@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Sample Project",
+    "description": "A brief description of this project.",
+    "tech": ["React", "Vite"],
+    "link": "https://github.com/yourusername/sample-project"
+  },
+  {
+    "title": "Unity Physics Simulator",
+    "description": "A physics simulation toolkit for Unity, supporting 2D and 3D environments.",
+    "tech": ["Unity", "C#", "Physics"],
+    "link": "https://github.com/ttvpro007/UnityPhysicsSimulator"
+  },
+  {
+    "title": "Planet Runner",
+    "description": "An endless runner game set on a rotating planet. Features procedural generation and power-ups.",
+    "tech": ["HTML5", "JavaScript", "Canvas"],
+    "link": "https://github.com/ttvpro007/Planet-Runner"
+  },
+  {
+    "title": "Bull Cow Game",
+    "description": "A classic word guessing game built with Unreal Engine 4.",
+    "tech": ["Unreal Engine", "C++", "GameDev"],
+    "link": "https://github.com/ttvpro007/Bull-Cow-Game"
+  },
+  {
+    "title": "Catavaneer Redo",
+    "description": "A reimagining of the Catavaneer game with modern C# and Unity features.",
+    "tech": ["Unity", "C#", "GameDev"],
+    "link": "https://github.com/ttvpro007/Catavaneer-Redo"
+  },
+  {
+    "title": "Programming Problems Solution",
+    "description": "A collection of programming problems and solutions from Codewars and other platforms.",
+    "tech": ["C#", "Algorithms", "Codewars"],
+    "link": "https://github.com/ttvpro007/Programming-Problems-Solution"
+  }
+] 
