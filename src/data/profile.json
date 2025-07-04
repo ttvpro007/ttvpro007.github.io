@@ -1,0 +1,25 @@
+{
+  "name": "Vi Tiet",
+  "tagline": "I dream in code and wake up ready to bring those dreams to life.",
+  "profilePic": "/portfolio-profile-pic.png",
+  "socialLinks": [
+    {
+      "type": "github",
+      "url": "https://github.com/ttvpro007",
+      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
+      "color": "#333"
+    },
+    {
+      "type": "linkedin",
+      "url": "https://www.linkedin.com/in/vitiet-programmer",
+      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg",
+      "color": "#0077b5"
+    },
+    {
+      "type": "email",
+      "url": "mailto:vitiet.programmer@gmail.com",
+      "icon": "email-svg",
+      "color": "#d44638"
+    }
+  ]
+} 

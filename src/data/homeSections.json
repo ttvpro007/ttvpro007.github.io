@@ -6,6 +6,15 @@
       "AR Simulation & VR Simulation: Developing AR and VR applications to simulate complex and novel technological ideas.",
       "Feature Implementation: Designing and implementing innovative features for passion-driven game projects.",
       "Reusable Tooling: Building reusable Unity tools to shorten development time."
+    ],
+    "highlights": [
+      "2D Visualization",
+      "3D Visualization",
+      "AR Simulation",
+      "VR Simulation",
+      "Feature Implementation",
+      "Reusable Tooling",
+      "Unity"
     ]
   },
   {
@@ -14,6 +23,12 @@
       "Unity Engine & C# Development: Developed a wide range of games and applications with Unity and C# for Windows & Mac.",
       "C++ OOP: Built applications using C++, focusing on object-oriented programming and efficient code practices.",
       "Swift (Vision Pro): Created an AR application for Apple Vision Pro utilizing Swift, enhancing user interaction through innovative software and hardware integration."
+    ],
+    "highlights": [
+      "Unity Engine",
+      "C# Development",
+      "C++ OOP",
+      "Swift (Vision Pro)"
     ]
   },
   {
@@ -22,6 +37,13 @@
       "Audio Signal Processing (Max 8): Engineered complex audio signal processing pipelines for custom hardware using Max 8, ensuring precision and efficiency.",
       "Demo Video Editing: Edited moonshot demo videos with custom software and hardware, delivering high-impact visual presentations.",
       "Clipchamp & CapCut Video Editing: Experienced in video editing with Clipchamp and Capcut, producing high-quality content."
+    ],
+    "highlights": [
+      "Audio Signal Processing",
+      "Max 8",
+      "Demo Video Editing",
+      "Clipchamp",
+      "CapCut"
     ]
   }
 ]

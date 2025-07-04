@@ -3,36 +3,54 @@
     "title": "Sample Project",
     "description": "A brief description of this project.",
     "tech": ["React", "Vite"],
-    "link": "https://github.com/yourusername/sample-project"
+    "techIcons": ["react", "vite"],
+    "link": "https://github.com/yourusername/sample-project",
+    "image": "/portfolio-profile-pic.png",
+    "linkSource": "github"
   },
   {
     "title": "Unity Physics Simulator",
     "description": "A physics simulation toolkit for Unity, supporting 2D and 3D environments.",
     "tech": ["Unity", "C#", "Physics"],
-    "link": "https://github.com/ttvpro007/UnityPhysicsSimulator"
+    "techIcons": ["unity", "csharp"],
+    "link": "https://github.com/ttvpro007/UnityPhysicsSimulator",
+    "image": "/portfolio-profile-pic.png",
+    "linkSource": "github"
   },
   {
     "title": "Planet Runner",
     "description": "An endless runner game set on a rotating planet. Features procedural generation and power-ups.",
     "tech": ["HTML5", "JavaScript", "Canvas"],
-    "link": "https://github.com/ttvpro007/Planet-Runner"
+    "techIcons": ["html5", "javascript", "canvas"],
+    "link": "https://ttvpro007.itch.io/planet-runner",
+    "image": "https://static.wixstatic.com/media/84b145_f7724c3bd5204f59962de89eaefe378d~mv2.jpg/v1/fill/w_800,h_389,al_c,q_80,usm_0.66_1.00_0.01/84b145_f7724c3bd5204f59962de89eaefe378d~mv2.jpg",
+    "linkSource": "itchio"
   },
   {
     "title": "Bull Cow Game",
     "description": "A classic word guessing game built with Unreal Engine 4.",
     "tech": ["Unreal Engine", "C++", "GameDev"],
-    "link": "https://github.com/ttvpro007/Bull-Cow-Game"
+    "techIcons": ["unreal", "cpp"],
+    "link": "https://github.com/ttvpro007/Bull-Cow-Game",
+    "image": "https://static.wixstatic.com/media/84b145_2ce8582889a149b4a94b4070eba05c8c~mv2.png/v1/fill/w_310,h_496,al_c,q_80,usm_0.66_1.00_0.01/84b145_2ce8582889a149b4a94b4070eba05c8c~mv2.png",
+    "linkSource": "github"
   },
   {
-    "title": "Catavaneer Redo",
+    "title": "Catavaneer",
     "description": "A reimagining of the Catavaneer game with modern C# and Unity features.",
     "tech": ["Unity", "C#", "GameDev"],
-    "link": "https://github.com/ttvpro007/Catavaneer-Redo"
+    "techIcons": ["unity", "csharp"],
+    "link": "https://cryobyte-studio.itch.io/catavaneer",
+    "image": "/projects-images/catavaneer.png",
+    "linkSource": "itchio"
   },
   {
     "title": "Programming Problems Solution",
     "description": "A collection of programming problems and solutions from Codewars and other platforms.",
     "tech": ["C#", "Algorithms", "Codewars"],
-    "link": "https://github.com/ttvpro007/Programming-Problems-Solution"
+    "techIcons": ["csharp", "algorithms", "codewars"],
+    "link": "https://github.com/ttvpro007/Programming-Problems-Solution",
+    "image": "/portfolio-profile-pic.png",
+    "linkSource": "github"
   }
 ] 

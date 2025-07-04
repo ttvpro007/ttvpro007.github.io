@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import projects from "../data/projects.json";
 
@@ -27,6 +27,25 @@ const cardVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
 };
 
+const linkLabels = {
+  github: "View on GitHub",
+  itchio: "Play on itch.io",
+  youtube: "Watch on YouTube",
+  default: "View Project"
+};
+
+const techIconMap = {
+  react: '/src/assets/react.svg',
+  vite: '/vite.svg',
+  unity: '/tech-icons/unity.png',
+  csharp: '/tech-icons/c-sharp-c-seeklogo.png',
+  html5: '/tech-icons/html5-seeklogo.png',
+  javascript: '/tech-icons/javascript-seeklogo.png',
+  unreal: '/tech-icons/unreal.svg',
+  cpp: '/tech-icons/c-seeklogo.png',
+  codewars: '/kenney_cursor-pack/Vector/Basic/target_round_a.svg',
+};
+
 export default function Projects() {
   return (
     <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '50vh' }}>
@@ -50,29 +69,72 @@ export default function Projects() {
           initial="hidden"
           animate="visible"
         >
-          {projects.map((project, idx) => (
-            <motion.li
-              key={idx}
-              className="project-card"
-              style={cardStyle}
-              variants={cardVariants}
-              whileHover={{ scale: 1.03, boxShadow: '0 4px 24px rgba(0,0,0,0.10)' }}
-              onMouseOut={e => {
-                e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.boxShadow = cardStyle.boxShadow;
-              }}
-            >
-              <h3 style={{ margin: '0 0 0.5rem 0', color: 'var(--primary)' }}>{project.title}</h3>
-              <p style={{ margin: '0 0 0.5rem 0', color: 'var(--text)' }}>{project.description}</p>
-              <p style={{ margin: '0 0 0.5rem 0', color: 'var(--text)' }}><strong>Tech:</strong> {project.tech.join(", ")}</p>
-              <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)' }}>View on GitHub</a>
-            </motion.li>
-          ))}
+          {projects.map((project, idx) => {
+            const [isHovered, setIsHovered] = useState(false);
+            return (
+              <motion.li
+                key={idx}
+                className="project-card"
+                style={{
+                  ...cardStyle,
+                  position: 'relative',
+                  overflow: 'hidden',
+                  background: 'none',
+                }}
+                variants={cardVariants}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+              >
+                {/* Animated background image */}
+                <motion.div
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    backgroundImage: project.image ? `url(${project.image})` : undefined,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    zIndex: 0,
+                    transition: 'transform 0.6s cubic-bezier(.4,2,.6,1)',
+                  }}
+                  animate={{ scale: isHovered ? 1.125 : 1 }}
+                />
+                {/* Overlay for readability */}
+                <div style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'var(--card-overlay)',
+                  zIndex: 1,
+                  pointerEvents: 'none',
+                }} />
+                <div style={{ position: 'relative', zIndex: 2 }}>
+                  <h3 style={{ margin: '0 0 0.5rem 0', color: 'var(--primary)' }}>{project.title}</h3>
+                  <p style={{ margin: '0 0 0.5rem 0', color: 'var(--text)' }}>{project.description}</p>
+                  <p style={{ margin: '0 0 0.5rem 0', color: 'var(--text)' }}>
+                    <strong>Tech:</strong>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', marginLeft: 8 }}>
+                      {project.techIcons?.map(iconKey =>
+                        techIconMap[iconKey] ? (
+                          <img
+                            key={iconKey}
+                            src={techIconMap[iconKey]}
+                            alt={iconKey}
+                            title={iconKey.charAt(0).toUpperCase() + iconKey.slice(1)}
+                            style={{ width: 22, height: 22, marginLeft: 4, verticalAlign: 'middle', filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.10))' }}
+                          />
+                        ) : null
+                      )}
+                    </span>
+                  </p>
+                  <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)' }}>
+                    {linkLabels[project.linkSource] || linkLabels.default}
+                  </a>
+                </div>
+              </motion.li>
+            );
+          })}
         </motion.ul>
       </motion.div>
-      <div style={{background:'#eee',padding:'1rem',marginTop:'2rem',textAlign:'center',borderRadius:'8px',maxWidth:400}}>
-        <strong>Projects Page Placeholder</strong>
-      </div>
     </section>
   );
 } 
