@@ -1,311 +1,457 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { techIconMap, linkLabels } from "../utils/constants";
-import projectsContent from "../data/projectsContent.json";
 import { Button, Badge, Icon } from "./base";
+import { projects } from "../data";
+import { 
+  generateProjectButtons, 
+  getProjectImages, 
+  formatImageCounter, 
+  getProjectDescription 
+} from "../utils/projectUtils";
 
-export default function ProjectModal({ project, isOpen, onClose }) {
+const ProjectModal = ({ project, isOpen, onClose }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
+
+  // Reset image index when modal opens
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
+      setCurrentImageIndex(0);
     }
-    
+  }, [isOpen]);
+
+  // Handle escape key
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden'; // Prevent background scroll
+    }
+
     return () => {
+      document.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = 'unset';
     };
-  }, [isOpen]);
-  
-  if (!project) return null;
-  
-  const images = project.images || [project.image];
-  
+  }, [isOpen, onClose]);
+
+  const images = getProjectImages(project);
+  const currentImage = images[currentImageIndex];
+  const actionButtons = generateProjectButtons(project);
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+
   return (
-    <AnimatePresence>
-      {isOpen && (
+    <AnimatePresence mode="wait" onExitComplete={() => {}}>
+      {isOpen && project && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          transition={{ 
+            duration: 0.5, 
+            ease: "easeInOut",
+            exit: { duration: 0.4, ease: "easeOut" }
+          }}
           style={{
-            position: 'fixed',
+            position: "fixed",
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
-            background: 'rgba(0,0,0,0.8)',
-            zIndex: 1000,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '1rem',
+            background: "rgba(0, 0, 0, 0.8)",
+            backdropFilter: "blur(10px)",
+            zIndex: 9999,
+            overflow: "auto"
           }}
           onClick={onClose}
         >
+          {/* Close Button */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
-            style={{
-              background: 'var(--card-bg)',
-              borderRadius: 'var(--border-radius)',
-              maxWidth: '800px',
-              width: '100%',
-              maxHeight: '90vh',
-              overflow: 'hidden',
-              position: 'relative',
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ 
+              delay: 0.2,
+              exit: { delay: 0, duration: 0.3 }
             }}
-            onClick={(e) => e.stopPropagation()}
+            style={{
+              position: "fixed",
+              top: "2rem",
+              right: "2rem",
+              zIndex: 10010
+            }}
           >
-            {/* Close Button */}
             <Button
               onClick={onClose}
               variant="outline"
-              size="small"
               style={{
-                position: 'absolute',
-                top: '1rem',
-                right: '1rem',
-                background: 'rgba(0,0,0,0.5)',
-                color: 'white',
-                border: 'none',
-                borderRadius: '50%',
-                width: '40px',
-                height: '40px',
-                minWidth: 'auto',
-                zIndex: 10,
-                fontSize: '1.2rem',
+                padding: "1rem",
+                minWidth: "auto",
+                width: "60px",
+                height: "60px",
+                borderRadius: "50%",
+                background: "rgba(255, 255, 255, 0.1)",
+                backdropFilter: "blur(20px)",
+                border: "2px solid var(--border)",
+                fontSize: "1.5rem",
+                fontWeight: "bold",
+                color: "var(--text)"
+              }}
+              whileHover={{ 
+                scale: 1.1,
+                background: "rgba(255, 255, 255, 0.2)"
+              }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {projects.ui.projectModal.closeButton}
+            </Button>
+          </motion.div>
+
+          {/* Main Content */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ 
+              delay: 0.1,
+              duration: 0.4,
+              exit: { delay: 0, duration: 0.3 }
+            }}
+            style={{
+              maxWidth: projects.ui.projectModal.layout.maxWidth,
+              margin: "0 auto",
+              padding: "2rem",
+              paddingTop: "6rem"
+            }}
+          >
+            {/* Hero Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 30 }}
+              transition={{ 
+                delay: 0.3,
+                exit: { delay: 0, duration: 0.3 }
+              }}
+              style={{
+                textAlign: "center",
+                marginBottom: "3rem"
               }}
             >
-              {projectsContent.projectModal.closeButton}
-            </Button>
-            
-            {/* Image Carousel */}
-            <div style={{
-              position: 'relative',
-              height: '300px',
-              overflow: 'hidden',
-            }}>
-              <motion.img
-                key={currentImageIndex}
-                src={images[currentImageIndex]}
-                alt={`${project.title} - Image ${currentImageIndex + 1}`}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3 }}
-              />
+              <h1 style={{
+                fontSize: "3.5rem",
+                fontWeight: "bold",
+                color: "var(--text)",
+                marginBottom: "1rem",
+                background: "linear-gradient(45deg, var(--primary), #FC9460)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text"
+              }}>
+                {project.title}
+              </h1>
+              <p style={{
+                fontSize: "1.3rem",
+                color: "var(--text-secondary)",
+                maxWidth: "800px",
+                margin: "0 auto",
+                lineHeight: "1.6"
+              }}>
+                {getProjectDescription(project)}
+              </p>
+            </motion.div>
+
+            {/* Image Gallery */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ 
+                delay: 0.4,
+                exit: { delay: 0, duration: 0.3 }
+              }}
+              style={{
+                position: "relative",
+                height: projects.ui.projectModal.imageGallery.height,
+                borderRadius: "20px",
+                overflow: "hidden",
+                marginBottom: "3rem",
+                boxShadow: "0 20px 40px rgba(0, 0, 0, 0.2)"
+              }}
+            >
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={currentImageIndex}
+                  src={currentImage}
+                  alt={project.title}
+                  initial={{ opacity: 0, scale: 1.1 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.4 }}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover"
+                  }}
+                />
+              </AnimatePresence>
               
               {/* Navigation Arrows */}
               {images.length > 1 && (
                 <>
-                  <Button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
-                    }}
-                    variant="outline"
-                    size="small"
-                    style={{
-                      position: 'absolute',
-                      left: '1rem',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      background: 'rgba(0,0,0,0.5)',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '50%',
-                      width: '40px',
-                      height: '40px',
-                      minWidth: 'auto',
-                      fontSize: '1.2rem',
+                  <motion.div
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -30 }}
+                    transition={{ 
+                      delay: 0.5,
+                      exit: { delay: 0, duration: 0.3 }
                     }}
                   >
-                    {projectsContent.projectModal.navigation.previous}
-                  </Button>
-                  <Button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setCurrentImageIndex((prev) => (prev + 1) % images.length);
-                    }}
-                    variant="outline"
-                    size="small"
-                    style={{
-                      position: 'absolute',
-                      right: '1rem',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      background: 'rgba(0,0,0,0.5)',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '50%',
-                      width: '40px',
-                      height: '40px',
-                      minWidth: 'auto',
-                      fontSize: '1.2rem',
+                    <Button
+                      onClick={prevImage}
+                      variant="outline"
+                      style={{
+                        position: "absolute",
+                        left: "2rem",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        padding: "1rem",
+                        minWidth: "auto",
+                        width: "60px",
+                        height: "60px",
+                        borderRadius: "50%",
+                        background: "rgba(0, 0, 0, 0.7)",
+                        color: "white",
+                        border: "none",
+                        backdropFilter: "blur(20px)",
+                        fontSize: "1.5rem"
+                      }}
+                      whileHover={{ scale: 1.1, background: "rgba(0, 0, 0, 0.9)" }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {projects.ui.projectModal.navigation.previous}
+                    </Button>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: 30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 30 }}
+                    transition={{ 
+                      delay: 0.5,
+                      exit: { delay: 0, duration: 0.3 }
                     }}
                   >
-                    {projectsContent.projectModal.navigation.next}
-                  </Button>
+                    <Button
+                      onClick={nextImage}
+                      variant="outline"
+                      style={{
+                        position: "absolute",
+                        right: "2rem",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        padding: "1rem",
+                        minWidth: "auto",
+                        width: "60px",
+                        height: "60px",
+                        borderRadius: "50%",
+                        background: "rgba(0, 0, 0, 0.7)",
+                        color: "white",
+                        border: "none",
+                        backdropFilter: "blur(20px)",
+                        fontSize: "1.5rem"
+                      }}
+                      whileHover={{ scale: 1.1, background: "rgba(0, 0, 0, 0.9)" }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {projects.ui.projectModal.navigation.next}
+                    </Button>
+                  </motion.div>
                 </>
               )}
-              
-              {/* Image Indicators */}
+
+              {/* Image Counter */}
               {images.length > 1 && (
-                <div style={{
-                  position: 'absolute',
-                  bottom: '1rem',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  display: 'flex',
-                  gap: '0.5rem',
-                }}>
-                  {images.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setCurrentImageIndex(index);
-                      }}
-                      style={{
-                        width: '8px',
-                        height: '8px',
-                        borderRadius: '50%',
-                        border: 'none',
-                        background: index === currentImageIndex ? 'var(--primary)' : 'rgba(255,255,255,0.5)',
-                        cursor: 'pointer',
-                      }}
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
-            
-            {/* Content */}
-            <div style={{ padding: '2rem' }}>
-              <h2 style={{
-                margin: '0 0 1rem 0',
-                color: 'var(--primary)',
-                fontSize: '1.8rem',
-              }}>
-                {project.title}
-              </h2>
-              
-              <p style={{
-                margin: '0 0 1.5rem 0',
-                color: 'var(--text)',
-                lineHeight: '1.6',
-                fontSize: '1rem',
-              }}>
-                {project.longDescription || project.description}
-              </p>
-              
-              {/* Tech Stack */}
-              <div style={{ marginBottom: '1.5rem' }}>
-                <h4 style={{
-                  margin: '0 0 0.75rem 0',
-                  color: 'var(--text-secondary)',
-                  fontSize: '0.9rem',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.05em',
-                }}>
-                  {projectsContent.projectModal.content.techStack}
-                </h4>
-                <div style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  gap: '0.5rem',
-                }}>
-                  {project.tech?.map(iconKey => (
-                    <Badge
-                      key={iconKey}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        background: 'var(--bg-alt)',
-                        fontSize: '0.875rem',
-                        fontWeight: 'bold',
-                      }}
-                    >
-                      {techIconMap[iconKey] && (
-                        <img
-                          src={techIconMap[iconKey]}
-                          alt={iconKey}
-                          style={{ width: 16, height: 16 }}
-                        />
-                      )}
-                      {iconKey.charAt(0).toUpperCase() + iconKey.slice(1)}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Links */}
-              <div style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: '1rem',
-              }}>
-                {project.demo && (
-                  <Button
-                    as="a"
-                    href={project.demo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      textDecoration: 'none',
-                    }}
-                  >
-                    {projectsContent.projectModal.content.links.liveDemo}
-                  </Button>
-                )}
-                
-                <Button
-                  as="a"
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="secondary"
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ 
+                    delay: 0.6,
+                    exit: { delay: 0, duration: 0.3 }
+                  }}
                   style={{
-                    background: 'var(--accent)',
-                    color: 'white',
-                    border: 'none',
-                    textDecoration: 'none',
+                    position: "absolute",
+                    bottom: "2rem",
+                    right: "2rem",
+                    background: "rgba(0, 0, 0, 0.8)",
+                    color: "white",
+                    padding: "0.75rem 1.5rem",
+                    borderRadius: "25px",
+                    fontSize: "1rem",
+                    backdropFilter: "blur(20px)",
+                    fontWeight: "600"
                   }}
                 >
-                  {linkLabels[project.linkSource] || linkLabels.default}
-                </Button>
+                  {formatImageCounter(currentImageIndex + 1, images.length)}
+                </motion.div>
+              )}
+            </motion.div>
+
+            {/* Project Details */}
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: projects.ui.projectModal.layout.gridColumns,
+              gap: projects.ui.projectModal.layout.gap,
+              alignItems: "start"
+            }}>
+              {/* Tech Stack */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -30 }}
+                transition={{ 
+                  delay: 0.6,
+                  exit: { delay: 0, duration: 0.3 }
+                }}
+              >
+                <h2 style={{
+                  color: "var(--text)",
+                  marginBottom: "1.5rem",
+                  fontSize: "2rem",
+                  fontWeight: "bold"
+                }}>
+                  {projects.ui.projectModal.content.techStack}
+                </h2>
+                <div style={{
+                  display: "flex",
+                  gap: "1rem",
+                  flexWrap: "wrap"
+                }}>
+                  {project.tech.map((tech, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      transition={{ 
+                        delay: 0.7 + index * 0.1,
+                        exit: { delay: 0, duration: 0.2 }
+                      }}
+                    >
+                      <Badge size="small" style={{
+                        fontSize: "1rem",
+                        padding: "0.75rem 1.5rem",
+                        background: "var(--primary)",
+                        color: "var(--card-bg)"
+                      }}>
+                        {tech}
+                      </Badge>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Action Buttons */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 30 }}
+                transition={{ 
+                  delay: 0.7,
+                  exit: { delay: 0, duration: 0.3 }
+                }}
+                style={{
+                  background: "rgba(255, 255, 255, 0.05)",
+                  borderRadius: "20px",
+                  padding: "2rem",
+                  border: "1px solid var(--border)",
+                  backdropFilter: "blur(10px)"
+                }}
+              >
+                <h3 style={{
+                  color: "var(--text)",
+                  marginBottom: "1.5rem",
+                  fontSize: "1.5rem",
+                  fontWeight: "bold"
+                }}>
+                  {projects.ui.projectModal.content.getStarted}
+                </h3>
                 
-                {project.appStore && (
-                  <Button
-                    as="a"
-                    href={project.appStore}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                {actionButtons.length > 0 ? (
+                  <div style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "1rem"
+                  }}>
+                    {actionButtons.map((button, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 20 }}
+                        transition={{ 
+                          delay: 0.8 + index * 0.1,
+                          exit: { delay: 0, duration: 0.2 }
+                        }}
+                      >
+                        <Button
+                          onClick={() => window.open(button.url, "_blank")}
+                          variant={button.variant}
+                          style={{
+                            width: "100%",
+                            padding: "1rem 1.5rem",
+                            fontSize: "1.1rem",
+                            fontWeight: "600",
+                            borderRadius: "12px"
+                          }}
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          <span style={{ marginRight: "0.5rem" }}>{button.icon}</span>
+                          {button.label}
+                        </Button>
+                      </motion.div>
+                    ))}
+                  </div>
+                ) : (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ 
+                      delay: 0.8,
+                      exit: { delay: 0, duration: 0.3 }
+                    }}
                     style={{
-                      background: '#007AFF',
-                      color: 'white',
-                      border: 'none',
-                      textDecoration: 'none',
+                      textAlign: "center",
+                      color: "var(--text-secondary)",
+                      padding: "2rem"
                     }}
                   >
-                    {projectsContent.projectModal.content.links.appStore}
-                  </Button>
+                    <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>
+                      {projects.ui.projectModal.content.noLinks.icon}
+                    </div>
+                    <p>{projects.ui.projectModal.content.noLinks.text}</p>
+                  </motion.div>
                 )}
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
   );
-} 
+};
+
+export default ProjectModal; 

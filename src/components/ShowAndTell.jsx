@@ -6,6 +6,10 @@ import { profile, uiContent } from "../data";
 const ShowAndTell = () => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
 
+  if (!profile || !profile.showAndTell) {
+    return null;
+  }
+
   return (
     <Section 
       title={uiContent.sections.showAndTell.title} 
@@ -53,7 +57,7 @@ const ShowAndTell = () => {
       </div>
       
       <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
-        {profile.showAndTell.map((_, index) => (
+        {profile.showAndTell?.map((_, index) => (
           <motion.button
             key={index}
             onClick={() => setCurrentIndex(index)}

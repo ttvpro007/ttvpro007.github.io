@@ -1,63 +1,85 @@
-import React, { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import skillData from "../data/skillData.json";
+import React from "react";
+import { motion } from "framer-motion";
 import { Card, Section } from "./base";
-import { animationComponents } from "./animations/SkillAnimations";
+import { profile } from "../data";
 
-function SkillBar({ skill, index }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const AnimationComponent = animationComponents[skill.animation];
-
+const AnimatedSkillBars = () => {
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-    >
-      <Card style={{ marginBottom: '1.5rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
-          <span style={{ fontSize: '1.2rem', marginRight: '0.5rem' }}>{skill.icon}</span>
-          <h4 style={{ margin: 0, fontSize: '1rem', fontWeight: 600 }}>{skill.name}</h4>
-          <span style={{ 
-            marginLeft: 'auto', 
-            fontSize: '0.9rem', 
-            fontWeight: 600,
-            color: skill.color 
+    <Section title="Skills & Expertise" icon="⚡" centered={true}>
+      {Object.entries(profile.skills.categories).map(([category, skills]) => (
+        <Card key={category} style={{ marginBottom: "2rem" }}>
+          <h3 style={{ 
+            color: "var(--text)", 
+            marginBottom: "1.5rem", 
+            textAlign: "center",
+            fontSize: "1.3rem"
           }}>
-            {skill.level}%
-          </span>
-        </div>
-        
-        {AnimationComponent && (
-          <AnimationComponent level={skill.level} color={skill.color} />
-        )}
-        
-        <p style={{ 
-          margin: '0.5rem 0 0 0', 
-          fontSize: '0.9rem', 
-          color: 'var(--text-secondary)',
-          lineHeight: 1.4
-        }}>
-          {skill.description}
-        </p>
-      </Card>
-    </motion.div>
-  );
-}
-
-export default function AnimatedSkillBars() {
-  return (
-    <div style={{ width: '100%' }}>
-      {Object.entries(skillData).map(([category, skills]) => (
-        <Section key={category} title={category} centered={true}>
-          {skills.map((skill, index) => (
-            <SkillBar key={skill.name} skill={skill} index={index} />
-          ))}
-        </Section>
+            {category}
+          </h3>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            {skills.map((skill, index) => (
+              <motion.div
+                key={skill.name}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.1 }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                  padding: "0.5rem",
+                  borderRadius: "8px",
+                  background: "var(--bg)"
+                }}
+              >
+                <div style={{ fontSize: "1.5rem", minWidth: "40px" }}>
+                  {skill.icon}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ 
+                    display: "flex", 
+                    justifyContent: "space-between", 
+                    marginBottom: "0.25rem" 
+                  }}>
+                    <span style={{ fontWeight: "bold", color: "var(--text)" }}>
+                      {skill.name}
+                    </span>
+                    <span style={{ color: "var(--primary)", fontWeight: "bold" }}>
+                      {skill.level || skill.percentage}%
+                    </span>
+                  </div>
+                  <div style={{ 
+                    background: "var(--text-secondary)", 
+                    height: "8px", 
+                    borderRadius: "4px",
+                    overflow: "hidden"
+                  }}>
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${skill.level || skill.percentage}%` }}
+                      transition={{ duration: 1, delay: index * 0.1 }}
+                      style={{
+                        height: "100%",
+                        background: skill.color || "var(--primary)",
+                        borderRadius: "4px"
+                      }}
+                    />
+                  </div>
+                  <p style={{ 
+                    margin: "0.25rem 0 0 0", 
+                    fontSize: "0.9rem", 
+                    color: "var(--text-secondary)" 
+                  }}>
+                    {skill.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </Card>
       ))}
-    </div>
+    </Section>
   );
-} 
+};
+
+export default AnimatedSkillBars; 

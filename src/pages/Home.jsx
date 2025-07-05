@@ -12,6 +12,22 @@ export default function Home() {
   const [bounce, setBounce] = React.useState(false);
   const [confetti, setConfetti] = React.useState(false);
 
+  // Add loading state check
+  if (!profile || !profile.personal) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        minHeight: '50vh',
+        fontSize: '1.2rem',
+        color: 'var(--text-secondary)'
+      }}>
+        Loading...
+      </div>
+    );
+  }
+
   return (
     <section style={{ 
       display: 'flex', 
@@ -41,8 +57,8 @@ export default function Home() {
       >
         <div style={{ position: 'relative', display: 'inline-block' }}>
           <motion.img
-            src={profile.profilePic}
-            alt={profile.name + " profile"}
+            src={profile.personal?.profilePic}
+            alt={profile.personal?.name + " profile"}
             style={{ 
               borderRadius: '50%', 
               marginBottom: '1.5rem', 
@@ -79,13 +95,13 @@ export default function Home() {
           </div>
         </div>
         
-        <h1 style={{ fontSize: '2.5rem', margin: 0 }}>{profile.name}</h1>
+        <h1 style={{ fontSize: '2.5rem', margin: 0 }}>{profile.personal?.name}</h1>
         <p style={{ fontSize: '1.2rem', fontStyle: 'italic', margin: '0.5rem 0 1.5rem 0', textAlign: 'center', maxWidth: 400 }}>
-          {profile.tagline}
+          {profile.personal?.tagline}
         </p>
         
         <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '2rem' }}>
-          {profile.socialLinks.map(link => (
+          {profile.socialLinks?.map(link => (
             <a
               key={link.type}
               href={link.url}

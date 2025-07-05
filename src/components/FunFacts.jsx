@@ -7,6 +7,10 @@ const FunFacts = () => {
   const [currentFact, setCurrentFact] = React.useState(0);
   const [isVisible, setIsVisible] = React.useState(false);
 
+  if (!profile || !profile.funFacts) {
+    return null;
+  }
+
   React.useEffect(() => {
     if (isVisible) {
       const interval = setInterval(() => {

@@ -5,7 +5,15 @@ import { ProgressBar, Icon } from "./base";
 const SkillBar = ({ skill, index }) => {
   const [isInView, setIsInView] = React.useState(false);
 
-  const getSkillTheme = (theme) => {
+  const getSkillTheme = (theme, skill) => {
+    // If skill has a color property, use it
+    if (skill.color) {
+      return {
+        background: skill.color,
+        icon: skill.icon,
+      };
+    }
+    
     switch (theme) {
       case 'filament':
         return {
@@ -35,7 +43,7 @@ const SkillBar = ({ skill, index }) => {
     }
   };
 
-  const theme = getSkillTheme(skill.theme);
+  const theme = getSkillTheme(skill.theme, skill);
 
   return (
     <motion.div
@@ -52,11 +60,11 @@ const SkillBar = ({ skill, index }) => {
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
         <Icon emoji={theme.icon} size="small" style={{ marginRight: '0.5rem' }} />
         <span style={{ fontWeight: 'bold', marginRight: 'auto' }}>{skill.name}</span>
-        <span style={{ fontSize: '0.9rem', opacity: 0.7 }}>{skill.percentage}%</span>
+        <span style={{ fontSize: '0.9rem', opacity: 0.7 }}>{skill.level || skill.percentage}%</span>
       </div>
       
       <ProgressBar 
-        progress={skill.percentage} 
+        progress={skill.level || skill.percentage} 
         max={100} 
         height="12px"
         color={theme.background}

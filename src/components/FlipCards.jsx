@@ -5,6 +5,10 @@ import { Section } from "./base";
 import { profile, uiContent } from "../data";
 
 const FlipCards = () => {
+  if (!profile || !profile.flipCards) {
+    return null;
+  }
+  
   return (
     <Section 
       title={uiContent.sections.flipCards.title} 
@@ -20,7 +24,7 @@ const FlipCards = () => {
         width: '100%',
         margin: '0 auto'
       }}>
-        {profile.flipCards.map((card, index) => (
+        {profile.flipCards?.map((card, index) => (
           <FlipCard key={index} card={card} index={index} />
         ))}
       </div>

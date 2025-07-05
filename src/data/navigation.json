@@ -1,5 +1,5 @@
 {
-  "pages": ["Home", "About", "Projects", "Resume", "Contact"],
+  "pages": ["Home", "Projects", "Resume", "Contact"],
   "brandName": "Vi Tiet",
   "themeConfig": {
     "defaultTheme": "dark",

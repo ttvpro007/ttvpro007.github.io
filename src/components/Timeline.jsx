@@ -4,6 +4,10 @@ import { Icon, Section } from "./base";
 import { profile, uiContent } from "../data";
 
 const Timeline = () => {
+  if (!profile || !profile.journey) {
+    return null;
+  }
+  
   return (
     <Section 
       title={uiContent.sections.timeline.title} 
@@ -35,7 +39,7 @@ const Timeline = () => {
           zIndex: 1,
         }} />
 
-        {profile.journey.map((item, index) => (
+        {profile.journey?.map((item, index) => (
           <motion.div
             key={index}
             style={{

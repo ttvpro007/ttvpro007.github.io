@@ -1,77 +1,217 @@
-[
-  {
-    "title": "Unity Physics Simulator",
-    "description": "A physics simulation toolkit for Unity, supporting 2D and 3D environments with realistic particle systems and collision detection.",
-    "longDescription": "A comprehensive physics simulation toolkit built for Unity that provides developers with advanced 2D and 3D physics capabilities. Features include realistic particle systems, collision detection, fluid dynamics, and customizable physics materials. The toolkit is designed to be both powerful for experienced developers and accessible for beginners.",
-    "tech": ["unity", "cs"],
-    "link": "https://github.com/ttvpro007/UnityPhysicsSimulator",
-    "image": "/portfolio-profile-pic.png",
-    "images": ["/portfolio-profile-pic.png", "/projects-images/catavaneer.png"],
-    "linkSource": "github",
-    "category": "Game Dev",
-    "year": 2024,
-    "featured": true,
-    "demo": "https://demo.example.com",
-    "appStore": null
+{
+  "config": {
+    "pageTitle": "Projects",
+    "searchPlaceholder": "Search projects (e.g., Unity, AR, 3D print)...",
+    "noResultsMessage": {
+      "icon": "🔍",
+      "title": "No projects found",
+      "description": "Try adjusting your search terms or filters"
+    },
+    "sortOptions": {
+      "recent": "Most Recent",
+      "tech": "By Tech"
+    },
+    "filterOptions": {
+      "all": "All",
+      "sortLabel": "Sort:"
+    },
+    "gridSettings": {
+      "minCardWidth": "300px",
+      "gap": "2rem",
+      "staggerDelay": 0.1
+    },
+    "animations": {
+      "pageEnter": {
+        "duration": 0.7,
+        "ease": "easeOut"
+      },
+      "cardStagger": {
+        "delay": 0.1
+      }
+    },
+    "layout": {
+      "maxWidth": "1200px",
+      "featuredHeight": "400px",
+      "cardHeight": "320px"
+    },
+    "stats": {
+      "maxTechDisplay": 5,
+      "barWidth": "60px",
+      "barHeight": "8px"
+    }
   },
-  {
-    "title": "Planet Runner",
-    "description": "An endless runner game set on a rotating planet. Features procedural generation and power-ups.",
-    "longDescription": "An innovative endless runner game that takes place on a dynamically rotating planet. The game features procedurally generated terrain, unique power-ups, and challenging obstacles that adapt to player skill level. Built with HTML5 and JavaScript for cross-platform compatibility.",
-    "tech": ["html5", "js"],
-    "link": "https://ttvpro007.itch.io/planet-runner",
-    "image": "https://static.wixstatic.com/media/84b145_f7724c3bd5204f59962de89eaefe378d~mv2.jpg/v1/fill/w_800,h_389,al_c,q_80,usm_0.66_1.00_0.01/84b145_f7724c3bd5204f59962de89eaefe378d~mv2.jpg",
-    "images": ["https://static.wixstatic.com/media/84b145_f7724c3bd5204f59962de89eaefe378d~mv2.jpg/v1/fill/w_800,h_389,al_c,q_80,usm_0.66_1.00_0.01/84b145_f7724c3bd5204f59962de89eaefe378d~mv2.jpg"],
-    "linkSource": "itchio",
-    "category": "Game Dev",
-    "year": 2023,
-    "featured": false,
-    "demo": "https://ttvpro007.itch.io/planet-runner",
-    "appStore": null
+  "ui": {
+    "featuredProject": {
+      "badge": "⭐ Featured Project",
+      "button": "See Full Case Study →"
+    },
+    "searchAndFilter": {
+      "searchIcon": "🔍",
+      "categoryFilters": {
+        "all": "All"
+      },
+      "sortToggle": {
+        "label": "Sort:",
+        "recent": "Most Recent",
+        "tech": "By Tech"
+      }
+    },
+    "projectCard": {
+      "viewDetails": "View Details",
+      "clickHint": {
+        "icon": "👆",
+        "text": "Click to view details"
+      },
+      "imageHeight": "200px"
+    },
+    "projectModal": {
+      "closeButton": "×",
+      "navigation": {
+        "previous": "‹",
+        "next": "›"
+      },
+      "content": {
+        "techStack": "Tech Stack",
+        "getStarted": "Get Started",
+        "noLinks": {
+          "icon": "🔗",
+          "text": "No external links available for this project"
+        },
+        "links": {
+          "liveDemo": "🚀 Live Demo",
+          "appStore": "📱 App Store",
+          "github": "📁 View on GitHub",
+          "itchio": "🎮 Play on itch.io"
+        }
+      },
+      "imageGallery": {
+        "height": "500px",
+        "counterFormat": "{current} / {total}"
+      },
+      "layout": {
+        "maxWidth": "1400px",
+        "gridColumns": "1fr 400px",
+        "gap": "3rem"
+      }
+    },
+    "statsWidget": {
+      "title": "Project Stats",
+      "sections": {
+        "techUsage": {
+          "title": "Most Used Technologies"
+        },
+        "yearlyBreakdown": {
+          "title": "Projects by Year"
+        }
+      }
+    },
+    "noResults": {
+      "icon": "🔍",
+      "title": "No projects found",
+      "description": "Try adjusting your search terms or filters"
+    }
   },
-  {
-    "title": "Bull Cow Game",
-    "description": "A classic word guessing game built with Unreal Engine 4.",
-    "longDescription": "A modern implementation of the classic Bull Cow word guessing game using Unreal Engine 4. Features include an intuitive UI, sound effects, particle systems, and a hint system to help players. The game demonstrates advanced C++ programming concepts and Unreal Engine integration.",
-    "tech": ["unreal", "cpp"],
-    "link": "https://github.com/ttvpro007/Bull-Cow-Game",
-    "image": "https://static.wixstatic.com/media/84b145_2ce8582889a149b4a94b4070eba05c8c~mv2.png/v1/fill/w_310,h_496,al_c,q_80,usm_0.66_1.00_0.01/84b145_2ce8582889a149b4a94b4070eba05c8c~mv2.png",
-    "images": ["https://static.wixstatic.com/media/84b145_2ce8582889a149b4a94b4070eba05c8c~mv2.png/v1/fill/w_310,h_496,al_c,q_80,usm_0.66_1.00_0.01/84b145_2ce8582889a149b4a94b4070eba05c8c~mv2.png"],
-    "linkSource": "github",
-    "category": "Game Dev",
-    "year": 2023,
-    "featured": false,
-    "demo": null,
-    "appStore": null
-  },
-  {
-    "title": "Catavaneer",
-    "description": "A reimagining of the Catavaneer game with modern C# and Unity features.",
-    "longDescription": "A complete reimagining of the classic Catavaneer game using modern Unity features and C# programming practices. This project showcases advanced game development techniques including procedural generation, AI pathfinding, and optimized rendering systems.",
-    "tech": ["unity", "cs"],
-    "link": "https://cryobyte-studio.itch.io/catavaneer",
-    "image": "/projects-images/catavaneer.png",
-    "images": ["/projects-images/catavaneer.png"],
-    "linkSource": "itchio",
-    "category": "Game Dev",
-    "year": 2024,
-    "featured": false,
-    "demo": "https://cryobyte-studio.itch.io/catavaneer",
-    "appStore": null
-  },
-  {
-    "title": "Programming Problems Solution",
-    "description": "A collection of programming problems and solutions from Codewars and other platforms.",
-    "longDescription": "A comprehensive collection of programming problems and their solutions from various competitive programming platforms including Codewars, LeetCode, and HackerRank. The repository includes solutions in multiple languages and demonstrates different algorithmic approaches and optimization techniques.",
-    "tech": ["cs", "cpp", "codewars"],
-    "link": "https://github.com/ttvpro007/Programming-Problems-Solution",
-    "image": "/portfolio-profile-pic.png",
-    "images": ["/portfolio-profile-pic.png"],
-    "linkSource": "github",
-    "category": "Tools",
-    "year": 2024,
-    "featured": false,
-    "demo": null,
-    "appStore": null
-  }
-] 
+  "items": [
+    {
+      "title": "Unity Physics Simulator",
+      "description": "A physics simulation toolkit for Unity, supporting 2D and 3D environments with realistic particle systems and collision detection.",
+      "longDescription": "A comprehensive physics simulation toolkit built for Unity that provides developers with advanced 2D and 3D physics capabilities. Features include realistic particle systems, collision detection, fluid dynamics, and customizable physics materials. The toolkit is designed to be both powerful for experienced developers and accessible for beginners.",
+      "tech": ["unity", "cs"],
+      "link": "https://github.com/ttvpro007/UnityPhysicsSimulator",
+      "image": "/portfolio-profile-pic.png",
+      "images": ["/portfolio-profile-pic.png", "/projects-images/catavaneer.png"],
+      "linkSource": "github",
+      "category": "Game Dev",
+      "year": 2024,
+      "featured": true,
+      "demo": "https://demo.example.com",
+      "appStore": null
+    },
+    {
+      "title": "Planet Runner",
+      "description": "An endless runner game set on a rotating planet. Features procedural generation and power-ups.",
+      "longDescription": "An innovative endless runner game that takes place on a dynamically rotating planet. The game features procedurally generated terrain, unique power-ups, and challenging obstacles that adapt to player skill level. Built with HTML5 and JavaScript for cross-platform compatibility.",
+      "tech": ["html5", "js"],
+      "link": "https://ttvpro007.itch.io/planet-runner",
+      "image": "https://static.wixstatic.com/media/84b145_f7724c3bd5204f59962de89eaefe378d~mv2.jpg/v1/fill/w_800,h_389,al_c,q_80,usm_0.66_1.00_0.01/84b145_f7724c3bd5204f59962de89eaefe378d~mv2.jpg",
+      "images": ["https://static.wixstatic.com/media/84b145_f7724c3bd5204f59962de89eaefe378d~mv2.jpg/v1/fill/w_800,h_389,al_c,q_80,usm_0.66_1.00_0.01/84b145_f7724c3bd5204f59962de89eaefe378d~mv2.jpg"],
+      "linkSource": "itchio",
+      "category": "Game Dev",
+      "year": 2023,
+      "featured": false,
+      "demo": "https://ttvpro007.itch.io/planet-runner",
+      "appStore": null
+    },
+    {
+      "title": "Bull Cow Game",
+      "description": "A classic word guessing game built with Unreal Engine 4.",
+      "longDescription": "A modern implementation of the classic Bull Cow word guessing game using Unreal Engine 4. Features include an intuitive UI, sound effects, particle systems, and a hint system to help players. The game demonstrates advanced C++ programming concepts and Unreal Engine integration.",
+      "tech": ["unreal", "cpp"],
+      "link": "https://github.com/ttvpro007/Bull-Cow-Game",
+      "image": "https://static.wixstatic.com/media/84b145_2ce8582889a149b4a94b4070eba05c8c~mv2.png/v1/fill/w_310,h_496,al_c,q_80,usm_0.66_1.00_0.01/84b145_2ce8582889a149b4a94b4070eba05c8c~mv2.png",
+      "images": ["https://static.wixstatic.com/media/84b145_2ce8582889a149b4a94b4070eba05c8c~mv2.png/v1/fill/w_310,h_496,al_c,q_80,usm_0.66_1.00_0.01/84b145_2ce8582889a149b4a94b4070eba05c8c~mv2.png"],
+      "linkSource": "github",
+      "category": "Game Dev",
+      "year": 2023,
+      "featured": false,
+      "demo": null,
+      "appStore": null
+    },
+    {
+      "title": "Catavaneer",
+      "description": "A reimagining of the Catavaneer game with modern C# and Unity features.",
+      "longDescription": "A complete reimagining of the classic Catavaneer game using modern Unity features and C# programming practices. This project showcases advanced game development techniques including procedural generation, AI pathfinding, and optimized rendering systems.",
+      "tech": ["unity", "cs"],
+      "link": "https://cryobyte-studio.itch.io/catavaneer",
+      "image": "/projects-images/catavaneer.png",
+      "images": ["/projects-images/catavaneer.png"],
+      "linkSource": "itchio",
+      "category": "Game Dev",
+      "year": 2024,
+      "featured": false,
+      "demo": "https://cryobyte-studio.itch.io/catavaneer",
+      "appStore": null
+    },
+    {
+      "title": "Programming Problems Solution",
+      "description": "A collection of programming problems and solutions from Codewars and other platforms.",
+      "longDescription": "A comprehensive collection of programming problems and their solutions from various competitive programming platforms including Codewars, LeetCode, and HackerRank. The repository includes solutions in multiple languages and demonstrates different algorithmic approaches and optimization techniques.",
+      "tech": ["cs", "cpp", "codewars"],
+      "link": "https://github.com/ttvpro007/Programming-Problems-Solution",
+      "image": "/portfolio-profile-pic.png",
+      "images": ["/portfolio-profile-pic.png"],
+      "linkSource": "github",
+      "category": "Tools",
+      "year": 2024,
+      "featured": false,
+      "demo": null,
+      "appStore": null
+    }
+  ],
+  "resume": [
+    {
+      "title": "Unity Physics Simulator",
+      "description": "A physics simulation toolkit for Unity, supporting 2D and 3D environments with realistic particle systems and collision detection.",
+      "year": 2024,
+      "tech": ["Unity", "C#"]
+    },
+    {
+      "title": "Planet Runner",
+      "description": "An endless runner game set on a rotating planet. Features procedural generation and power-ups.",
+      "year": 2023,
+      "tech": ["HTML5", "JavaScript"]
+    },
+    {
+      "title": "Bull Cow Game",
+      "description": "A classic word guessing game built with Unreal Engine 4.",
+      "year": 2023,
+      "tech": ["Unreal", "C++"]
+    },
+    {
+      "title": "Catavaneer",
+      "description": "A reimagining of the Catavaneer game with modern C# and Unity features.",
+      "year": 2024,
+      "tech": ["Unity", "C#"]
+    }
+  ]
+} 
