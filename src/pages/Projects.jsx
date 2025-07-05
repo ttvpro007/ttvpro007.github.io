@@ -163,39 +163,7 @@ const Projects = () => {
           </div>
         </motion.div>
 
-        {/* Floating Search Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-          style={{
-            position: "sticky",
-            top: "100px",
-            zIndex: 100,
-            maxWidth: "800px",
-            margin: "0 auto 3rem auto",
-            padding: "0 2rem"
-          }}
-        >
-          <div style={{
-            background: "var(--card-bg)",
-            borderRadius: "20px",
-            padding: "1.5rem",
-            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1)",
-            border: "1px solid var(--border)",
-            backdropFilter: "blur(10px)"
-          }}>
-            <SearchAndFilter
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              selectedCategory={selectedCategory}
-              setSelectedCategory={setSelectedCategory}
-              sortBy={sortBy}
-              setSortBy={setSortBy}
-              projects={projects.items}
-            />
-          </div>
-        </motion.div>
+
 
         {/* Featured Project - Centered with Offset */}
         {featuredProject && (
@@ -213,6 +181,18 @@ const Projects = () => {
             <FeaturedProject project={featuredProject} />
           </motion.div>
         )}
+
+        {/* Floating Search and Filter */}
+        <SearchAndFilter
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+          projects={projects.items}
+          animationStrategy="scaleFade" // Test different strategies: "scaleFade", "slideFade", "bouncePop", "flipRotate"
+        />
 
         {/* Floating Stats Cards */}
         <motion.div
