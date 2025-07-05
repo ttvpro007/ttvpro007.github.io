@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { techIconMap } from "../utils/constants";
 import projectsConfig from "../data/projectsConfig.json";
 import projectsContent from "../data/projectsContent.json";
+import { Badge, Button } from "./base";
 
 export default function FeaturedProject({ project, onViewDetails }) {
   return (
@@ -51,20 +52,18 @@ export default function FeaturedProject({ project, onViewDetails }) {
         color: 'var(--text)',
       }}>
         {/* Featured Badge */}
-        <div style={{
-          position: 'absolute',
-          top: '1.5rem',
-          right: '1.5rem',
-          background: 'var(--primary)',
-          color: 'var(--bg)',
-          padding: '0.5rem 1rem',
-          borderRadius: '20px',
-          fontSize: '0.875rem',
-          fontWeight: 'bold',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-        }}>
+        <Badge
+          style={{
+            position: 'absolute',
+            top: '1.5rem',
+            right: '1.5rem',
+            background: 'var(--primary)',
+            color: 'var(--bg)',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+          }}
+        >
           {projectsContent.featuredProject.badge}
-        </div>
+        </Badge>
         
         <h2 style={{ 
           fontSize: '2.5rem', 
@@ -105,18 +104,9 @@ export default function FeaturedProject({ project, onViewDetails }) {
           )}
         </div>
         
-        <button
+        <Button
           onClick={() => onViewDetails(project)}
           style={{
-            background: 'var(--primary)',
-            color: 'var(--bg)',
-            border: 'none',
-            borderRadius: '8px',
-            padding: '0.75rem 1.5rem',
-            fontSize: '1rem',
-            fontWeight: 'bold',
-            cursor: 'pointer',
-            transition: 'all 0.2s ease',
             alignSelf: 'flex-start',
             boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
           }}
@@ -130,7 +120,7 @@ export default function FeaturedProject({ project, onViewDetails }) {
           }}
         >
           {projectsContent.featuredProject.button}
-        </button>
+        </Button>
       </div>
     </motion.div>
   );

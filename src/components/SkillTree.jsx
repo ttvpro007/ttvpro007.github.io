@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Card, Icon, ProgressBar, Section, Button } from "./base";
 
 function SkillTreeNode({ skill, isUnlocked, onClick }) {
   return (
@@ -25,12 +26,13 @@ function SkillTreeNode({ skill, isUnlocked, onClick }) {
         position: "relative"
       }}
     >
-      <div style={{
-        fontSize: "2rem",
-        filter: isUnlocked ? "none" : "grayscale(100%)"
-      }}>
-        {skill.icon}
-      </div>
+      <Icon 
+        emoji={skill.icon}
+        size="large"
+        style={{
+          filter: isUnlocked ? "none" : "grayscale(100%)"
+        }}
+      />
       <div style={{
         textAlign: "center",
         color: isUnlocked ? "var(--card-bg)" : "var(--text-secondary)"
@@ -43,14 +45,15 @@ function SkillTreeNode({ skill, isUnlocked, onClick }) {
         </div>
       </div>
       {!isUnlocked && (
-        <div style={{
-          position: "absolute",
-          top: "0.5rem",
-          right: "0.5rem",
-          fontSize: "1.2rem"
-        }}>
-          🔒
-        </div>
+        <Icon 
+          emoji="🔒"
+          size="small"
+          style={{
+            position: "absolute",
+            top: "0.5rem",
+            right: "0.5rem"
+          }}
+        />
       )}
       {isUnlocked && (
         <motion.div
@@ -94,27 +97,7 @@ function SkillTree({ skills }) {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      style={{
-        background: 'var(--card-bg)',
-        borderRadius: 'var(--border-radius)',
-        boxShadow: 'var(--shadow)',
-        padding: "2rem",
-        marginBottom: "2rem",
-        border: "2px solid var(--primary)"
-      }}
-    >
-      <h3 style={{ 
-        color: "var(--text)", 
-        marginBottom: "1.5rem",
-        fontSize: "1.5rem",
-        textAlign: "center",
-        textShadow: "0 0 10px var(--primary)"
-      }}>
-        🌳 Skill Tree
-      </h3>
+    <Section title="Skill Tree" icon="🌳" centered={true}>
       <div style={{
         display: "grid",
         gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
@@ -130,6 +113,7 @@ function SkillTree({ skills }) {
           />
         ))}
       </div>
+      
       {/* Skill Details */}
       <AnimatePresence>
         {selectedSkill && (
@@ -137,68 +121,43 @@ function SkillTree({ skills }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            style={{
-              background: "var(--card-bg)",
-              borderRadius: "12px",
-              padding: "1.5rem",
-              border: "1px solid var(--primary)"
-            }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-              <span style={{ fontSize: "2rem" }}>{selectedSkill.icon}</span>
-              <div>
-                <h4 style={{ color: "var(--text)", margin: "0 0 0.5rem 0" }}>
-                  {selectedSkill.name}
-                </h4>
-                <div style={{ color: "var(--text-secondary)" }}>
-                  {selectedSkill.description}
+            <Card style={{ marginBottom: "1rem" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
+                <Icon emoji={selectedSkill.icon} size="large" />
+                <div>
+                  <h4 style={{ color: "var(--text)", margin: "0 0 0.5rem 0" }}>
+                    {selectedSkill.name}
+                  </h4>
+                  <div style={{ color: "var(--text-secondary)" }}>
+                    {selectedSkill.description}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div style={{
-              background: "var(--text-secondary)",
-              height: "8px",
-              borderRadius: "4px",
-              overflow: "hidden"
-            }}>
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: `${selectedSkill.percentage}%` }}
-                transition={{ duration: 1, ease: "easeOut" }}
-                style={{
-                  height: "100%",
-                  background: "var(--primary)",
-                  borderRadius: "4px"
-                }}
+              <ProgressBar 
+                progress={selectedSkill.percentage} 
+                max={100} 
+                height="8px"
               />
-            </div>
+            </Card>
           </motion.div>
         )}
       </AnimatePresence>
+      
       {/* Unlock More Skills Button */}
       {unlockedSkills < skills.length && (
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+        <Button
           onClick={unlockNextSkill}
           style={{
-            background: "var(--primary)",
-            color: "var(--card-bg)",
-            border: "none",
-            padding: "0.75rem 1.5rem",
-            borderRadius: "25px",
-            fontWeight: "bold",
-            fontSize: "1rem",
-            cursor: "pointer",
             display: "block",
             margin: "0 auto",
             boxShadow: "0 4px 15px var(--primary)"
           }}
         >
           🔓 Unlock Next Skill
-        </motion.button>
+        </Button>
       )}
-    </motion.div>
+    </Section>
   );
 }
 

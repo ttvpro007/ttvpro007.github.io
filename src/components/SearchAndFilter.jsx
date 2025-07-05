@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import projects from "../data/projects.json";
 import projectsConfig from "../data/projectsConfig.json";
 import projectsContent from "../data/projectsContent.json";
+import { Badge, Button, Section } from "./base";
 
 export default function SearchAndFilter({ 
   searchTerm, 
@@ -15,19 +16,9 @@ export default function SearchAndFilter({
   const categories = [...new Set(projects.map(p => p.category))];
   
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
-      style={{
-        marginBottom: '2rem',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1rem',
-      }}
-    >
+    <Section style={{ marginBottom: '2rem' }}>
       {/* Search Bar */}
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: 'relative', marginBottom: '1rem' }}>
         <input
           type="text"
           placeholder={projectsConfig.searchPlaceholder}
@@ -74,40 +65,30 @@ export default function SearchAndFilter({
       }}>
         {/* Category Filters */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', flex: 1 }}>
-          <button
+          <Badge
             onClick={() => setSelectedCategory(null)}
             style={{
-              padding: '0.5rem 1rem',
-              borderRadius: '20px',
-              border: '1px solid var(--border)',
+              cursor: 'pointer',
               background: selectedCategory === null ? 'var(--primary)' : 'transparent',
               color: selectedCategory === null ? 'var(--bg)' : 'var(--text)',
-              cursor: 'pointer',
-              fontSize: '0.875rem',
-              fontWeight: 'bold',
-              transition: 'all 0.2s ease',
+              border: '1px solid var(--border)',
             }}
           >
             {projectsContent.searchAndFilter.categoryFilters.all}
-          </button>
+          </Badge>
           {categories.map(category => (
-            <button
+            <Badge
               key={category}
               onClick={() => setSelectedCategory(category)}
               style={{
-                padding: '0.5rem 1rem',
-                borderRadius: '20px',
-                border: '1px solid var(--border)',
+                cursor: 'pointer',
                 background: selectedCategory === category ? '#4A90E2' : 'transparent',
                 color: selectedCategory === category ? 'white' : 'var(--text)',
-                cursor: 'pointer',
-                fontSize: '0.875rem',
-                fontWeight: 'bold',
-                transition: 'all 0.2s ease',
+                border: '1px solid var(--border)',
               }}
             >
               {category}
-            </button>
+            </Badge>
           ))}
         </div>
         
@@ -124,24 +105,19 @@ export default function SearchAndFilter({
           <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
             {projectsContent.searchAndFilter.sortToggle.label}
           </span>
-          <button
+          <Button
             onClick={() => setSortBy(sortBy === 'recent' ? 'tech' : 'recent')}
+            size="small"
             style={{
-              padding: '0.25rem 0.75rem',
-              borderRadius: '6px',
-              border: 'none',
               background: 'var(--accent)',
               color: 'white',
-              cursor: 'pointer',
-              fontSize: '0.75rem',
-              fontWeight: 'bold',
-              transition: 'all 0.2s ease',
+              border: 'none',
             }}
           >
             {projectsContent.searchAndFilter.sortToggle[sortBy]}
-          </button>
+          </Button>
         </div>
       </div>
-    </motion.div>
+    </Section>
   );
 } 

@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import projectsConfig from "../data/projectsConfig.json";
 import projectsContent from "../data/projectsContent.json";
+import { Section, ProgressBar } from "./base";
 
 export default function StatsWidget({ projects }) {
   const techStats = projects.reduce((acc, project) => {
@@ -17,22 +18,10 @@ export default function StatsWidget({ projects }) {
   }, {});
   
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
-      style={{
-        background: 'var(--card-bg)',
-        borderRadius: 'var(--border-radius)',
-        padding: '1.5rem',
-        marginBottom: '2rem',
-        boxShadow: 'var(--shadow)',
-      }}
+    <Section 
+      title={projectsContent.statsWidget.title}
+      style={{ marginBottom: '2rem' }}
     >
-      <h3 style={{ margin: '0 0 1rem 0', color: 'var(--primary)' }}>
-        {projectsContent.statsWidget.title}
-      </h3>
-      
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
@@ -56,12 +45,13 @@ export default function StatsWidget({ projects }) {
                     borderRadius: '4px',
                     overflow: 'hidden',
                   }}>
-                    <div style={{
-                      width: `${(count / Math.max(...Object.values(techStats))) * 100}%`,
-                      height: '100%',
-                      background: 'var(--primary)',
-                      borderRadius: '4px',
-                    }} />
+                    <ProgressBar 
+                      progress={count} 
+                      max={Math.max(...Object.values(techStats))} 
+                      height={projectsConfig.stats.barHeight}
+                      animated={false}
+                      style={{ width: '100%' }}
+                    />
                   </div>
                   <span style={{ fontSize: '0.875rem', color: 'var(--text)' }}>
                     {tech.toUpperCase()} ({count})
@@ -88,12 +78,14 @@ export default function StatsWidget({ projects }) {
                     borderRadius: '4px',
                     overflow: 'hidden',
                   }}>
-                    <div style={{
-                      width: `${(count / Math.max(...Object.values(yearStats))) * 100}%`,
-                      height: '100%',
-                      background: 'var(--accent)',
-                      borderRadius: '4px',
-                    }} />
+                    <ProgressBar 
+                      progress={count} 
+                      max={Math.max(...Object.values(yearStats))} 
+                      height={projectsConfig.stats.barHeight}
+                      color="var(--accent)"
+                      animated={false}
+                      style={{ width: '100%' }}
+                    />
                   </div>
                   <span style={{ fontSize: '0.875rem', color: 'var(--text)' }}>
                     {year} ({count})
@@ -103,6 +95,6 @@ export default function StatsWidget({ projects }) {
           </div>
         </div>
       </div>
-    </motion.div>
+    </Section>
   );
 } 

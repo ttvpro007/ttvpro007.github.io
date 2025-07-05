@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import gridItems from "../data/gridItems.json";
+import { Card, Icon, Section, Button } from "./base";
 
 export default function InteractiveGrid() {
   const [selectedItem, setSelectedItem] = useState(null);
 
   return (
-    <div style={{ width: '100%', marginBottom: '3rem' }}>
-      <h3 style={{ color: 'var(--primary)', marginBottom: '1.5rem', textAlign: 'center' }}>
-        What I Do
-      </h3>
-      
+    <Section title="What I Do" icon="🎯" centered={true}>
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(2, 1fr)',
@@ -23,32 +20,31 @@ export default function InteractiveGrid() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setSelectedItem(item)}
-            style={{
-              background: 'var(--card-bg)',
-              borderRadius: 'var(--border-radius)',
-              padding: '1.5rem',
-              cursor: 'pointer',
-              border: '2px solid transparent',
-              transition: 'all 0.3s ease',
-              boxShadow: 'var(--shadow)',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              textAlign: 'center',
-              minHeight: '120px',
-              justifyContent: 'center'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = item.color;
-              e.currentTarget.style.transform = 'translateY(-4px)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'transparent';
-              e.currentTarget.style.transform = 'translateY(0)';
-            }}
           >
-            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{item.icon}</div>
-            <h4 style={{ margin: 0, fontSize: '1rem', fontWeight: 600 }}>{item.title}</h4>
+            <Card
+              style={{
+                cursor: 'pointer',
+                border: '2px solid transparent',
+                transition: 'all 0.3s ease',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
+                minHeight: '120px',
+                justifyContent: 'center'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = item.color;
+                e.currentTarget.style.transform = 'translateY(-4px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'transparent';
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}
+            >
+              <Icon emoji={item.icon} size="large" style={{ marginBottom: '0.5rem' }} />
+              <h4 style={{ margin: 0, fontSize: '1rem', fontWeight: 600 }}>{item.title}</h4>
+            </Card>
           </motion.div>
         ))}
       </div>
@@ -91,25 +87,24 @@ export default function InteractiveGrid() {
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              <button
+              <Button
                 onClick={() => setSelectedItem(null)}
+                variant="outline"
                 style={{
                   position: 'absolute',
                   top: '1rem',
                   right: '1rem',
-                  background: 'none',
-                  border: 'none',
-                  fontSize: '1.5rem',
-                  cursor: 'pointer',
-                  color: 'var(--text)',
-                  padding: '0.5rem'
+                  padding: '0.5rem',
+                  minWidth: 'auto',
+                  width: '40px',
+                  height: '40px'
                 }}
               >
                 ×
-              </button>
+              </Button>
               
               <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-                <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>{selectedItem.icon}</div>
+                <Icon emoji={selectedItem.icon} size="xlarge" style={{ marginBottom: '0.5rem' }} />
                 <h3 style={{ margin: 0, color: selectedItem.color }}>{selectedItem.title}</h3>
               </div>
               
@@ -147,6 +142,6 @@ export default function InteractiveGrid() {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </Section>
   );
 } 

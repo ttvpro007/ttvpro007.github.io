@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { techIconMap, linkLabels } from "../utils/constants";
 import projectsContent from "../data/projectsContent.json";
+import { Button, Badge, Icon } from "./base";
 
 export default function ProjectModal({ project, isOpen, onClose }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -61,8 +62,10 @@ export default function ProjectModal({ project, isOpen, onClose }) {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
-            <button
+            <Button
               onClick={onClose}
+              variant="outline"
+              size="small"
               style={{
                 position: 'absolute',
                 top: '1rem',
@@ -73,16 +76,13 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                 borderRadius: '50%',
                 width: '40px',
                 height: '40px',
-                cursor: 'pointer',
+                minWidth: 'auto',
                 zIndex: 10,
                 fontSize: '1.2rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
               }}
             >
               {projectsContent.projectModal.closeButton}
-            </button>
+            </Button>
             
             {/* Image Carousel */}
             <div style={{
@@ -107,11 +107,13 @@ export default function ProjectModal({ project, isOpen, onClose }) {
               {/* Navigation Arrows */}
               {images.length > 1 && (
                 <>
-                  <button
+                  <Button
                     onClick={(e) => {
                       e.stopPropagation();
                       setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
                     }}
+                    variant="outline"
+                    size="small"
                     style={{
                       position: 'absolute',
                       left: '1rem',
@@ -123,17 +125,19 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                       borderRadius: '50%',
                       width: '40px',
                       height: '40px',
-                      cursor: 'pointer',
+                      minWidth: 'auto',
                       fontSize: '1.2rem',
                     }}
                   >
                     {projectsContent.projectModal.navigation.previous}
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     onClick={(e) => {
                       e.stopPropagation();
                       setCurrentImageIndex((prev) => (prev + 1) % images.length);
                     }}
+                    variant="outline"
+                    size="small"
                     style={{
                       position: 'absolute',
                       right: '1rem',
@@ -145,12 +149,12 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                       borderRadius: '50%',
                       width: '40px',
                       height: '40px',
-                      cursor: 'pointer',
+                      minWidth: 'auto',
                       fontSize: '1.2rem',
                     }}
                   >
                     {projectsContent.projectModal.navigation.next}
-                  </button>
+                  </Button>
                 </>
               )}
               
@@ -221,15 +225,13 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                   gap: '0.5rem',
                 }}>
                   {project.tech?.map(iconKey => (
-                    <div
+                    <Badge
                       key={iconKey}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
                         gap: '0.5rem',
                         background: 'var(--bg-alt)',
-                        padding: '0.5rem 0.75rem',
-                        borderRadius: '20px',
                         fontSize: '0.875rem',
                         fontWeight: 'bold',
                       }}
@@ -242,7 +244,7 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                         />
                       )}
                       {iconKey.charAt(0).toUpperCase() + iconKey.slice(1)}
-                    </div>
+                    </Badge>
                   ))}
                 </div>
               </div>
@@ -254,82 +256,50 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                 gap: '1rem',
               }}>
                 {project.demo && (
-                  <a
+                  <Button
+                    as="a"
                     href={project.demo}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
-                      background: 'var(--primary)',
-                      color: 'var(--bg)',
-                      padding: '0.75rem 1.5rem',
-                      borderRadius: '8px',
                       textDecoration: 'none',
-                      fontWeight: 'bold',
-                      transition: 'all 0.2s ease',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.transform = 'translateY(-2px)';
-                      e.target.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.transform = 'translateY(0)';
-                      e.target.style.boxShadow = 'none';
                     }}
                   >
                     {projectsContent.projectModal.content.links.liveDemo}
-                  </a>
+                  </Button>
                 )}
                 
-                <a
+                <Button
+                  as="a"
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
+                  variant="secondary"
                   style={{
                     background: 'var(--accent)',
                     color: 'white',
-                    padding: '0.75rem 1.5rem',
-                    borderRadius: '8px',
+                    border: 'none',
                     textDecoration: 'none',
-                    fontWeight: 'bold',
-                    transition: 'all 0.2s ease',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.transform = 'translateY(-2px)';
-                    e.target.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.transform = 'translateY(0)';
-                    e.target.style.boxShadow = 'none';
                   }}
                 >
                   {linkLabels[project.linkSource] || linkLabels.default}
-                </a>
+                </Button>
                 
                 {project.appStore && (
-                  <a
+                  <Button
+                    as="a"
                     href={project.appStore}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
                       background: '#007AFF',
                       color: 'white',
-                      padding: '0.75rem 1.5rem',
-                      borderRadius: '8px',
+                      border: 'none',
                       textDecoration: 'none',
-                      fontWeight: 'bold',
-                      transition: 'all 0.2s ease',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.transform = 'translateY(-2px)';
-                      e.target.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.transform = 'translateY(0)';
-                      e.target.style.boxShadow = 'none';
                     }}
                   >
                     {projectsContent.projectModal.content.links.appStore}
-                  </a>
+                  </Button>
                 )}
               </div>
             </div>

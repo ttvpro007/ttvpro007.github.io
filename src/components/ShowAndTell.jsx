@@ -1,26 +1,22 @@
 import React from "react";
 import { motion } from "framer-motion";
 import profile from '../data/profile.json';
+import { Section, Button } from "./base";
 
 const ShowAndTell = () => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 0.5 }}
+    <Section 
+      title="Show & Tell" 
+      icon="📸"
+      centered={true}
       style={{
-        background: 'var(--card-bg)',
-        borderRadius: 'var(--border-radius)',
-        padding: '1.5rem',
-        boxShadow: 'var(--shadow)',
         maxWidth: '600px',
         width: '100%',
+        margin: '0 auto'
       }}
     >
-      <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.1rem', textAlign: 'center' }}>Show & Tell</h3>
-      
       <div style={{ position: 'relative', marginBottom: '1rem' }}>
         <motion.img
           key={currentIndex}
@@ -74,7 +70,7 @@ const ShowAndTell = () => {
           />
         ))}
       </div>
-    </motion.div>
+    </Section>
   );
 };
 

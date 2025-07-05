@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { ProgressBar, Icon } from "./base";
 
 const SkillBar = ({ skill, index }) => {
   const [isInView, setIsInView] = React.useState(false);
@@ -49,31 +50,19 @@ const SkillBar = ({ skill, index }) => {
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
-        <span style={{ fontSize: '1.2rem', marginRight: '0.5rem' }}>{theme.icon}</span>
+        <Icon emoji={theme.icon} size="small" style={{ marginRight: '0.5rem' }} />
         <span style={{ fontWeight: 'bold', marginRight: 'auto' }}>{skill.name}</span>
         <span style={{ fontSize: '0.9rem', opacity: 0.7 }}>{skill.percentage}%</span>
       </div>
       
-      <div style={{
-        width: '100%',
-        height: '12px',
-        background: 'var(--card-bg)',
-        borderRadius: '6px',
-        overflow: 'hidden',
-        position: 'relative',
-      }}>
-        <motion.div
-          style={{
-            height: '100%',
-            background: theme.background,
-            borderRadius: '6px',
-            position: 'relative',
-          }}
-          initial={{ width: 0 }}
-          animate={isInView ? { width: `${skill.percentage}%` } : { width: 0 }}
-          transition={{ duration: 1.5, ease: 'easeOut' }}
-        />
-      </div>
+      <ProgressBar 
+        progress={skill.percentage} 
+        max={100} 
+        height="12px"
+        color={theme.background}
+        bgColor="var(--card-bg)"
+        animated={isInView}
+      />
       
       <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.8rem', opacity: 0.8, fontStyle: 'italic' }}>
         {skill.description}

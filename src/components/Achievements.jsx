@@ -1,27 +1,28 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Icon, Section } from "./base";
 
 function AchievementBadge({ achievement }) {
   return (
     <motion.div
       whileHover={{ scale: 1.05, rotate: 5 }}
       style={{
-        background: "var(--primary)",
-        borderRadius: "50%",
-        width: "80px",
-        height: "80px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: "2rem",
-        boxShadow: "0 8px 25px var(--primary)",
-        border: "3px solid var(--text)",
         position: "relative",
         cursor: "pointer"
       }}
       title={achievement.story}
     >
-      {achievement.icon}
+      <Icon 
+        emoji={achievement.icon} 
+        size="xlarge" 
+        circular={true}
+        animated={true}
+        style={{
+          background: "var(--primary)",
+          boxShadow: "0 8px 25px var(--primary)",
+          border: "3px solid var(--text)"
+        }}
+      />
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileHover={{ opacity: 1, scale: 1 }}
@@ -67,27 +68,7 @@ function Achievements() {
   ];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      style={{
-        background: 'var(--card-bg)',
-        borderRadius: 'var(--border-radius)',
-        boxShadow: 'var(--shadow)',
-        padding: "2rem",
-        marginBottom: "2rem",
-        border: "2px solid var(--primary)"
-      }}
-    >
-      <h3 style={{ 
-        color: "var(--text)", 
-        marginBottom: "1.5rem",
-        fontSize: "1.5rem",
-        textAlign: "center",
-        textShadow: "0 0 10px var(--primary)"
-      }}>
-        🏆 Achievements
-      </h3>
+    <Section title="Achievements" icon="🏆" centered={true}>
       <div style={{
         display: "flex",
         justifyContent: "center",
@@ -98,7 +79,7 @@ function Achievements() {
           <AchievementBadge key={index} achievement={achievement} />
         ))}
       </div>
-    </motion.div>
+    </Section>
   );
 }
 

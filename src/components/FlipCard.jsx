@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Card } from "./base";
 
 const FlipCard = ({ card, index }) => {
   const [isFlipped, setIsFlipped] = React.useState(false);
@@ -23,28 +24,24 @@ const FlipCard = ({ card, index }) => {
         transition={{ duration: 0.6, ease: 'easeInOut' }}
       >
         {/* Front of card */}
-        <motion.div
+        <Card
           style={{
             position: 'absolute',
             width: '100%',
             height: '100%',
             backfaceVisibility: 'hidden',
-            background: 'var(--card-bg)',
-            borderRadius: 'var(--border-radius)',
-            boxShadow: 'var(--shadow)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
             padding: '1.5rem',
-            border: '2px solid var(--primary)',
           }}
-          whileHover={{ scale: 1.02 }}
+          hover={true}
         >
           <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>{card.front.icon}</div>
           <h3 style={{ margin: '0 0 0.5rem 0', fontSize: '1.2rem', textAlign: 'center' }}>{card.front.title}</h3>
           <p style={{ margin: 0, fontSize: '0.9rem', opacity: 0.8, textAlign: 'center' }}>{card.front.subtitle}</p>
-        </motion.div>
+        </Card>
 
         {/* Back of card */}
         <motion.div

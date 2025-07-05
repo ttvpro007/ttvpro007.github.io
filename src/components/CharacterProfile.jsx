@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Icon, ProgressBar, Section } from "./base";
 
 function CharacterProfile({ profile }) {
   const [level, setLevel] = useState(5); // 5 years experience
@@ -21,21 +22,7 @@ function CharacterProfile({ profile }) {
   }, [profile.skills, maxXp, showLevelUp]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="character-profile"
-      style={{
-        background: 'var(--card-bg)',
-        borderRadius: 'var(--border-radius)',
-        boxShadow: 'var(--shadow)',
-        padding: "2rem",
-        marginBottom: "2rem",
-        position: "relative",
-        overflow: "hidden",
-        border: '2px solid var(--primary)'
-      }}
-    >
+    <Section style={{ position: "relative", overflow: "hidden" }}>
       {/* Glow effect */}
       <div style={{
         position: "absolute",
@@ -46,25 +33,21 @@ function CharacterProfile({ profile }) {
         background: "linear-gradient(90deg, transparent, var(--primary), transparent)",
         animation: "glow 2s ease-in-out infinite alternate"
       }} />
+      
       <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
         {/* Avatar */}
-        <motion.div
-          whileHover={{ scale: 1.05 }}
+        <Icon 
+          src={profile.profilePic}
+          alt="Character Avatar"
+          size="xlarge"
+          circular={true}
+          animated={true}
           style={{
-            width: "80px",
-            height: "80px",
-            borderRadius: "50%",
-            overflow: "hidden",
             border: "3px solid var(--primary)",
             boxShadow: "0 0 20px var(--primary)"
           }}
-        >
-          <img
-            src={profile.profilePic}
-            alt="Character Avatar"
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
-        </motion.div>
+        />
+        
         {/* Character Info */}
         <div style={{ flex: 1 }}>
           <h2 style={{ 
@@ -83,6 +66,7 @@ function CharacterProfile({ profile }) {
           }}>
             {profile.tagline}
           </p>
+          
           {/* Level and XP Bar */}
           <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
             <div style={{
@@ -97,42 +81,24 @@ function CharacterProfile({ profile }) {
               Level {level}
             </div>
             <div style={{ flex: 1, maxWidth: "300px" }}>
-              <div style={{
-                background: "var(--text-secondary)",
-                height: "12px",
-                borderRadius: "6px",
-                overflow: "hidden",
-                border: "1px solid var(--primary)"
-              }}>
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: `${(xp / maxXp) * 100}%` }}
-                  transition={{ duration: 1, ease: "easeOut" }}
-                  style={{
-                    height: "100%",
-                    background: "var(--primary)",
-                    borderRadius: "6px"
-                  }}
-                />
-              </div>
-              <div style={{
-                color: "var(--text-secondary)",
-                fontSize: "0.9rem",
-                marginTop: "0.25rem",
-                textAlign: "center"
-              }}>
-                {xp} / {maxXp} XP
-              </div>
+              <ProgressBar 
+                progress={xp} 
+                max={maxXp} 
+                showLabel={true}
+                label={`${xp} / ${maxXp} XP`}
+              />
             </div>
           </div>
         </div>
       </div>
+      
       <style>{`
         @keyframes glow {
           from { opacity: 0.5; }
           to { opacity: 1; }
         }
       `}</style>
+      
       {/* Level Up Animation */}
       <AnimatePresence>
         {showLevelUp && (
@@ -161,7 +127,7 @@ function CharacterProfile({ profile }) {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </Section>
   );
 }
 
