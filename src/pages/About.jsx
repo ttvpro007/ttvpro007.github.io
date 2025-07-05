@@ -1,5 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
+import InteractiveGrid from "../components/InteractiveGrid";
+import AnimatedSkillBars from "../components/AnimatedSkillBars";
+import aboutContent from "../data/aboutContent.json";
 
 export default function About() {
   return (
@@ -13,17 +16,18 @@ export default function About() {
           borderRadius: 'var(--border-radius)',
           boxShadow: 'var(--shadow)',
           padding: '2.5rem 2rem',
-          maxWidth: 480,
+          maxWidth: 800,
           width: '100%',
-          textAlign: 'center',
         }}
       >
-        <h2>About Me</h2>
-        <p>This is a short bio. Update this section with your background, skills, and interests.</p>
+        <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>{aboutContent.title}</h2>
+        <p style={{ textAlign: 'center', marginBottom: '3rem', fontSize: '1.1rem', lineHeight: 1.6 }}>
+          {aboutContent.bio}
+        </p>
+        
+        <InteractiveGrid />
+        <AnimatedSkillBars />
       </motion.div>
-      <div style={{background:'#eee',padding:'1rem',marginTop:'2rem',textAlign:'center',borderRadius:'8px',maxWidth:400}}>
-        <strong>About Page Placeholder</strong>
-      </div>
     </section>
   );
 } 

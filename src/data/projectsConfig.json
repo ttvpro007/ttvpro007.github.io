@@ -1,0 +1,41 @@
+{
+  "pageTitle": "Projects",
+  "searchPlaceholder": "Search projects (e.g., Unity, AR, 3D print)...",
+  "noResultsMessage": {
+    "icon": "🔍",
+    "title": "No projects found",
+    "description": "Try adjusting your search terms or filters"
+  },
+  "sortOptions": {
+    "recent": "Most Recent",
+    "tech": "By Tech"
+  },
+  "filterOptions": {
+    "all": "All",
+    "sortLabel": "Sort:"
+  },
+  "gridSettings": {
+    "minCardWidth": "300px",
+    "gap": "2rem",
+    "staggerDelay": 0.1
+  },
+  "animations": {
+    "pageEnter": {
+      "duration": 0.7,
+      "ease": "easeOut"
+    },
+    "cardStagger": {
+      "delay": 0.1
+    }
+  },
+  "layout": {
+    "maxWidth": "1200px",
+    "featuredHeight": "400px",
+    "cardHeight": "320px"
+  },
+  "stats": {
+    "maxTechDisplay": 5,
+    "barWidth": "60px",
+    "barHeight": "8px"
+  }
+} 

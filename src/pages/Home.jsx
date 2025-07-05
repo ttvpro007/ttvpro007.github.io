@@ -1,24 +1,28 @@
 import React from "react";
 import { motion } from "framer-motion";
-import homeSections from "../data/homeSections.json";
 import Confetti from 'react-dom-confetti';
 import profile from '../data/profile.json';
-
-function highlightWords(text, highlights) {
-  let result = text;
-  highlights.forEach(word => {
-    const regex = new RegExp(`(${word.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'gi');
-    result = result.replace(regex, '<span class="highlighted-keyword">$1</span>');
-  });
-  return result;
-}
+import FlipCards from '../components/FlipCards';
+import Timeline from '../components/Timeline';
+import FunFacts from '../components/FunFacts';
+import Skills from '../components/Skills';
+import ShowAndTell from '../components/ShowAndTell';
 
 export default function Home() {
   const [bounce, setBounce] = React.useState(false);
   const [confetti, setConfetti] = React.useState(false);
 
   return (
-    <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
+    <section style={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      alignItems: 'center', 
+      justifyContent: 'center', 
+      minHeight: '100vh',
+      padding: '2rem 1rem',
+      gap: '2rem'
+    }}>
+      {/* Hero Section */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -39,7 +43,14 @@ export default function Home() {
           <motion.img
             src={profile.profilePic}
             alt={profile.name + " profile"}
-            style={{ borderRadius: '50%', marginBottom: '1.5rem', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', objectFit: 'cover', border: '4px solid var(--primary)', boxShadow: '0 0 16px var(--primary)' }}
+            style={{ 
+              borderRadius: '50%', 
+              marginBottom: '1.5rem', 
+              boxShadow: '0 2px 8px rgba(0,0,0,0.08)', 
+              objectFit: 'cover', 
+              border: '4px solid var(--primary)', 
+              boxShadow: '0 0 16px var(--primary)' 
+            }}
             width={160}
             height={160}
             animate={bounce ? { y: [0, -30, 0], scale: [1, 1.15, 1] } : {}}
@@ -67,10 +78,12 @@ export default function Home() {
             }} />
           </div>
         </div>
+        
         <h1 style={{ fontSize: '2.5rem', margin: 0 }}>{profile.name}</h1>
         <p style={{ fontSize: '1.2rem', fontStyle: 'italic', margin: '0.5rem 0 1.5rem 0', textAlign: 'center', maxWidth: 400 }}>
           {profile.tagline}
         </p>
+        
         <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '2rem' }}>
           {profile.socialLinks.map(link => (
             <a
@@ -88,23 +101,22 @@ export default function Home() {
             </a>
           ))}
         </div>
-        {homeSections.map((section, idx) => (
-          <div key={section.title} style={{ width: '100%', marginBottom: idx === homeSections.length - 1 ? 0 : '2rem' }}>
-            <h3 style={{ color: 'var(--primary)', marginBottom: '0.5rem', marginTop: idx === 0 ? 0 : '1.5rem' }}>{section.title}</h3>
-            <ul style={{ marginLeft: 0, paddingLeft: '1.2rem', fontSize: '1rem', listStyle: 'none' }}>
-              {section.items.map((item, i) => (
-                <li key={i} style={{ marginBottom: 4, display: 'flex', alignItems: 'center' }}>
-                  <span style={{ marginRight: 8, fontSize: '1.1em' }}>⚡</span>
-                  <span dangerouslySetInnerHTML={{ __html: highlightWords(item.replace(/^⚡\s*/, ''), section.highlights || []) }} />
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
       </motion.div>
-      <div style={{background:'#eee',padding:'1rem',marginTop:'2rem',textAlign:'center',borderRadius:'8px',maxWidth:400}}>
-        <strong>Home Page Placeholder</strong>
-      </div>
+
+      {/* Flip Cards Section */}
+      <FlipCards />
+
+      {/* Timeline Section */}
+      <Timeline />
+
+      {/* Fun Facts Section */}
+      <FunFacts />
+
+      {/* Skills Section */}
+      <Skills />
+
+      {/* Show and Tell Section */}
+      <ShowAndTell />
     </section>
   );
 } 

@@ -1,6 +1,6 @@
 {
   "name": "Vi Tiet",
-  "tagline": "I dream in code and wake up ready to bring those dreams to life.",
+  "tagline": "From stethoscopes to game engines",
   "profilePic": "/portfolio-profile-pic.png",
   "socialLinks": [
     {
@@ -20,6 +20,124 @@
       "url": "mailto:vitiet.programmer@gmail.com",
       "icon": "email-svg",
       "color": "#d44638"
+    }
+  ],
+  "journey": [
+    {
+      "title": "Nursing Days",
+      "year": "2015-2019",
+      "icon": "💉",
+      "description": "Caring for patients while secretly dreaming of pixels and code",
+      "animation": "heartbeat"
+    },
+    {
+      "title": "First Line of Code",
+      "year": "2019",
+      "icon": "✨",
+      "description": "Hello World! The moment that changed everything",
+      "animation": "sparkle"
+    },
+    {
+      "title": "Game Dev Launch",
+      "year": "2020",
+      "icon": "🚀",
+      "description": "From Unity to Unreal, building worlds one script at a time",
+      "animation": "rocket"
+    }
+  ],
+  "flipCards": [
+    {
+      "front": {
+        "title": "Nurse → Programmer",
+        "icon": "💉",
+        "subtitle": "Career Pivot"
+      },
+      "back": {
+        "content": "Spent years caring for patients, then discovered the magic of creating programs. Sometimes the best debugging skills come from patiently listening to error messages like patient complaints!"
+      }
+    },
+    {
+      "front": {
+        "title": "Game Dev Life",
+        "icon": "🎮",
+        "subtitle": "Digital Dreams"
+      },
+      "back": {
+        "content": "Building immersive worlds where players can escape reality. From Unity to Unreal, every project teaches me something new about storytelling through code."
+      }
+    },
+    {
+      "front": {
+        "title": "Maker Mode",
+        "icon": "🛠️",
+        "subtitle": "Hands-On Creator"
+      },
+      "back": {
+        "content": "3D printing, custom keyboards, woodworking - when I'm not coding, I'm building something physical. The tactile satisfaction of creating never gets old."
+      }
+    }
+  ],
+  "skills": [
+    {
+      "name": "Programming",
+      "percentage": 90,
+      "icon": "💻",
+      "theme": "filament",
+      "description": "From C# to Python, I speak fluent code"
+    },
+    {
+      "name": "Game Development",
+      "percentage": 85,
+      "icon": "🎮",
+      "theme": "rocket",
+      "description": "Unity & Unreal Engine wizardry"
+    },
+    {
+      "name": "3D Printing",
+      "percentage": 80,
+      "icon": "🖨️",
+      "theme": "filament",
+      "description": "Turning digital designs into reality"
+    },
+    {
+      "name": "Custom Keyboards",
+      "percentage": 75,
+      "icon": "⌨️",
+      "theme": "switch",
+      "description": "Thock is my jock! Building the perfect creamy sound"
+    },
+    {
+      "name": "Woodworking",
+      "percentage": 30,
+      "icon": "🪵",
+      "theme": "shavings",
+      "description": "From code to carpentry, creating with my hands"
+    }
+  ],
+  "funFacts": [
+    "I once solved a coding problem I've stuck on for days in my dream",
+    "My first 3D printer is a Bambu Lab X1C",
+    "I can type 110 WPM on my custom mechanical keyboard",
+    "Built my first game while learning game dev during the pandemic"
+  ],
+  "showAndTell": [
+    {
+      "title": "Custom Keyboard Build",
+      "image": "/projects-images/catavaneer.png",
+      "caption": "Thock is my jock!",
+      "description": "Hand-wired mechanical keyboard with custom keycaps"
+    },
+    {
+      "title": "3D Printed Design",
+      "image": "/projects-images/makerworld-profile.png",
+      "caption": "From pixels to plastic",
+      "description": "Custom phone stand with integrated cable management"
+    },
+    {
+      "title": "Woodworking Project",
+      "image": "/projects-images/catavaneer.png",
+      "caption": "Sawdust therapy",
+      "description": "Handcrafted desk organizer with hidden compartments"
     }
   ]
 } 

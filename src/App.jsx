@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Projects from "./pages/Projects";
+import Resume from "./pages/Resume";
 import Contact from "./pages/Contact";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -121,6 +122,8 @@ function App() {
         return <About />;
       case "Projects":
         return <Projects />;
+      case "Resume":
+        return <Resume />;
       case "Contact":
         return <Contact />;
       default:

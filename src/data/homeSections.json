@@ -2,48 +2,53 @@
   {
     "title": "What I Do?",
     "items": [
-      "2D Visualization & 3D Visualization: Developing cutting-edge technology visualizations in both two and three dimensions.",
-      "AR Simulation & VR Simulation: Developing AR and VR applications to simulate complex and novel technological ideas.",
-      "Feature Implementation: Designing and implementing innovative features for passion-driven game projects.",
-      "Reusable Tooling: Building reusable Unity tools to shorten development time."
+      "Developing 2D & 3D visualization of cutting-edge technologies.",
+      "Developing AR & VR applications to simulate complex technological novel ideas.",
+      "Designing & Implementing features for passion game projects.",
+      "Building reusable tools to shorten development time for Unity."
     ],
     "highlights": [
-      "2D Visualization",
-      "3D Visualization",
-      "AR Simulation",
-      "VR Simulation",
-      "Feature Implementation",
-      "Reusable Tooling",
+      "2D & 3D",
+      "cutting-edge",
+      "AR & VR",
+      "complex",
+      "novel",
+      "Designing & Implementing",
+      "passion game",
+      "reusable tools",
       "Unity"
     ]
   },
   {
     "title": "Programming Languages",
     "items": [
-      "Unity Engine & C# Development: Developed a wide range of games and applications with Unity and C# for Windows & Mac.",
-      "C++ OOP: Built applications using C++, focusing on object-oriented programming and efficient code practices.",
-      "Swift (Vision Pro): Created an AR application for Apple Vision Pro utilizing Swift, enhancing user interaction through innovative software and hardware integration."
+      "Developed a wide range of games and applications with Unity and C# for Windows & Mac.",
+      "Built applications using C++, focusing on OOP and efficient code practices.",
+      "Created an AR app for Apple Vision Pro utilizing Swift, enhancing user interaction with innovative software & hardware integration."
     ],
     "highlights": [
-      "Unity Engine",
-      "C# Development",
-      "C++ OOP",
-      "Swift (Vision Pro)"
+      "Unity and C#",
+      "C++",
+      "OOP",
+      "AR app",
+      "Apple Vision Pro",
+      "Swift"
     ]
   },
   {
     "title": "Video & Audio Editing",
     "items": [
-      "Audio Signal Processing (Max 8): Engineered complex audio signal processing pipelines for custom hardware using Max 8, ensuring precision and efficiency.",
-      "Demo Video Editing: Edited moonshot demo videos with custom software and hardware, delivering high-impact visual presentations.",
-      "Clipchamp & CapCut Video Editing: Experienced in video editing with Clipchamp and Capcut, producing high-quality content."
+      "Engineered highly complex audio signal processing pipelines for custom hardware using Max 8, while ensuring precision and efficiency.",
+      "Edited moonshot demo videos with custom software and hardware, delivering high-impact visual presentations.",
+      "Experienced in video editing with Clipchamp and Capcut, producing high quality content."
     ],
     "highlights": [
-      "Audio Signal Processing",
+      "audio signal processing",
       "Max 8",
-      "Demo Video Editing",
-      "Clipchamp",
-      "CapCut"
+      "moonshot demo",
+      "high-impact",
+      "video editing",
+      "high quality"
     ]
   }
 ]
