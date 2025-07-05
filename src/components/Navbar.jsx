@@ -1,7 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const pages = ["Home", "About", "Projects", "Resume", "Contact"];
+const pages = ["Home", "About", "Projects", "Contact"];
 
 function getInitialTheme() {
   if (typeof window !== 'undefined') {
