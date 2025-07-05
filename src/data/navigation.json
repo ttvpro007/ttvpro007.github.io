@@ -1,0 +1,29 @@
+{
+  "pages": ["Home", "About", "Projects", "Resume", "Contact"],
+  "brandName": "Vi Tiet",
+  "themeConfig": {
+    "defaultTheme": "dark",
+    "storageKey": "theme"
+  },
+  "icons": {
+    "moon": {
+      "width": 20,
+      "height": 20,
+      "viewBox": "0 0 24 24",
+      "path": "M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"
+    },
+    "sun": {
+      "width": 20,
+      "height": 20,
+      "viewBox": "0 0 24 24",
+      "circle": {
+        "cx": 12,
+        "cy": 12,
+        "r": 5
+      },
+      "paths": [
+        "M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 6.95-1.41-1.41M6.34 6.34 4.93 4.93m12.02 0-1.41 1.41M6.34 17.66l-1.41 1.41"
+      ]
+    }
+  }
+} 

@@ -1,0 +1,16 @@
+{
+  "levelConfig": {
+    "initialLevel": 5,
+    "maxXp": 1000,
+    "xpPerSkill": 100,
+    "levelUpMessage": "🎉 LEVEL UP! 🎉",
+    "levelUpDuration": 3000
+  },
+  "animations": {
+    "glow": {
+      "duration": "2s",
+      "timing": "ease-in-out",
+      "iteration": "infinite alternate"
+    }
+  }
+} 

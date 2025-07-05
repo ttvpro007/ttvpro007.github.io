@@ -1,15 +1,15 @@
 import React from "react";
 import { motion } from "framer-motion";
-import profile from '../data/profile.json';
 import { Section, Button } from "./base";
+import { profile, uiContent } from "../data";
 
 const ShowAndTell = () => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
 
   return (
     <Section 
-      title="Show & Tell" 
-      icon="📸"
+      title={uiContent.sections.showAndTell.title} 
+      icon={uiContent.sections.showAndTell.icon}
       centered={true}
       style={{
         maxWidth: '600px',
@@ -58,8 +58,8 @@ const ShowAndTell = () => {
             key={index}
             onClick={() => setCurrentIndex(index)}
             style={{
-              width: '12px',
-              height: '12px',
+              width: uiContent.config.showAndTell.indicatorSize,
+              height: uiContent.config.showAndTell.indicatorSize,
               borderRadius: '50%',
               border: 'none',
               background: index === currentIndex ? 'var(--primary)' : 'var(--text-muted)',

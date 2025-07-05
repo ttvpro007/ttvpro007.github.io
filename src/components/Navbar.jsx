@@ -1,14 +1,13 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button, Icon } from "./base";
-
-const pages = ["Home", "About", "Projects", "Resume", "Contact"];
+import { navigation } from "../data";
 
 function getInitialTheme() {
   if (typeof window !== 'undefined') {
-    return localStorage.getItem('theme') || 'dark';
+    return localStorage.getItem(navigation.themeConfig.storageKey) || navigation.themeConfig.defaultTheme;
   }
-  return 'dark';
+  return navigation.themeConfig.defaultTheme;
 }
 
 export default function Navbar({ setPage, currentPage }) {
@@ -17,7 +16,7 @@ export default function Navbar({ setPage, currentPage }) {
   React.useEffect(() => {
     document.body.classList.remove('theme-dark', 'theme-light');
     document.body.classList.add(`theme-${theme}`);
-    localStorage.setItem('theme', theme);
+    localStorage.setItem(navigation.themeConfig.storageKey, theme);
   }, [theme]);
 
   return (
@@ -39,10 +38,10 @@ export default function Navbar({ setPage, currentPage }) {
       }}
     >
       <span style={{ fontWeight: 700, color: "var(--primary)", fontSize: "1.3rem", letterSpacing: "1px" }}>
-        Vi Tiet
+        {navigation.brandName}
       </span>
       <div style={{ display: "flex", gap: "1.5rem", alignItems: 'center' }}>
-        {pages.map((page) => (
+        {navigation.pages.map((page) => (
           <Button
             key={page}
             onClick={() => setPage(page)}
@@ -79,10 +78,39 @@ export default function Navbar({ setPage, currentPage }) {
             >
               {theme === 'dark' ? (
                 // Moon icon
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+                <svg 
+                  width={navigation.icons.moon.width} 
+                  height={navigation.icons.moon.height} 
+                  viewBox={navigation.icons.moon.viewBox} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                >
+                  <path d={navigation.icons.moon.path}/>
+                </svg>
               ) : (
                 // Sun icon
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 6.95-1.41-1.41M6.34 6.34 4.93 4.93m12.02 0-1.41 1.41M6.34 17.66l-1.41 1.41"/></svg>
+                <svg 
+                  width={navigation.icons.sun.width} 
+                  height={navigation.icons.sun.height} 
+                  viewBox={navigation.icons.sun.viewBox} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                >
+                  <circle 
+                    cx={navigation.icons.sun.circle.cx} 
+                    cy={navigation.icons.sun.circle.cy} 
+                    r={navigation.icons.sun.circle.r}
+                  />
+                  {navigation.icons.sun.paths.map((path, index) => (
+                    <path key={index} d={path}/>
+                  ))}
+                </svg>
               )}
             </motion.div>
           </AnimatePresence>

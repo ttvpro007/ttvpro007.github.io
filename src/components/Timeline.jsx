@@ -1,11 +1,15 @@
 import React from "react";
 import { motion } from "framer-motion";
-import profile from '../data/profile.json';
 import { Icon, Section } from "./base";
+import { profile, uiContent } from "../data";
 
 const Timeline = () => {
   return (
-    <Section title="Journey Timeline" icon="⏰" centered={true}>
+    <Section 
+      title={uiContent.sections.timeline.title} 
+      icon={uiContent.sections.timeline.icon} 
+      centered={true}
+    >
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -50,15 +54,9 @@ const Timeline = () => {
               style={{
                 marginBottom: '0.5rem',
               }}
-              animate={item.animation === 'sparkle' ? {
-                rotate: [0, 360],
-                scale: [1, 1.2, 1],
-              } : item.animation === 'rocket' ? {
-                y: [0, -10, 0],
-                rotate: [0, 5, -5, 0],
-              } : {
-                scale: [1, 1.1, 1],
-              }}
+              animate={item.animation === 'sparkle' ? uiContent.animations.timeline.sparkle : 
+                      item.animation === 'rocket' ? uiContent.animations.timeline.rocket : 
+                      uiContent.animations.timeline.default}
               transition={{
                 duration: 2,
                 repeat: Infinity,

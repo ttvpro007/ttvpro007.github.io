@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Card, Badge, Icon, Section } from "./base";
+import { questLog, uiContent } from "../data";
 
 function QuestCard({ quest }) {
   return (
@@ -46,7 +47,7 @@ function QuestCard({ quest }) {
         fontSize: "0.9rem",
         fontWeight: "bold"
       }}>
-        <span>🏆</span>
+        <span>{questLog.config.rewardIcon}</span>
         <span>+{quest.xp} XP</span>
       </div>
     </Card>
@@ -59,16 +60,20 @@ function QuestLog({ projects }) {
     description: project.description,
     year: project.year,
     tech: project.tech,
-    icon: "🎯",
-    xp: Math.floor(Math.random() * 300) + 200 // Random XP between 200-500
+    icon: questLog.config.questIcon,
+    xp: Math.floor(Math.random() * (questLog.config.xpRange.max - questLog.config.xpRange.min + 1)) + questLog.config.xpRange.min
   }));
 
   return (
-    <Section title="Quest Log" icon="📝" centered={true}>
+    <Section 
+      title={uiContent.sections.questLog.title} 
+      icon={uiContent.sections.questLog.icon} 
+      centered={true}
+    >
       <div style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-        gap: "1.5rem"
+        gridTemplateColumns: questLog.gridConfig.columns,
+        gap: questLog.gridConfig.gap
       }}>
         {quests.map((quest, index) => (
           <QuestCard key={index} quest={quest} />

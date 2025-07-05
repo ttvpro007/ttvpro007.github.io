@@ -1,0 +1,20 @@
+{
+  "achievements": [
+    {
+      "icon": "🎮",
+      "story": "Published multiple games on itch.io"
+    },
+    {
+      "icon": "🖨️",
+      "story": "Printed 20+ miniatures in 2024"
+    },
+    {
+      "icon": "⌨️",
+      "story": "Built custom mechanical keyboard"
+    },
+    {
+      "icon": "💻",
+      "story": "Solved 100+ coding problems"
+    }
+  ]
+} 

@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import gridItems from "../data/gridItems.json";
 import { Card, Icon, Section, Button } from "./base";
+import { gridItems, uiContent } from "../data";
 
 export default function InteractiveGrid() {
   const [selectedItem, setSelectedItem] = useState(null);
 
   return (
-    <Section title="What I Do" icon="🎯" centered={true}>
+    <Section 
+      title={uiContent.sections.interactiveGrid.title} 
+      icon={uiContent.sections.interactiveGrid.icon} 
+      centered={true}
+    >
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(2, 1fr)',

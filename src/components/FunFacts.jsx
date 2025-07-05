@@ -1,7 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import profile from '../data/profile.json';
 import { Card, Section } from "./base";
+import { profile, uiContent } from "../data";
 
 const FunFacts = () => {
   const [currentFact, setCurrentFact] = React.useState(0);
@@ -11,15 +11,15 @@ const FunFacts = () => {
     if (isVisible) {
       const interval = setInterval(() => {
         setCurrentFact((prev) => (prev + 1) % profile.funFacts.length);
-      }, 3000);
+      }, uiContent.config.funFacts.rotationInterval);
       return () => clearInterval(interval);
     }
   }, [isVisible]);
 
   return (
     <Section 
-      title="Did you know...?" 
-      icon="🤔"
+      title={uiContent.sections.funFacts.title} 
+      icon={uiContent.sections.funFacts.icon}
       centered={true}
       style={{
         maxWidth: '500px',

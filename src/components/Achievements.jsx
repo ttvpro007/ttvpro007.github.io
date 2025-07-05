@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Icon, Section } from "./base";
+import { achievements, uiContent } from "../data";
 
 function AchievementBadge({ achievement }) {
   return (
@@ -48,34 +49,19 @@ function AchievementBadge({ achievement }) {
 }
 
 function Achievements() {
-  const achievements = [
-    {
-      icon: "🎮",
-      story: "Published multiple games on itch.io"
-    },
-    {
-      icon: "🖨️",
-      story: "Printed 20+ miniatures in 2024"
-    },
-    {
-      icon: "⌨️",
-      story: "Built custom mechanical keyboard"
-    },
-    {
-      icon: "💻",
-      story: "Solved 100+ coding problems"
-    }
-  ];
-
   return (
-    <Section title="Achievements" icon="🏆" centered={true}>
+    <Section 
+      title={uiContent.sections.achievements.title} 
+      icon={uiContent.sections.achievements.icon} 
+      centered={true}
+    >
       <div style={{
         display: "flex",
         justifyContent: "center",
         gap: "2rem",
         flexWrap: "wrap"
       }}>
-        {achievements.map((achievement, index) => (
+        {achievements.achievements.map((achievement, index) => (
           <AchievementBadge key={index} achievement={achievement} />
         ))}
       </div>

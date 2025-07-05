@@ -1,12 +1,16 @@
 import React from "react";
 import { motion } from "framer-motion";
 import FlipCard from "./FlipCard";
-import profile from '../data/profile.json';
 import { Section } from "./base";
+import { profile, uiContent } from "../data";
 
 const FlipCards = () => {
   return (
-    <Section title="Interactive Cards" icon="🃏" centered={true}>
+    <Section 
+      title={uiContent.sections.flipCards.title} 
+      icon={uiContent.sections.flipCards.icon} 
+      centered={true}
+    >
       <div style={{
         display: 'flex',
         gap: '1.5rem',

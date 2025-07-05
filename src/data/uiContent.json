@@ -1,0 +1,63 @@
+{
+  "sections": {
+    "achievements": {
+      "title": "Achievements",
+      "icon": "🏆"
+    },
+    "questLog": {
+      "title": "Quest Log",
+      "icon": "📝"
+    },
+    "skillTree": {
+      "title": "Skill Tree",
+      "icon": "🌳"
+    },
+    "timeline": {
+      "title": "Journey Timeline",
+      "icon": "⏰"
+    },
+    "funFacts": {
+      "title": "Did you know...?",
+      "icon": "🤔"
+    },
+    "showAndTell": {
+      "title": "Show & Tell",
+      "icon": "📸"
+    },
+    "interactiveGrid": {
+      "title": "What I Do",
+      "icon": "🎯"
+    },
+    "flipCards": {
+      "title": "Interactive Cards",
+      "icon": "🃏"
+    },
+    "skills": {
+      "title": "Skills & Crafts",
+      "icon": "⚡"
+    }
+  },
+  "animations": {
+    "timeline": {
+      "sparkle": {
+        "rotate": [0, 360],
+        "scale": [1, 1.2, 1]
+      },
+      "rocket": {
+        "y": [0, -10, 0],
+        "rotate": [0, 5, -5, 0]
+      },
+      "default": {
+        "scale": [1, 1.1, 1]
+      }
+    }
+  },
+  "config": {
+    "funFacts": {
+      "rotationInterval": 3000
+    },
+    "showAndTell": {
+      "indicatorSize": "12px"
+    }
+  }
+} 

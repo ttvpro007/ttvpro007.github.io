@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Icon, ProgressBar, Section } from "./base";
+import { characterProfile } from "../data";
 
 function CharacterProfile({ profile }) {
-  const [level, setLevel] = useState(5); // 5 years experience
+  const [level, setLevel] = useState(characterProfile.levelConfig.initialLevel);
   const [xp, setXp] = useState(0);
-  const [maxXp] = useState(1000);
+  const [maxXp] = useState(characterProfile.levelConfig.maxXp);
   const [showLevelUp, setShowLevelUp] = useState(false);
 
   useEffect(() => {
     // Simulate XP gain based on skills and projects
     const totalSkills = profile.skills.length;
-    const skillXp = totalSkills * 100;
+    const skillXp = totalSkills * characterProfile.levelConfig.xpPerSkill;
     const newXp = Math.min(skillXp, maxXp);
     setXp(newXp);
     // Check for level up
     if (newXp >= maxXp && !showLevelUp) {
       setShowLevelUp(true);
-      setTimeout(() => setShowLevelUp(false), 3000);
+      setTimeout(() => setShowLevelUp(false), characterProfile.levelConfig.levelUpDuration);
     }
   }, [profile.skills, maxXp, showLevelUp]);
 
@@ -31,7 +32,7 @@ function CharacterProfile({ profile }) {
         right: 0,
         height: "2px",
         background: "linear-gradient(90deg, transparent, var(--primary), transparent)",
-        animation: "glow 2s ease-in-out infinite alternate"
+        animation: `glow ${characterProfile.animations.glow.duration} ${characterProfile.animations.glow.timing} ${characterProfile.animations.glow.iteration}`
       }} />
       
       <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
@@ -123,7 +124,7 @@ function CharacterProfile({ profile }) {
               border: "3px solid var(--text)"
             }}
           >
-            🎉 LEVEL UP! 🎉
+            {characterProfile.levelConfig.levelUpMessage}
           </motion.div>
         )}
       </AnimatePresence>

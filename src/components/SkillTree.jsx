@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Card, Icon, ProgressBar, Section, Button } from "./base";
+import { skillTree, uiContent } from "../data";
 
 function SkillTreeNode({ skill, isUnlocked, onClick }) {
   return (
@@ -58,13 +59,12 @@ function SkillTreeNode({ skill, isUnlocked, onClick }) {
       {isUnlocked && (
         <motion.div
           animate={{ 
-            boxShadow: [
-              "0 0 0 var(--primary)",
-              "0 0 20px var(--primary)",
-              "0 0 0 var(--primary)"
-            ]
+            boxShadow: skillTree.animations.glow.boxShadow
           }}
-          transition={{ duration: 2, repeat: Infinity }}
+          transition={{ 
+            duration: skillTree.animations.glow.duration, 
+            repeat: skillTree.animations.glow.repeat 
+          }}
           style={{
             position: "absolute",
             top: "-2px",
@@ -82,7 +82,7 @@ function SkillTreeNode({ skill, isUnlocked, onClick }) {
 
 function SkillTree({ skills }) {
   const [selectedSkill, setSelectedSkill] = useState(null);
-  const [unlockedSkills, setUnlockedSkills] = useState(3); // First 3 skills unlocked
+  const [unlockedSkills, setUnlockedSkills] = useState(skillTree.config.initialUnlockedSkills);
 
   const handleSkillClick = (skill, index) => {
     if (index < unlockedSkills) {
@@ -97,7 +97,11 @@ function SkillTree({ skills }) {
   };
 
   return (
-    <Section title="Skill Tree" icon="🌳" centered={true}>
+    <Section 
+      title={uiContent.sections.skillTree.title} 
+      icon={uiContent.sections.skillTree.icon} 
+      centered={true}
+    >
       <div style={{
         display: "grid",
         gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
@@ -154,7 +158,7 @@ function SkillTree({ skills }) {
             boxShadow: "0 4px 15px var(--primary)"
           }}
         >
-          🔓 Unlock Next Skill
+          {skillTree.config.unlockButtonText}
         </Button>
       )}
     </Section>

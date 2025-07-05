@@ -1,14 +1,14 @@
 import React from "react";
 import { motion } from "framer-motion";
 import SkillBar from "./SkillBar";
-import profile from '../data/profile.json';
 import { Section } from "./base";
+import { profile, uiContent } from "../data";
 
 const Skills = () => {
   return (
     <Section 
-      title="Skills & Crafts" 
-      icon="⚡"
+      title={uiContent.sections.skills.title} 
+      icon={uiContent.sections.skills.icon}
       centered={true}
       style={{
         maxWidth: '600px',
