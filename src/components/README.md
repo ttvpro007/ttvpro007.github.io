@@ -1,6 +1,6 @@
 # Portfolio Components
 
-This directory contains all the React components for the portfolio application, organized with a focus on reusability, maintainability, and the user's preferred gamer aesthetic.
+This directory contains all the React components for the portfolio application, organized with a focus on reusability, maintainability, and the user's preferred gamer aesthetic. All components have been refactored to use the centralized animation system located in `../utils/animations.js`.
 
 ## 🏗️ Architecture Overview
 
@@ -192,31 +192,245 @@ const [searchTerm, setSearchTerm] = useState('');
 />
 ```
 
-## 🔧 Development Guidelines
+## 🎬 Animation Integration
 
-### Component Structure
-1. **Imports**: Base components, data, and utilities
-2. **State**: Local state management
-3. **Effects**: Side effects and lifecycle
-4. **Render**: JSX with proper styling
-5. **Export**: Named export for consistency
+All components now use the centralized animation system instead of hardcoded animations. This provides:
 
-### Styling Approach
-- Use CSS custom properties for theming
-- Inline styles for component-specific styling
-- Responsive design with CSS Grid and Flexbox
-- Hover effects and transitions for interactivity
+- **Consistency** across all components
+- **Maintainability** - changes in one place affect all components
+- **Reusability** - animations can be easily shared
+- **Performance** - optimized animation configurations
+- **Flexibility** - easy to swap animation strategies
 
-### Data Access
-- Import from centralized data index: `import { profile, projects } from '../data'`
-- Use structured data paths: `profile.skills.categories["Programming Languages"]`
-- Access UI content: `projects.ui.featuredProject.badge`
+### Animation Categories Used
 
-### Animation Guidelines
-- Use Framer Motion for complex animations
-- Keep animations subtle and purposeful
-- Ensure accessibility with reduced motion support
-- Use staggered animations for lists and grids
+- **ENTRY_EXIT** - Component appearance/disappearance
+- **HOVER** - Interactive element hover effects
+- **CARD** - Card-specific animations
+- **BUTTON** - Button interactions
+- **PROGRESS** - Progress bar animations
+- **STATS** - Statistics widget animations
+- **FLIP_CARD** - 3D flip card effects
+- **STAGGERED** - List item staggered animations
+- **SHOW_HIDE** - Visibility toggles
+
+## 📁 Component Structure
+
+### Base Components (`/base/`)
+Core reusable components with built-in animation support:
+
+- **Card.jsx** - Animated card container with hover effects
+- **Button.jsx** - Interactive button with press animations
+- **ProgressBar.jsx** - Animated progress indicator
+- **Badge.jsx** - Small animated badges
+- **Icon.jsx** - Icon component
+- **Section.jsx** - Section container
+
+### Main Components
+Feature-specific components with specialized animations:
+
+- **AnimatedCard.jsx** - Enhanced card with configurable animations
+- **ProjectCard.jsx** - Project display cards with hover effects
+- **FlipCard.jsx** - 3D flip card with entry and flip animations
+- **StatsWidget.jsx** - Statistics display with staggered animations
+- **Timeline.jsx** - Timeline with staggered item animations
+- **SkillBar.jsx** - Skill progress bars with entry animations
+- **ShowAndTell.jsx** - Image carousel with transition animations
+- **FunFacts.jsx** - Text rotation with slide animations
+- **SearchAndFilter.jsx** - Search interface with expand/collapse animations
+
+### Layout Components (`/layout/`)
+Layout-specific components:
+
+- **Grid.jsx** - Responsive grid with optional animations
+
+### Animation Components (`/animations/`)
+Specialized animation components:
+
+- **SkillAnimations.jsx** - Skill-specific animation utilities
+
+## 🚀 Usage Examples
+
+### Basic Component with Animations
+
+```jsx
+import { AnimatedCard } from './components/AnimatedCard';
+import { getAnimation, AnimationCategories } from '../utils/animations';
+
+const MyComponent = () => {
+  return (
+    <AnimatedCard 
+      entryStrategy="bouncePop"
+      hoverStrategy="glow"
+    >
+      <h3>Animated Content</h3>
+      <p>This card uses centralized animations</p>
+    </AnimatedCard>
+  );
+};
+```
+
+### Custom Animation Strategy
+
+```jsx
+import { ProjectCard } from './components/ProjectCard';
+
+const CustomProjectCard = ({ project }) => {
+  return (
+    <ProjectCard
+      project={project}
+      entryStrategy="flipRotate"
+      hoverStrategy="bounce"
+      size="large"
+    />
+  );
+};
+```
+
+### Staggered List Animation
+
+```jsx
+import { Timeline } from './components/Timeline';
+
+const MyTimeline = () => {
+  // Timeline automatically uses staggered animations
+  return <Timeline />;
+};
+```
+
+## 🎨 Animation Strategies
+
+### Entry/Exit Strategies
+- `scaleFade` - Scale and fade (default for cards)
+- `slideFade` - Slide from left with fade
+- `slideUp` - Slide up from bottom
+- `bouncePop` - Bouncy spring animation
+- `flipRotate` - 3D flip rotation
+- `zoomIn` - Zoom in/out effect
+
+### Hover Strategies
+- `lift` - Lift up with slight scale
+- `scale` - Scale up/down
+- `glow` - Scale with glow effect
+- `rotate` - Slight rotation
+
+### Card Strategies
+- `hover` - Lift with shadow (default)
+- `flip` - 3D flip effect
+- `bounce` - Bouncy hover
+
+### Button Strategies
+- `press` - Scale press effect (default)
+- `lift` - Lift with scale
+- `glow` - Scale with glow
+
+## 🔧 Configuration
+
+### Animation Presets
+Common animation combinations are available as presets:
+
+```jsx
+import { AnimationPresets } from '../utils/animations';
+
+// Use preset combinations
+const cardPreset = AnimationPresets.card;
+const buttonPreset = AnimationPresets.button;
+const statsPreset = AnimationPresets.stats;
+```
+
+### Custom Animation Overrides
+
+```jsx
+const CustomComponent = () => {
+  const baseAnimation = getAnimation(AnimationCategories.ENTRY_EXIT, 'slideUp');
+  
+  return (
+    <motion.div
+      {...baseAnimation}
+      transition={{
+        ...baseAnimation.transition,
+        duration: 0.8, // Override duration
+        delay: 0.2     // Add custom delay
+      }}
+    >
+      Content
+    </motion.div>
+  );
+};
+```
+
+## 🎮 Gamer-Style Animations
+
+For a more dynamic, gaming-inspired feel, use these combinations:
+
+### Energetic Entry
+```jsx
+entryStrategy="bouncePop"  // Bouncy spring entry
+```
+
+### Interactive Hover
+```jsx
+hoverStrategy="glow"       // Glow effect on hover
+```
+
+### Dynamic Cards
+```jsx
+hoverStrategy="bounce"     // Bouncy card hover
+```
+
+### Responsive Buttons
+```jsx
+hoverStrategy="press"      // Quick press feedback
+```
+
+## 📊 Performance Considerations
+
+### Animation Optimization
+- Use `transform` properties for better performance
+- Avoid animating `width`/`height` when possible
+- Use `will-change` CSS property for complex animations
+- Consider `prefers-reduced-motion` for accessibility
+
+### Staggered Animations
+- Limit stagger delays to reasonable values (0.1-0.2s)
+- Use `AnimatePresence` for list changes
+- Consider virtual scrolling for large lists
+
+## 🔄 Migration Notes
+
+### From Hardcoded Animations
+All components have been migrated from hardcoded animations to the centralized system:
+
+**Before:**
+```jsx
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  whileHover={{ scale: 1.05 }}
+>
+```
+
+**After:**
+```jsx
+const entryAnimation = getAnimation(AnimationCategories.ENTRY_EXIT, 'slideUp');
+const hoverAnimation = getAnimation(AnimationCategories.HOVER, 'scale');
+
+<motion.div {...entryAnimation} {...hoverAnimation}>
+```
+
+### Benefits Achieved
+1. **Consistency** - All animations follow the same patterns
+2. **Maintainability** - Single source of truth for animations
+3. **Reusability** - Animations can be shared between components
+4. **Performance** - Optimized configurations
+5. **Flexibility** - Easy to swap strategies
+6. **Documentation** - Clear API for all animations
+
+## 📚 Additional Resources
+
+- [Animation System Documentation](../utils/animations-README.md)
+- [Framer Motion Documentation](https://www.framer.com/motion/)
+- [Animation Best Practices](../utils/animations-README.md#best-practices)
 
 ## 📁 File Organization
 

@@ -1,9 +1,17 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ProgressBar, Icon } from "./base";
+import { 
+  AnimationCategories, 
+  getAnimation, 
+  AnimationPresets 
+} from "../utils/animations";
 
-const SkillBar = ({ skill, index }) => {
+const SkillBar = ({ skill, index, entryStrategy = "slideFade" }) => {
   const [isInView, setIsInView] = React.useState(false);
+
+  // Get animations from the centralized system
+  const entryAnimation = getAnimation(AnimationCategories.ENTRY_EXIT, entryStrategy);
 
   const getSkillTheme = (theme, skill) => {
     // If skill has a color property, use it
@@ -47,9 +55,11 @@ const SkillBar = ({ skill, index }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
+      {...entryAnimation}
+      transition={{ 
+        ...entryAnimation.transition,
+        delay: index * 0.1 
+      }}
       onViewportEnter={() => setIsInView(true)}
       onViewportLeave={() => setIsInView(false)}
       style={{

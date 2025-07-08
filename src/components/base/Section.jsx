@@ -19,6 +19,7 @@ const Section = ({
     padding,
     marginBottom,
     border: '2px solid var(--primary)',
+    width: '100%',
     ...style
   };
 

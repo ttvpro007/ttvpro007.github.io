@@ -97,6 +97,7 @@ function App() {
   const [page, setPage] = React.useState("Home");
   const [konami, setKonami] = React.useState([]);
   const [showConfetti, setShowConfetti] = React.useState(false);
+  const [isTransitioning, setIsTransitioning] = React.useState(false);
 
   React.useEffect(() => {
     const onKeyDown = (e) => {
@@ -113,12 +114,26 @@ function App() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
+  const handlePageChange = (newPage) => {
+    // If we're leaving the Projects page, add a delay for search component exit
+    if (page === "Projects" && newPage !== "Projects") {
+      setIsTransitioning(true);
+      // Delay matches the search component's exit animation duration
+      setTimeout(() => {
+        setPage(newPage);
+        setIsTransitioning(false);
+      }, 150); // 50ms animation + 100ms buffer
+    } else {
+      setPage(newPage);
+    }
+  };
+
   const renderPage = () => {
     switch (page) {
       case "Home":
         return <Home />;
       case "Projects":
-        return <Projects />;
+        return <Projects isTransitioning={isTransitioning} />;
       case "Resume":
         return <Resume />;
       case "Contact":
@@ -132,7 +147,7 @@ function App() {
     <div>
       <SecretBadge show={showConfetti} />
       {showConfetti && <Confetti />}
-      <Navbar setPage={setPage} currentPage={page} />
+      <Navbar setPage={handlePageChange} currentPage={page} />
       <AnimatePresence mode="wait" initial={false}>
         <motion.main
           key={page}

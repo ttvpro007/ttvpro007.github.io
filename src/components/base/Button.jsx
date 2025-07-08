@@ -1,5 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { 
+  AnimationCategories, 
+  getAnimation 
+} from "../../utils/animations";
 
 const Button = ({ 
   children, 
@@ -9,6 +13,7 @@ const Button = ({
   disabled = false,
   style = {},
   onClick,
+  hoverStrategy = "press",
   ...props 
 }) => {
   const variants = {
@@ -50,11 +55,7 @@ const Button = ({
     ...style
   };
 
-  const motionProps = {
-    whileHover: disabled ? {} : { scale: 1.05, y: -2 },
-    whileTap: disabled ? {} : { scale: 0.95 },
-    transition: { duration: 0.2, ease: 'easeOut' }
-  };
+  const motionProps = disabled ? {} : getAnimation(AnimationCategories.BUTTON, hoverStrategy);
 
   return (
     <motion.button

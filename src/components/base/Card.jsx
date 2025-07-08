@@ -1,5 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { 
+  AnimationCategories, 
+  getAnimation 
+} from "../../utils/animations";
 
 const Card = ({ 
   children, 
@@ -10,6 +14,7 @@ const Card = ({
   shadow = true,
   padding = "1.5rem",
   onClick,
+  hoverStrategy = "hover",
   ...props 
 }) => {
   const cardStyle = {
@@ -24,10 +29,7 @@ const Card = ({
   };
 
   const MotionComponent = hover ? motion.div : 'div';
-  const motionProps = hover ? {
-    whileHover: { scale: 1.02, y: -2 },
-    transition: { duration: 0.2, ease: 'easeOut' }
-  } : {};
+  const motionProps = hover ? getAnimation(AnimationCategories.CARD, hoverStrategy) : {};
 
   return (
     <MotionComponent

@@ -27,7 +27,8 @@ const FeaturedProject = ({ project }) => {
           borderRadius: "var(--border-radius)",
           overflow: "hidden",
           marginBottom: "2rem",
-          boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)"
+          boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
+          width: "100%",
         }}
       >
         {/* Background Image */}
@@ -51,7 +52,8 @@ const FeaturedProject = ({ project }) => {
           flexDirection: "column",
           justifyContent: "flex-end",
           padding: "2rem",
-          color: "white"
+          color: "white",
+          width: "100%",
         }}>
           {/* Featured Badge */}
           <div style={{ marginBottom: "1rem" }}>
@@ -83,8 +85,8 @@ const FeaturedProject = ({ project }) => {
             margin: "0 0 1.5rem 0",
             fontSize: "1.1rem",
             lineHeight: "1.6",
-            maxWidth: "600px",
-            textShadow: "0 1px 2px rgba(0,0,0,0.5)"
+            textShadow: "0 1px 2px rgba(0,0,0,0.5)",
+            width: "100%"
           }}>
             {project.longDescription || project.description}
           </p>

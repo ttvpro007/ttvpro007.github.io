@@ -76,101 +76,134 @@
         "subtitle": "Hands-On Creator"
       },
       "back": {
-        "content": "3D printing, custom keyboards, woodworking - when I'm not coding, I'm building something physical. The tactile satisfaction of creating never gets old."
+        "content": "3D printing, custom keyboards, woodworking – when I'm not coding, I'm building something physical. The tactile satisfaction of creating never gets old."
       }
     }
   ],
   "skills": {
     "categories": {
-      "Programming Languages": [
-        {
-          "name": "Unity & C#",
-          "level": 90,
-          "icon": "🎮",
-          "description": "Developed a wide range of games and applications with Unity and C# for Windows & Mac.",
-          "animation": "battery",
-          "color": "#00ff88"
-        },
-        {
-          "name": "C++",
-          "level": 85,
-          "icon": "⚡",
-          "description": "Built applications using C++, focusing on OOP and efficient code practices.",
-          "animation": "typing",
-          "color": "#0066cc"
-        },
-        {
-          "name": "Swift",
-          "level": 80,
-          "icon": "🍎",
-          "description": "Created an AR app for Apple Vision Pro utilizing Swift, enhancing user interaction with innovative software & hardware integration.",
-          "animation": "spinning",
-          "color": "#ff6b35"
-        }
-      ],
-      "Video & Audio Editing": [
-        {
-          "name": "Max 8 Pipelines",
-          "level": 88,
-          "icon": "🎵",
-          "description": "Engineered highly complex audio signal processing pipelines for custom hardware using Max 8, while ensuring precision and efficiency.",
-          "animation": "waveform",
-          "color": "#8b5cf6"
-        },
-        {
-          "name": "Moonshot Videos",
-          "level": 92,
-          "icon": "🚀",
-          "description": "Edited moonshot demo videos with custom software and hardware, delivering high-impact visual presentations.",
-          "animation": "launch",
-          "color": "#f59e0b"
-        },
-        {
-          "name": "Clipchamp/CapCut",
-          "level": 85,
-          "icon": "🎬",
-          "description": "Experienced in video editing with Clipchamp and Capcut, producing high quality content.",
-          "animation": "pulse",
-          "color": "#ef4444"
-        }
-      ],
-      "Personal Skills": [
-        {
-          "name": "Programming",
-          "percentage": 90,
-          "icon": "💻",
-          "theme": "filament",
-          "description": "From C# to Python, I speak fluent code"
-        },
-        {
-          "name": "Game Development",
-          "percentage": 85,
-          "icon": "🎮",
-          "theme": "rocket",
-          "description": "Unity & Unreal Engine wizardry"
-        },
-        {
-          "name": "3D Printing",
-          "percentage": 80,
-          "icon": "🖨️",
-          "theme": "filament",
-          "description": "Turning digital designs into reality"
-        },
-        {
-          "name": "Custom Keyboards",
-          "percentage": 75,
-          "icon": "⌨️",
-          "theme": "switch",
-          "description": "Thock is my jock! Building the perfect creamy sound"
-        },
-        {
-          "name": "Woodworking",
-          "percentage": 30,
-          "icon": "🪵",
-          "theme": "shavings",
-          "description": "From code to carpentry, creating with my hands"
-        }
-      ]
+      "Programming Languages": {
+        "highlights": [
+          "Unity and C#",
+          "C++",
+          "OOP",
+          "AR app",
+          "Apple Vision Pro",
+          "Swift"
+        ],
+        "skills": [
+          {
+            "name": "Unity & C#",
+            "level": 90,
+            "icon": "🎮",
+            "description": "Developed a wide range of games and applications with Unity and C# for Windows & Mac.",
+            "animation": "battery",
+            "color": "#00ff88"
+          },
+          {
+            "name": "C++",
+            "level": 85,
+            "icon": "⚡",
+            "description": "Built applications using C++, focusing on OOP and efficient code practices.",
+            "animation": "typing",
+            "color": "#0066cc"
+          },
+          {
+            "name": "Swift",
+            "level": 80,
+            "icon": "🍎",
+            "description": "Created an AR app for Apple Vision Pro utilizing Swift, enhancing user interaction with innovative software & hardware integration.",
+            "animation": "spinning",
+            "color": "#ff6b35"
+          }
+        ]
+      },
+      "Video & Audio Editing": {
+        "highlights": [
+          "audio signal processing",
+          "Max 8",
+          "moonshot demo",
+          "high-impact",
+          "video editing",
+          "high quality"
+        ],
+        "skills": [
+          {
+            "name": "Max 8 Pipelines",
+            "level": 88,
+            "icon": "🎵",
+            "description": "Engineered highly complex audio signal processing pipelines for custom hardware using Max 8, while ensuring precision and efficiency.",
+            "animation": "waveform",
+            "color": "#8b5cf6"
+          },
+          {
+            "name": "Moonshot Videos",
+            "level": 92,
+            "icon": "🚀",
+            "description": "Edited moonshot demo videos with custom software and hardware, delivering high-impact visual presentations.",
+            "animation": "launch",
+            "color": "#f59e0b"
+          },
+          {
+            "name": "Clipchamp/CapCut",
+            "level": 85,
+            "icon": "🎬",
+            "description": "Experienced in video editing with Clipchamp and Capcut, producing high quality content.",
+            "animation": "pulse",
+            "color": "#ef4444"
+          }
+        ]
+      },
+      "Personal Skills": {
+        "highlights": [
+          "2D & 3D",
+          "cutting-edge",
+          "AR & VR",
+          "complex",
+          "novel",
+          "Designing & Implementing",
+          "passion game",
+          "reusable tools",
+          "Unity"
+        ],
+        "skills": [
+          {
+            "name": "Programming",
+            "level": 90,
+            "icon": "💻",
+            "theme": "filament",
+            "description": "From C# to Python, I speak fluent code"
+          },
+          {
+            "name": "Game Development",
+            "level": 85,
+            "icon": "🎮",
+            "theme": "rocket",
+            "description": "Unity & Unreal Engine wizardry"
+          },
+          {
+            "name": "3D Printing",
+            "level": 80,
+            "icon": "🖨️",
+            "theme": "filament",
+            "description": "Turning digital designs into reality"
+          },
+          {
+            "name": "Custom Keyboards",
+            "level": 75,
+            "icon": "⌨️",
+            "theme": "switch",
+            "description": "Thock is my jock! Building the perfect creamy sound"
+          },
+          {
+            "name": "Woodworking",
+            "level": 30,
+            "icon": "🪵",
+            "theme": "shavings",
+            "description": "From code to carpentry, creating with my hands"
+          }
+        ]
+      }
     }
   },
   "funFacts": [
@@ -197,60 +230,6 @@
       "image": "/projects-images/catavaneer.png",
       "caption": "Sawdust therapy",
       "description": "Handcrafted desk organizer with hidden compartments"
-    }
-  ],
-  "homeSections": [
-    {
-      "title": "What I Do?",
-      "items": [
-        "Developing 2D & 3D visualization of cutting-edge technologies.",
-        "Developing AR & VR applications to simulate complex technological novel ideas.",
-        "Designing & Implementing features for passion game projects.",
-        "Building reusable tools to shorten development time for Unity."
-      ],
-      "highlights": [
-        "2D & 3D",
-        "cutting-edge",
-        "AR & VR",
-        "complex",
-        "novel",
-        "Designing & Implementing",
-        "passion game",
-        "reusable tools",
-        "Unity"
-      ]
-    },
-    {
-      "title": "Programming Languages",
-      "items": [
-        "Developed a wide range of games and applications with Unity and C# for Windows & Mac.",
-        "Built applications using C++, focusing on OOP and efficient code practices.",
-        "Created an AR app for Apple Vision Pro utilizing Swift, enhancing user interaction with innovative software & hardware integration."
-      ],
-      "highlights": [
-        "Unity and C#",
-        "C++",
-        "OOP",
-        "AR app",
-        "Apple Vision Pro",
-        "Swift"
-      ]
-    },
-    {
-      "title": "Video & Audio Editing",
-      "items": [
-        "Engineered highly complex audio signal processing pipelines for custom hardware using Max 8, while ensuring precision and efficiency.",
-        "Edited moonshot demo videos with custom software and hardware, delivering high-impact visual presentations.",
-        "Experienced in video editing with Clipchamp and Capcut, producing high quality content."
-      ],
-      "highlights": [
-        "audio signal processing",
-        "Max 8",
-        "moonshot demo",
-        "high-impact",
-        "video editing",
-        "high quality"
-      ]
     }
   ]
 } 

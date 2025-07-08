@@ -1,35 +1,43 @@
 import React from "react";
-import { motion } from "framer-motion";
 import FlipCard from "./FlipCard";
-import { Section } from "./base";
-import { profile, uiContent } from "../data";
+import { profile } from "../data";
 
-const FlipCards = () => {
+const brickGridStyle = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(3, minmax(140px, 1fr))', // smaller cards
+  gap: '2rem 1.5rem',
+  justifyContent: 'center',
+  alignItems: 'start',
+  maxWidth: '700px', // match body panel constraint
+  width: '100%',
+  margin: '0 auto',
+  position: 'relative',
+};
+
+// Jagged pattern: 0rem, 1.5rem, 3rem, then repeat
+const getJaggedMarginTop = (index) => {
+  const pattern = [0, 1.5, 3];
+  return `${pattern[index % 3]}rem`;
+};
+
+export default function FlipCards() {
   if (!profile || !profile.flipCards) {
     return null;
   }
-  
-  return (
-    <Section 
-      title={uiContent.sections.flipCards.title} 
-      icon={uiContent.sections.flipCards.icon} 
-      centered={true}
-    >
-      <div style={{
-        display: 'flex',
-        gap: '1.5rem',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        maxWidth: '900px',
-        width: '100%',
-        margin: '0 auto'
-      }}>
-        {profile.flipCards?.map((card, index) => (
-          <FlipCard key={index} card={card} index={index} />
-        ))}
-      </div>
-    </Section>
-  );
-};
 
-export default FlipCards; 
+  return (
+    <div style={brickGridStyle}>
+      {profile.flipCards?.map((card, index) => (
+        <div
+          key={index}
+          style={{
+            marginTop: getJaggedMarginTop(index),
+            transition: 'margin-top 0.3s',
+          }}
+        >
+          <FlipCard card={card} index={index} />
+        </div>
+      ))}
+    </div>
+  );
+} 

@@ -2,6 +2,11 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Section, Button } from "./base";
 import { profile, uiContent } from "../data";
+import { 
+  AnimationCategories, 
+  getAnimation, 
+  AnimationPresets 
+} from "../utils/animations";
 
 const ShowAndTell = () => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -10,13 +15,16 @@ const ShowAndTell = () => {
     return null;
   }
 
+  // Get animations from the centralized system
+  const imageAnimation = getAnimation(AnimationCategories.ENTRY_EXIT, 'scaleFade');
+  const buttonAnimation = getAnimation(AnimationCategories.BUTTON, 'press');
+
   return (
     <Section 
       title={uiContent.sections.showAndTell.title} 
       icon={uiContent.sections.showAndTell.icon}
       centered={true}
       style={{
-        maxWidth: '600px',
         width: '100%',
         margin: '0 auto'
       }}
@@ -33,9 +41,7 @@ const ShowAndTell = () => {
             borderRadius: 'var(--border-radius)',
             marginBottom: '0.5rem',
           }}
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
+          {...imageAnimation}
         />
         
         <div style={{ textAlign: 'center' }}>
@@ -69,8 +75,7 @@ const ShowAndTell = () => {
               background: index === currentIndex ? 'var(--primary)' : 'var(--text-muted)',
               cursor: 'pointer',
             }}
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 0.9 }}
+            {...buttonAnimation}
           />
         ))}
       </div>

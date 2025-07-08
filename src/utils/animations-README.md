@@ -1,6 +1,6 @@
 # Animation System Documentation
 
-This animation system provides a comprehensive set of reusable animations organized by categories for consistent and maintainable animations across your React components.
+This animation system provides a comprehensive set of reusable animations organized by categories for consistent and maintainable animations across your React components. The system has been refactored to centralize all animations and provide a consistent API across all components.
 
 ## 🎯 Animation Categories
 
@@ -89,6 +89,38 @@ Use for card hover effects.
 - `flip` - 3D flip effect
 - `bounce` - Bouncy hover
 
+### 11. **FLIP_CARD** - Flip Card Animations
+Use for 3D flip card effects.
+
+**Available Strategies:**
+- `entry` - Initial entry animation
+- `flip` - Flip to back
+- `unflip` - Flip to front
+
+### 12. **STAGGERED** - Staggered List Animations
+Use for lists with staggered entry effects.
+
+**Available Strategies:**
+- `fadeUp` - Fade up with stagger
+- `slideIn` - Slide in with stagger
+- `scaleIn` - Scale in with stagger
+
+### 13. **PROGRESS** - Progress Bar Animations
+Use for progress bars and loading indicators.
+
+**Available Strategies:**
+- `fill` - Fill animation
+- `pulse` - Pulsing effect
+
+### 14. **STATS** - Stats Widget Animations
+Use for statistics and data visualization components.
+
+**Available Strategies:**
+- `header` - Header animation
+- `leftCard` - Left card entry
+- `rightCard` - Right card entry
+- `item` - Individual item animation
+
 ## 🚀 How to Use
 
 ### Basic Usage
@@ -145,69 +177,160 @@ const MyComponent = ({ animationType = 'scaleFade' }) => {
 };
 ```
 
-## 📝 Examples
+## 📝 Component Examples
 
-### Search/Filter Component
+### ProjectCard Component
 ```jsx
-const SearchComponent = () => {
-  const entryAnimation = getAnimation(AnimationCategories.ENTRY_EXIT, 'slideFade');
-  const expandAnimation = getAnimation(AnimationCategories.EXPAND_COLLAPSE, 'smooth');
-  const hoverAnimation = getAnimation(AnimationCategories.HOVER, 'lift');
+const ProjectCard = ({ 
+  project, 
+  onClick, 
+  size = 'medium',
+  entryStrategy = "scaleFade",
+  hoverStrategy = "hover"
+}) => {
+  const entryAnimation = getAnimation(AnimationCategories.ENTRY_EXIT, entryStrategy);
+  const hoverAnimation = getAnimation(AnimationCategories.CARD, hoverStrategy);
 
   return (
-    <motion.div {...entryAnimation}>
-      <motion.div {...expandAnimation} {...hoverAnimation}>
-        Search content
+    <motion.div
+      {...entryAnimation}
+      {...hoverAnimation}
+      onClick={onClick}
+    >
+      {/* Card content */}
+    </motion.div>
+  );
+};
+```
+
+### FlipCard Component
+```jsx
+const FlipCard = ({ card, index, entryStrategy = "entry" }) => {
+  const [isFlipped, setIsFlipped] = useState(false);
+  
+  const entryAnimation = getAnimation(AnimationCategories.FLIP_CARD, entryStrategy);
+  const flipAnimation = getAnimation(AnimationCategories.FLIP_CARD, isFlipped ? 'flip' : 'unflip');
+
+  return (
+    <motion.div
+      {...entryAnimation}
+      transition={{ ...entryAnimation.transition, delay: index * 0.1 }}
+    >
+      <motion.div {...flipAnimation}>
+        {/* Card content */}
       </motion.div>
     </motion.div>
   );
 };
 ```
 
-### Animated Card
+### StatsWidget Component
 ```jsx
-const AnimatedCard = ({ entryStrategy = 'scaleFade' }) => {
-  const entryAnimation = getAnimation(AnimationCategories.ENTRY_EXIT, entryStrategy);
-  const hoverAnimation = getAnimation(AnimationCategories.CARD, 'hover');
+const StatsWidget = ({ projects }) => {
+  const headerAnimation = getAnimation(AnimationCategories.STATS, 'header');
+  const leftCardAnimation = getAnimation(AnimationCategories.STATS, 'leftCard');
+  const rightCardAnimation = getAnimation(AnimationCategories.STATS, 'rightCard');
+  const itemAnimation = getAnimation(AnimationCategories.STATS, 'item');
 
   return (
-    <motion.div {...entryAnimation} {...hoverAnimation}>
-      Card content
+    <div>
+      <motion.div {...headerAnimation}>
+        {/* Header content */}
+      </motion.div>
+      <motion.div {...leftCardAnimation}>
+        {/* Left card content */}
+      </motion.div>
+      <motion.div {...rightCardAnimation}>
+        {/* Right card content */}
+      </motion.div>
+    </div>
+  );
+};
+```
+
+### Timeline Component
+```jsx
+const Timeline = () => {
+  const containerAnimation = getAnimation(AnimationCategories.ENTRY_EXIT, 'slideUp');
+  const itemAnimation = getAnimation(AnimationCategories.STAGGERED, 'scaleIn');
+  const hoverAnimation = getAnimation(AnimationCategories.HOVER, 'scale');
+
+  return (
+    <motion.div {...containerAnimation}>
+      {items.map((item, index) => (
+        <motion.div
+          key={index}
+          {...itemAnimation}
+          {...hoverAnimation}
+          transition={{ ...itemAnimation.transition, delay: index * 0.2 }}
+        >
+          {/* Timeline item */}
+        </motion.div>
+      ))}
     </motion.div>
   );
 };
 ```
 
-### Loading Spinner
+### Base Components
+
+#### Card Component
 ```jsx
-const LoadingSpinner = () => {
-  const spinAnimation = getAnimation(AnimationCategories.LOADING, 'spin');
+const Card = ({ 
+  children, 
+  hover = true, 
+  hoverStrategy = "hover",
+  ...props 
+}) => {
+  const MotionComponent = hover ? motion.div : 'div';
+  const motionProps = hover ? getAnimation(AnimationCategories.CARD, hoverStrategy) : {};
 
   return (
-    <motion.div {...spinAnimation}>
-      ⏳
-    </motion.div>
+    <MotionComponent {...motionProps} {...props}>
+      {children}
+    </MotionComponent>
   );
 };
 ```
 
-### Modal
+#### Button Component
 ```jsx
-const Modal = ({ isOpen }) => {
-  const modalAnimation = getAnimation(AnimationCategories.MODAL, 'scale');
-  const overlayAnimation = getAnimation(AnimationCategories.MODAL, 'fade');
+const Button = ({ 
+  children, 
+  disabled = false,
+  hoverStrategy = "press",
+  ...props 
+}) => {
+  const motionProps = disabled ? {} : getAnimation(AnimationCategories.BUTTON, hoverStrategy);
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <>
-          <motion.div {...overlayAnimation} className="overlay" />
-          <motion.div {...modalAnimation} className="modal">
-            Modal content
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+    <motion.button {...motionProps} {...props}>
+      {children}
+    </motion.button>
+  );
+};
+```
+
+#### ProgressBar Component
+```jsx
+const ProgressBar = ({ 
+  progress, 
+  max = 100,
+  animated = true,
+  animationStrategy = "fill",
+  ...props 
+}) => {
+  const ProgressComponent = animated ? motion.div : 'div';
+  const motionProps = animated ? {
+    ...getAnimation(AnimationCategories.PROGRESS, animationStrategy),
+    animate: { 
+      ...getAnimation(AnimationCategories.PROGRESS, animationStrategy).animate,
+      width: `${(progress / max) * 100}%` 
+    }
+  } : { style: { width: `${(progress / max) * 100}%` } };
+
+  return (
+    <ProgressComponent {...motionProps} {...props} />
   );
 };
 ```
@@ -255,6 +378,31 @@ const MyComponent = () => {
 };
 ```
 
+### Staggered Animations
+
+```jsx
+const StaggeredList = ({ items }) => {
+  const itemAnimation = getAnimation(AnimationCategories.STAGGERED, 'fadeUp');
+
+  return (
+    <div>
+      {items.map((item, index) => (
+        <motion.div
+          key={index}
+          {...itemAnimation}
+          transition={{ 
+            ...itemAnimation.transition,
+            delay: index * 0.1 
+          }}
+        >
+          {item}
+        </motion.div>
+      ))}
+    </div>
+  );
+};
+```
+
 ## 🔧 Utility Functions
 
 - `getAnimation(category, strategy)` - Get animation object
@@ -269,6 +417,9 @@ const MyComponent = () => {
 3. **Keep animations consistent** across similar components
 4. **Test performance** with complex animations
 5. **Consider accessibility** - respect `prefers-reduced-motion`
+6. **Use staggered animations** for lists and grids
+7. **Combine animations** for richer interactions
+8. **Override transitions** when needed for specific timing
 
 ## 🎮 Gamer-Style Recommendations
 
@@ -278,5 +429,42 @@ For a gamer aesthetic, consider these combinations:
 - **Cards**: `bounce` hover effect
 - **Buttons**: `press` with `glow`
 - **Loading**: `spin` or `pulse`
+- **Progress**: `fill` with `pulse`
+- **Timeline**: `scaleIn` with `scale` hover
+- **Stats**: `leftCard`/`rightCard` with `item` stagger
 
-This creates a dynamic, energetic feel that matches gaming interfaces! 
+This creates a dynamic, energetic feel that matches gaming interfaces!
+
+## 🔄 Migration Guide
+
+### From Hardcoded Animations
+
+**Before:**
+```jsx
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.3 }}
+  whileHover={{ scale: 1.05 }}
+>
+```
+
+**After:**
+```jsx
+const entryAnimation = getAnimation(AnimationCategories.ENTRY_EXIT, 'slideUp');
+const hoverAnimation = getAnimation(AnimationCategories.HOVER, 'scale');
+
+<motion.div
+  {...entryAnimation}
+  {...hoverAnimation}
+>
+```
+
+### Benefits of Migration
+
+1. **Consistency** - All animations follow the same patterns
+2. **Maintainability** - Changes in one place affect all components
+3. **Reusability** - Animations can be easily shared between components
+4. **Performance** - Optimized animation configurations
+5. **Flexibility** - Easy to swap animation strategies
+6. **Documentation** - Clear API for all available animations 

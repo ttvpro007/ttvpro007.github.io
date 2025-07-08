@@ -2,11 +2,21 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Icon, Section } from "./base";
 import { profile, uiContent } from "../data";
+import { 
+  AnimationCategories, 
+  getAnimation, 
+  AnimationPresets 
+} from "../utils/animations";
 
 const Timeline = () => {
   if (!profile || !profile.journey) {
     return null;
   }
+  
+  // Get animations from the centralized system
+  const containerAnimation = getAnimation(AnimationCategories.ENTRY_EXIT, 'slideUp');
+  const itemAnimation = getAnimation(AnimationCategories.STAGGERED, 'scaleIn');
+  const hoverAnimation = getAnimation(AnimationCategories.HOVER, 'scale');
   
   return (
     <Section 
@@ -15,14 +25,15 @@ const Timeline = () => {
       centered={true}
     >
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.3 }}
+        {...containerAnimation}
+        transition={{ 
+          ...containerAnimation.transition,
+          delay: 0.3 
+        }}
         style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          maxWidth: '800px',
           width: '100%',
           margin: '2rem auto',
           position: 'relative',
@@ -49,10 +60,12 @@ const Timeline = () => {
               position: 'relative',
               zIndex: 2,
             }}
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 + index * 0.2 }}
-            whileHover={{ scale: 1.1 }}
+            {...itemAnimation}
+            {...hoverAnimation}
+            transition={{ 
+              ...itemAnimation.transition,
+              delay: 0.5 + index * 0.2 
+            }}
           >
             <motion.div
               style={{

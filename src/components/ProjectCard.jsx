@@ -2,17 +2,32 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Card, Badge } from "./base";
 import { projects } from "../data";
+import { 
+  AnimationCategories, 
+  getAnimation, 
+  AnimationPresets 
+} from "../utils/animations";
 
-const ProjectCard = ({ project, onClick, size = 'medium' }) => {
+const ProjectCard = ({ 
+  project, 
+  onClick, 
+  size = 'medium',
+  entryStrategy = "scaleFade",
+  hoverStrategy = "hover"
+}) => {
+  // Get animations from the centralized system
+  const entryAnimation = getAnimation(AnimationCategories.ENTRY_EXIT, entryStrategy);
+  const hoverAnimation = getAnimation(AnimationCategories.CARD, hoverStrategy);
+
   return (
     <motion.div
-      whileHover={{ y: -5 }}
-      transition={{ duration: 0.2 }}
+      {...entryAnimation}
+      {...hoverAnimation}
       style={{ cursor: "pointer" }}
       onClick={onClick}
     >
       <Card
-        hover={true}
+        hover={false} // We're handling hover with motion.div above
         style={{
           height: "100%",
           minHeight: size === 'large' ? '380px' : size === 'medium' ? '300px' : '260px',
@@ -21,8 +36,8 @@ const ProjectCard = ({ project, onClick, size = 'medium' }) => {
           overflow: "hidden",
           position: "relative",
           background: "linear-gradient(135deg, var(--card-bg) 0%, rgba(252, 148, 96, 0.05) 100%)",
-          border: "2px solid var(--border)",
-          borderRadius: "20px",
+          border: "2px solid var(--primary)",
+          borderRadius: "var(--border-radius)",
           boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(252, 148, 96, 0.1)"
         }}
       >

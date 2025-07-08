@@ -116,7 +116,7 @@
       "title": "Unity Physics Simulator",
       "description": "A physics simulation toolkit for Unity, supporting 2D and 3D environments with realistic particle systems and collision detection.",
       "longDescription": "A comprehensive physics simulation toolkit built for Unity that provides developers with advanced 2D and 3D physics capabilities. Features include realistic particle systems, collision detection, fluid dynamics, and customizable physics materials. The toolkit is designed to be both powerful for experienced developers and accessible for beginners.",
-      "tech": ["unity", "cs"],
+      "tech": ["Unity", "C#"],
       "link": "https://github.com/ttvpro007/UnityPhysicsSimulator",
       "image": "/portfolio-profile-pic.png",
       "images": ["/portfolio-profile-pic.png", "/projects-images/catavaneer.png"],
@@ -125,13 +125,15 @@
       "year": 2024,
       "featured": true,
       "demo": "https://demo.example.com",
-      "appStore": null
+      "appStore": null,
+      "showOnResume": true,
+      "resumeOrder": 1
     },
     {
       "title": "Planet Runner",
       "description": "An endless runner game set on a rotating planet. Features procedural generation and power-ups.",
       "longDescription": "An innovative endless runner game that takes place on a dynamically rotating planet. The game features procedurally generated terrain, unique power-ups, and challenging obstacles that adapt to player skill level. Built with HTML5 and JavaScript for cross-platform compatibility.",
-      "tech": ["html5", "js"],
+      "tech": ["HTML5", "JavaScript"],
       "link": "https://ttvpro007.itch.io/planet-runner",
       "image": "https://static.wixstatic.com/media/84b145_f7724c3bd5204f59962de89eaefe378d~mv2.jpg/v1/fill/w_800,h_389,al_c,q_80,usm_0.66_1.00_0.01/84b145_f7724c3bd5204f59962de89eaefe378d~mv2.jpg",
       "images": ["https://static.wixstatic.com/media/84b145_f7724c3bd5204f59962de89eaefe378d~mv2.jpg/v1/fill/w_800,h_389,al_c,q_80,usm_0.66_1.00_0.01/84b145_f7724c3bd5204f59962de89eaefe378d~mv2.jpg"],
@@ -140,13 +142,15 @@
       "year": 2023,
       "featured": false,
       "demo": "https://ttvpro007.itch.io/planet-runner",
-      "appStore": null
+      "appStore": null,
+      "showOnResume": true,
+      "resumeOrder": 2
     },
     {
       "title": "Bull Cow Game",
       "description": "A classic word guessing game built with Unreal Engine 4.",
       "longDescription": "A modern implementation of the classic Bull Cow word guessing game using Unreal Engine 4. Features include an intuitive UI, sound effects, particle systems, and a hint system to help players. The game demonstrates advanced C++ programming concepts and Unreal Engine integration.",
-      "tech": ["unreal", "cpp"],
+      "tech": ["Unreal", "C++"],
       "link": "https://github.com/ttvpro007/Bull-Cow-Game",
       "image": "https://static.wixstatic.com/media/84b145_2ce8582889a149b4a94b4070eba05c8c~mv2.png/v1/fill/w_310,h_496,al_c,q_80,usm_0.66_1.00_0.01/84b145_2ce8582889a149b4a94b4070eba05c8c~mv2.png",
       "images": ["https://static.wixstatic.com/media/84b145_2ce8582889a149b4a94b4070eba05c8c~mv2.png/v1/fill/w_310,h_496,al_c,q_80,usm_0.66_1.00_0.01/84b145_2ce8582889a149b4a94b4070eba05c8c~mv2.png"],
@@ -155,13 +159,15 @@
       "year": 2023,
       "featured": false,
       "demo": null,
-      "appStore": null
+      "appStore": null,
+      "showOnResume": true,
+      "resumeOrder": 3
     },
     {
       "title": "Catavaneer",
       "description": "A reimagining of the Catavaneer game with modern C# and Unity features.",
       "longDescription": "A complete reimagining of the classic Catavaneer game using modern Unity features and C# programming practices. This project showcases advanced game development techniques including procedural generation, AI pathfinding, and optimized rendering systems.",
-      "tech": ["unity", "cs"],
+      "tech": ["Unity", "C#"],
       "link": "https://cryobyte-studio.itch.io/catavaneer",
       "image": "/projects-images/catavaneer.png",
       "images": ["/projects-images/catavaneer.png"],
@@ -170,13 +176,15 @@
       "year": 2024,
       "featured": false,
       "demo": "https://cryobyte-studio.itch.io/catavaneer",
-      "appStore": null
+      "appStore": null,
+      "showOnResume": true,
+      "resumeOrder": 4
     },
     {
       "title": "Programming Problems Solution",
       "description": "A collection of programming problems and solutions from Codewars and other platforms.",
       "longDescription": "A comprehensive collection of programming problems and their solutions from various competitive programming platforms including Codewars, LeetCode, and HackerRank. The repository includes solutions in multiple languages and demonstrates different algorithmic approaches and optimization techniques.",
-      "tech": ["cs", "cpp", "codewars"],
+      "tech": ["C#", "C++", "Codewars"],
       "link": "https://github.com/ttvpro007/Programming-Problems-Solution",
       "image": "/portfolio-profile-pic.png",
       "images": ["/portfolio-profile-pic.png"],
@@ -185,33 +193,9 @@
       "year": 2024,
       "featured": false,
       "demo": null,
-      "appStore": null
-    }
-  ],
-  "resume": [
-    {
-      "title": "Unity Physics Simulator",
-      "description": "A physics simulation toolkit for Unity, supporting 2D and 3D environments with realistic particle systems and collision detection.",
-      "year": 2024,
-      "tech": ["Unity", "C#"]
-    },
-    {
-      "title": "Planet Runner",
-      "description": "An endless runner game set on a rotating planet. Features procedural generation and power-ups.",
-      "year": 2023,
-      "tech": ["HTML5", "JavaScript"]
-    },
-    {
-      "title": "Bull Cow Game",
-      "description": "A classic word guessing game built with Unreal Engine 4.",
-      "year": 2023,
-      "tech": ["Unreal", "C++"]
-    },
-    {
-      "title": "Catavaneer",
-      "description": "A reimagining of the Catavaneer game with modern C# and Unity features.",
-      "year": 2024,
-      "tech": ["Unity", "C#"]
+      "appStore": null,
+      "showOnResume": true,
+      "resumeOrder": 5
     }
   ]
 } 

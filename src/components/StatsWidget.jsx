@@ -2,6 +2,11 @@ import React from "react";
 import { motion } from "framer-motion";
 import { ProgressBar } from "./base";
 import { projects } from "../data";
+import { 
+  AnimationCategories, 
+  getAnimation, 
+  AnimationPresets 
+} from "../utils/animations";
 
 const StatsWidget = ({ projects: projectItems }) => {
   // Calculate tech usage statistics
@@ -25,6 +30,23 @@ const StatsWidget = ({ projects: projectItems }) => {
   const sortedYears = Object.entries(yearlyBreakdown)
     .sort(([a], [b]) => parseInt(b) - parseInt(a));
 
+  // Get animations from the centralized system
+  const headerAnimation = getAnimation(AnimationCategories.STATS, 'header');
+  const leftCardAnimation = getAnimation(AnimationCategories.STATS, 'leftCard');
+  const rightCardAnimation = getAnimation(AnimationCategories.STATS, 'rightCard');
+  const itemAnimation = getAnimation(AnimationCategories.STATS, 'item');
+
+  // Colorful gradients for progress bars
+  const gradients = [
+    'linear-gradient(90deg, #ff6b6b, #4ecdc4)',
+    'linear-gradient(90deg, #a8e6cf, #dcedc1)',
+    'linear-gradient(90deg, #8b4513, #d2691e)',
+    'linear-gradient(90deg, #667eea, #764ba2)',
+    'linear-gradient(90deg, #FC9460, #A92F5F)',
+    'linear-gradient(90deg, #64A47F, #EEB64B)',
+    'linear-gradient(90deg, #E54264, #442261)'
+  ];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -36,9 +58,7 @@ const StatsWidget = ({ projects: projectItems }) => {
     >
       {/* Header */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.2 }}
+        {...headerAnimation}
         style={{
           marginBottom: "3rem"
         }}
@@ -74,19 +94,17 @@ const StatsWidget = ({ projects: projectItems }) => {
         display: "grid",
         gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
         gap: "3rem",
-        maxWidth: "1000px",
+        width: "100%",
         margin: "0 auto"
       }}>
         {/* Tech Usage */}
         <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3 }}
+          {...leftCardAnimation}
           style={{
             background: "var(--card-bg)",
-            borderRadius: "20px",
+            borderRadius: "var(--border-radius)",
             padding: "2rem",
-            border: "1px solid var(--border)",
+            border: "2px solid var(--primary)",
             boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
             transform: "rotate(-1deg)"
           }}
@@ -103,9 +121,11 @@ const StatsWidget = ({ projects: projectItems }) => {
             {sortedTech.map(([tech, count], index) => (
               <motion.div
                 key={tech}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4 + index * 0.1 }}
+                {...itemAnimation}
+                transition={{ 
+                  ...itemAnimation.transition,
+                  delay: 0.4 + index * 0.1 
+                }}
                 style={{ display: "flex", alignItems: "center", gap: "1rem" }}
               >
                 <div style={{ 
@@ -121,7 +141,7 @@ const StatsWidget = ({ projects: projectItems }) => {
                     progress={count} 
                     max={Math.max(...sortedTech.map(([,c]) => c))}
                     height="12px"
-                    color="var(--primary)"
+                    color={gradients[index % gradients.length]}
                   />
                 </div>
                 <div style={{ 
@@ -140,14 +160,12 @@ const StatsWidget = ({ projects: projectItems }) => {
 
         {/* Yearly Breakdown */}
         <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.4 }}
+          {...rightCardAnimation}
           style={{
             background: "var(--card-bg)",
-            borderRadius: "20px",
+            borderRadius: "var(--border-radius)",
             padding: "2rem",
-            border: "1px solid var(--border)",
+            border: "2px solid var(--primary)",
             boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
             transform: "rotate(1deg)"
           }}
@@ -164,9 +182,11 @@ const StatsWidget = ({ projects: projectItems }) => {
             {sortedYears.map(([year, count], index) => (
               <motion.div
                 key={year}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 + index * 0.1 }}
+                {...itemAnimation}
+                transition={{ 
+                  ...itemAnimation.transition,
+                  delay: 0.5 + index * 0.1 
+                }}
                 style={{ display: "flex", alignItems: "center", gap: "1rem" }}
               >
                 <div style={{ 
@@ -182,7 +202,7 @@ const StatsWidget = ({ projects: projectItems }) => {
                     progress={count} 
                     max={Math.max(...sortedYears.map(([,c]) => c))}
                     height="12px"
-                    color="var(--primary)"
+                    color={gradients[index % gradients.length]}
                   />
                 </div>
                 <div style={{ 

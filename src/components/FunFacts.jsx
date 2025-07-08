@@ -2,6 +2,11 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Card, Section } from "./base";
 import { profile, uiContent } from "../data";
+import { 
+  AnimationCategories, 
+  getAnimation, 
+  AnimationPresets 
+} from "../utils/animations";
 
 const FunFacts = () => {
   const [currentFact, setCurrentFact] = React.useState(0);
@@ -10,6 +15,9 @@ const FunFacts = () => {
   if (!profile || !profile.funFacts) {
     return null;
   }
+
+  // Get animations from the centralized system
+  const textAnimation = getAnimation(AnimationCategories.SHOW_HIDE, 'slideUp');
 
   React.useEffect(() => {
     if (isVisible) {
@@ -26,7 +34,6 @@ const FunFacts = () => {
       icon={uiContent.sections.funFacts.icon}
       centered={true}
       style={{
-        maxWidth: '500px',
         width: '100%',
         margin: '0 auto'
       }}
@@ -36,10 +43,7 @@ const FunFacts = () => {
       <AnimatePresence mode="wait">
         <motion.p
           key={currentFact}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.3 }}
+          {...textAnimation}
           style={{
             margin: 0,
             fontSize: '0.95rem',

@@ -13,9 +13,9 @@ const InteractiveGrid = () => {
         gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
         gap: "2rem"
       }}>
-        {profile.homeSections.map((section, index) => (
+        {Object.entries(profile.skills.categories).map(([categoryName, categoryData], index) => (
           <motion.div
-            key={section.title}
+            key={categoryName}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
@@ -37,12 +37,12 @@ const InteractiveGrid = () => {
                   fontSize: "1.3rem",
                   fontWeight: "bold"
                 }}>
-                  {section.title}
+                  {categoryName}
                 </h3>
               </div>
 
               <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                {section.items.map((item, itemIndex) => (
+                {categoryData.skills.map((skill, itemIndex) => (
                   <motion.div
                     key={itemIndex}
                     initial={{ opacity: 0, x: -10 }}
@@ -61,14 +61,14 @@ const InteractiveGrid = () => {
                       lineHeight: "1.5",
                       fontSize: "0.95rem"
                     }}>
-                      {item}
+                      {skill.description}
                     </p>
                   </motion.div>
                 ))}
               </div>
 
               {/* Highlights */}
-              {selectedSection === index && (
+              {selectedSection === index && categoryData.highlights && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: "auto" }}
@@ -89,7 +89,7 @@ const InteractiveGrid = () => {
                     flexWrap: "wrap",
                     gap: "0.5rem"
                   }}>
-                    {section.highlights.map((highlight, highlightIndex) => (
+                    {categoryData.highlights.map((highlight, highlightIndex) => (
                       <span
                         key={highlightIndex}
                         style={{

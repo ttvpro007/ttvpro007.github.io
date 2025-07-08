@@ -1,27 +1,42 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Card } from "./base";
+import { 
+  AnimationCategories, 
+  getAnimation, 
+  AnimationPresets 
+} from "../utils/animations";
+import styles from "./FlipCard.module.css";
 
-const FlipCard = ({ card, index }) => {
-  const [isFlipped, setIsFlipped] = React.useState(false);
+const FlipCard = ({ card, index, entryStrategy = "entry" }) => {
+  const [isHovered, setIsHovered] = React.useState(false);
+
+  // Get animations from the centralized system
+  const entryAnimation = getAnimation(AnimationCategories.FLIP_CARD, entryStrategy);
+  const flipAnimation = getAnimation(AnimationCategories.FLIP_CARD, isHovered ? 'flip' : 'unflip');
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
+      {...entryAnimation}
+      transition={{ 
+        ...entryAnimation.transition,
+        delay: index * 0.1 
+      }}
+      className={styles.flipCardContainer}
       style={{ perspective: '1000px' }}
-      onClick={() => setIsFlipped(!isFlipped)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <motion.div
         style={{
-          width: '280px',
-          height: '200px',
+          width: '100%',
+          height: '100%',
+          aspectRatio: '1.4 / 1',
+          minHeight: '160px',
           position: 'relative',
           transformStyle: 'preserve-3d',
         }}
-        animate={{ rotateY: isFlipped ? 180 : 0 }}
-        transition={{ duration: 0.6, ease: 'easeInOut' }}
+        {...flipAnimation}
       >
         {/* Front of card */}
         <Card
@@ -38,13 +53,16 @@ const FlipCard = ({ card, index }) => {
           }}
           hover={true}
         >
-          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>{card.front.icon}</div>
-          <h3 style={{ margin: '0 0 0.5rem 0', fontSize: '1.2rem', textAlign: 'center' }}>{card.front.title}</h3>
-          <p style={{ margin: 0, fontSize: '0.9rem', opacity: 0.8, textAlign: 'center' }}>{card.front.subtitle}</p>
+          <div className={styles.flipCardFront}>
+            <div className={styles.flipCardIcon}>{card.front.icon}</div>
+            <h3 className={styles.flipCardTitle}>{card.front.title}</h3>
+            <p className={styles.flipCardSubtitle}>{card.front.subtitle}</p>
+          </div>
         </Card>
 
         {/* Back of card */}
         <motion.div
+          className={styles.flipCardBack}
           style={{
             position: 'absolute',
             width: '100%',
@@ -62,7 +80,7 @@ const FlipCard = ({ card, index }) => {
             textAlign: 'center',
           }}
         >
-          <p style={{ margin: 0, fontSize: '0.95rem', lineHeight: 1.4 }}>{card.back.content}</p>
+          <div className={styles.flipCardBackText}>{card.back.content}</div>
         </motion.div>
       </motion.div>
     </motion.div>

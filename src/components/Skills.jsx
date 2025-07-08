@@ -20,7 +20,7 @@ const Skills = () => {
         margin: '0 auto'
       }}
     >
-      {Object.entries(profile.skills.categories).map(([categoryName, skills], categoryIndex) => (
+      {Object.entries(profile.skills.categories).map(([categoryName, categoryData], categoryIndex) => (
         <div key={categoryIndex} style={{ marginBottom: '2rem' }}>
           <h3 style={{ 
             textAlign: 'center', 
@@ -30,7 +30,7 @@ const Skills = () => {
           }}>
             {categoryName}
           </h3>
-          {skills.map((skill, skillIndex) => (
+          {categoryData.skills.map((skill, skillIndex) => (
             <SkillBar 
               key={skillIndex} 
               skill={skill} 
