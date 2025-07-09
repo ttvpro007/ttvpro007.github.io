@@ -3,30 +3,21 @@ import { motion } from 'framer-motion';
 import { Card } from "./base";
 import '../styling/components/social-links.css';
 
-export default function SocialLinks({ socialLinks }) {
-  const getIcon = (iconComponent) => {
-    switch (iconComponent) {
-      case 'linkedin':
-        return '💼';
-      case 'github':
-        return '🐙';
-      case 'twitter':
-        return '🐦';
-      case 'discord':
-        return '🎮';
-      case 'email':
-        return '📧';
-      default:
-        return '🔥';
-    }
-  };
+const EmailSVG = (
+  <svg width="1.5em" height="1.5em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="24" height="24" rx="6" fill="#d44638"/>
+    <path d="M5 8.5V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8.5l-7 5-7-5Z" fill="#fff"/>
+    <path d="M19 7a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1l7 5 7-5Z" fill="#fff"/>
+  </svg>
+);
 
+export default function SocialLinks({ socialLinks }) {
   return (
     <Card hover={false}>
       <div className="social-links-container">
         <h3 className="social-links-title">
           <span>🏕️</span>
-          Contact Campfires
+          Social Links
         </h3>
         <div className="social-links-list">
           {socialLinks.map((link, index) => (
@@ -39,30 +30,15 @@ export default function SocialLinks({ socialLinks }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
-              whileHover={{ 
-                scale: 1.02,
-                background: 'rgba(238, 182, 75, 0.2)',
-                borderColor: 'var(--primary)',
-                transform: 'translateY(-2px)',
-                boxShadow: '0 4px 12px rgba(238, 182, 75, 0.3)'
-              }}
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <div className="social-link-icon">
-                <span>{getIcon(link.iconComponent)}</span>
-                <motion.div
-                  className="social-link-sparkle"
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [0.5, 1, 0.5]
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    delay: index * 0.5
-                  }}
-                />
-              </div>
+              <span className="social-link-icon">
+                {link.icon === 'email-svg' ? EmailSVG :
+                  link.icon && link.icon.startsWith('http') ? (
+                    <img src={link.icon} alt={link.name + ' icon'} style={{ width: '1.5em', height: '1.5em', verticalAlign: 'middle' }} />
+                  ) : null}
+              </span>
               <span className="social-link-name">{link.name}</span>
             </motion.a>
           ))}

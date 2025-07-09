@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { Card } from './base';
 import '../styling/components/quest-form.css';
 
-export default function QuestForm({ formFields, submitLabel, onSubmit, progressPerField, maxProgress }) {
-  const [formData, setFormData] = useState({});
+// Accept refs from parent for form and hidden message input
+const QuestForm = forwardRef(function QuestForm({ formFields, submitLabel, progressPerField, maxProgress, onInputChange, formData, onSubmit }, ref) {
   const [progress, setProgress] = useState(0);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const validFields = formFields.filter(field => {
@@ -18,22 +17,8 @@ export default function QuestForm({ formFields, submitLabel, onSubmit, progressP
   }, [formData, formFields, progressPerField, maxProgress]);
 
   const handleInputChange = (id, value) => {
-    setFormData(prev => ({
-      ...prev,
-      [id]: value
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (progress < maxProgress) return;
-    setIsSubmitting(true);
-    try {
-      await onSubmit(formData);
-    } catch (error) {
-      console.error('Quest submission failed:', error);
-    } finally {
-      setIsSubmitting(false);
+    if (onInputChange) {
+      onInputChange(id, value);
     }
   };
 
@@ -63,7 +48,7 @@ export default function QuestForm({ formFields, submitLabel, onSubmit, progressP
             value={value}
             onChange={(e) => handleInputChange(field.id, e.target.value)}
             placeholder={field.placeholder}
-            className={fieldClass}
+            className={fieldClass + (field.id === 'details' ? ' quest-details' : '')}
             required={field.required}
             rows={4}
           />
@@ -82,15 +67,15 @@ export default function QuestForm({ formFields, submitLabel, onSubmit, progressP
     }
   };
 
-  const submitClass = `quest-submit${progress >= maxProgress ? ' ready' : ''}${isSubmitting ? ' submitting' : ''}`;
+  const submitClass = `quest-submit${progress >= maxProgress ? ' ready' : ''}`;
 
   return (
-    <motion.form
-      onSubmit={handleSubmit}
+    <form
+      ref={el => { if (ref && typeof ref === 'object' && ref.current) ref.current.form = el; }}
+      action="https://formsubmit.co/vitiet.programmer@gmail.com"
+      method="POST"
       className="quest-form"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
+      onSubmit={onSubmit}
     >
       <Card className="quest-form-container" hover={false}>
         {/* Progress Bar */}
@@ -126,11 +111,17 @@ export default function QuestForm({ formFields, submitLabel, onSubmit, progressP
             </motion.div>
           ))}
         </div>
+        {/* Hidden RPG message field */}
+        <input
+          type="hidden"
+          name="message"
+          ref={el => { if (ref && typeof ref === 'object' && ref.current) ref.current.hiddenMessage = el; }}
+        />
         {/* Submit Button */}
         <motion.button
           type="submit"
-          className={submitClass}
-          disabled={progress < maxProgress || isSubmitting}
+          className={submitClass + " center-submit"}
+          disabled={progress < maxProgress}
           whileHover={progress >= maxProgress ? { scale: 1.02 } : {}}
           whileTap={progress >= maxProgress ? { scale: 0.98 } : {}}
           animate={progress >= maxProgress ? {
@@ -143,9 +134,24 @@ export default function QuestForm({ formFields, submitLabel, onSubmit, progressP
           transition={{ duration: 2, repeat: Infinity }}
         >
           <span className="submit-icon">💎</span>
-          {isSubmitting ? 'Sending Quest...' : submitLabel}
+          {submitLabel}
         </motion.button>
       </Card>
-    </motion.form>
+    </form>
+  );
+});
+
+export default QuestForm;
+
+// Utility to format form data into a gamified RPG-style email content
+export function formatQuestEmailContent(formData) {
+  const name = formData.name || 'Unknown Adventurer';
+  const email = formData.email || 'Unknown Realm';
+  const details = formData.details || '';
+  return (
+    `📜Quest Alert!📜\n` +
+    `Brave Adventurer ${name} of <${email}> has sent a quest scroll:\n` +
+    `“${details}”\n` +
+    `Will you answer the call?`
   );
 } 

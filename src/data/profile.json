@@ -224,10 +224,10 @@
   "hq": {
     "title": "Command Center",
     "location": "Digital Realm",
-    "coordinates": "42.3601° N, 71.0589° W",
-    "timezone": "UTC-5",
+    "coordinates": "43.5901° N, -79.7736° W",
+    "timezone": "UTC-4",
     "status": "Online",
-    "description": "My digital headquarters where I craft games and code adventures. Currently stationed in the Boston area.",
+    "description": "My digital headquarters where I craft games and code adventures. Currently stationed in the Mississauga area.",
     "icon": "🏰"
   },
   "contact": {
@@ -235,10 +235,17 @@
     "subtitleText": "Send me a quest below.",
     "formFields": [
       {
-        "id": "heroName",
-        "label": "Hero/Heroine Name",
+        "id": "name",
+        "label": "Adventurer's Name",
         "type": "text",
-        "placeholder": "What shall I call you?",
+        "placeholder": "What do the bards call you?",
+        "required": true
+      },
+      {
+        "id": "email",
+        "label": "Adventurer's Email",
+        "type": "email",
+        "placeholder": "Where can the guild reach you?",
         "required": true
       },
       {
@@ -266,7 +273,7 @@
     "submitLabel": "Send Quest",
     "confirmationTitle": "Quest Sent!",
     "confirmationText": "Thanks for reaching out — I'll reply ASAP. Your message has been sent to my quest log!",
-    "progressPerField": 25,
+    "progressPerField": 20,
     "maxProgress": 100
   }
 } 
