@@ -233,6 +233,11 @@
   "contact": {
     "titleText": "Embark on a New Adventure!",
     "subtitleText": "Send me a quest below.",
+    "formConfig": {
+      "action": "https://formsubmit.co/vitiet.programmer@gmail.com",
+      "testAction": "https://formsubmit.co/vimulude@mailgolem.com",
+      "method": "POST"
+    },
     "formFields": [
       {
         "id": "name",

@@ -79,6 +79,7 @@ export default function Contact() {
               onInputChange={handleInputChange}
               formData={formData}
               onSubmit={handleSubmit}
+              formConfig={profileData.contact.formConfig}
             />
           </div>
         </section>

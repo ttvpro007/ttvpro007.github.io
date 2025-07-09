@@ -6,6 +6,7 @@ import SearchAndFilter from "../components/SearchAndFilter";
 import ProjectModal from "../components/ProjectModal";
 import { projects } from "../data";
 import { ProgressBar } from "../components/base";
+import "../styling/pages/projects.css";
 
 const Projects = ({ isTransitioning = false }) => {
   const [filteredProjects, setFilteredProjects] = useState(projects.items);
@@ -80,32 +81,17 @@ const Projects = ({ isTransitioning = false }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-          style={{
-            position: "relative",
-            minHeight: "100vh",
-            overflow: "visible"
-          }}
+          className="projects-main-container"
         >
           {/* Floating Background Elements */}
-          <div style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            pointerEvents: "none",
-            zIndex: -1
-          }}>
+          <div className="projects-floating-background">
             {[...Array(6)].map((_, i) => (
               <motion.div
                 key={i}
+                className="projects-floating-element"
                 style={{
-                  position: "absolute",
                   width: Math.random() * 200 + 50,
                   height: Math.random() * 200 + 50,
-                  background: `radial-gradient(circle, var(--primary) 0%, transparent 70%)`,
-                  opacity: 0.03,
-                  borderRadius: "50%",
                   top: `${Math.random() * 100}%`,
                   left: `${Math.random() * 100}%`,
                 }}
@@ -133,11 +119,7 @@ const Projects = ({ isTransitioning = false }) => {
                 duration: 0.6, 
                 ease: [0.25, 0.46, 0.45, 0.94] 
               }}
-              style={{
-                width: "100%",
-                margin: "0 auto 3rem auto",
-                transform: "rotate(-1deg)"
-              }}
+              className="projects-featured-container"
             >
               <FeaturedProject project={featuredProject} />
             </motion.div>
@@ -152,20 +134,9 @@ const Projects = ({ isTransitioning = false }) => {
               duration: 0.5, 
               ease: [0.25, 0.46, 0.45, 0.94] 
             }}
-            style={{
-              width: "100%",
-              margin: "0 auto 3rem auto"
-            }}
+            className="projects-stats-container"
           >
-            <div 
-              className="compact-stats-grid"
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "2rem",
-                alignItems: "start"
-              }}
-            >
+            <div className="projects-compact-stats-grid">
               {/* Most Used Tech */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
@@ -175,28 +146,12 @@ const Projects = ({ isTransitioning = false }) => {
                   duration: 0.5, 
                   ease: [0.25, 0.46, 0.45, 0.94] 
                 }}
-                className="compact-stats-card"
-                style={{
-                  background: "var(--card-bg)",
-                  borderRadius: "var(--border-radius)",
-                  padding: "1.5rem",
-                  border: "2px solid var(--primary)",
-                  boxShadow: "0 8px 25px rgba(0, 0, 0, 0.1)",
-                  transform: "rotate(-0.5deg"
-                }}
+                className="projects-compact-stats-card projects-compact-stats-card-left"
               >
-                <h3 
-                  className="compact-stats-title body-text"
-                  style={{ 
-                    color: "var(--text)", 
-                    marginBottom: "1rem",
-                    fontWeight: "bold",
-                    textAlign: "center"
-                  }}
-                >
+                <h3 className="projects-compact-stats-title body-text">
                   🛠️ Most Used Tech
                 </h3>
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                <div className="projects-compact-stats-items">
                   {(() => {
                     const techUsage = {};
                     projects.items.forEach(project => {
@@ -217,18 +172,12 @@ const Projects = ({ isTransitioning = false }) => {
                           delay: 0.6 + index * 0.1,
                           duration: 0.3
                         }}
-                        className="compact-stats-item"
-                        style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}
+                        className="projects-compact-stats-item"
                       >
-                        <div style={{ 
-                          minWidth: "60px",
-                          fontWeight: "600",
-                          fontSize: "0.9rem",
-                          color: "var(--text)"
-                        }}>
+                        <div className="projects-compact-stats-label">
                           {tech}
                         </div>
-                        <div style={{ flex: 1 }}>
+                        <div className="projects-compact-stats-progress">
                           <ProgressBar
                             progress={count}
                             max={Math.max(...sortedTech.map(([,c]) => c))}
@@ -238,13 +187,7 @@ const Projects = ({ isTransitioning = false }) => {
                             animated={true}
                           />
                         </div>
-                        <div style={{ 
-                          minWidth: "25px",
-                          textAlign: "right",
-                          fontSize: "0.85rem",
-                          color: "var(--primary)",
-                          fontWeight: "bold"
-                        }}>
+                        <div className="projects-compact-stats-count">
                           {count}
                         </div>
                       </motion.div>
@@ -262,28 +205,12 @@ const Projects = ({ isTransitioning = false }) => {
                   duration: 0.5, 
                   ease: [0.25, 0.46, 0.45, 0.94] 
                 }}
-                className="compact-stats-card"
-                style={{
-                  background: "var(--card-bg)",
-                  borderRadius: "var(--border-radius)",
-                  padding: "1.5rem",
-                  border: "2px solid var(--primary)",
-                  boxShadow: "0 8px 25px rgba(0, 0, 0, 0.1)",
-                  transform: "rotate(0.5deg)"
-                }}
+                className="projects-compact-stats-card projects-compact-stats-card-right"
               >
-                <h3 
-                  className="compact-stats-title body-text"
-                  style={{ 
-                    color: "var(--text)", 
-                    marginBottom: "1rem",
-                    fontWeight: "bold",
-                    textAlign: "center"
-                  }}
-                >
+                <h3 className="projects-compact-stats-title body-text">
                   📅 Projects by Year
                 </h3>
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                <div className="projects-compact-stats-items">
                   {(() => {
                     const yearlyBreakdown = {};
                     projects.items.forEach(project => {
@@ -301,18 +228,12 @@ const Projects = ({ isTransitioning = false }) => {
                           delay: 0.6 + index * 0.1,
                           duration: 0.3
                         }}
-                        className="compact-stats-item"
-                        style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}
+                        className="projects-compact-stats-item"
                       >
-                        <div style={{ 
-                          minWidth: "60px",
-                          fontWeight: "600",
-                          fontSize: "0.9rem",
-                          color: "var(--text)"
-                        }}>
+                        <div className="projects-compact-stats-label">
                           {year}
                         </div>
-                        <div style={{ flex: 1 }}>
+                        <div className="projects-compact-stats-progress">
                           <ProgressBar
                             progress={count}
                             max={Math.max(...sortedYears.map(([,c]) => c))}
@@ -322,13 +243,7 @@ const Projects = ({ isTransitioning = false }) => {
                             animated={true}
                           />
                         </div>
-                        <div style={{ 
-                          minWidth: "25px",
-                          textAlign: "right",
-                          fontSize: "0.85rem",
-                          color: "var(--primary)",
-                          fontWeight: "bold"
-                        }}>
+                        <div className="projects-compact-stats-count">
                           {count}
                         </div>
                       </motion.div>
@@ -361,23 +276,9 @@ const Projects = ({ isTransitioning = false }) => {
               duration: 0.6, 
               ease: [0.25, 0.46, 0.45, 0.94] 
             }}
-            style={{
-              margin: "0 auto",
-              paddingBottom: "4rem",
-              width: "100%"
-            }}
+            className="projects-grid-container"
           >
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-              gap: "2rem",
-              gridAutoRows: "auto",
-              gridAutoFlow: "dense",
-              alignItems: "start",
-              justifyContent: "center",
-              justifyItems: "center",
-              overflow: "visible" // <-- allow overflow for scaled cards
-            }}>
+            <div className="projects-masonry-grid">
               <AnimatePresence>
                 {nonFeaturedProjects.map((project, index) => {
                   const size = getProjectSize(index);
@@ -399,25 +300,13 @@ const Projects = ({ isTransitioning = false }) => {
                         zIndex: 10, // bring to front on hover
                         transition: { duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }
                       }}
+                      className="projects-card-wrapper"
                       style={{
                         transform: `rotate(${Math.sin(index) * 2}deg)`,
-                        position: "relative",
-                        zIndex: 1,
-                        overflow: "visible", // <-- allow overflow for scaled card
-                        // Make large cards span 2 columns without affecting grid flow
                         gridColumn: size === 'large' ? 'span 2' : 'span 1'
                       }}
                     >
-                      <div style={{
-                        minHeight: size === 'large' ? '400px' : size === 'medium' ? '320px' : '280px',
-                        transition: "all 0.3s ease",
-                        position: "relative",
-                        zIndex: 2,
-                        width: "100%",
-                        display: "flex",
-                        flexDirection: "column",
-                        overflow: "visible" // <-- ensure child can overflow
-                      }}>
+                      <div className={`projects-card-container ${size}`}>
                         <ProjectCard 
                           project={project} 
                           size={size}
@@ -440,31 +329,19 @@ const Projects = ({ isTransitioning = false }) => {
                   duration: 0.5, 
                   ease: [0.25, 0.46, 0.45, 0.94] 
                 }}
-                style={{
-                  textAlign: "center",
-                  padding: "6rem 2rem",
-                  background: "var(--card-bg)",
-                  borderRadius: "var(--border-radius)",
-                  border: "2px solid var(--primary)",
-                  margin: "2rem 0",
-                  transform: "rotate(-0.5deg)"
-                }}
+                className="projects-no-results"
               >
                 <motion.div
                   animate={{ rotate: [0, 10, -10, 0] }}
                   transition={{ duration: 2, repeat: Infinity }}
-                  style={{ fontSize: "5rem", marginBottom: "1rem" }}
+                  className="projects-no-results-icon"
                 >
                   {projects.ui.noResults.icon}
                 </motion.div>
-                <h3 style={{ 
-                  marginBottom: "0.5rem", 
-                  color: "var(--text)",
-                  fontSize: "1.5rem"
-                }}>
+                <h3 className="projects-no-results-title">
                   {projects.ui.noResults.title}
                 </h3>
-                <p style={{ color: "var(--text-secondary)" }}>
+                <p className="projects-no-results-description">
                   {projects.ui.noResults.description}
                 </p>
               </motion.div>
@@ -473,42 +350,6 @@ const Projects = ({ isTransitioning = false }) => {
 
 
 
-          {/* Responsive Design */}
-          <style>{`
-            @media (max-width: 1024px) {
-              .floating-stats {
-                display: none !important;
-              }
-              .masonry-grid {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
-              }
-            }
-            @media (max-width: 768px) {
-              h1 {
-                font-size: 2.5rem !important;
-              }
-              .hero-section {
-                padding: 2rem 1rem 4rem 1rem !important;
-              }
-              .masonry-grid {
-                grid-template-columns: 1fr !important;
-                gap: 1.5rem !important;
-              }
-              .compact-stats-grid {
-                grid-template-columns: 1fr !important;
-                gap: 1.5rem !important;
-              }
-              .compact-stats-card {
-                padding: 1rem !important;
-              }
-              .compact-stats-title {
-                font-size: 1rem !important;
-              }
-              .compact-stats-item {
-                font-size: 0.8rem !important;
-              }
-            }
-          `}</style>
         </motion.div>
 
         {/* Full-Screen Modal */}

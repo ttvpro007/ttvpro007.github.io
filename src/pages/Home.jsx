@@ -6,6 +6,7 @@ import FlipCards from '../components/FlipCards';
 import Timeline from '../components/Timeline';
 import FunFacts from '../components/FunFacts';
 import ShowAndTell from '../components/ShowAndTell';
+import '../styling/pages/home.css';
 
 export default function Home() {
   const [bounce, setBounce] = React.useState(false);
@@ -14,15 +15,7 @@ export default function Home() {
   // Add loading state check
   if (!profile || !profile.personal) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        minHeight: '50vh',
-        color: 'var(--text-secondary)'
-      }}
-      className="body-text"
-      >
+      <div className="home-loading body-text">
         Loading...
       </div>
     );
@@ -31,42 +24,19 @@ export default function Home() {
   return (
     <main>
       <div className="body-panel">
-        <section style={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
-          alignItems: 'center', 
-          justifyContent: 'center', 
-          gap: '2rem'
-        }}>
+        <section className="home-main-section">
           {/* Hero Section */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: 'easeOut' }}
-            style={{
-              background: 'var(--card-bg)',
-              borderRadius: 'var(--border-radius)',
-              boxShadow: 'var(--shadow)',
-              border: '2px solid var(--primary)',
-              padding: '2.5rem 2rem',
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
+            className="home-hero"
           >
-            <div style={{ position: 'relative', display: 'inline-block' }}>
+            <div className="home-profile-container">
               <motion.img
                 src={profile.personal?.profilePic}
                 alt={profile.personal?.name + " profile"}
-                style={{ 
-                  borderRadius: '50%', 
-                  marginBottom: '1.5rem', 
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.08)', 
-                  objectFit: 'cover', 
-                  border: '4px solid var(--primary)', 
-                  boxShadow: '0 0 16px var(--primary)' 
-                }}
+                className="home-profile-pic"
                 width={160}
                 height={160}
                 animate={bounce ? { y: [0, -30, 0], scale: [1, 1.15, 1] } : {}}
@@ -78,7 +48,7 @@ export default function Home() {
                   setTimeout(() => setConfetti(false), 700);
                 }}
               />
-              <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none' }}>
+              <div className="home-confetti-container">
                 <Confetti active={confetti} config={{
                   angle: 90,
                   spread: 60,
@@ -95,19 +65,20 @@ export default function Home() {
               </div>
             </div>
             
-            <h1 className="header-1" style={{ margin: 0 }}>{profile.personal?.name}</h1>
-            <p className="body-text" style={{ fontStyle: 'italic', margin: '0.5rem 0 1.5rem 0', textAlign: 'center' }}>
+            <h1 className="header-1 home-hero-title">{profile.personal?.name}</h1>
+            <p className="body-text home-hero-tagline">
               {profile.personal?.tagline}
             </p>
             
-            <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '2rem' }}>
+            <div className="home-social-links">
               {profile.socialLinks?.map(link => (
                 <a
                   key={link.type}
                   href={link.url}
                   target={link.type !== 'email' ? '_blank' : undefined}
                   rel={link.type !== 'email' ? 'noopener noreferrer' : undefined}
-                  style={{ textDecoration: 'none', color: link.color }}
+                  className="home-social-link"
+                  style={{ color: link.color }}
                 >
                   {link.icon === 'email-svg' ? (
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#eee"/><path d="M4 8V16C4 17.1046 4.89543 18 6 18H18C19.1046 18 20 17.1046 20 16V8C20 6.89543 19.1046 6 18 6H6C4.89543 6 4 6.89543 4 8Z" stroke="#d44638" strokeWidth="2"/><path d="M4 8L12 13L20 8" stroke="#d44638" strokeWidth="2"/></svg>

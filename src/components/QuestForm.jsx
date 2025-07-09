@@ -4,7 +4,7 @@ import { Card } from './base';
 import '../styling/components/quest-form.css';
 
 // Accept refs from parent for form and hidden message input
-const QuestForm = forwardRef(function QuestForm({ formFields, submitLabel, progressPerField, maxProgress, onInputChange, formData, onSubmit }, ref) {
+const QuestForm = forwardRef(function QuestForm({ formFields, submitLabel, progressPerField, maxProgress, onInputChange, formData, onSubmit, formConfig }, ref) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -72,8 +72,9 @@ const QuestForm = forwardRef(function QuestForm({ formFields, submitLabel, progr
   return (
     <form
       ref={el => { if (ref && typeof ref === 'object' && ref.current) ref.current.form = el; }}
-      action="https://formsubmit.co/vitiet.programmer@gmail.com"
-      method="POST"
+      // action={formConfig?.action || "https://formsubmit.co/vitiet.programmer@gmail.com"}
+      action={formConfig?.testAction || "https://formsubmit.co/vitiet.programmer@gmail.com"}
+      method={formConfig?.method || "POST"}
       className="quest-form"
       onSubmit={onSubmit}
     >
