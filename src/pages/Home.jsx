@@ -5,7 +5,6 @@ import profile from '../data/profile.json';
 import FlipCards from '../components/FlipCards';
 import Timeline from '../components/Timeline';
 import FunFacts from '../components/FunFacts';
-import Skills from '../components/Skills';
 import ShowAndTell from '../components/ShowAndTell';
 
 export default function Home() {
@@ -120,20 +119,18 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* Flip Cards Section */}
-          <FlipCards />
-
           {/* Timeline Section */}
           <Timeline />
+
+          {/* Flip Cards Section */}
+          <FlipCards />
 
           {/* Fun Facts Section */}
           <FunFacts />
 
-          {/* Skills Section */}
-          <Skills />
-
           {/* Show and Tell Section */}
           <ShowAndTell />
+
         </section>
       </div>
     </main>

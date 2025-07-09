@@ -83,7 +83,7 @@ const Projects = ({ isTransitioning = false }) => {
           style={{
             position: "relative",
             minHeight: "100vh",
-            overflow: "hidden"
+            overflow: "visible"
           }}
         >
           {/* Floating Background Elements */}
@@ -376,6 +376,7 @@ const Projects = ({ isTransitioning = false }) => {
               alignItems: "start",
               justifyContent: "center",
               justifyItems: "center",
+              overflow: "visible" // <-- allow overflow for scaled cards
             }}>
               <AnimatePresence>
                 {nonFeaturedProjects.map((project, index) => {
@@ -395,12 +396,14 @@ const Projects = ({ isTransitioning = false }) => {
                       whileHover={{ 
                         y: -8,
                         scale: 1.02,
+                        zIndex: 10, // bring to front on hover
                         transition: { duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }
                       }}
                       style={{
                         transform: `rotate(${Math.sin(index) * 2}deg)`,
                         position: "relative",
                         zIndex: 1,
+                        overflow: "visible", // <-- allow overflow for scaled card
                         // Make large cards span 2 columns without affecting grid flow
                         gridColumn: size === 'large' ? 'span 2' : 'span 1'
                       }}
@@ -412,7 +415,8 @@ const Projects = ({ isTransitioning = false }) => {
                         zIndex: 2,
                         width: "100%",
                         display: "flex",
-                        flexDirection: "column"
+                        flexDirection: "column",
+                        overflow: "visible" // <-- ensure child can overflow
                       }}>
                         <ProjectCard 
                           project={project} 

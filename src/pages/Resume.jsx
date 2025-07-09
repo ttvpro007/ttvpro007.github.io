@@ -42,47 +42,47 @@ const Resume = () => {
                 {profile.personal.tagline}
               </p>
             </div>
-            
-            {/* All Skills Section (all categories, concise version) */}
-            <div style={{ maxWidth: '800px', margin: '0 auto', width: '100%' }}>
-              <h3 className="header-3" style={{ color: "var(--text)", marginBottom: "0.5rem", textAlign: 'center', fontSize: '1.1rem' }}>Skills</h3>
-              {profile.skills && profile.skills.categories && Object.entries(profile.skills.categories).map(([categoryName, categoryData], categoryIndex) => (
-                <div key={categoryIndex} style={{ marginBottom: categoryIndex !== Object.keys(profile.skills.categories).length - 1 ? '1rem' : 0 }}>
-                  <h4 style={{
-                    textAlign: 'center',
-                    marginBottom: '0.25rem',
-                    color: 'var(--primary)',
-                    fontSize: '0.98rem',
-                    fontWeight: 600
-                  }}>{categoryName}</h4>
-                  {categoryData.skills.map((skill, skillIndex) => {
-                    // Concise skill bar: no description, smaller bar, tighter spacing
-                    const percent = skill.level || skill.percentage;
-                    return (
-                      <div key={skillIndex} style={{ marginBottom: '0.5rem', width: '100%' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.15rem' }}>
-                          <span style={{ marginRight: '0.4rem', fontSize: '1rem' }}>{skill.icon}</span>
-                          <span style={{ fontWeight: 500, fontSize: '0.98rem', marginRight: 'auto' }}>{skill.name}</span>
-                          <span style={{ fontSize: '0.85rem', opacity: 0.7 }}>{percent}%</span>
-                        </div>
-                        <div style={{ width: '100%' }}>
-                          <ProgressBar
-                            progress={percent}
-                            max={100}
-                            height="7px"
-                            color={skill.color || (skill.theme === 'filament' ? 'linear-gradient(90deg, #ff6b6b, #4ecdc4)' : skill.theme === 'switch' ? 'linear-gradient(90deg, #a8e6cf, #dcedc1)' : skill.theme === 'shavings' ? 'linear-gradient(90deg, #8b4513, #d2691e)' : skill.theme === 'rocket' ? 'linear-gradient(90deg, #667eea, #764ba2)' : 'var(--primary)')}
-                            bgColor="#222"
-                            glow={true}
-                            animatedGradient={skill.theme === 'filament' || skill.theme === 'switch' || skill.theme === 'shavings' || skill.theme === 'rocket'}
-                            animated={true}
-                          />
-                        </div>
+          </Card>
+
+          {/* Skills Section (all categories, concise version) */}
+          <Card style={{ marginBottom: "2rem", maxWidth: '800px', marginLeft: 'auto', marginRight: 'auto', width: '100%' }}>
+            <h3 className="header-3" style={{ color: "var(--text)", marginBottom: "0.5rem", textAlign: 'center', fontSize: '1.1rem' }}>Skills</h3>
+            {profile.skills && profile.skills.categories && Object.entries(profile.skills.categories).map(([categoryName, categoryData], categoryIndex) => (
+              <div key={categoryIndex} style={{ marginBottom: categoryIndex !== Object.keys(profile.skills.categories).length - 1 ? '1rem' : 0 }}>
+                <h4 style={{
+                  textAlign: 'center',
+                  marginBottom: '0.25rem',
+                  color: 'var(--primary)',
+                  fontSize: '0.98rem',
+                  fontWeight: 600
+                }}>{categoryName}</h4>
+                {categoryData.skills.map((skill, skillIndex) => {
+                  // Concise skill bar: no description, smaller bar, tighter spacing
+                  const percent = skill.level || skill.percentage;
+                  return (
+                    <div key={skillIndex} style={{ marginBottom: '0.5rem', width: '100%' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.15rem' }}>
+                        <span style={{ marginRight: '0.4rem', fontSize: '1rem' }}>{skill.icon}</span>
+                        <span style={{ fontWeight: 500, fontSize: '0.98rem', marginRight: 'auto' }}>{skill.name}</span>
+                        <span style={{ fontSize: '0.85rem', opacity: 0.7 }}>{percent}%</span>
                       </div>
-                    );
-                  })}
-                </div>
-              ))}
-            </div>
+                      <div style={{ width: '100%' }}>
+                        <ProgressBar
+                          progress={percent}
+                          max={100}
+                          height="7px"
+                          color={skill.color || (skill.theme === 'filament' ? 'linear-gradient(90deg, #ff6b6b, #4ecdc4)' : skill.theme === 'switch' ? 'linear-gradient(90deg, #a8e6cf, #dcedc1)' : skill.theme === 'shavings' ? 'linear-gradient(90deg, #8b4513, #d2691e)' : skill.theme === 'rocket' ? 'linear-gradient(90deg, #667eea, #764ba2)' : 'var(--primary)')}
+                          bgColor="#222"
+                          glow={true}
+                          animatedGradient={skill.theme === 'filament' || skill.theme === 'switch' || skill.theme === 'shavings' || skill.theme === 'rocket'}
+                          animated={true}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
           </Card>
 
           {/* Projects Section */}

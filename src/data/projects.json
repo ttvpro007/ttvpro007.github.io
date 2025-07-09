@@ -78,10 +78,10 @@
           "text": "No external links available for this project"
         },
         "links": {
-          "liveDemo": "🚀 Live Demo",
-          "appStore": "📱 App Store",
-          "github": "📁 View on GitHub",
-          "itchio": "🎮 Play on itch.io"
+          "liveDemo": { "label": "Live Demo", "icon": "🚀", "variant": "outline" },
+          "appStore": { "label": "App Store", "icon": "📱", "variant": "outline" },
+          "github": { "label": "View on GitHub", "icon": "📁", "variant": "primary" },
+          "itchio": { "label": "Play on itch.io", "icon": "🎮", "variant": "primary" }
         }
       },
       "imageGallery": {
@@ -123,10 +123,10 @@
       "linkSource": "github",
       "category": "Game Dev",
       "year": 2024,
-      "featured": true,
+      "featured": false,
       "demo": "https://demo.example.com",
       "appStore": null,
-      "showOnResume": true,
+      "showOnResume": false,
       "resumeOrder": 1
     },
     {
@@ -174,7 +174,7 @@
       "linkSource": "itchio",
       "category": "Game Dev",
       "year": 2024,
-      "featured": false,
+      "featured": true,
       "demo": "https://cryobyte-studio.itch.io/catavaneer",
       "appStore": null,
       "showOnResume": true,

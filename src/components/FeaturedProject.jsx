@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { Badge, Button } from "./base";
+import { AnimatedContainer, Badge, Button, TechStack } from "./base";
 import ProjectModal from "./ProjectModal";
 import { projects } from "../data";
 
@@ -17,10 +16,8 @@ const FeaturedProject = ({ project }) => {
 
   return (
     <>
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+      <AnimatedContainer
+        entryStrategy="slideUp"
         style={{
           position: "relative",
           height: projects.config.layout.featuredHeight,
@@ -29,6 +26,8 @@ const FeaturedProject = ({ project }) => {
           marginBottom: "2rem",
           boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
           width: "100%",
+          border: "3px solid var(--primary)",
+          boxSizing: "border-box"
         }}
       >
         {/* Background Image */}
@@ -50,10 +49,13 @@ const FeaturedProject = ({ project }) => {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "flex-end",
+          justifyContent: "flex-start",
           padding: "2rem",
+          boxSizing: "border-box",
+          overflow: "auto",
           color: "white",
           width: "100%",
+          paddingTop: "2.5rem", // extra top padding to ensure header is not cut off
         }}>
           {/* Featured Badge */}
           <div style={{ marginBottom: "1rem" }}>
@@ -72,47 +74,34 @@ const FeaturedProject = ({ project }) => {
 
           {/* Project Title */}
           <h2 style={{
-            margin: "0 0 1rem 0",
-            fontSize: "2.5rem",
+            margin: 0,
+            fontSize: "1.3rem",
             fontWeight: "bold",
-            textShadow: "0 2px 4px rgba(0,0,0,0.5)"
+            color: "var(--text)",
+            textShadow: "0 1px 2px rgba(0,0,0,0.1)",
+            lineHeight: "1.2"
           }}>
             {project.title}
           </h2>
 
           {/* Project Description */}
           <p style={{
-            margin: "0 0 1.5rem 0",
-            fontSize: "1.1rem",
+            margin: "0.75rem 0 1.25rem 0",
+            fontSize: "0.9rem",
+            color: "var(--text-secondary)",
             lineHeight: "1.6",
-            textShadow: "0 1px 2px rgba(0,0,0,0.5)",
+            textShadow: "0 1px 1px rgba(0,0,0,0.05)",
             width: "100%"
           }}>
             {project.longDescription || project.description}
           </p>
 
           {/* Tech Stack */}
-          <div style={{
-            display: "flex",
-            gap: "0.75rem",
-            marginBottom: "1.5rem",
-            flexWrap: "wrap"
-          }}>
-            {project.tech.map((tech, index) => (
-              <Badge
-                key={index}
-                style={{
-                  background: "rgba(255, 255, 255, 0.2)",
-                  color: "white",
-                  border: "1px solid rgba(255, 255, 255, 0.3)",
-                  fontSize: "0.9rem",
-                  padding: "0.5rem 1rem"
-                }}
-              >
-                {tech}
-              </Badge>
-            ))}
-          </div>
+          <TechStack 
+            tech={project.tech}
+            maxDisplay={4}
+            style={{ marginBottom: "1rem" }}
+          />
 
           {/* Action Buttons */}
           <div style={{
@@ -152,7 +141,7 @@ const FeaturedProject = ({ project }) => {
             )}
           </div>
         </div>
-      </motion.div>
+      </AnimatedContainer>
 
       <ProjectModal
         project={project}

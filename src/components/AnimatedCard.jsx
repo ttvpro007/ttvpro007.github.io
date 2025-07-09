@@ -1,10 +1,6 @@
 import React from "react";
-import { motion } from "framer-motion";
-import { 
-  AnimationCategories, 
-  getAnimation, 
-  AnimationPresets 
-} from "../utils/animations";
+import { AnimatedContainer } from "./base";
+import { AnimationCategories } from "../utils/animations";
 
 const AnimatedCard = ({ 
   children, 
@@ -13,14 +9,11 @@ const AnimatedCard = ({
   className = "",
   style = {}
 }) => {
-  // Get animations from the new system
-  const entryAnimation = getAnimation(AnimationCategories.ENTRY_EXIT, entryStrategy);
-  const hoverAnimation = getAnimation(AnimationCategories.CARD, hoverStrategy);
-
   return (
-    <motion.div
-      {...entryAnimation}
-      {...hoverAnimation}
+    <AnimatedContainer
+      entryStrategy={entryStrategy}
+      hoverStrategy={hoverStrategy}
+      category={AnimationCategories.CARD}
       className={className}
       style={{
         background: "linear-gradient(135deg, #1a1a1a 0%, rgba(252, 148, 96, 0.05) 100%)",
@@ -34,7 +27,7 @@ const AnimatedCard = ({
       }}
     >
       {children}
-    </motion.div>
+    </AnimatedContainer>
   );
 };
 
