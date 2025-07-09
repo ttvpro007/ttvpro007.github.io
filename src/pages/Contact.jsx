@@ -17,7 +17,6 @@ export default function Contact() {
   };
 
   const handleSubmit = (e) => {
-    // e.preventDefault(); // <--- Add this back!
     if (questFormRefs.current.hiddenMessage) {
       const formatted = formatQuestEmailContent(formData);
       questFormRefs.current.hiddenMessage.value = formatted;

@@ -1,35 +1,39 @@
-# Portfolio Components
+# 🎮 Portfolio Components
 
-This directory contains all the React components for the portfolio application, organized with a focus on reusability, maintainability, and the user's preferred gamer aesthetic. All components have been refactored to use the centralized animation system located in `../utils/animations.js`.
+This directory contains all the React components for the portfolio application, organized with a focus on reusability, maintainability, and the user's preferred gamer aesthetic. All components use the centralized animation system located in `../utils/animations.js`.
 
 ## 🏗️ Architecture Overview
 
 ### Base Components (`base/`)
 Reusable foundational components that provide consistent styling and behavior:
-- `Card` - Flexible container with hover effects and gamer styling
-- `Section` - Page section wrapper with title and icon support
-- `Button` - Interactive button with multiple variants
+- `AnimatedContainer` - Wrapper for consistent animations across components
 - `Badge` - Small label component for tags and status
-- `Icon` - Emoji-based icon component
-- `ProgressBar` - Animated progress indicator
+- `Button` - Interactive button with multiple variants and animations
+- `Card` - Flexible container with hover effects and gamer styling
+- `Icon` - Emoji-based icon component with SVG support
+- `ImageContainer` - Image display with consistent styling and animations
+- `IndicatorDots` - Navigation dots for carousels and galleries
+- `ProgressBar` - Animated progress indicator with multiple themes
+- `ProjectCardBase` - Base component for all project-related cards
+- `Section` - Page section wrapper with title and icon support
+- `TechStack` - Technology stack display component
+- `YearBadge` - Year indicator badge for projects
 
-### Layout Components
-Components that handle page structure and layout:
-- `Navbar` - Navigation bar with gamer-themed styling
+### Main Components
+Components that handle specific features and page sections:
+- `Navbar` - Navigation bar with gamer-themed styling and theme toggle
 - `FeaturedProject` - Hero section for featured projects
 - `ProjectCard` - Individual project display card
-- `ProjectModal` - Detailed project view modal
-
-### Interactive Components
-Components with user interaction and animations:
+- `ProjectModal` - Detailed project view modal with image gallery
 - `SearchAndFilter` - Project filtering and search functionality
 - `FlipCards` - Interactive card flipping animations
-
-### Data-Driven Components
-Components that display dynamic content:
-- `Timeline` - Journey timeline component
+- `Timeline` - Journey timeline component with animations
 - `FunFacts` - Rotating fun facts display
-- `ShowAndTell` - Image gallery with captions
+- `ShowAndTell` - Image gallery with captions and navigation
+- `QuestForm` - Contact form with RPG-themed styling
+- `ConfirmationModal` - Modal for form submission confirmation
+- `SocialLinks` - Social media links display
+- `HQ` - Contact page header component
 
 ## 📊 Data Structure
 
@@ -41,93 +45,75 @@ The data has been consolidated into a simplified structure:
 ```json
 {
   "personal": {
-    "name": "Vi Tiet",
-    "tagline": "From stethoscopes to game engines",
-    "profilePic": "/portfolio-profile-pic.png",
-    "bio": "..."
+    "name": "Your Name",
+    "tagline": "Your tagline",
+    "profilePic": "/profile-pic.png",
+    "bio": "Your bio",
+    "email": "your@email.com"
   },
   "socialLinks": [...],
   "journey": [...],
   "flipCards": [...],
   "skills": {
     "categories": {
-      "Programming Languages": [...],
-      "Video & Audio Editing": [...],
-      "Personal Skills": [...]
+      "Category Name": {
+        "highlights": [...],
+        "skills": [...]
+      }
     }
   },
   "funFacts": [...],
-  "showAndTell": [...],
-  "homeSections": [...]
+  "hq": {...}
 }
 ```
 
-#### `projects.json` - Complete Projects Data
+#### `projects.json` - Project Portfolio
 ```json
 {
-  "config": {
-    "pageTitle": "Projects",
-    "searchPlaceholder": "...",
-    "gridSettings": {...},
-    "animations": {...},
-    "layout": {...},
-    "stats": {...}
-  },
-  "ui": {
-    "featuredProject": {...},
-    "searchAndFilter": {...},
-    "projectCard": {...},
-    "projectModal": {...},
-    "statsWidget": {...},
-    "noResults": {...}
-  },
-  "items": [...],
-  "resume": [...]
-}
-```
-
-#### `uiContent.json` - UI Content and Configuration
-```json
-{
-  "pages": {
-    "about": {
-      "title": "About Me",
-      "bio": "..."
+  "items": [
+    {
+      "title": "Project Name",
+      "description": "Short description",
+      "longDescription": "Detailed description",
+      "tech": ["React", "Node.js"],
+      "link": "https://github.com/...",
+      "image": "/projects-images/project.png",
+      "images": [...],
+      "linkSource": "github",
+      "category": "Web Development",
+      "year": 2024,
+      "featured": true,
+      "demo": "https://demo.com",
+      "appStore": null,
+      "showOnResume": true,
+      "resumeOrder": 1
     }
-  },
-  "sections": {
-    "achievements": {...},
-    "questLog": {...},
-    "skillTree": {...},
-    "timeline": {...},
-    "funFacts": {...},
-    "showAndTell": {...},
-    "interactiveGrid": {...},
-    "flipCards": {...},
-    "skills": {...}
-  },
-  "animations": {...},
-  "config": {...}
+  ]
 }
 ```
 
-### Component-Specific Data Files
-- `achievements.json` - Achievement data
-- `characterProfile.json` - Character profile configuration
-- `skillTree.json` - Skill tree structure
-- `navigation.json` - Navigation menu items
-- `questLog.json` - Quest log entries
-- `gridItems.json` - Grid item definitions
+#### `uiContent.json` - UI Configuration
+```json
+{
+  "pages": {...},
+  "sections": {...},
+  "animations": {...},
+  "config": {...},
+  "ui": {...}
+}
+```
 
 ## 🎨 Design System
 
 ### Color Palette
-- `--primary`: #EEB64B (Golden yellow for gamer aesthetic)
-- `--text`: #FFFFFF (White text)
-- `--text-secondary`: #B8B8B8 (Secondary text)
-- `--bg`: #1A1A1A (Dark background)
-- `--card-bg`: #2A2A2A (Card background)
-- `--border`: #404040 (Border color)
+- **Primary**: #EEB64B (Gold)
+- **Secondary**: #FC9460 (Orange)
+- **Accent**: #E54264 (Red-Pink)
+- **Background**: #181622 (Dark)
+- **Card Background**: #221B36 (Dark Purple)
+- **Text**: #F3F3F3 (Light)
+- **Text Secondary**: #B8B8B8 (Muted)
+- **Border**: #404040 (Border color)
 
 ### Typography
 - Primary font: System fonts with gamer aesthetic
@@ -187,7 +173,7 @@ const [searchTerm, setSearchTerm] = useState('');
 
 ## 🎬 Animation Integration
 
-All components now use the centralized animation system instead of hardcoded animations. This provides:
+All components use the centralized animation system instead of hardcoded animations. This provides:
 
 - **Consistency** across all components
 - **Maintainability** - changes in one place affect all components
@@ -212,30 +198,35 @@ All components now use the centralized animation system instead of hardcoded ani
 ### Base Components (`/base/`)
 Core reusable components with built-in animation support:
 
-- **Card.jsx** - Animated card container with hover effects
+- **AnimatedContainer.jsx** - Animation wrapper with strategy support
 - **Button.jsx** - Interactive button with press animations
+- **Card.jsx** - Animated card container with hover effects
 - **ProgressBar.jsx** - Animated progress indicator
 - **Badge.jsx** - Small animated badges
-- **Icon.jsx** - Icon component
-- **Section.jsx** - Section container
+- **Icon.jsx** - Icon component with emoji and SVG support
+- **Section.jsx** - Section container with title and icon
+- **ImageContainer.jsx** - Image display with animations
+- **IndicatorDots.jsx** - Navigation dots for galleries
+- **ProjectCardBase.jsx** - Base component for project cards
+- **TechStack.jsx** - Technology stack display
+- **YearBadge.jsx** - Year indicator badge
 
 ### Main Components
 Feature-specific components with specialized animations:
 
 - **ProjectCard.jsx** - Project display cards with hover effects
-- **FlipCard.jsx** - 3D flip card with entry and flip animations
+- **FeaturedProject.jsx** - Hero section for featured projects
+- **FlipCards.jsx** - Interactive card flipping container
 - **Timeline.jsx** - Timeline with staggered item animations
-- **SkillBar.jsx** - Skill progress bars with entry animations
 - **ShowAndTell.jsx** - Image carousel with transition animations
 - **FunFacts.jsx** - Text rotation with slide animations
 - **SearchAndFilter.jsx** - Search interface with expand/collapse animations
-
-
-
-### Animation Components (`/animations/`)
-Specialized animation components:
-
-*Note: Animation components are now centralized in the utils/animations system*
+- **ProjectModal.jsx** - Detailed project modal with image gallery
+- **QuestForm.jsx** - RPG-themed contact form
+- **ConfirmationModal.jsx** - Form submission confirmation
+- **SocialLinks.jsx** - Social media links display
+- **HQ.jsx** - Contact page header component
+- **Navbar.jsx** - Navigation with theme toggle
 
 ## 🚀 Usage Examples
 
@@ -259,114 +250,42 @@ const MyComponent = () => {
 ### Custom Animation Strategy
 
 ```jsx
-import { ProjectCard } from './components/ProjectCard';
+import { AnimatedContainer } from './base';
 
-const CustomProjectCard = ({ project }) => {
-  return (
-    <ProjectCard
-      project={project}
-      entryStrategy="flipRotate"
-      hoverStrategy="bounce"
-      size="large"
-    />
-  );
-};
+<AnimatedContainer
+  entryStrategy="slideUp"
+  hoverStrategy="scale"
+  className="my-component"
+>
+  <div>Content with animations</div>
+</AnimatedContainer>
 ```
 
-### Staggered List Animation
+### Animation Strategy Examples
 
+### Smooth Entry
 ```jsx
-import { Timeline } from './components/Timeline';
-
-const MyTimeline = () => {
-  // Timeline automatically uses staggered animations
-  return <Timeline />;
-};
+entryStrategy="slideUp"     // Slide up from bottom
 ```
-
-## 🎨 Animation Strategies
-
-### Entry/Exit Strategies
-- `scaleFade` - Scale and fade (default for cards)
-- `slideFade` - Slide from left with fade
-- `slideUp` - Slide up from bottom
-- `bouncePop` - Bouncy spring animation
-- `flipRotate` - 3D flip rotation
-- `zoomIn` - Zoom in/out effect
-
-### Hover Strategies
-- `lift` - Lift up with slight scale
-- `scale` - Scale up/down
-- `glow` - Scale with glow effect
-- `rotate` - Slight rotation
-
-### Card Strategies
-- `hover` - Lift with shadow (default)
-- `flip` - 3D flip effect
-- `bounce` - Bouncy hover
-
-### Button Strategies
-- `press` - Scale press effect (default)
-- `lift` - Lift with scale
-- `glow` - Scale with glow
-
-## 🔧 Configuration
-
-### Animation Presets
-Common animation combinations are available as presets:
-
-```jsx
-import { AnimationPresets } from '../utils/animations';
-
-// Use preset combinations
-const cardPreset = AnimationPresets.card;
-const buttonPreset = AnimationPresets.button;
-const statsPreset = AnimationPresets.stats;
-```
-
-### Custom Animation Overrides
-
-```jsx
-const CustomComponent = () => {
-  const baseAnimation = getAnimation(AnimationCategories.ENTRY_EXIT, 'slideUp');
-  
-  return (
-    <motion.div
-      {...baseAnimation}
-      transition={{
-        ...baseAnimation.transition,
-        duration: 0.8, // Override duration
-        delay: 0.2     // Add custom delay
-      }}
-    >
-      Content
-    </motion.div>
-  );
-};
-```
-
-## 🎮 Gamer-Style Animations
-
-For a more dynamic, gaming-inspired feel, use these combinations:
 
 ### Energetic Entry
 ```jsx
-entryStrategy="bouncePop"  // Bouncy spring entry
+entryStrategy="bouncePop"   // Bouncy spring entry
 ```
 
 ### Interactive Hover
 ```jsx
-hoverStrategy="glow"       // Glow effect on hover
+hoverStrategy="glow"        // Glow effect on hover
 ```
 
 ### Dynamic Cards
 ```jsx
-hoverStrategy="bounce"     // Bouncy card hover
+hoverStrategy="bounce"      // Bouncy card hover
 ```
 
 ### Responsive Buttons
 ```jsx
-hoverStrategy="press"      // Quick press feedback
+hoverStrategy="press"       // Quick press feedback
 ```
 
 ## 📊 Performance Considerations
@@ -424,15 +343,20 @@ const hoverAnimation = getAnimation(AnimationCategories.HOVER, 'scale');
 src/components/
 ├── base/                    # Base components
 │   ├── index.js            # Base component exports
-│   ├── Card.jsx            # Card component
-│   ├── Section.jsx         # Section wrapper
-│   ├── Button.jsx          # Button component
-│   ├── Badge.jsx           # Badge component
-│   ├── Icon.jsx            # Icon component
-│   └── ProgressBar.jsx     # Progress bar component
-├── animations/              # Animation utilities
-│   └── SkillAnimations.jsx # Skill-specific animations
+│   ├── AnimatedContainer.jsx
+│   ├── Button.jsx
+│   ├── Card.jsx
+│   ├── ProgressBar.jsx
+│   ├── Badge.jsx
+│   ├── Icon.jsx
+│   ├── Section.jsx
+│   ├── ImageContainer.jsx
+│   ├── IndicatorDots.jsx
+│   ├── ProjectCardBase.jsx
+│   ├── TechStack.jsx
+│   └── YearBadge.jsx
 ├── README.md               # This documentation
+├── REFACTORING_SUMMARY.md  # Refactoring documentation
 └── [Component].jsx         # Individual components
 ```
 
@@ -504,4 +428,5 @@ When adding new components or modifying existing ones:
 - All components are designed to work with the consolidated data structure
 - The gamer aesthetic is maintained throughout all components
 - Components are optimized for performance and accessibility
-- Data separation ensures easy content updates without code changes 
+- Data separation ensures easy content updates without code changes
+- All components use the centralized animation system for consistency 
