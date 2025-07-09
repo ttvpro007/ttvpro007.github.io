@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Card } from "./base";
+import { Card, Icon } from "./base";
 import '../styling/components/social-links.css';
 
 const EmailSVG = (
@@ -16,7 +16,11 @@ export default function SocialLinks({ socialLinks }) {
     <Card hover={false}>
       <div className="social-links-container">
         <h3 className="social-links-title">
-          <span>🏕️</span>
+          <Icon 
+            emoji="🏕️"
+            size="large"
+            className="social-links-title-icon"
+          />
           Social Links
         </h3>
         <div className="social-links-list">

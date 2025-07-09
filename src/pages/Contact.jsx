@@ -4,7 +4,7 @@ import QuestForm, { formatQuestEmailContent } from "../components/QuestForm";
 import SocialLinks from "../components/SocialLinks";
 import ConfirmationModal from "../components/ConfirmationModal";
 import HQ from "../components/HQ";
-import profileData from "../data/profile.json";
+import { profile as profileData, contact } from "../data";
 import "../styling/pages/contact.css";
 
 export default function Contact() {
@@ -44,11 +44,11 @@ export default function Contact() {
           >
             <h1 className="header-1 contact-header-title">
               <span style={{ marginRight: '0.5rem' }}>🗺️</span>
-              {profileData.contact.titleText}
+              {contact.titleText}
             </h1>
             <p className="body-text contact-header-subtitle">
               <span style={{ marginRight: '0.5rem' }}>📜</span>
-              {profileData.contact.subtitleText}
+              {contact.subtitleText}
             </p>
           </motion.div>
 
@@ -72,14 +72,14 @@ export default function Contact() {
             {/* Quest Form Area */}
             <QuestForm
               ref={questFormRefs}
-              formFields={profileData.contact.formFields}
-              submitLabel={profileData.contact.submitLabel}
-              progressPerField={profileData.contact.progressPerField}
-              maxProgress={profileData.contact.maxProgress}
+              formFields={contact.formFields}
+              submitLabel={contact.submitLabel}
+              progressPerField={contact.progressPerField}
+              maxProgress={contact.maxProgress}
               onInputChange={handleInputChange}
               formData={formData}
               onSubmit={handleSubmit}
-              formConfig={profileData.contact.formConfig}
+              formConfig={contact.formConfig}
             />
           </div>
         </section>
@@ -88,8 +88,8 @@ export default function Contact() {
       {/* Confirmation Modal */}
       <ConfirmationModal
         isOpen={showConfirmation}
-        title={profileData.contact.confirmationTitle}
-        text={profileData.contact.confirmationText}
+        title={contact.confirmationTitle}
+        text={contact.confirmationText}
         onClose={handleCloseConfirmation}
       />
     </main>

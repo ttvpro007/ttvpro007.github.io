@@ -4,7 +4,7 @@ import ProjectCard from "../components/ProjectCard";
 import FeaturedProject from "../components/FeaturedProject";
 import SearchAndFilter from "../components/SearchAndFilter";
 import ProjectModal from "../components/ProjectModal";
-import { projects } from "../data";
+import { projects, uiContent } from "../data";
 import { ProgressBar } from "../components/base";
 import "../styling/pages/projects.css";
 
@@ -336,13 +336,13 @@ const Projects = ({ isTransitioning = false }) => {
                   transition={{ duration: 2, repeat: Infinity }}
                   className="projects-no-results-icon"
                 >
-                  {projects.ui.noResults.icon}
+                  {uiContent.ui.noResults.icon}
                 </motion.div>
                 <h3 className="projects-no-results-title">
-                  {projects.ui.noResults.title}
+                  {uiContent.ui.noResults.title}
                 </h3>
                 <p className="projects-no-results-description">
-                  {projects.ui.noResults.description}
+                  {uiContent.ui.noResults.description}
                 </p>
               </motion.div>
             )}

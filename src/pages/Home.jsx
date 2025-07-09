@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Confetti from 'react-dom-confetti';
-import profile from '../data/profile.json';
+import { profile } from '../data';
 import FlipCards from '../components/FlipCards';
 import Timeline from '../components/Timeline';
 import FunFacts from '../components/FunFacts';

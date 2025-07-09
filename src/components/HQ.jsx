@@ -22,12 +22,14 @@ const HQ = ({
       <div className="hq-container">
         {/* Header */}
         <div className="hq-header">
-          <Icon 
-            emoji={icon}
-            size="large"
-            className="hq-icon"
-          />
-          <h3 className="hq-title">{title}</h3>
+          <div className="hq-title-row">
+            <Icon 
+              emoji={icon}
+              size="large"
+              className="hq-icon"
+            />
+            <h3 className="hq-title">{title}</h3>
+          </div>
           {/* Status Indicator */}
           <div className={statusClass}>
             <div className={statusDotClass} />

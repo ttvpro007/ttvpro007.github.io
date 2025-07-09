@@ -222,63 +222,12 @@
     }
   ],
   "hq": {
-    "title": "Command Center",
+    "title": "Headquarters",
     "location": "Digital Realm",
     "coordinates": "43.5901° N, -79.7736° W",
     "timezone": "UTC-4",
     "status": "Online",
     "description": "My digital headquarters where I craft games and code adventures. Currently stationed in the Mississauga area.",
-    "icon": "🏰"
-  },
-  "contact": {
-    "titleText": "Embark on a New Adventure!",
-    "subtitleText": "Send me a quest below.",
-    "formConfig": {
-      "action": "https://formsubmit.co/vitiet.programmer@gmail.com",
-      "testAction": "https://formsubmit.co/vimulude@mailgolem.com",
-      "method": "POST"
-    },
-    "formFields": [
-      {
-        "id": "name",
-        "label": "Adventurer's Name",
-        "type": "text",
-        "placeholder": "What do the bards call you?",
-        "required": true
-      },
-      {
-        "id": "email",
-        "label": "Adventurer's Email",
-        "type": "email",
-        "placeholder": "Where can the guild reach you?",
-        "required": true
-      },
-      {
-        "id": "role",
-        "label": "Role/Class",
-        "type": "select",
-        "options": ["Developer", "Designer", "Project Manager", "Recruiter", "Other"],
-        "required": true
-      },
-      {
-        "id": "questType",
-        "label": "Quest Type",
-        "type": "select",
-        "options": ["Collaboration", "Job Opportunity", "Freelance Work", "Question", "Just Saying Hi"],
-        "required": true
-      },
-      {
-        "id": "details",
-        "label": "Quest Details",
-        "type": "textarea",
-        "placeholder": "Describe the mission you have in mind...",
-        "required": true
-      }
-    ],
-    "submitLabel": "Send Quest",
-    "confirmationTitle": "Quest Sent!",
-    "confirmationText": "Thanks for reaching out — I'll reply ASAP. Your message has been sent to my quest log!",
-    "progressPerField": 20,
-    "maxProgress": 100
+        "icon": "🏰"
   }
 } 

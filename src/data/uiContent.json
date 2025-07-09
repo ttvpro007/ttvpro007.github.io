@@ -1,18 +1,16 @@
 {
-  "pages": {},
+  "pages": {
+    "projects": {
+      "title": "Projects",
+      "searchPlaceholder": "Search projects (e.g., Unity, AR, 3D print)...",
+      "noResultsMessage": {
+        "icon": "🔍",
+        "title": "No projects found",
+        "description": "Try adjusting your search terms or filters"
+      }
+    }
+  },
   "sections": {
-    "achievements": {
-      "title": "Achievements",
-      "icon": "🏆"
-    },
-    "questLog": {
-      "title": "Quest Log",
-      "icon": "📝"
-    },
-    "skillTree": {
-      "title": "Skill Tree",
-      "icon": "🌳"
-    },
     "timeline": {
       "title": "Journey Timeline",
       "icon": "⏰"
@@ -51,6 +49,15 @@
       "default": {
         "scale": [1, 1.1, 1]
       }
+    },
+    "projects": {
+      "pageEnter": {
+        "duration": 0.7,
+        "ease": "easeOut"
+      },
+      "cardStagger": {
+        "delay": 0.1
+      }
     }
   },
   "config": {
@@ -59,6 +66,102 @@
     },
     "showAndTell": {
       "indicatorSize": "12px"
+    },
+    "projects": {
+      "sortOptions": {
+        "recent": "Most Recent",
+        "tech": "By Tech"
+      },
+      "filterOptions": {
+        "all": "All",
+        "sortLabel": "Sort:"
+      },
+      "gridSettings": {
+        "minCardWidth": "300px",
+        "gap": "2rem",
+        "staggerDelay": 0.1
+      },
+      "layout": {
+        "maxWidth": "1200px",
+        "featuredHeight": "400px",
+        "cardHeight": "320px"
+      },
+      "stats": {
+        "maxTechDisplay": 5,
+        "barWidth": "60px",
+        "barHeight": "8px"
+      }
+    }
+  },
+  "ui": {
+    "featuredProject": {
+      "badge": "⭐ Featured Project",
+      "button": "See Full Case Study →"
+    },
+    "searchAndFilter": {
+      "searchIcon": "🔍",
+      "categoryFilters": {
+        "all": "All"
+      },
+      "sortToggle": {
+        "label": "Sort:",
+        "recent": "Most Recent",
+        "tech": "By Tech"
+      }
+    },
+    "projectCard": {
+      "viewDetails": "View Details",
+      "clickHint": {
+        "icon": "👆",
+        "text": "Click to view details"
+      },
+      "imageHeight": "200px"
+    },
+    "projectModal": {
+      "closeButton": "×",
+      "navigation": {
+        "previous": "‹",
+        "next": "›"
+      },
+      "content": {
+        "techStack": "Tech Stack",
+        "getStarted": "Get Started",
+        "noLinks": {
+          "icon": "🔗",
+          "text": "No external links available for this project"
+        },
+        "links": {
+          "liveDemo": { "label": "Live Demo", "icon": "🚀", "variant": "outline" },
+          "appStore": { "label": "App Store", "icon": "📱", "variant": "outline" },
+          "github": { "label": "View on GitHub", "icon": "📁", "variant": "primary" },
+          "itchio": { "label": "Play on itch.io", "icon": "🎮", "variant": "primary" }
+        }
+      },
+      "imageGallery": {
+        "height": "500px",
+        "counterFormat": "{current} / {total}"
+      },
+      "layout": {
+        "maxWidth": "1400px",
+        "gridColumns": "1fr 400px",
+        "gap": "3rem"
+      }
+    },
+    "statsWidget": {
+      "title": "Project Stats",
+      "sections": {
+        "techUsage": {
+          "title": "Most Used Technologies"
+        },
+        "yearlyBreakdown": {
+          "title": "Projects by Year"
+        }
+      }
+    },
+    "noResults": {
+      "icon": "🔍",
+      "title": "No projects found",
+      "description": "Try adjusting your search terms or filters"
     }
   }
 } 

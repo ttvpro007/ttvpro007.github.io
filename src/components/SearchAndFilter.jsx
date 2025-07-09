@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge, Button } from "./base";
-import { projects } from "../data";
+import { projects, uiContent } from "../data";
 import { 
   AnimationCategories, 
   getAnimation, 
@@ -187,7 +187,7 @@ const SearchAndFilter = ({
                           size="small"
                           className={`search-filter-sort-button ${sortBy === option ? 'active' : ''}`}
                         >
-                          {projects.ui.searchAndFilter.sortToggle[option]}
+                          {uiContent.ui.searchAndFilter.sortToggle[option]}
                         </Button>
                       ))}
                     </div>

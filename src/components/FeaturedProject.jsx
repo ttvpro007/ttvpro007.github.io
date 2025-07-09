@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, Badge, Button, TechStack } from "./base";
 import ProjectModal from "./ProjectModal";
-import { projects } from "../data";
+import { projects, uiContent } from "../data";
 import '../styling/components/featured-project.css';
 
 const FeaturedProject = ({ project }) => {
@@ -32,7 +32,7 @@ const FeaturedProject = ({ project }) => {
           {/* Featured Badge */}
           <div className="featured-project-badge">
             <Badge>
-              {projects.ui.featuredProject.badge}
+              {uiContent.ui.featuredProject.badge}
             </Badge>
           </div>
 
@@ -61,7 +61,7 @@ const FeaturedProject = ({ project }) => {
               variant="primary"
               className="featured-project-button"
             >
-              {projects.ui.featuredProject.button}
+              {uiContent.ui.featuredProject.button}
             </Button>
 
             {project.demo && (

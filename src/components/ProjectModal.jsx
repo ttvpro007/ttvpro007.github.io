@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button, Badge, Card } from "./base";
-import { projects } from "../data";
+import { projects, uiContent } from "../data";
 import { 
   generateProjectButtons, 
   getProjectImages, 
@@ -82,7 +82,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
               className="project-modal-close-button"
               whileTap={{ scale: 0.95 }}
             >
-              {projects.ui.projectModal.closeButton}
+              {uiContent.ui.projectModal.closeButton}
             </Button>
           </motion.div>
 
@@ -129,7 +129,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                   className="tech-section"
                 >
                   <h3 className="section-title">
-                    {projects.ui.projectModal.content.techStack}
+                    {uiContent.ui.projectModal.content.techStack}
                   </h3>
                   <div className="tech-grid">
                     {project.tech.map((tech, index) => (
@@ -155,7 +155,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                   className="actions-section"
                 >
                   <h3 className="section-title">
-                    {projects.ui.projectModal.content.getStarted}
+                    {uiContent.ui.projectModal.content.getStarted}
                   </h3>
                   
                   {actionButtons.length > 0 ? (
@@ -188,9 +188,9 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                       className="no-links"
                     >
                       <div className="no-links-icon">
-                        {projects.ui.projectModal.content.noLinks.icon}
+                        {uiContent.ui.projectModal.content.noLinks.icon}
                       </div>
-                      <p>{projects.ui.projectModal.content.noLinks.text}</p>
+                      <p>{uiContent.ui.projectModal.content.noLinks.text}</p>
                     </motion.div>
                   )}
                 </motion.div>
@@ -240,7 +240,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                           className="nav-button"
                           whileHover={{ background: "rgba(0, 0, 0, 0.9)" }}
                         >
-                          {projects.ui.projectModal.navigation.previous}
+                          {uiContent.ui.projectModal.navigation.previous}
                         </Button>
                       </motion.div>
                       <motion.div
@@ -256,7 +256,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                           className="nav-button"
                           whileHover={{ background: "rgba(0, 0, 0, 0.9)" }}
                         >
-                          {projects.ui.projectModal.navigation.next}
+                          {uiContent.ui.projectModal.navigation.next}
                         </Button>
                       </motion.div>
                     </>
