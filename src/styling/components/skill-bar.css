@@ -1,0 +1,58 @@
+/* =====================
+   Skill Bar Styles
+   ===================== */
+
+.skill-bar {
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.skill-bar-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.skill-bar-icon {
+  margin-right: 0.5rem;
+}
+
+.skill-bar-name {
+  font-weight: bold;
+  margin-right: auto;
+}
+
+.skill-bar-level {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.skill-bar-description {
+  margin: 0.25rem 0 0 0;
+  font-size: 0.8rem;
+  opacity: 0.8;
+  font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .skill-bar {
+    margin-bottom: 1rem;
+  }
+  
+  .skill-bar-header {
+    margin-bottom: 0.4rem;
+  }
+  
+  .skill-bar-name {
+    font-size: 0.9rem;
+  }
+  
+  .skill-bar-level {
+    font-size: 0.8rem;
+  }
+  
+  .skill-bar-description {
+    font-size: 0.75rem;
+  }
+} 

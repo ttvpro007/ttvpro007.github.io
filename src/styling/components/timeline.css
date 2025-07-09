@@ -1,0 +1,67 @@
+/* =====================
+   Timeline Styles
+   ===================== */
+
+.timeline-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 2rem auto;
+  position: relative;
+}
+
+.timeline-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--primary);
+  z-index: 1;
+}
+
+.timeline-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.timeline-icon-container {
+  margin-bottom: 0.5rem;
+}
+
+.timeline-icon {
+  background: var(--card-bg);
+  border: 3px solid var(--primary);
+  box-shadow: var(--shadow);
+}
+
+.timeline-content {
+  text-align: center;
+}
+
+.timeline-title {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+.timeline-year {
+  margin: 0;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .timeline-container {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .timeline-line {
+    display: none;
+  }
+} 

@@ -1,0 +1,37 @@
+{
+  "hash": "5fcf7814",
+  "configHash": "724587bf",
+  "lockfileHash": "93da2a7a",
+  "browserHash": "bebd3314",
+  "optimized": {
+    "framer-motion": {
+      "src": "../../node_modules/framer-motion/dist/es/index.mjs",
+      "file": "framer-motion.js",
+      "fileHash": "57fa8c16",
+      "needsInterop": false
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "e3658777",
+      "needsInterop": true
+    },
+    "react-dom-confetti": {
+      "src": "../../node_modules/react-dom-confetti/lib/confetti.js",
+      "file": "react-dom-confetti.js",
+      "fileHash": "591be1cf",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "8dd9204c",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "chunk-3A6WRQ5K": {
+      "file": "chunk-3A6WRQ5K.js"
+    }
+  }
+}

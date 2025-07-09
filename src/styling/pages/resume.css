@@ -1,0 +1,173 @@
+/* Resume Page Styles */
+
+.resume-main-container {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.resume-profile-card {
+  margin-bottom: 2rem;
+}
+
+.resume-profile-content {
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.resume-profile-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 0.75rem;
+  border: 3px solid var(--primary);
+  transition: transform 0.2s ease;
+}
+
+.resume-profile-pic:hover {
+  transform: scale(1.05);
+}
+
+.resume-profile-name {
+  margin: 0 0 0.4rem 0;
+  color: var(--text);
+}
+
+.resume-profile-tagline {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.resume-skills-card {
+  margin-bottom: 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.resume-skills-title {
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.resume-skills-category {
+  margin-bottom: 1rem;
+}
+
+.resume-skills-category:last-child {
+  margin-bottom: 0;
+}
+
+.resume-skills-category-title {
+  text-align: center;
+  margin-bottom: 0.25rem;
+  color: var(--primary);
+  font-size: 0.98rem;
+  font-weight: 600;
+}
+
+.resume-skill-item {
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
+
+.resume-skill-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.15rem;
+}
+
+.resume-skill-icon {
+  margin-right: 0.4rem;
+  font-size: 1rem;
+}
+
+.resume-skill-name {
+  font-weight: 500;
+  font-size: 0.98rem;
+  margin-right: auto;
+}
+
+.resume-skill-percentage {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.resume-skill-progress {
+  width: 100%;
+}
+
+.resume-projects-card {
+  padding: 1.5rem 1rem;
+}
+
+.resume-projects-title {
+  color: var(--text);
+  margin-bottom: 0.7rem;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.resume-projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.resume-project-item {
+  border-bottom: 1px solid var(--text-secondary);
+  padding-bottom: 0.7rem;
+}
+
+.resume-project-item:last-child {
+  border-bottom: none;
+}
+
+.resume-project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.2rem;
+}
+
+.resume-project-title {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.98rem;
+  font-weight: 600;
+}
+
+.resume-project-year {
+  color: var(--primary);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.resume-project-description {
+  margin: 0 0 0.2rem 0;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.resume-project-tech {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+
+.resume-tech-tag {
+  background: var(--primary);
+  color: var(--card-bg);
+  padding: 0.13rem 0.38rem;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 0.78rem;
+  transition: transform 0.2s ease;
+}
+
+.resume-tech-tag:hover {
+  transform: scale(1.05);
+} 

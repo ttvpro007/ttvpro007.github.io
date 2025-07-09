@@ -1,0 +1,182 @@
+/* =====================
+   Featured Project Styles
+   ===================== */
+
+.featured-project-container {
+  position: relative;
+  height: var(--featured-height, 400px);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  border: 3px solid var(--primary);
+  box-sizing: border-box;
+}
+
+.featured-project-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%), var(--project-bg-image, none);
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  z-index: 1;
+}
+
+.featured-project-overlay {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: white;
+  width: 100%;
+  padding-top: 2rem;
+}
+
+.featured-project-badge {
+  margin-bottom: 0.75rem;
+}
+
+.featured-project-badge .badge {
+  background: var(--primary);
+  color: var(--card-bg);
+  font-weight: bold;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
+
+.featured-project-title {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--text);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  line-height: 1.2;
+}
+
+.featured-project-description {
+  margin: 0.5rem 0 1rem 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.05);
+  width: 100%;
+}
+
+.featured-project-techstack {
+  margin-bottom: 0.75rem;
+}
+
+.featured-project-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.featured-project-button {
+  background: var(--primary);
+  color: var(--card-bg);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.featured-project-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.featured-project-button:hover::before {
+  left: 100%;
+}
+
+.featured-project-button:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 15px rgba(238, 182, 75, 0.4);
+}
+
+.featured-project-demo {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.featured-project-demo::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.featured-project-demo:hover::before {
+  left: 100%;
+}
+
+.featured-project-demo:hover {
+  transform: scale(1.02);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .featured-project-container {
+    height: 350px;
+  }
+  
+  .featured-project-overlay {
+    padding: 1rem;
+    padding-top: 1.5rem;
+  }
+  
+  .featured-project-title {
+    font-size: 1.1rem;
+  }
+  
+  .featured-project-description {
+    font-size: 0.8rem;
+    margin: 0.4rem 0 0.8rem 0;
+  }
+  
+  .featured-project-actions {
+    gap: 0.75rem;
+  }
+  
+  .featured-project-button,
+  .featured-project-demo {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+} 

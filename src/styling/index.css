@@ -1,0 +1,148 @@
+/* =====================
+   Portfolio Styling System
+   ===================== */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
+
+/* Import Theme Variables */
+@import './themes/variables.css';
+
+/* Import Base Styles */
+@import './base/reset.css';
+
+/* Import Animations */
+@import './animations/keyframes.css';
+
+/* Import Component Styles */
+@import './components/quest-form.css';
+@import './components/hq.css';
+@import './components/social-links.css';
+
+/* Import Utilities */
+@import './utils/utilities.css';
+
+/* =====================
+   Layout Utilities
+   ===================== */
+
+.quest-content-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: var(--spacing-xl);
+  width: 100%;
+  align-items: start;
+}
+
+.quest-sidebar {
+  position: sticky;
+  top: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.quest-form-area {
+  /* Form area styles */
+}
+
+/* =====================
+   Header Styles
+   ===================== */
+
+.quest-header {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.header-banner {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  border: 2px solid var(--primary);
+  padding: var(--spacing-2xl) var(--spacing-xl);
+  width: 100%;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.header-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(238, 182, 75, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.quest-title {
+  color: var(--primary);
+  margin: 0 0 var(--spacing-md) 0;
+  font-size: var(--font-size-header-1);
+  font-weight: 700;
+  text-shadow: 0 0 8px var(--primary), 0 0 2px var(--accent);
+  position: relative;
+  z-index: 1;
+}
+
+.quest-subtitle {
+  font-style: italic;
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.title-icon, .subtitle-icon {
+  margin-right: var(--spacing-sm);
+}
+
+/* =====================
+   Responsive Design
+   ===================== */
+
+@media (max-width: 768px) {
+  .quest-content-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+  
+  .quest-sidebar {
+    position: static;
+    order: 2;
+  }
+  
+  .quest-form-area {
+    order: 1;
+  }
+  
+  .quest-title {
+    font-size: var(--font-size-header-2);
+  }
+  
+  .header-banner {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+  
+  .quest-form-area {
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .quest-title {
+    font-size: var(--font-size-header-3);
+  }
+  
+  .quest-subtitle {
+    font-size: var(--font-size-body);
+  }
+  
+  .header-banner {
+    padding: var(--spacing-md) var(--spacing-sm);
+  }
+} 

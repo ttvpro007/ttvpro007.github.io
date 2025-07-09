@@ -1,0 +1,101 @@
+/* =====================
+   Navbar Styles
+   ===================== */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--card-bg);
+  border-bottom: 1px solid #e0e6ed;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+}
+
+.navbar-nav {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.navbar-button {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.navbar-theme-button {
+  margin-left: 1.5rem;
+  padding: 0.5rem;
+  min-width: auto;
+  width: 40px;
+  height: 40px;
+}
+
+.navbar-theme-icon {
+  display: flex;
+  align-items: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+  
+  .navbar-brand {
+    font-size: 1.1rem;
+  }
+  
+  .navbar-nav {
+    gap: 1rem;
+  }
+  
+  .navbar-button {
+    font-size: 0.9rem;
+  }
+  
+  .navbar-theme-button {
+    margin-left: 1rem;
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .navbar-brand {
+    font-size: 1rem;
+  }
+  
+  .navbar-nav {
+    gap: 0.5rem;
+  }
+  
+  .navbar-button {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.6rem;
+  }
+  
+  .navbar-theme-button {
+    margin-left: 0.5rem;
+    width: 32px;
+    height: 32px;
+  }
+} 

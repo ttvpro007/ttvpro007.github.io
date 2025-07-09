@@ -1,0 +1,229 @@
+/* =====================
+   Search and Filter Styles
+   ===================== */
+
+.search-filter-container {
+  position: fixed;
+  top: 200px;
+  left: 2rem;
+  z-index: 1000;
+  pointer-events: auto;
+  transform-origin: left center;
+}
+
+.search-filter-collapsed {
+  background: linear-gradient(135deg, #1a1a1a 0%, rgba(252, 148, 96, 0.05) 100%);
+  border: 2px solid #333;
+  border-radius: 20px;
+  padding: 0.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(252, 148, 96, 0.1);
+  backdrop-filter: blur(10px);
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.search-filter-collapsed-icon {
+  font-size: 1.5rem;
+  color: #FC9460;
+  filter: drop-shadow(0 2px 4px rgba(252, 148, 96, 0.3));
+}
+
+.search-filter-expanded {
+  background: linear-gradient(135deg, #1a1a1a 0%, rgba(252, 148, 96, 0.05) 100%);
+  border: 2px solid #333;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(252, 148, 96, 0.1);
+  backdrop-filter: blur(10px);
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.search-filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.search-filter-title {
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.search-filter-close-button {
+  width: 28px;
+  height: 28px;
+  background: rgba(252, 148, 96, 0.1);
+  border: 1px solid rgba(252, 148, 96, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #FC9460;
+  padding: 0;
+  margin: 0;
+}
+
+.search-filter-close-button:hover {
+  background: rgba(252, 148, 96, 0.2);
+}
+
+.search-filter-input-container {
+  position: relative;
+}
+
+.search-filter-input {
+  width: 100%;
+  padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+  border: 2px solid #333;
+  border-radius: 12px;
+  background: #1a1a1a;
+  color: #ffffff;
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-filter-input:focus {
+  border-color: #FC9460;
+  box-shadow: 0 0 0 3px rgba(252, 148, 96, 0.1);
+}
+
+.search-filter-input-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #FC9460;
+}
+
+.search-filter-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.search-filter-section-title {
+  color: #cccccc;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.search-filter-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.search-filter-category-badge {
+  cursor: pointer;
+  background: rgba(252, 148, 96, 0.1);
+  color: #FC9460;
+  border: 1px solid rgba(252, 148, 96, 0.3);
+  border-radius: 8px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  text-transform: capitalize;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.search-filter-category-badge.active {
+  background: #FC9460;
+  color: white;
+  border-color: #FC9460;
+  box-shadow: 0 2px 8px rgba(252, 148, 96, 0.4);
+}
+
+.search-filter-sort-container {
+  display: flex;
+  background: #1a1a1a;
+  border-radius: 8px;
+  padding: 0.25rem;
+  border: 1px solid #333;
+}
+
+.search-filter-sort-button {
+  flex: 1;
+  border-radius: 0;
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.search-filter-sort-button.active {
+  border-radius: 6px;
+  border: none;
+}
+
+.search-filter-summary {
+  padding: 0.75rem;
+  background: rgba(252, 148, 96, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(252, 148, 96, 0.2);
+  transform-origin: top;
+}
+
+.search-filter-summary-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+}
+
+.search-filter-summary-item {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .search-filter-container {
+    top: 150px;
+    left: 1rem;
+  }
+  
+  .search-filter-expanded {
+    width: 280px;
+    padding: 1rem;
+  }
+  
+  .search-filter-categories {
+    gap: 0.3rem;
+  }
+  
+  .search-filter-category-badge {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-filter-container {
+    top: 120px;
+    left: 0.5rem;
+  }
+  
+  .search-filter-expanded {
+    width: 260px;
+    padding: 0.75rem;
+  }
+} 

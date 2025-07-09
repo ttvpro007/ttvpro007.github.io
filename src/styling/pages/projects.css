@@ -1,0 +1,218 @@
+/* Projects Page Styles */
+
+.projects-main-container {
+  position: relative;
+  min-height: 100vh;
+  overflow: visible;
+}
+
+.projects-floating-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.projects-floating-element {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+  opacity: 0.03;
+  border-radius: 50%;
+}
+
+.projects-featured-container {
+  width: 100%;
+  margin: 0 auto 3rem auto;
+  transform: rotate(-1deg);
+}
+
+.projects-stats-container {
+  width: 100%;
+  margin: 0 auto 3rem auto;
+}
+
+.projects-compact-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.projects-compact-stats-card {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  border: 2px solid var(--primary);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.projects-compact-stats-card:hover {
+  transform: translateY(-2px);
+}
+
+.projects-compact-stats-card-left {
+  transform: rotate(-0.5deg);
+}
+
+.projects-compact-stats-card-right {
+  transform: rotate(0.5deg);
+}
+
+.projects-compact-stats-title {
+  color: var(--text);
+  margin-bottom: 1rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.projects-compact-stats-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.projects-compact-stats-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.projects-compact-stats-label {
+  min-width: 60px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.projects-compact-stats-progress {
+  flex: 1;
+}
+
+.projects-compact-stats-count {
+  min-width: 25px;
+  text-align: right;
+  font-size: 0.85rem;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.projects-grid-container {
+  margin: 0 auto;
+  padding-bottom: 4rem;
+  width: 100%;
+}
+
+.projects-masonry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  grid-auto-rows: auto;
+  grid-auto-flow: dense;
+  align-items: start;
+  justify-content: center;
+  justify-items: center;
+  overflow: visible;
+}
+
+.projects-card-wrapper {
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+}
+
+.projects-card-wrapper:hover {
+  z-index: 10;
+}
+
+.projects-card-container {
+  min-height: 280px;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+}
+
+.projects-card-container.medium {
+  min-height: 320px;
+}
+
+.projects-card-container.large {
+  min-height: 400px;
+}
+
+.projects-no-results {
+  text-align: center;
+  padding: 6rem 2rem;
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  border: 2px solid var(--primary);
+  margin: 2rem 0;
+  transform: rotate(-0.5deg);
+}
+
+.projects-no-results-icon {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+}
+
+.projects-no-results-title {
+  margin-bottom: 0.5rem;
+  color: var(--text);
+  font-size: 1.5rem;
+}
+
+.projects-no-results-description {
+  color: var(--text-secondary);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .floating-stats {
+    display: none !important;
+  }
+  
+  .projects-masonry-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem !important;
+  }
+  
+  .hero-section {
+    padding: 2rem 1rem 4rem 1rem !important;
+  }
+  
+  .projects-masonry-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+  
+  .projects-compact-stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+  
+  .projects-compact-stats-card {
+    padding: 1rem !important;
+  }
+  
+  .projects-compact-stats-title {
+    font-size: 1rem !important;
+  }
+  
+  .projects-compact-stats-item {
+    font-size: 0.8rem !important;
+  }
+} 

@@ -1,0 +1,16 @@
+/* =====================
+   Fun Facts Styles
+   ===================== */
+
+.fun-facts-section {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.fun-facts-text {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  font-style: italic;
+  text-align: center;
+} 
