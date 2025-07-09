@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Card } from "./base";
+import '../styling/components/social-links.css';
 
 export default function SocialLinks({ socialLinks }) {
   const getIcon = (iconComponent) => {
@@ -22,41 +23,19 @@ export default function SocialLinks({ socialLinks }) {
 
   return (
     <Card hover={false}>
-      <div>
-        <h3 style={{
-          color: 'var(--text)',
-          margin: '0 0 1rem 0',
-          fontSize: '1.1rem',
-          fontWeight: 'bold',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.5rem'
-        }}>
+      <div className="social-links-container">
+        <h3 className="social-links-title">
           <span>🏕️</span>
           Contact Campfires
         </h3>
-        
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div className="social-links-list">
           {socialLinks.map((link, index) => (
             <motion.a
               key={link.name}
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.75rem',
-                padding: '0.75rem',
-                background: 'rgba(238, 182, 75, 0.1)',
-                border: '1px solid rgba(238, 182, 75, 0.3)',
-                borderRadius: '8px',
-                textDecoration: 'none',
-                color: 'var(--text)',
-                transition: 'all 0.3s ease',
-                position: 'relative',
-                overflow: 'hidden'
-              }}
+              className="social-link-item"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
@@ -69,19 +48,10 @@ export default function SocialLinks({ socialLinks }) {
               }}
               whileTap={{ scale: 0.98 }}
             >
-              <div style={{ position: 'relative', fontSize: '1.5rem' }}>
+              <div className="social-link-icon">
                 <span>{getIcon(link.iconComponent)}</span>
                 <motion.div
-                  style={{
-                    position: 'absolute',
-                    top: '-5px',
-                    right: '-5px',
-                    width: '8px',
-                    height: '8px',
-                    background: 'var(--primary)',
-                    borderRadius: '50%',
-                    pointerEvents: 'none'
-                  }}
+                  className="social-link-sparkle"
                   animate={{
                     scale: [1, 1.2, 1],
                     opacity: [0.5, 1, 0.5]
@@ -93,7 +63,7 @@ export default function SocialLinks({ socialLinks }) {
                   }}
                 />
               </div>
-              <span style={{ fontWeight: '500' }}>{link.name}</span>
+              <span className="social-link-name">{link.name}</span>
             </motion.a>
           ))}
         </div>

@@ -7,6 +7,7 @@ import {
   getAnimation, 
   AnimationPresets 
 } from "../utils/animations";
+import "../styling/components/timeline.css";
 
 const Timeline = () => {
   if (!profile || !profile.journey) {
@@ -30,36 +31,15 @@ const Timeline = () => {
           ...containerAnimation.transition,
           delay: 0.3 
         }}
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: '100%',
-          margin: '2rem auto',
-          position: 'relative',
-        }}
+        className="timeline-container"
       >
         {/* Timeline line */}
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '0',
-          right: '0',
-          height: '2px',
-          background: 'var(--primary)',
-          zIndex: 1,
-        }} />
+        <div className="timeline-line" />
 
         {profile.journey?.map((item, index) => (
           <motion.div
             key={index}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              position: 'relative',
-              zIndex: 2,
-            }}
+            className="timeline-item"
             {...itemAnimation}
             {...hoverAnimation}
             transition={{ 
@@ -68,9 +48,7 @@ const Timeline = () => {
             }}
           >
             <motion.div
-              style={{
-                marginBottom: '0.5rem',
-              }}
+              className="timeline-icon-container"
               animate={item.animation === 'sparkle' ? uiContent.animations.timeline.sparkle : 
                       item.animation === 'rocket' ? uiContent.animations.timeline.rocket : 
                       uiContent.animations.timeline.default}
@@ -84,16 +62,12 @@ const Timeline = () => {
                 emoji={item.icon}
                 size="large"
                 circular={true}
-                style={{
-                  background: 'var(--card-bg)',
-                  border: '3px solid var(--primary)',
-                  boxShadow: 'var(--shadow)',
-                }}
+                className="timeline-icon"
               />
             </motion.div>
-            <div style={{ textAlign: 'center' }}>
-              <h4 style={{ margin: '0 0 0.25rem 0', fontSize: '0.9rem' }}>{item.title}</h4>
-              <p style={{ margin: 0, fontSize: '0.8rem', opacity: 0.7 }}>{item.year}</p>
+            <div className="timeline-content">
+              <h4 className="timeline-title">{item.title}</h4>
+              <p className="timeline-year">{item.year}</p>
             </div>
           </motion.div>
         ))}

@@ -6,6 +6,7 @@ import {
   getAnimation, 
   AnimationPresets 
 } from "../utils/animations";
+import "../styling/components/skill-bar.css";
 
 const SkillBar = ({ skill, index, entryStrategy = "slideFade" }) => {
   const [isInView, setIsInView] = React.useState(false);
@@ -62,15 +63,12 @@ const SkillBar = ({ skill, index, entryStrategy = "slideFade" }) => {
       }}
       onViewportEnter={() => setIsInView(true)}
       onViewportLeave={() => setIsInView(false)}
-      style={{
-        marginBottom: '1.5rem',
-        width: '100%',
-      }}
+      className="skill-bar"
     >
-      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
-        <Icon emoji={theme.icon} size="small" style={{ marginRight: '0.5rem' }} />
-        <span style={{ fontWeight: 'bold', marginRight: 'auto' }}>{skill.name}</span>
-        <span style={{ fontSize: '0.9rem', opacity: 0.7 }}>{skill.level || skill.percentage}%</span>
+      <div className="skill-bar-header">
+        <Icon emoji={theme.icon} size="small" className="skill-bar-icon" />
+        <span className="skill-bar-name">{skill.name}</span>
+        <span className="skill-bar-level">{skill.level || skill.percentage}%</span>
       </div>
       
       <ProgressBar 
@@ -82,7 +80,7 @@ const SkillBar = ({ skill, index, entryStrategy = "slideFade" }) => {
         animated={isInView}
       />
       
-      <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.8rem', opacity: 0.8, fontStyle: 'italic' }}>
+      <p className="skill-bar-description">
         {skill.description}
       </p>
     </motion.div>

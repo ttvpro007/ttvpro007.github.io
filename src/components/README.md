@@ -24,19 +24,12 @@ Components that handle page structure and layout:
 Components with user interaction and animations:
 - `SearchAndFilter` - Project filtering and search functionality
 - `FlipCards` - Interactive card flipping animations
-- `InteractiveGrid` - Clickable grid with expandable content
-- `AnimatedSkillBars` - Animated skill progress indicators
 
 ### Data-Driven Components
 Components that display dynamic content:
-- `CharacterProfile` - Personal profile information
-- `SkillTree` - Visual skill tree representation
-- `Achievements` - Achievement showcase
-- `QuestLog` - Project timeline display
 - `Timeline` - Journey timeline component
 - `FunFacts` - Rotating fun facts display
 - `ShowAndTell` - Image gallery with captions
-- `StatsWidget` - Project statistics visualization
 
 ## 📊 Data Structure
 
@@ -229,43 +222,36 @@ Core reusable components with built-in animation support:
 ### Main Components
 Feature-specific components with specialized animations:
 
-- **AnimatedCard.jsx** - Enhanced card with configurable animations
 - **ProjectCard.jsx** - Project display cards with hover effects
 - **FlipCard.jsx** - 3D flip card with entry and flip animations
-- **StatsWidget.jsx** - Statistics display with staggered animations
 - **Timeline.jsx** - Timeline with staggered item animations
 - **SkillBar.jsx** - Skill progress bars with entry animations
 - **ShowAndTell.jsx** - Image carousel with transition animations
 - **FunFacts.jsx** - Text rotation with slide animations
 - **SearchAndFilter.jsx** - Search interface with expand/collapse animations
 
-### Layout Components (`/layout/`)
-Layout-specific components:
 
-- **Grid.jsx** - Responsive grid with optional animations
 
 ### Animation Components (`/animations/`)
 Specialized animation components:
 
-- **SkillAnimations.jsx** - Skill-specific animation utilities
+*Note: Animation components are now centralized in the utils/animations system*
 
 ## 🚀 Usage Examples
 
 ### Basic Component with Animations
 
 ```jsx
-import { AnimatedCard } from './components/AnimatedCard';
+import { ProjectCard } from './components/ProjectCard';
 import { getAnimation, AnimationCategories } from '../utils/animations';
 
 const MyComponent = () => {
   return (
-    <AnimatedCard 
+    <ProjectCard 
+      project={project}
       entryStrategy="bouncePop"
       hoverStrategy="glow"
-    >
-      <h3>Animated Content</h3>
-      <p>This card uses centralized animations</p>
-    </AnimatedCard>
+    />
   );
 };
 ```

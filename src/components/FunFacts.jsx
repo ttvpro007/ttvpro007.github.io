@@ -7,6 +7,7 @@ import {
   getAnimation, 
   AnimationPresets 
 } from "../utils/animations";
+import '../styling/components/fun-facts.css';
 
 const FunFacts = () => {
   const [currentFact, setCurrentFact] = React.useState(0);
@@ -33,10 +34,7 @@ const FunFacts = () => {
       title={uiContent.sections.funFacts.title} 
       icon={uiContent.sections.funFacts.icon}
       centered={true}
-      style={{
-        width: '100%',
-        margin: '0 auto'
-      }}
+      className="fun-facts-section"
       onHoverStart={() => setIsVisible(true)}
       onHoverEnd={() => setIsVisible(false)}
     >
@@ -44,13 +42,7 @@ const FunFacts = () => {
         <motion.p
           key={currentFact}
           {...textAnimation}
-          style={{
-            margin: 0,
-            fontSize: '0.95rem',
-            lineHeight: 1.4,
-            fontStyle: 'italic',
-            textAlign: 'center'
-          }}
+          className="fun-facts-text"
         >
           {profile.funFacts[currentFact]}
         </motion.p>

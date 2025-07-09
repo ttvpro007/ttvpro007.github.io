@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import '../styling/components/confirmation-modal.css';
 
 export default function ConfirmationModal({ isOpen, title, text, onClose }) {
   if (!isOpen) return null;
@@ -7,36 +8,14 @@ export default function ConfirmationModal({ isOpen, title, text, onClose }) {
   return (
     <AnimatePresence>
       <motion.div
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'rgba(0, 0, 0, 0.8)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1000,
-          backdropFilter: 'blur(8px)'
-        }}
+        className="modal-overlay"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
       >
         <motion.div
-          style={{
-            background: 'var(--card-bg)',
-            border: '3px solid var(--primary)',
-            borderRadius: 'var(--border-radius)',
-            padding: '3rem',
-            textAlign: 'center',
-            maxWidth: '500px',
-            width: '90%',
-            position: 'relative',
-            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(238, 182, 75, 0.3)'
-          }}
+          className="modal-container"
           initial={{ scale: 0.8, opacity: 0, y: 50 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.8, opacity: 0, y: 50 }}
@@ -45,41 +24,19 @@ export default function ConfirmationModal({ isOpen, title, text, onClose }) {
         >
           {/* Treasure Chest Animation */}
           <motion.div
-            style={{
-              width: '80px',
-              height: '60px',
-              margin: '0 auto 2rem',
-              position: 'relative'
-            }}
+            className="treasure-chest"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.3, type: "spring", damping: 15 }}
           >
             <motion.div
-              style={{
-                width: '100%',
-                height: '40px',
-                background: 'linear-gradient(135deg, #8B4513 0%, #A0522D 100%)',
-                border: '2px solid #654321',
-                borderRadius: '8px 8px 0 0',
-                position: 'absolute',
-                bottom: 0
-              }}
+              className="treasure-base"
               initial={{ scale: 1 }}
               animate={{ scale: [1, 1.1, 1] }}
               transition={{ delay: 1.2, duration: 0.3 }}
             />
             <motion.div
-              style={{
-                width: '100%',
-                height: '20px',
-                background: 'linear-gradient(135deg, #CD853F 0%, #DEB887 100%)',
-                border: '2px solid #8B4513',
-                borderRadius: '8px 8px 0 0',
-                position: 'absolute',
-                top: 0,
-                transformOrigin: 'bottom'
-              }}
+              className="treasure-lid"
               initial={{ rotateX: 0 }}
               animate={{ rotateX: -45 }}
               transition={{ delay: 0.8, duration: 0.5 }}
@@ -89,14 +46,7 @@ export default function ConfirmationModal({ isOpen, title, text, onClose }) {
             {[...Array(6)].map((_, i) => (
               <motion.div
                 key={i}
-                style={{
-                  position: 'absolute',
-                  width: '4px',
-                  height: '4px',
-                  background: 'var(--primary)',
-                  borderRadius: '50%',
-                  pointerEvents: 'none'
-                }}
+                className="treasure-sparkle"
                 initial={{ 
                   opacity: 0, 
                   scale: 0,
@@ -118,11 +68,7 @@ export default function ConfirmationModal({ isOpen, title, text, onClose }) {
           </motion.div>
 
           <motion.h2
-            style={{
-              fontSize: '2rem',
-              marginBottom: '1rem',
-              color: 'var(--primary)'
-            }}
+            className="modal-title"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
@@ -131,12 +77,7 @@ export default function ConfirmationModal({ isOpen, title, text, onClose }) {
           </motion.h2>
 
           <motion.p
-            style={{
-              fontSize: '1.1rem',
-              color: 'var(--text-secondary)',
-              marginBottom: '2rem',
-              lineHeight: 1.6
-            }}
+            className="modal-text"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7 }}
@@ -145,20 +86,7 @@ export default function ConfirmationModal({ isOpen, title, text, onClose }) {
           </motion.p>
 
           <motion.button
-            style={{
-              background: 'linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)',
-              color: 'var(--bg)',
-              border: 'none',
-              borderRadius: '8px',
-              padding: '0.75rem 1.5rem',
-              fontSize: '1rem',
-              fontWeight: '600',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem'
-            }}
+            className="modal-button"
             onClick={onClose}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -169,7 +97,7 @@ export default function ConfirmationModal({ isOpen, title, text, onClose }) {
             }}
             whileTap={{ scale: 0.95 }}
           >
-            <span style={{ fontSize: '1.1rem' }}>✨</span>
+            <span className="modal-button-icon">✨</span>
             Continue Adventure
           </motion.button>
         </motion.div>

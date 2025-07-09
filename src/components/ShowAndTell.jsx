@@ -1,6 +1,7 @@
 import React from "react";
 import { Section, ImageContainer, IndicatorDots } from "./base";
 import { profile, uiContent } from "../data";
+import '../styling/components/show-and-tell.css';
 
 const ShowAndTell = () => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -14,10 +15,7 @@ const ShowAndTell = () => {
       title={uiContent.sections.showAndTell.title} 
       icon={uiContent.sections.showAndTell.icon}
       centered={true}
-      style={{
-        width: '100%',
-        margin: '0 auto'
-      }}
+      className="show-and-tell-container"
     >
       <div style={{ position: 'relative', marginBottom: '1rem' }}>
         <ImageContainer
@@ -25,29 +23,20 @@ const ShowAndTell = () => {
           src={profile.showAndTell[currentIndex].image}
           alt={profile.showAndTell[currentIndex].title}
           height="200px"
-          style={{
-            marginBottom: '0.5rem',
-          }}
+          className="show-and-tell-image"
         />
-        
-        <div style={{ textAlign: 'center' }}>
-          <h4 style={{ margin: '0 0 0.25rem 0', fontSize: '1rem' }}>
+        <div className="show-and-tell-text">
+          <h4 className="show-and-tell-title">
             {profile.showAndTell[currentIndex].title}
           </h4>
-          <p style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', opacity: 0.8 }}>
+          <p className="show-and-tell-description">
             {profile.showAndTell[currentIndex].description}
           </p>
-          <span style={{
-            fontSize: '0.8rem',
-            fontStyle: 'italic',
-            color: 'var(--primary)',
-            fontWeight: 'bold',
-          }}>
+          <span className="show-and-tell-caption">
             "{profile.showAndTell[currentIndex].caption}"
           </span>
         </div>
       </div>
-      
       <IndicatorDots
         count={profile.showAndTell.length}
         currentIndex={currentIndex}

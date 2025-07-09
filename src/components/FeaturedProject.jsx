@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { AnimatedContainer, Badge, Button, TechStack } from "./base";
+import { Card, Badge, Button, TechStack } from "./base";
 import ProjectModal from "./ProjectModal";
 import { projects } from "../data";
+import '../styling/components/featured-project.css';
 
 const FeaturedProject = ({ project }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,110 +17,49 @@ const FeaturedProject = ({ project }) => {
 
   return (
     <>
-      <AnimatedContainer
-        entryStrategy="slideUp"
+      <Card
+        className="featured-project-container"
+        hover={false}
         style={{
-          position: "relative",
-          height: projects.config.layout.featuredHeight,
-          borderRadius: "var(--border-radius)",
-          overflow: "hidden",
-          marginBottom: "2rem",
-          boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
-          width: "100%",
-          border: "3px solid var(--primary)",
-          boxSizing: "border-box"
+          '--project-bg-image': `url(${project.image})`
         }}
       >
-        {/* Background Image */}
-        <div style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: `linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%), url(${project.image})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center"
-        }} />
+        {/* Background Image with Gradient Overlay */}
+        <div className="featured-project-bg" />
 
         {/* Content Overlay */}
-        <div style={{
-          position: "relative",
-          zIndex: 2,
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-start",
-          padding: "2rem",
-          boxSizing: "border-box",
-          overflow: "auto",
-          color: "white",
-          width: "100%",
-          paddingTop: "2.5rem", // extra top padding to ensure header is not cut off
-        }}>
+        <div className="featured-project-overlay">
           {/* Featured Badge */}
-          <div style={{ marginBottom: "1rem" }}>
-            <Badge
-              style={{
-                background: "var(--primary)",
-                color: "var(--card-bg)",
-                fontWeight: "bold",
-                fontSize: "0.9rem",
-                padding: "0.5rem 1rem"
-              }}
-            >
+          <div className="featured-project-badge">
+            <Badge>
               {projects.ui.featuredProject.badge}
             </Badge>
           </div>
 
           {/* Project Title */}
-          <h2 style={{
-            margin: 0,
-            fontSize: "1.3rem",
-            fontWeight: "bold",
-            color: "var(--text)",
-            textShadow: "0 1px 2px rgba(0,0,0,0.1)",
-            lineHeight: "1.2"
-          }}>
+          <h2 className="featured-project-title">
             {project.title}
           </h2>
 
           {/* Project Description */}
-          <p style={{
-            margin: "0.75rem 0 1.25rem 0",
-            fontSize: "0.9rem",
-            color: "var(--text-secondary)",
-            lineHeight: "1.6",
-            textShadow: "0 1px 1px rgba(0,0,0,0.05)",
-            width: "100%"
-          }}>
+          <p className="featured-project-description">
             {project.longDescription || project.description}
           </p>
 
           {/* Tech Stack */}
-          <TechStack 
-            tech={project.tech}
-            maxDisplay={4}
-            style={{ marginBottom: "1rem" }}
-          />
+          <div className="featured-project-techstack">
+            <TechStack 
+              tech={project.tech}
+              maxDisplay={4}
+            />
+          </div>
 
           {/* Action Buttons */}
-          <div style={{
-            display: "flex",
-            gap: "1rem",
-            flexWrap: "wrap"
-          }}>
+          <div className="featured-project-actions">
             <Button
               onClick={handleViewDetails}
               variant="primary"
-              style={{
-                background: "var(--primary)",
-                color: "var(--card-bg)",
-                border: "none",
-                padding: "0.75rem 1.5rem",
-                fontSize: "1rem",
-                fontWeight: "bold"
-              }}
+              className="featured-project-button"
             >
               {projects.ui.featuredProject.button}
             </Button>
@@ -128,20 +68,14 @@ const FeaturedProject = ({ project }) => {
               <Button
                 onClick={() => window.open(project.demo, "_blank")}
                 variant="outline"
-                style={{
-                  background: "transparent",
-                  color: "white",
-                  border: "2px solid white",
-                  padding: "0.75rem 1.5rem",
-                  fontSize: "1rem"
-                }}
+                className="featured-project-demo"
               >
                 🚀 Live Demo
               </Button>
             )}
           </div>
         </div>
-      </AnimatedContainer>
+      </Card>
 
       <ProjectModal
         project={project}

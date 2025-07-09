@@ -16,7 +16,7 @@ During the refactoring, several animation-related issues were identified and fix
 - **AnimatedContainer**: Updated to use correct hover strategies and handle CARD vs HOVER categories properly. Entry animations now always come from ENTRY_EXIT category, while hover animations come from the appropriate category (CARD or HOVER)
 - **ProjectCardBase**: Fixed to use "hover" strategy from CARD category
 - **ProjectCard**: Updated to use correct hover strategy
-- **AnimatedCard**: Fixed animation category and strategy usage
+
 - **All Components**: Ensured proper import of AnimationCategories
 
 ### Animation Strategy Mapping
@@ -80,26 +80,7 @@ During the refactoring, several animation-related issues were identified and fix
 />
 ```
 
-### 4. ContentCard
-**Location**: `src/components/base/ContentCard.jsx`
-**Purpose**: Card component with title, description, and icon support
-**Features**:
-- Configurable title sizes
-- Optional icon display
-- Consistent typography
-- Built on base Card component
 
-**Usage**:
-```jsx
-<ContentCard
-  title="Project Title"
-  description="Project description"
-  icon="🎮"
-  titleSize="medium"
->
-  {/* Additional content */}
-</ContentCard>
-```
 
 ### 5. AnimatedContainer
 **Location**: `src/components/base/AnimatedContainer.jsx`
@@ -192,13 +173,7 @@ During the refactoring, several animation-related issues were identified and fix
 - Replaced indicator dots with IndicatorDots component
 - Removed duplicate animation logic
 
-### 4. AnimatedCard
-**Before**: 79 lines with manual animation handling
-**After**: 79 lines using AnimatedContainer
-**Improvements**:
-- Consistent animation behavior
-- Reusable animation logic
-- Cleaner component structure
+
 
 ## Benefits Achieved
 
@@ -231,7 +206,7 @@ During the refactoring, several animation-related issues were identified and fix
 
 ### Base Layer (`/base/`)
 - **Purpose**: Reusable, foundational components
-- **Components**: Card, Button, Badge, Icon, Section, ProgressBar, ImageContainer, TechStack, YearBadge, ContentCard, AnimatedContainer, IndicatorDots, ProjectCardBase
+- **Components**: Card, Button, Badge, Icon, Section, ProgressBar, ImageContainer, TechStack, YearBadge, AnimatedContainer, IndicatorDots, ProjectCardBase
 - **Characteristics**: Highly reusable, configurable, no business logic
 
 ### Feature Layer (Root `/components/`)
@@ -239,14 +214,11 @@ During the refactoring, several animation-related issues were identified and fix
 - **Components**: ProjectCard, FeaturedProject, ShowAndTell, etc.
 - **Characteristics**: Business logic, composition of base components
 
-### Layout Layer (`/layout/`)
-- **Purpose**: Layout and structural components
-- **Components**: Grid
-- **Characteristics**: Layout-specific, responsive design
+
 
 ### Animation Layer (`/animations/`)
 - **Purpose**: Specialized animation components
-- **Components**: SkillAnimations
+- **Components**: *Removed - animations now centralized in utils/animations*
 - **Characteristics**: Animation-specific logic
 
 ## Migration Guide
@@ -274,9 +246,7 @@ During the refactoring, several animation-related issues were identified and fix
 
 ### Potential Refactoring Opportunities
 1. **SearchAndFilter**: Could benefit from base form components
-2. **StatsWidget**: Could use base chart/graph components
-3. **Timeline**: Could use base timeline components
-4. **SkillTree**: Could use base tree/graph components
+2. **Timeline**: Could use base timeline components
 
 ## Testing Considerations
 

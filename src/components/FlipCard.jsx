@@ -1,12 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Card } from "./base";
 import { 
   AnimationCategories, 
   getAnimation, 
   AnimationPresets 
 } from "../utils/animations";
-import styles from "./FlipCard.module.css";
+import "../styling/components/flip-card.css";
 
 const FlipCard = ({ card, index, entryStrategy = "entry" }) => {
   const [isHovered, setIsHovered] = React.useState(false);
@@ -22,66 +21,25 @@ const FlipCard = ({ card, index, entryStrategy = "entry" }) => {
         ...entryAnimation.transition,
         delay: index * 0.1 
       }}
-      className={styles.flipCardContainer}
-      style={{ perspective: '1000px' }}
+      className="flip-card-container"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <motion.div
-        style={{
-          width: '100%',
-          height: '100%',
-          aspectRatio: '1.4 / 1',
-          minHeight: '160px',
-          position: 'relative',
-          transformStyle: 'preserve-3d',
-        }}
+        className="flip-card-inner"
         {...flipAnimation}
       >
         {/* Front of card */}
-        <Card
-          style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            backfaceVisibility: 'hidden',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '1.5rem',
-          }}
-          hover={true}
-        >
-          <div className={styles.flipCardFront}>
-            <div className={styles.flipCardIcon}>{card.front.icon}</div>
-            <h3 className={styles.flipCardTitle}>{card.front.title}</h3>
-            <p className={styles.flipCardSubtitle}>{card.front.subtitle}</p>
-          </div>
-        </Card>
+        <div className="flip-card-front">
+          <div className="flip-card-icon">{card.front.icon}</div>
+          <h3 className="flip-card-title">{card.front.title}</h3>
+          <p className="flip-card-subtitle">{card.front.subtitle}</p>
+        </div>
 
         {/* Back of card */}
-        <motion.div
-          className={styles.flipCardBack}
-          style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            backfaceVisibility: 'hidden',
-            transform: 'rotateY(180deg)',
-            background: 'var(--primary)',
-            color: 'white',
-            borderRadius: 'var(--border-radius)',
-            boxShadow: 'var(--shadow)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '1.5rem',
-            textAlign: 'center',
-          }}
-        >
-          <div className={styles.flipCardBackText}>{card.back.content}</div>
-        </motion.div>
+        <div className="flip-card-back">
+          <div className="flip-card-back-text">{card.back.content}</div>
+        </div>
       </motion.div>
     </motion.div>
   );

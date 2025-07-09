@@ -1,18 +1,7 @@
 import React from "react";
 import FlipCard from "./FlipCard";
 import { profile } from "../data";
-
-const brickGridStyle = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(3, minmax(140px, 1fr))', // smaller cards
-  gap: '2rem 1.5rem',
-  justifyContent: 'center',
-  alignItems: 'start',
-  maxWidth: '700px', // match body panel constraint
-  width: '100%',
-  margin: '0 auto',
-  position: 'relative',
-};
+import "../styling/components/flip-card.css";
 
 // Jagged pattern: 0rem, 1.5rem, 3rem, then repeat
 const getJaggedMarginTop = (index) => {
@@ -26,14 +15,11 @@ export default function FlipCards() {
   }
 
   return (
-    <div style={brickGridStyle}>
+    <div className="flip-cards-grid">
       {profile.flipCards?.map((card, index) => (
         <div
           key={index}
-          style={{
-            marginTop: getJaggedMarginTop(index),
-            transition: 'margin-top 0.3s',
-          }}
+          className="flip-card-item"
         >
           <FlipCard card={card} index={index} />
         </div>
