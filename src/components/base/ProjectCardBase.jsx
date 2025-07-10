@@ -10,6 +10,27 @@ import {
 import { AnimationCategories } from "../../utils/animations";
 import "../../styling/components/project-card-base.css";
 
+/**
+ * ProjectCardBase - Base component for project cards with hover toggle functionality
+ * 
+ * @param {Object} props
+ * @param {Object} props.project - Project data object
+ * @param {Function} props.onClick - Click handler function
+ * @param {string} props.size - Card size: 'small', 'medium', 'large'
+ * @param {string} props.variant - Card variant: 'default', 'featured', 'compact'
+ * @param {string} props.entryStrategy - Entry animation strategy
+ * @param {string} props.hoverStrategy - Hover animation strategy
+ * @param {boolean} props.enableHover - Whether to enable hover interactions (default: true)
+ * @param {boolean} props.showImage - Whether to show project image
+ * @param {boolean} props.showTech - Whether to show tech stack
+ * @param {boolean} props.showYear - Whether to show year badge
+ * @param {boolean} props.showBadge - Whether to show featured badge
+ * @param {boolean} props.showActions - Whether to show action buttons
+ * @param {string} props.imageHeight - Custom image height
+ * @param {Object} props.style - Additional styles
+ * @param {Object} props.uiContent - UI content configuration
+ */
+
 const ProjectCardBase = ({ 
   project,
   onClick,
@@ -25,6 +46,7 @@ const ProjectCardBase = ({
   imageHeight,
   style = {},
   uiContent = {},
+  enableHover = true, // New prop to control hover interactions
   ...props 
 }) => {
   const cardHeight = size === 'large' ? '380px' : size === 'medium' ? '300px' : '260px';
@@ -49,13 +71,17 @@ const ProjectCardBase = ({
   const containerClasses = [
     'project-card-base',
     `project-card-${variant}`,
-    `project-card-${size}`
+    `project-card-${size}`,
+    !enableHover ? 'no-hover' : ''
   ].join(' ');
+
+  // Determine hover strategy based on enableHover prop
+  const finalHoverStrategy = enableHover ? hoverStrategy : "none";
 
   return (
     <AnimatedContainer
       entryStrategy={entryStrategy}
-      hoverStrategy={hoverStrategy}
+      hoverStrategy={finalHoverStrategy}
       category={AnimationCategories.CARD}
       onClick={isFeatured ? undefined : onClick}
       className={containerClasses}

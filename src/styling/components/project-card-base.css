@@ -100,4 +100,15 @@
 /* Badge container */
 .project-card-badge-container {
   margin-bottom: 1rem;
+}
+
+/* No hover state */
+.project-card-base.no-hover {
+  cursor: default;
+  transition: none;
+}
+
+.project-card-base.no-hover:hover {
+  transform: none;
+  box-shadow: none;
 } 

@@ -8,7 +8,8 @@ const ProjectCard = ({
   size = 'medium',
   variant = 'default',
   entryStrategy = "scaleFade",
-  hoverStrategy = "hover"
+  hoverStrategy = "hover",
+  enableHover = true
 }) => {
   return (
     <ProjectCardBase
@@ -18,6 +19,7 @@ const ProjectCard = ({
       variant={variant}
       entryStrategy={entryStrategy}
       hoverStrategy={hoverStrategy}
+      enableHover={enableHover}
       showImage={true}
       showTech={true}
       showYear={true}

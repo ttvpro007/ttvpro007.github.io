@@ -112,6 +112,9 @@ const animations = {
     }
   },
   [AnimationCategories.HOVER]: {
+    none: {
+      // No hover animation
+    },
     lift: {
       whileHover: { y: -8, scale: 1.02 },
       transition: { duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }
@@ -233,6 +236,9 @@ const animations = {
     }
   },
   [AnimationCategories.CARD]: {
+    none: {
+      // No hover animation
+    },
     hover: {
       whileHover: { 
         y: -8, 

@@ -121,7 +121,7 @@ const Projects = ({ isTransitioning = false }) => {
               }}
               className="projects-featured-container"
             >
-              <FeaturedProject project={featuredProject} />
+              <FeaturedProject project={featuredProject} enableHover={false} />
             </motion.div>
           )}
 
@@ -293,12 +293,6 @@ const Projects = ({ isTransitioning = false }) => {
                         delay: 0.6 + (0.05 * index),
                         duration: 0.5,
                         ease: [0.25, 0.46, 0.45, 0.94]
-                      }}
-                      whileHover={{ 
-                        y: -8,
-                        scale: 1.02,
-                        zIndex: 10, // bring to front on hover
-                        transition: { duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }
                       }}
                       className="projects-card-wrapper"
                       style={{

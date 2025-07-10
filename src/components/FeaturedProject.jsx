@@ -4,7 +4,7 @@ import ProjectModal from "./ProjectModal";
 import { uiContent } from "../data";
 import '../styling/components/featured-project.css';
 
-const FeaturedProject = ({ project }) => {
+const FeaturedProject = ({ project, enableHover = true }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleViewDetails = () => {
@@ -21,6 +21,7 @@ const FeaturedProject = ({ project }) => {
         project={project}
         variant="featured"
         size="large"
+        enableHover={enableHover}
         showImage={false}
         showYear={false}
         showBadge={true}
