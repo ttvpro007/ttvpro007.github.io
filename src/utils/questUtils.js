@@ -1,0 +1,339 @@
+// Quest-related utility functions
+
+/**
+ * Formats form data into a gamified RPG-style HTML email content
+ * @param {Object} formData - The form data object
+ * @returns {string} - HTML formatted quest email
+ */
+export function formatQuestEmailContent(formData) {
+  const name = formData.name || 'Unknown Adventurer';
+  const email = formData.email || 'Unknown Realm';
+  const details = formData.details || '';
+  const role = formData.role || 'Wanderer';
+  const questType = formData.questType || 'Mystery';
+
+  // Fun RPG titles
+  const titles = [
+    'Sir', 'Lady', 'Archmage', 'Rogue', 'Paladin', 'Druid', 'Bard', 'Ranger', 'Warlock', 'Champion', 'Squire', 'Oracle', 'Warden', 'Alchemist', 'Beastmaster', 'Necromancer', 'Artificer', 'Monk', 'Barbarian', 'Sorcerer', 'Knight', 'Assassin', 'Enchanter', 'Seeker', 'Guardian', 'Witch', 'Hunter', 'Inventor', 'Mystic', 'Valkyrie', 'Samurai', 'Ninja', 'Gunslinger', 'Shaman', 'Templar', 'Sage', 'Witcher', 'Dragonborn', 'Hero', 'Villager', 'Merchant', 'Smith', 'Scholar', 'Explorer', 'Pirate', 'Captain', 'Admiral', 'Commander', 'Scout', 'Outlaw', 'Champion', 'Wanderer'
+  ];
+  const randomTitle = titles[Math.floor(Math.random() * titles.length)];
+
+  // Fun quest difficulties
+  const difficulties = [
+    '🟢 Easy', '🟡 Moderate', '🟠 Challenging', '🔴 Heroic', '🟣 Legendary', '⚫️ Mythic', '🌟 Epic', '💀 Deadly', '✨ Enchanted', '🔥 Infernal', '❄️ Frostbitten', '🌪️ Chaotic', '🌈 Whimsical'
+  ];
+  const randomDifficulty = difficulties[Math.floor(Math.random() * difficulties.length)];
+
+  // Fun quest rewards
+  const rewards = [
+    '1000 XP', 'A chest of gold', 'A rare artifact', 'A legendary weapon', 'A magical companion', 'A secret map', 'A favor from the guild', 'A mysterious potion', 'A badge of honor', 'A scroll of wisdom', 'A dragon egg', 'A bag of enchanted beans', 'A ticket to the next adventure', 'A shiny badge', 'A new title', 'A blessing from the gods', 'A handshake from the king', 'A song written in your honor', 'A magical mount', 'A rare gem', 'A piece of ancient lore'
+  ];
+  const randomReward = rewards[Math.floor(Math.random() * rewards.length)];
+
+  // Fun quest intro phrases
+  const intros = [
+    'A new quest has arrived at the guild hall!',
+    'A mysterious scroll has appeared on your desk...',
+    'A carrier pigeon delivers a sealed letter:',
+    'A magical portal shimmers and a message emerges:',
+    'A town crier shouts the news across the land:',
+    'A bard sings of a new adventure:',
+    'A glowing rune stone pulses with a message:',
+    'A secret agent hands you a coded scroll:',
+    'A talking cat delivers a quest:',
+    'A thunderclap heralds a new mission:',
+    'A whisper in the wind brings a challenge:',
+    'A royal decree is posted on the quest board:',
+    'A fortune teller reveals a new opportunity:',
+    'A goblin courier drops off a note:',
+    'A magical mirror reveals a plea for help:'
+  ];
+  const randomIntro = intros[Math.floor(Math.random() * intros.length)];
+
+  return `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Quest Alert!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:wght@400;600&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            font-family: 'Crimson Text', serif;
+            color: #f4f4f4;
+            line-height: 1.6;
+        }
+        
+        .quest-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, #2d1b69 0%, #1a103f 100%);
+            border: 3px solid #d4af37;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .quest-header {
+            background: linear-gradient(90deg, #d4af37 0%, #ffd700 50%, #d4af37 100%);
+            color: #1a103f;
+            padding: 20px;
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 24px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quest-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .quest-content {
+            padding: 30px;
+            position: relative;
+        }
+        
+        .quest-intro {
+            font-size: 18px;
+            color: #ffd700;
+            text-align: center;
+            margin-bottom: 25px;
+            font-style: italic;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .quest-info {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .quest-field {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .quest-field:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .quest-icon {
+            font-size: 20px;
+            margin-right: 15px;
+            min-width: 25px;
+        }
+        
+        .quest-label {
+            font-weight: 600;
+            color: #ffd700;
+            margin-right: 10px;
+            font-family: 'Cinzel', serif;
+        }
+        
+        .quest-value {
+            color: #f4f4f4;
+            flex: 1;
+        }
+        
+        .quest-details {
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .quest-details::before {
+            content: '📜';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: #1a103f;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 16px;
+        }
+        
+        .quest-details-content {
+            margin-top: 10px;
+            font-style: italic;
+            color: #e8e8e8;
+            line-height: 1.8;
+        }
+        
+        .quest-reward {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(255, 215, 0, 0.1) 100%);
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quest-reward::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+            animation: reward-shimmer 4s infinite;
+        }
+        
+        @keyframes reward-shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .reward-label {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: #ffd700;
+            font-size: 18px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .reward-value {
+            color: #f4f4f4;
+            font-size: 16px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .quest-call-to-action {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%);
+            border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .cta-text {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            color: #ffd700;
+            font-size: 20px;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .cta-subtext {
+            color: #e8e8e8;
+            font-style: italic;
+        }
+        
+        .quest-footer {
+            background: linear-gradient(90deg, #d4af37 0%, #ffd700 50%, #d4af37 100%);
+            color: #1a103f;
+            padding: 15px;
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .quest-content { padding: 20px; }
+            .quest-header { font-size: 20px; padding: 15px; }
+            .quest-intro { font-size: 16px; }
+            .cta-text { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="quest-container">
+        <div class="quest-header">
+            ⚔️ NEW QUEST ALERT! ⚔️
+        </div>
+        
+        <div class="quest-content">
+            <div class="quest-intro">
+                ${randomIntro}
+            </div>
+            
+            <div class="quest-info">
+                <div class="quest-field">
+                    <span class="quest-icon">🧙‍♂️</span>
+                    <span class="quest-label">From:</span>
+                    <span class="quest-value">${randomTitle} ${name} &lt;${email}&gt;</span>
+                </div>
+                
+                <div class="quest-field">
+                    <span class="quest-icon">🎭</span>
+                    <span class="quest-label">Role/Class:</span>
+                    <span class="quest-value">${role}</span>
+                </div>
+                
+                <div class="quest-field">
+                    <span class="quest-icon">🗺️</span>
+                    <span class="quest-label">Quest Type:</span>
+                    <span class="quest-value">${questType}</span>
+                </div>
+                
+                <div class="quest-field">
+                    <span class="quest-icon">⚔️</span>
+                    <span class="quest-label">Difficulty:</span>
+                    <span class="quest-value">${randomDifficulty}</span>
+                </div>
+            </div>
+            
+            <div class="quest-details">
+                <div class="quest-details-content">
+                    "${details}"
+                </div>
+            </div>
+            
+            <div class="quest-reward">
+                <div class="reward-label">🏆 Reward (Rumored)</div>
+                <div class="reward-value">${randomReward}</div>
+            </div>
+            
+            <div class="quest-call-to-action">
+                <div class="cta-text">Will you accept this challenge?</div>
+                <div class="cta-subtext">Reply to this scroll to begin your quest!</div>
+            </div>
+        </div>
+        
+        <div class="quest-footer">
+            🏰 Quest Guild - Adventure Awaits! 🏰
+        </div>
+    </div>
+</body>
+</html>
+  `;
+} 

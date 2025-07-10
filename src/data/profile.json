@@ -1,4 +1,10 @@
 {
+  "_metadata": {
+    "version": "1.0",
+    "lastUpdated": "2024",
+    "description": "Vi Tiet's Portfolio Data - Game Developer & Maker"
+  },
+
   "personal": {
     "name": "Vi Tiet",
     "tagline": "From stethoscopes to game engines",
@@ -6,6 +12,7 @@
     "bio": "I'm a passionate developer focused on creating immersive digital experiences through 2D/3D visualization, AR/VR applications, and game development. With expertise in Unity, C++, and Swift, I bring cutting-edge technologies to life while building efficient tools and workflows.",
     "email": "vitiet.programmer@gmail.com"
   },
+
   "socialLinks": [
     {
       "name": "GitHub",
@@ -29,6 +36,7 @@
       "color": "#d44638"
     }
   ],
+
   "journey": [
     {
       "title": "Nursing Days",
@@ -52,6 +60,7 @@
       "animation": "rocket"
     }
   ],
+
   "flipCards": [
     {
       "front": {
@@ -84,6 +93,7 @@
       }
     }
   ],
+
   "skills": {
     "categories": {
       "Programming & Development": {
@@ -122,6 +132,7 @@
           }
         ]
       },
+
       "Creative & Media": {
         "highlights": [
           "audio signal processing",
@@ -158,6 +169,7 @@
           }
         ]
       },
+
       "Maker Skills": {
         "highlights": [
           "3D Printing",
@@ -195,12 +207,14 @@
       }
     }
   },
+
   "funFacts": [
     "I once solved a coding problem I've stuck on for days in my dream",
     "My first 3D printer is a Bambu Lab X1C",
     "I can type 110 WPM on my custom mechanical keyboard",
     "Built my first game while learning game dev during the pandemic"
   ],
+
   "showAndTell": [
     {
       "title": "Custom Keyboard Build",
@@ -221,6 +235,7 @@
       "description": "Handcrafted desk organizer with hidden compartments"
     }
   ],
+
   "hq": {
     "title": "Headquarters",
     "location": "Digital Realm",
@@ -228,6 +243,6 @@
     "timezone": "UTC-4",
     "status": "Online",
     "description": "My digital headquarters where I craft games and code adventures. Currently stationed in the Mississauga area.",
-        "icon": "🏰"
+    "icon": "🏰"
   }
 } 

@@ -89,7 +89,8 @@
   padding: 1.5rem;
   transform: rotateY(180deg);
   background: var(--primary);
-  color: white;
+  color: black;
+  font-weight: 600;
   border: 2px solid var(--primary);
   overflow-wrap: break-word;
   word-break: break-word;

@@ -117,8 +117,7 @@
 }
 
 .featured-project-demo {
-  background: transparent;
-  color: white;
+  background: rgba(255, 255, 255, 0.15);
   border: 2px solid white;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
@@ -127,6 +126,23 @@
   transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  backdrop-filter: blur(10px);
+}
+
+/* Dark mode styles for the demo button */
+@media (prefers-color-scheme: dark) {
+  .featured-project-demo {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 238, 0, 0.7);
+  }
+}
+
+/* Light mode styles for the demo button */
+@media (prefers-color-scheme: light) {
+  .featured-project-demo {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+  }
 }
 
 .featured-project-demo::before {

@@ -1,11 +1,27 @@
 {
-  "titleText": "Embark on a New Adventure!",
-  "subtitleText": "Send me a quest below.",
+  "_metadata": {
+    "version": "1.0",
+    "lastUpdated": "2024",
+    "description": "Contact Form Configuration - Quest-themed Contact System",
+    "formProvider": "FormSubmit",
+    "theme": "Gaming/Adventure"
+  },
+
+  "content": {
+    "titleText": "Embark on a New Adventure!",
+    "subtitleText": "Send me a quest below.",
+    "submitLabel": "Send Quest",
+    "confirmationTitle": "Quest Sent!",
+    "confirmationText": "Thanks for reaching out — I'll reply ASAP. Your message has been sent to my quest log!"
+  },
+
   "formConfig": {
     "action": "https://formsubmit.co/vitiet.programmer@gmail.com",
-    "testAction": "https://formsubmit.co/vimulude@mailgolem.com",
-    "method": "POST"
+    "method": "POST",
+    "progressPerField": 20,
+    "maxProgress": 100
   },
+
   "formFields": [
     {
       "id": "name",
@@ -14,6 +30,7 @@
       "placeholder": "What do the bards call you?",
       "required": true
     },
+
     {
       "id": "email",
       "label": "Adventurer's Email",
@@ -21,20 +38,35 @@
       "placeholder": "Where can the guild reach you?",
       "required": true
     },
+
     {
       "id": "role",
       "label": "Role/Class",
       "type": "select",
-      "options": ["Developer", "Designer", "Project Manager", "Recruiter", "Other"],
+      "options": [
+        "Developer",
+        "Designer", 
+        "Project Manager",
+        "Recruiter",
+        "Other"
+      ],
       "required": true
     },
+
     {
       "id": "questType",
       "label": "Quest Type",
       "type": "select",
-      "options": ["Collaboration", "Job Opportunity", "Freelance Work", "Question", "Just Saying Hi"],
+      "options": [
+        "Collaboration",
+        "Job Opportunity",
+        "Freelance Work",
+        "Question",
+        "Just Saying Hi"
+      ],
       "required": true
     },
+
     {
       "id": "details",
       "label": "Quest Details",
@@ -43,9 +75,21 @@
       "required": true
     }
   ],
-  "submitLabel": "Send Quest",
-  "confirmationTitle": "Quest Sent!",
-  "confirmationText": "Thanks for reaching out — I'll reply ASAP. Your message has been sent to my quest log!",
-  "progressPerField": 20,
-  "maxProgress": 100
+
+  "_fieldDescriptions": {
+    "content": "UI text content for the contact form",
+    "formConfig": "Form submission configuration and settings",
+    "formFields": "Array of form field definitions",
+    "action": "Production form submission endpoint",
+    "testAction": "Test form submission endpoint",
+    "method": "HTTP method for form submission",
+    "progressPerField": "Progress increment per completed field",
+    "maxProgress": "Maximum progress value (100%)",
+    "id": "Unique field identifier",
+    "label": "Display label for the field",
+    "type": "Input type (text, email, select, textarea)",
+    "placeholder": "Placeholder text for input fields",
+    "options": "Array of options for select fields",
+    "required": "Whether field is mandatory"
+  }
 } 

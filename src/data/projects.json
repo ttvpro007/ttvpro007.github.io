@@ -1,4 +1,12 @@
 {
+  "_metadata": {
+    "version": "1.0",
+    "lastUpdated": "2024",
+    "description": "Vi Tiet's Project Portfolio - Game Development & Programming Projects",
+    "totalProjects": 5,
+    "featuredProjects": 1
+  },
+
   "items": [
     {
       "title": "Unity Physics Simulator",
@@ -17,6 +25,7 @@
       "showOnResume": false,
       "resumeOrder": 1
     },
+
     {
       "title": "Planet Runner",
       "description": "An endless runner game set on a rotating planet. Features procedural generation and power-ups.",
@@ -34,6 +43,7 @@
       "showOnResume": true,
       "resumeOrder": 2
     },
+
     {
       "title": "Bull Cow Game",
       "description": "A classic word guessing game built with Unreal Engine 4.",
@@ -51,6 +61,7 @@
       "showOnResume": true,
       "resumeOrder": 3
     },
+
     {
       "title": "Catavaneer",
       "description": "A reimagining of the Catavaneer game with modern C# and Unity features.",
@@ -68,6 +79,7 @@
       "showOnResume": true,
       "resumeOrder": 4
     },
+
     {
       "title": "Programming Problems Solution",
       "description": "A collection of programming problems and solutions from Codewars and other platforms.",
@@ -85,5 +97,23 @@
       "showOnResume": true,
       "resumeOrder": 5
     }
-  ]
+  ],
+
+  "_fieldDescriptions": {
+    "title": "Project name",
+    "description": "Short project description for cards",
+    "longDescription": "Detailed project description for modals",
+    "tech": "Array of technologies used",
+    "link": "Primary project link (GitHub, itch.io, etc.)",
+    "image": "Main project image for cards",
+    "images": "Array of all project images for gallery",
+    "linkSource": "Source platform (github, itchio, etc.)",
+    "category": "Project category (Game Dev, Tools, etc.)",
+    "year": "Project completion year",
+    "featured": "Whether project is featured on homepage",
+    "demo": "Live demo link (if available)",
+    "appStore": "App store link (if applicable)",
+    "showOnResume": "Whether to include in resume",
+    "resumeOrder": "Order for resume display"
+  }
 } 
