@@ -94,6 +94,25 @@
     }
   ],
 
+  "education": [
+    {
+      "degree": "Bachelor of Science in Nursing",
+      "institution": "University of Toronto",
+      "year": "2015-2019",
+      "description": "Comprehensive nursing education with focus on patient care and healthcare systems",
+      "icon": "🎓",
+      "relevantCourses": ["Anatomy & Physiology", "Patient Care", "Healthcare Systems"]
+    },
+    {
+      "degree": "Self-Taught Programming",
+      "institution": "Online Learning Platforms",
+      "year": "2019-Present",
+      "description": "Intensive self-directed learning in game development, programming, and software engineering",
+      "icon": "💻",
+      "relevantCourses": ["Unity & C#", "C++ Programming", "Swift Development", "Game Design"]
+    }
+  ],
+
   "skills": {
     "categories": {
       "Programming & Development": {

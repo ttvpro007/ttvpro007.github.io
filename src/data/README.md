@@ -61,6 +61,7 @@ Contains all personal information and content for the Home page.
       }
     }
   },
+  "education": [...],
   "funFacts": [...],
   "showAndTell": [...],
   "hq": {...}
@@ -73,9 +74,44 @@ Contains all personal information and content for the Home page.
 - **journey**: Career timeline and milestones
 - **flipCards**: Interactive flip card content
 - **skills**: Skills organized by categories
+- **education**: Educational background and qualifications
 - **funFacts**: Rotating fun facts
 - **showAndTell**: Image gallery content
 - **hq**: Contact page header information
+
+#### Education Structure
+```json
+{
+  "education": [
+    {
+      "degree": "Bachelor of Science in Nursing",
+      "institution": "University of Toronto",
+      "year": "2015-2019",
+      "description": "Comprehensive nursing education with focus on patient care and healthcare systems",
+      "icon": "🎓",
+      "relevantCourses": ["Anatomy & Physiology", "Patient Care", "Healthcare Systems"]
+    },
+    {
+      "degree": "Self-Taught Programming",
+      "institution": "Online Learning Platforms",
+      "year": "2019-Present",
+      "description": "Intensive self-directed learning in game development, programming, and software engineering",
+      "icon": "💻",
+      "relevantCourses": ["Unity & C#", "C++ Programming", "Swift Development", "Game Design"]
+    }
+  ]
+}
+```
+
+#### Education Properties
+| Property | Type | Description | Example |
+|----------|------|-------------|---------|
+| `degree` | string | Degree or qualification name | "Bachelor of Science in Nursing" |
+| `institution` | string | Educational institution | "University of Toronto" |
+| `year` | string | Year or date range | "2015-2019" or "2019-Present" |
+| `description` | string | Brief description of education | "Comprehensive nursing education..." |
+| `icon` | string | Emoji or icon representation | "🎓" or "💻" |
+| `relevantCourses` | array | List of relevant courses | `["Unity & C#", "C++ Programming"]` |
 
 ### 2. Projects Data (`projects.json`)
 Contains all project information for the Projects page.
@@ -231,6 +267,13 @@ Contains contact form configuration.
 2. Navigate to the `skills.categories` section
 3. Add new categories or modify existing ones
 4. Update skill levels, descriptions, and animations
+
+### Updating Education
+1. Open `profile.json`
+2. Navigate to the `education` array
+3. Add new education entries or modify existing ones
+4. Include degree, institution, year, description, icon, and relevant courses
+5. Education entries are displayed on the Resume page in chronological order
 
 ### Changing UI Text
 1. Open `uiContent.json`

@@ -2,18 +2,25 @@
    Featured Project Styles
    ===================== */
 
+/* Featured project container with border */
 .featured-project-container {
-  position: relative;
-  height: var(--featured-height, 400px);
+  border: 2px solid var(--primary) !important;
   border-radius: var(--border-radius);
   overflow: hidden;
-  margin-bottom: 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  width: 100%;
-  border: 3px solid var(--primary);
+  position: relative;
+  padding: 2.5rem;
   box-sizing: border-box;
 }
 
+/* Featured project card container */
+.project-card-featured {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  min-height: 400px;
+}
+
+/* Featured project background image */
 .featured-project-bg {
   position: absolute;
   top: 0;
@@ -27,73 +34,70 @@
   z-index: 1;
 }
 
-.featured-project-overlay {
-  position: relative;
-  z-index: 2;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 1.5rem;
-  box-sizing: border-box;
-  overflow: hidden;
+/* Featured project content overlay */
+.project-card-featured .project-card-content-overlay {
+  background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%);
+  padding: 0 !important;
+  justify-content: center;
   color: white;
   width: 100%;
-  padding-top: 2rem;
+  box-sizing: border-box;
 }
 
-.featured-project-badge {
-  margin-bottom: 0.75rem;
+/* Featured project description */
+.project-card-featured .project-card-description {
+  color: rgba(255,255,255,0.9);
+  font-size: 1.1rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  background: rgba(0,0,0,0.60);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  margin-bottom: 1rem;
+  display: inline-block;
 }
 
-.featured-project-badge .badge {
-  background: var(--primary);
-  color: var(--card-bg);
-  font-weight: bold;
-  font-size: 0.9rem;
-  padding: 0.5rem 1rem;
+/* Featured project content padding */
+.project-card-featured .project-card-content {
+  padding: 0 !important;
 }
 
-.featured-project-title {
-  margin: 0;
-  font-size: 1.3rem;
-  font-weight: bold;
-  color: var(--text);
-  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-  line-height: 1.2;
+/* Featured project tech stack brightness */
+.project-card-featured .tech-stack {
+  filter: brightness(1.2);
 }
 
-.featured-project-description {
-  margin: 0.5rem 0 1rem 0;
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  text-shadow: 0 1px 1px rgba(0,0,0,0.05);
-  width: 100%;
+/* Featured project title */
+.project-card-featured .project-card-title {
+  color: white;
+  font-size: 2rem;
+  font-family: 'Orbitron', monospace;
+  text-shadow:
+    0 2px 4px rgba(0,0,0,0.5),
+    0 0 8px var(--primary),
+    0 0 16px var(--primary);
 }
 
-.featured-project-techstack {
-  margin-bottom: 0.75rem;
-}
-
-.featured-project-actions {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
+/* Enhanced button styles for featured projects - matching project modal */
 .featured-project-button {
-  background: var(--primary);
-  color: var(--card-bg);
-  border: none;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: bold;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  background: var(--primary) !important;
+  color: var(--card-bg) !important;
+  border: none !important;
+  padding: 1rem 1.5rem !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  border-radius: 12px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 8px rgba(238, 182, 75, 0.3) !important;
 }
 
 .featured-project-button::before {
@@ -103,7 +107,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
   transition: left 0.5s ease;
 }
 
@@ -112,21 +116,25 @@
 }
 
 .featured-project-button:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 15px rgba(238, 182, 75, 0.4);
+  transform: scale(1.02) !important;
+  box-shadow: 0 4px 15px rgba(238, 182, 75, 0.4) !important;
 }
 
 .featured-project-demo {
-  background: rgba(255, 255, 255, 0.15);
-  border: 2px solid white;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 2px solid white !important;
+  padding: 1rem 1.5rem !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  border-radius: 12px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  transition: all 0.3s ease !important;
+  backdrop-filter: blur(10px) !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2) !important;
 }
 
 /* Dark mode styles for the demo button */
@@ -152,7 +160,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
   transition: left 0.5s ease;
 }
 
@@ -161,38 +169,16 @@
 }
 
 .featured-project-demo:hover {
-  transform: scale(1.02);
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+  transform: scale(1.02) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3) !important;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .featured-project-container {
-    height: 350px;
-  }
-  
-  .featured-project-overlay {
-    padding: 1rem;
-    padding-top: 1.5rem;
-  }
-  
-  .featured-project-title {
-    font-size: 1.1rem;
-  }
-  
-  .featured-project-description {
-    font-size: 0.8rem;
-    margin: 0.4rem 0 0.8rem 0;
-  }
-  
-  .featured-project-actions {
-    gap: 0.75rem;
-  }
-  
   .featured-project-button,
   .featured-project-demo {
-    padding: 0.6rem 1.2rem;
+    padding: 0.8rem 1.2rem;
     font-size: 0.9rem;
   }
 } 

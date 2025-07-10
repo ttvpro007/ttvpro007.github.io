@@ -71,6 +71,43 @@ const Resume = () => {
             ))}
           </Card>
 
+          {/* Education Section */}
+          <Card className="resume-education-card" hover={false}>
+            <h3 className="header-3 resume-education-title">Education</h3>
+            <div className="resume-education-list">
+              {profile.education && profile.education.map((edu, index) => (
+                <div key={index} className="resume-education-item">
+                  <div className="resume-education-header">
+                    <span className="resume-education-icon">{edu.icon}</span>
+                    <div className="resume-education-info">
+                      <h4 className="resume-education-degree">{edu.degree}</h4>
+                      <p className="resume-education-institution">{edu.institution}</p>
+                      <span className="small-text resume-education-year">{edu.year}</span>
+                    </div>
+                  </div>
+                  <p className="body-text resume-education-description">
+                    {edu.description}
+                  </p>
+                  {edu.relevantCourses && (
+                    <div className="resume-education-courses">
+                      <span className="xsmall-text resume-courses-label">Relevant Courses:</span>
+                      <div className="resume-courses-list">
+                        {edu.relevantCourses.map((course, courseIndex) => (
+                          <span
+                            key={courseIndex}
+                            className="xsmall-text resume-course-tag"
+                          >
+                            {course}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </Card>
+
           {/* Projects Section */}
           <Card className="resume-projects-card" hover={false}>
             <h3 className="header-3 resume-projects-title">Projects</h3>

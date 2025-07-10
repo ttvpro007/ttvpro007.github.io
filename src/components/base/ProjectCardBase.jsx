@@ -3,138 +3,166 @@ import {
   AnimatedContainer, 
   ImageContainer, 
   TechStack, 
-  YearBadge 
+  YearBadge,
+  Badge,
+  Button
 } from "./index";
 import { AnimationCategories } from "../../utils/animations";
+import "../../styling/components/project-card-base.css";
 
 const ProjectCardBase = ({ 
   project,
   onClick,
   size = 'medium',
+  variant = 'default', // 'default', 'featured', 'compact'
   entryStrategy = "scaleFade",
   hoverStrategy = "hover",
   showImage = true,
   showTech = true,
   showYear = true,
+  showBadge = false,
+  showActions = false,
   imageHeight,
   style = {},
+  uiContent = {},
   ...props 
 }) => {
   const cardHeight = size === 'large' ? '380px' : size === 'medium' ? '300px' : '260px';
   const defaultImageHeight = size === 'large' ? "65%" : size === 'small' ? "55%" : "60%";
-  const padding = size === 'small' ? "0.5rem" : "0.75rem";
   const descriptionLines = size === 'small' ? 2 : size === 'large' ? 4 : 3;
+
+  // Featured project specific styles
+  const isFeatured = variant === 'featured';
+  const isCompact = variant === 'compact';
+
+  const handleViewDetails = () => {
+    if (onClick) onClick(project);
+  };
+
+  const handleDemoClick = () => {
+    if (project.demo) {
+      window.open(project.demo, "_blank");
+    }
+  };
+
+  // Build CSS classes
+  const containerClasses = [
+    'project-card-base',
+    `project-card-${variant}`,
+    `project-card-${size}`
+  ].join(' ');
 
   return (
     <AnimatedContainer
       entryStrategy={entryStrategy}
       hoverStrategy={hoverStrategy}
       category={AnimationCategories.CARD}
-      onClick={onClick}
+      onClick={isFeatured ? undefined : onClick}
+      className={containerClasses}
       style={{
-        height: "100%",
         minHeight: cardHeight,
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden",
-        position: "relative",
-        background: "var(--card-bg)",
-        border: "2px solid var(--primary)",
-        borderRadius: "var(--border-radius)",
-        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(252, 148, 96, 0.1)",
-        padding: 0,
         ...style
       }}
       {...props}
     >
-      {/* Project Image */}
-      {showImage && project.image && (
-        <ImageContainer
-          src={project.image}
-          alt={project.title}
-          height={imageHeight || defaultImageHeight}
-          borderRadius="16px"
+      {/* Background Image with Gradient Overlay for Featured */}
+      {isFeatured && project.image && (
+        <div 
+          className="featured-project-bg project-card-bg-image"
           style={{
-            margin: "4px"
+            backgroundImage: `url(${project.image})`
           }}
         />
       )}
 
-      {/* Content Section */}
-      <div style={{
-        flex: 1,
-        padding,
-        display: "flex",
-        flexDirection: "column",
-        position: "relative",
-        zIndex: 2,
-        minHeight: 0
-      }}>
-        {/* Title with Icon */}
-        <div style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.75rem",
-          marginBottom: "0.75rem"
-        }}>
-          <div style={{
-            width: size === 'small' ? "6px" : "8px",
-            height: size === 'small' ? "6px" : "8px",
-            background: "var(--primary)",
-            borderRadius: "50%",
-            boxShadow: "0 0 10px var(--primary)"
-          }} />
-          <h3 style={{
-            color: "var(--text)",
-            margin: 0,
-            fontSize: "1.3rem",
-            fontWeight: "bold",
-            textShadow: "0 1px 2px rgba(0,0,0,0.1)",
-            lineHeight: "1.2"
-          }}>
-            {project.title}
-          </h3>
-        </div>
+      {/* Content Overlay */}
+      <div className="project-card-content-overlay">
+        {/* Featured Badge */}
+        {showBadge && isFeatured && uiContent?.ui?.featuredProject?.badge && (
+          <div className="project-card-badge-container">
+            <Badge>
+              {uiContent.ui.featuredProject.badge}
+            </Badge>
+          </div>
+        )}
 
-        {/* Description */}
-        <p style={{
-          color: "var(--text-secondary)",
-          margin: "0.75rem 0 1.25rem 0",
-          fontSize: "0.9rem",
-          lineHeight: "1.6",
-          textShadow: "0 1px 1px rgba(0,0,0,0.05)",
-          flex: 1,
-          overflow: "hidden",
-          display: "-webkit-box",
-          WebkitLineClamp: descriptionLines,
-          WebkitBoxOrient: "vertical"
-        }}>
-          {project.description}
-        </p>
-
-        {/* Tech Stack */}
-        {showTech && project.tech && (
-          <TechStack 
-            tech={project.tech}
-            maxDisplay={4}
-            style={{ marginBottom: "1rem" }}
+        {/* Project Image for non-featured cards */}
+        {showImage && project.image && !isFeatured && (
+          <ImageContainer
+            src={project.image}
+            alt={project.title}
+            height={imageHeight || defaultImageHeight}
+            borderRadius="16px"
+            style={{
+              margin: "4px"
+            }}
           />
         )}
 
-        {/* Year Badge */}
-        {showYear && project.year && (
-          <div style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginTop: "auto",
-            paddingTop: "0.75rem"
-          }}>
-            <YearBadge 
-              year={project.year}
-              size={size}
-            />
+        {/* Content Section */}
+        <div className="project-card-content">
+          {/* Title with Icon */}
+          <div className="project-card-title-section">
+            {(!isFeatured && variant !== 'default') && (
+              <div className="project-card-title-dot" />
+            )}
+            <h3 className="project-card-title">
+              {project.title}
+            </h3>
           </div>
-        )}
+
+          {/* Description */}
+          <p 
+            className="project-card-description"
+            style={{
+              WebkitLineClamp: isFeatured ? 3 : descriptionLines
+            }}
+          >
+            {isFeatured ? (project.longDescription || project.description) : project.description}
+          </p>
+
+          {/* Tech Stack */}
+          {showTech && project.tech && (
+            <TechStack 
+              tech={project.tech}
+              maxDisplay={4}
+              style={{ marginBottom: "1rem" }}
+            />
+          )}
+
+          {/* Action Buttons for Featured */}
+          {showActions && isFeatured && (
+            <div className="project-card-actions">
+              <Button
+                onClick={handleViewDetails}
+                variant="primary"
+                className="featured-project-button"
+              >
+                {uiContent?.ui?.featuredProject?.button || "View Details"}
+              </Button>
+
+              {project.demo && (
+                <Button
+                  onClick={handleDemoClick}
+                  variant="outline"
+                  className="featured-project-demo"
+                >
+                  🚀 Live Demo
+                </Button>
+              )}
+            </div>
+          )}
+
+          {/* Year Badge */}
+          {showYear && project.year && !isFeatured && (
+            <div className="project-card-year-badge">
+              <YearBadge 
+                year={project.year}
+                size={size}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </AnimatedContainer>
   );
