@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Gmail API credentials and tokens
+credentials.json
+credentials-depricate.json
+token.json
+src/data/credentials.json
