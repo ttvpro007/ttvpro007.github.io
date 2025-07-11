@@ -70,6 +70,8 @@
       "link": "https://cryobyte-studio.itch.io/catavaneer",
       "image": "/projects-images/catavaneer.png",
       "images": ["/projects-images/catavaneer.png"],
+      "video": "https://www.youtube.com/embed/BYTxPFj44uo?si=eBDT605T5Q7QH_aM",
+      "videoBackgroundTheme": "pulsingParticlesGlass",
       "linkSource": "itchio",
       "category": "Game Dev",
       "year": 2024,

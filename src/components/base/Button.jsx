@@ -23,12 +23,12 @@ const Button = ({
       border: 'none'
     },
     secondary: {
-      background: 'transparent',
+      background: 'rgba(0,0,0,0)',
       color: 'var(--primary)',
       border: '1px solid var(--primary)'
     },
     outline: {
-      background: 'transparent',
+      background: 'rgba(0,0,0,0)',
       color: 'var(--text)',
       border: '1px solid var(--border)'
     }

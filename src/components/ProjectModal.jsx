@@ -9,6 +9,7 @@ import {
   getProjectDescription 
 } from "../utils/projectUtils";
 import "../styling/components/project-modal.css";
+import VideoBackgroundEffect from "./base/VideoBackgroundEffect";
 
 const ProjectModal = ({ project, isOpen, onClose }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -40,15 +41,27 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
   }, [isOpen, onClose]);
 
   const images = getProjectImages(project);
-  const currentImage = images[currentImageIndex];
   const actionButtons = generateProjectButtons(project);
+  
+  // Create a combined media array that includes both video and images
+  const mediaItems = [];
+  if (project?.video) {
+    mediaItems.push({ type: 'video', src: project.video, title: project?.title || '' });
+  }
+  if (project) {
+    images.forEach(image => {
+      mediaItems.push({ type: 'image', src: image, title: project.title || '' });
+    });
+  }
+  
+  const currentMedia = mediaItems[currentImageIndex];
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    setCurrentImageIndex((prev) => (prev + 1) % mediaItems.length);
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+    setCurrentImageIndex((prev) => (prev - 1 + mediaItems.length) % mediaItems.length);
   };
 
   return (
@@ -210,22 +223,49 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
               className="project-modal-content"
             >
               <Card className="gallery-card" padding="0" hover={false}>
-                <div className="gallery-container">
+                <div className="gallery-container" style={{ position: 'relative' }}>
+                  {mediaItems.some(item => item.type === 'video') && (
+                    <VideoBackgroundEffect theme={project.videoBackgroundTheme || 'raindrops'} />
+                  )}
                   <AnimatePresence mode="wait">
-                    <motion.img
-                      key={currentImageIndex}
-                      src={currentImage}
-                      alt={project.title}
-                      initial={{ opacity: 0, scale: 1.1 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.9 }}
-                      transition={{ duration: 0.4 }}
-                      className="gallery-image"
-                    />
+                    {currentMedia?.type === 'video' ? (
+                      <motion.div
+                        key={`video-${currentImageIndex}`}
+                        initial={{ opacity: 0, scale: 1.1 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        transition={{ duration: 0.4 }}
+                        className="project-modal-video-container"
+                        style={{ width: "100%", aspectRatio: "16/9", borderRadius: "12px", overflow: "hidden", position: "relative", zIndex: 2 }}
+                      >
+                        <iframe
+                          width="100%"
+                          height="100%"
+                          src={currentMedia.src}
+                          title={currentMedia.title}
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          style={{ borderRadius: "12px", position: "relative", zIndex: 2 }}
+                        />
+                      </motion.div>
+                    ) : (
+                      <motion.img
+                        key={`image-${currentImageIndex}`}
+                        src={currentMedia?.src}
+                        alt={currentMedia?.title}
+                        initial={{ opacity: 0, scale: 1.1 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        transition={{ duration: 0.4 }}
+                        className="gallery-image"
+                        style={{ position: 'relative', zIndex: 2 }}
+                      />
+                    )}
                   </AnimatePresence>
                   
                   {/* Navigation Arrows */}
-                  {images.length > 1 && (
+                  {mediaItems.length > 1 && (
                     <>
                       <motion.div
                         initial={{ opacity: 0, x: -30 }}
@@ -233,6 +273,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                         exit={{ opacity: 0, x: -30 }}
                         transition={{ delay: 0.5 }}
                         className="nav-arrow nav-left"
+                        style={{ background: 'rgba(0,0,0,0)' }}
                       >
                         <Button
                           onClick={prevImage}
@@ -249,6 +290,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                         exit={{ opacity: 0, x: 30 }}
                         transition={{ delay: 0.5 }}
                         className="nav-arrow nav-right"
+                        style={{ background: 'rgba(0,0,0,0)' }}
                       >
                         <Button
                           onClick={nextImage}
@@ -262,8 +304,8 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                     </>
                   )}
 
-                  {/* Image Counter */}
-                  {images.length > 1 && (
+                  {/* Media Counter */}
+                  {mediaItems.length > 1 && (
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -271,7 +313,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                       transition={{ delay: 0.6 }}
                       className="image-counter"
                     >
-                      {formatImageCounter(currentImageIndex + 1, images.length)}
+                      {formatImageCounter(currentImageIndex + 1, mediaItems.length)}
                     </motion.div>
                   )}
                 </div>

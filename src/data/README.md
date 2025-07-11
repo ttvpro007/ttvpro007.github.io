@@ -160,6 +160,55 @@ Contains all project information for the Projects page.
 | `showOnResume` | boolean | Show on resume | `true` or `false` |
 | `resumeOrder` | number | Resume display order | `1`, `2`, `3` |
 
+### 🎬 Video Background Themes for Project Modals
+
+You can add animated video background effects to the project modal gallery when a project has a video. The effect is controlled by the `videoBackgroundTheme` property in each project object.
+
+#### Available Themes
+- `raindrops` (default)
+// Add more themes here as you implement them, e.g.:
+// - `bokeh`
+// - `snow`
+
+#### How to Use
+Add the `videoBackgroundTheme` property to your project in `projects.json`:
+```json
+{
+  "title": "Catavaneer",
+  ...
+  "video": "https://www.youtube.com/embed/BYTxPFj44uo?si=eBDT605T5Q7QH_aM",
+  "videoBackgroundTheme": "raindrops"
+}
+```
+If not specified, the default theme is `raindrops`.
+
+#### How to Add More Themes
+1. **Implement a new strategy function** in `src/components/base/videoBgStrategies.js`:
+   ```js
+   function bokehStrategy(canvas) {
+     // Animation logic for bokeh effect
+   }
+   ```
+2. **Register the new strategy** in the `getVideoBgStrategy` switch:
+   ```js
+   export function getVideoBgStrategy(theme) {
+     switch (theme) {
+       case 'raindrops':
+         return raindropsStrategy;
+       case 'bokeh':
+         return bokehStrategy;
+       // ...
+       default:
+         return null;
+     }
+   }
+   ```
+3. **Set the theme in your project data**:
+   ```json
+   "videoBackgroundTheme": "bokeh"
+   ```
+4. **Document the new theme** in this README under 'Available Themes'.
+
 ### 3. Navigation Data (`navigation.json`)
 Contains navigation and theme configuration.
 
