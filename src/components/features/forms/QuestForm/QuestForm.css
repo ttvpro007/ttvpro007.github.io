@@ -29,6 +29,14 @@
   border-radius: 10px;
 }
 
+.quest-form select {
+  cursor: var(--cursor-pointer);
+}
+
+.quest-form select option {
+  cursor: var(--cursor-default);
+}
+
 /* Adjust spacing between fields */
 .form-fields {
   display: flex;
