@@ -1,0 +1,56 @@
+/* =====================
+   Animated Container Styles
+   ===================== */
+
+.animated-container {
+  /* Base container styles */
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Cursor states */
+.animated-container--clickable {
+  cursor: var(--cursor-pointer);
+}
+
+.animated-container--default {
+  cursor: var(--cursor-default);
+}
+
+/* Interactive states */
+.animated-container--clickable:hover {
+  /* Hover effects will be handled by framer-motion animations */
+}
+
+.animated-container--clickable:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Animation states */
+.animated-container--loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.animated-container--disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .animated-container {
+    /* Mobile-specific adjustments if needed */
+  }
+}
+
+@media (max-width: 480px) {
+  .animated-container {
+    /* Small mobile adjustments if needed */
+  }
+} 

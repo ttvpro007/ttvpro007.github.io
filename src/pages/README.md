@@ -1,16 +1,36 @@
 # 📄 Pages Directory
 
-This directory contains the main page components for the portfolio application. Each page is a top-level component that represents a distinct section of the portfolio and is responsible for composing other components to create the complete page experience.
+This directory contains the main page components for the portfolio application, organized following the same pattern as the components directory. Each page is a top-level component that represents a distinct section of the portfolio and is responsible for composing other components to create the complete page experience.
 
 ## 📁 File Structure
 
 ```
 src/pages/
-├── Home.jsx        # Landing page with hero, timeline, and interactive sections
-├── Projects.jsx    # Project showcase with search, filter, and modal views
-├── Resume.jsx      # Professional resume with skills and projects
-├── Contact.jsx     # Contact form with social links and HQ info
-└── README.md       # This documentation
+├── base/                  # Basic page components and layouts
+│   ├── PageContainer/     # Reusable page container with common layout
+│   ├── PageHeader/        # Common page header component
+│   └── PageFooter/        # Common page footer component
+├── features/              # Feature-specific pages organized by domain
+│   ├── home/              # Home page and related components
+│   │   ├── Home.jsx       # Main home page component
+│   │   ├── Home.css       # Home page styles
+│   │   └── index.js       # Export file
+│   ├── projects/          # Projects page and related components
+│   │   ├── Projects.jsx   # Main projects page component
+│   │   ├── Projects.css   # Projects page styles
+│   │   └── index.js       # Export file
+│   ├── resume/            # Resume page and related components
+│   │   ├── Resume.jsx     # Main resume page component
+│   │   ├── Resume.css     # Resume page styles
+│   │   └── index.js       # Export file
+│   └── contact/           # Contact page and related components
+│       ├── Contact.jsx    # Main contact page component
+│       ├── Contact.css    # Contact page styles
+│       └── index.js       # Export file
+├── layout/                # Layout-specific pages
+│   └── ErrorPage/         # Error page components
+├── README.md              # This documentation
+└── index.js               # Main export file for all pages
 ```
 
 ## 🎯 Page Architecture
@@ -31,12 +51,12 @@ import { profile, projects, navigation, uiContent, contact } from '../data';
 ### Styling Integration
 Each page imports its specific CSS file:
 ```javascript
-import '../styling/pages/[page-name].css';
+import './[page-name].css';
 ```
 
 ## 📋 Page Components Overview
 
-### 1. Home Page (`Home.jsx`)
+### 1. Home Page (`features/home/Home.jsx`)
 The landing page that introduces the portfolio owner and showcases key information.
 
 #### Features
@@ -75,7 +95,7 @@ The landing page that introduces the portfolio owner and showcases key informati
 ))}
 ```
 
-### 2. Projects Page (`Projects.jsx`)
+### 2. Projects Page (`features/projects/Projects.jsx`)
 A comprehensive project showcase with advanced filtering and search capabilities.
 
 #### Features
@@ -129,7 +149,7 @@ projects.items.forEach(project => {
 });
 ```
 
-### 3. Resume Page (`Resume.jsx`)
+### 3. Resume Page (`features/resume/Resume.jsx`)
 A professional resume view optimized for printing and sharing.
 
 #### Features
@@ -166,7 +186,7 @@ const resumeProjects = projects.items
 />
 ```
 
-### 4. Contact Page (`Contact.jsx`)
+### 4. Contact Page (`features/contact/Contact.jsx`)
 A contact form with social links and headquarters information.
 
 #### Features
@@ -248,109 +268,66 @@ import { profile, projects, navigation, uiContent, contact } from '../data';
 ### Responsive Design
 - Mobile-first approach
 - Adaptive layouts for all screen sizes
-- Touch-friendly interactions
-- Optimized typography scaling
+- Consistent breakpoints across all pages
 
 ### Performance Optimization
-- Lazy loading for images
-- Efficient data filtering
-- Optimized animations
-- Minimal re-renders
+- Lazy loading for page components
+- Optimized animations and transitions
+- Efficient data loading and caching
 
 ### Accessibility
 - Semantic HTML structure
+- ARIA labels and roles
 - Keyboard navigation support
 - Screen reader compatibility
-- High contrast ratios
 
-## 📱 Page-Specific Features
+## 🚀 Usage
 
-### Home Page
-- **Interactive Elements**: Clickable profile picture with confetti
-- **Social Integration**: Dynamic social media links
-- **Content Rotation**: Rotating fun facts and flip cards
-- **Smooth Animations**: Staggered entrance animations
+### Importing Pages
+```javascript
+// Import specific pages
+import Home from './features/home/Home';
+import Projects from './features/projects/Projects';
+import Resume from './features/resume/Resume';
+import Contact from './features/contact/Contact';
 
-### Projects Page
-- **Advanced Filtering**: Search by title, description, and technology
-- **Dynamic Sorting**: Sort by recent or technology
-- **Modal Views**: Detailed project information
-- **Statistics**: Technology usage and project breakdown
+// Or import from main index
+import { Home, Projects, Resume, Contact } from './pages';
+```
 
-### Resume Page
-- **Print Optimization**: Clean layout for PDF generation
-- **Skill Visualization**: Animated progress bars
-- **Project Selection**: Filtered projects for resume
-- **Professional Layout**: Clean, readable design
+### Page Routing
+```javascript
+// In your router configuration
+<Routes>
+  <Route path="/" element={<Home />} />
+  <Route path="/projects" element={<Projects />} />
+  <Route path="/resume" element={<Resume />} />
+  <Route path="/contact" element={<Contact />} />
+</Routes>
+```
 
-### Contact Page
-- **Form Validation**: Real-time form validation
-- **Progress Tracking**: Visual form completion progress
-- **RPG Theme**: Gaming-inspired form design
-- **Success Feedback**: Confirmation modal after submission
+## 📚 Best Practices
 
-## 🚀 Customization Guide
+### Component Organization
+- Keep page components focused on composition
+- Delegate complex logic to feature components
+- Use consistent naming conventions
+- Maintain clear separation of concerns
 
-### Adding New Pages
-1. Create new page component in `src/pages/`
-2. Add page styles in `src/styling/pages/`
-3. Update navigation in `src/data/navigation.json`
-4. Add route in `src/App.jsx`
-
-### Modifying Page Content
-1. Update data files in `src/data/`
-2. Modify component composition as needed
-3. Update page-specific styles
-4. Test responsive behavior
-
-### Adding New Features
-1. Create new components in `src/components/`
-2. Import and use in appropriate pages
-3. Add necessary data to JSON files
-4. Update documentation
-
-## 🔍 Best Practices
-
-### Component Composition
-- Keep pages focused on layout and composition
-- Delegate specific functionality to components
-- Use data-driven content where possible
-- Maintain consistent structure across pages
+### Styling
+- Import page-specific styles directly in page components
+- Use CSS variables for consistency
+- Follow responsive design principles
+- Maintain accessibility standards
 
 ### Performance
+- Optimize bundle size with code splitting
+- Use lazy loading for heavy components
+- Minimize re-renders with proper state management
 - Optimize animations for smooth performance
-- Use efficient data filtering and sorting
-- Minimize unnecessary re-renders
-- Implement proper loading states
 
-### Accessibility
-- Use semantic HTML elements
-- Provide proper alt text for images
-- Ensure keyboard navigation works
-- Test with screen readers
-
-### Code Organization
-- Keep pages clean and focused
-- Use consistent naming conventions
-- Document complex logic
-- Follow established patterns
-
-## 🔮 Future Enhancements
-
-### Potential Improvements
-- **Page Transitions**: Smooth transitions between pages
-- **Loading States**: Better loading indicators
-- **Error Boundaries**: Graceful error handling
-- **SEO Optimization**: Meta tags and structured data
-
-### Technical Improvements
-- **TypeScript**: Add type safety
-- **Testing**: Unit and integration tests
-- **Performance Monitoring**: Real-time performance tracking
-- **Analytics**: Page view and interaction tracking
-
----
-
-**Need help?** Check the main project README.md or component documentation for detailed instructions!
-
-The pages directory provides the main user interface for the portfolio. Each page is designed to be responsive, accessible, and easily customizable through the data-driven architecture! 🚀 
+### Testing
+- Test page components in isolation
+- Verify responsive behavior across devices
+- Test accessibility features
+- Validate data integration 

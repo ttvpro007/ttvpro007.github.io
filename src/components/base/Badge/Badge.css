@@ -1,0 +1,152 @@
+/* =====================
+   Badge Component Styles
+   ===================== */
+
+.badge {
+  background: var(--primary);
+  color: var(--card-bg);
+  border-radius: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border: 1px solid var(--primary);
+  text-decoration: none;
+  outline: none;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+/* Badge Variants */
+.badge--primary {
+  background: var(--primary);
+  color: var(--card-bg);
+  border: 1px solid var(--primary);
+}
+
+.badge--secondary {
+  background: var(--secondary);
+  color: var(--card-bg);
+  border: 1px solid var(--secondary);
+}
+
+.badge--accent {
+  background: var(--accent);
+  color: var(--card-bg);
+  border: 1px solid var(--accent);
+}
+
+.badge--outline {
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.badge--ghost {
+  background: rgba(238, 182, 75, 0.1);
+  color: var(--primary);
+  border: 1px solid rgba(238, 182, 75, 0.3);
+}
+
+/* Badge Sizes */
+.badge--small {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.badge--medium {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.badge--large {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+/* Badge States */
+.badge--animated {
+  cursor: var(--cursor-pointer);
+}
+
+.badge--animated:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.badge--animated:active {
+  transform: scale(0.95);
+}
+
+/* Hover Effects */
+.badge--primary:hover {
+  background: var(--secondary);
+  border-color: var(--secondary);
+  box-shadow: 0 4px 8px rgba(238, 182, 75, 0.3);
+}
+
+.badge--secondary:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 4px 8px rgba(229, 66, 100, 0.3);
+}
+
+.badge--accent:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  box-shadow: 0 4px 8px rgba(238, 182, 75, 0.3);
+}
+
+.badge--outline:hover {
+  background: var(--primary);
+  color: var(--card-bg);
+  box-shadow: 0 4px 8px rgba(238, 182, 75, 0.3);
+}
+
+.badge--ghost:hover {
+  background: rgba(238, 182, 75, 0.2);
+  border-color: var(--primary);
+  box-shadow: 0 4px 8px rgba(238, 182, 75, 0.2);
+}
+
+/* Focus States */
+.badge:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .badge--large {
+    padding: 0.4rem 0.875rem;
+    font-size: 0.85rem;
+  }
+  
+  .badge--medium {
+    padding: 0.2rem 0.625rem;
+    font-size: 0.75rem;
+  }
+  
+  .badge--small {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .badge--large {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+  }
+  
+  .badge--medium {
+    padding: 0.175rem 0.5rem;
+    font-size: 0.7rem;
+  }
+  
+  .badge--small {
+    padding: 0.175rem 0.35rem;
+    font-size: 0.65rem;
+  }
+} 

@@ -175,9 +175,9 @@
 .overflow-scroll { overflow: scroll; }
 
 /* Cursor Utilities */
-.cursor-pointer { cursor: pointer; }
+.cursor-pointer { cursor: var(--cursor-pointer); }
 .cursor-not-allowed { cursor: not-allowed; }
-.cursor-default { cursor: default; }
+.cursor-default { cursor: var(--cursor-default); }
 
 /* Z-index Utilities */
 .z-0 { z-index: 0; }

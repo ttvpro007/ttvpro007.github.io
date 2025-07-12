@@ -59,6 +59,11 @@
   --z-modal: 1050;
   --z-popover: 1060;
   --z-tooltip: 1070;
+  
+  /* Cursor Paths */
+  --cursor-default: url('/public/kenney_cursor-pack/CurFormatted/pointer_scifi_a.cur') 4 2, auto;
+  --cursor-pointer: url('/public/kenney_cursor-pack/CurFormatted/hand_thin_point.cur') 4 2, pointer;
+  --cursor-text: url('/public/kenney_cursor-pack/CurFormatted/bracket_a_vertical.cur') 4 2, text;
 }
 
 /* Dark Theme (Default) */

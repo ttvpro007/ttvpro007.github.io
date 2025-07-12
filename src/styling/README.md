@@ -1,6 +1,6 @@
 # 🎨 Portfolio Styling System
 
-A comprehensive, modular CSS architecture for the Portfolio project with a gamer-themed design system. This system follows a component-based approach with centralized theming and utilities.
+A comprehensive, modular CSS architecture for the Portfolio project with a gamer-themed design system. This system follows a component-based approach with centralized theming and utilities, with styles co-located with their respective components.
 
 ## 📁 Structure
 
@@ -27,14 +27,11 @@ src/styling/
 │   ├── timeline.css       # Timeline component styles
 │   ├── fun-facts.css      # FunFacts component styles
 │   └── show-and-tell.css  # ShowAndTell component styles
-├── pages/                 # Page-specific styles (imported directly in pages)
-│   ├── home.css           # Home page styles
-│   ├── projects.css       # Projects page styles
-│   ├── resume.css         # Resume page styles
-│   └── contact.css        # Contact page styles
 └── utils/
     └── utilities.css      # Utility classes & helper functions
 ```
+
+**Note**: Page-specific styles are now co-located with their respective page components in `src/pages/features/[page-name]/[PageName].css` for better organization and maintainability.
 
 ## 🎨 Design System
 
@@ -82,8 +79,8 @@ import '../styling/components/component-name.css';
 ```
 
 ```javascript
-// In a page file
-import '../styling/pages/page-name.css';
+// In a page file (co-located styles)
+import './PageName.css';
 ```
 
 ### Using CSS Variables
@@ -194,7 +191,7 @@ The styling system includes responsive utilities and breakpoints:
 5. Use CSS variables for consistency
 
 ### Adding New Pages
-1. Create a new CSS file in `pages/`
+1. Create a new CSS file co-located with the page component in `src/pages/features/[page-name]/`
 2. Import the CSS file directly in the page component
 3. Follow the established page layout patterns
 4. Include responsive design considerations
@@ -225,6 +222,7 @@ The styling system includes responsive utilities and breakpoints:
 - Use CSS variables for consistency
 - Follow BEM methodology for component classes
 - Import styles directly in components for better tree-shaking
+- Co-locate page styles with their components
 - Include responsive design considerations
 - Test across different browsers and screen sizes
 - Maintain accessibility standards
@@ -232,6 +230,7 @@ The styling system includes responsive utilities and breakpoints:
 
 ### Performance
 - Component styles are imported directly for optimal tree-shaking
+- Page styles are co-located for better maintainability
 - Utility classes are designed for reuse and performance
 - Animations use GPU acceleration where possible
 - CSS variables reduce bundle size and improve maintainability
@@ -239,14 +238,13 @@ The styling system includes responsive utilities and breakpoints:
 
 ### Architecture Benefits
 - **Modular**: Each component has its own styles
-- **Maintainable**: Clear separation of concerns
+- **Maintainable**: Clear separation of concerns with co-located styles
 - **Scalable**: Easy to add new components and pages
 - **Performance**: Only load styles that are actually used
 - **Consistent**: Centralized theming and utilities
+- **Organized**: Styles follow the same structure as components
 
 ## 📚 Resources
 
 - [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
-- [BEM Methodology](http://getbem.com/)
-- [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout)
-- [Flexbox](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout) 
+- [BEM Methodology](http://getbem.com/) 

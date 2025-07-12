@@ -1,0 +1,17 @@
+.page-container {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.page-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+}
+
+@media (max-width: 768px) {
+  .page-content {
+    padding: var(--spacing-md);
+  }
+} 

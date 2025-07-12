@@ -1,0 +1,152 @@
+/* =====================
+   Image Container Styles
+   ===================== */
+
+.image-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  cursor: var(--cursor-default);
+  display: block;
+  width: 100%;
+}
+
+/* Image styles */
+.image-container img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: var(--border-radius);
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+/* Interactive states */
+.image-container--clickable {
+  cursor: var(--cursor-pointer);
+}
+
+.image-container--clickable:hover img {
+  transform: scale(1.05);
+}
+
+.image-container--hover {
+  cursor: var(--cursor-pointer);
+}
+
+.image-container--hover:hover img {
+  transform: scale(1.05);
+}
+
+/* Focus states */
+.image-container--clickable:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.image-container--hover:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Common height variants */
+.image-container--small img {
+  height: 150px;
+}
+
+.image-container--medium img {
+  height: 200px;
+}
+
+.image-container--large img {
+  height: 300px;
+}
+
+.image-container--xlarge img {
+  height: 400px;
+}
+
+/* Object fit variants */
+.image-container--cover img {
+  object-fit: cover;
+}
+
+.image-container--contain img {
+  object-fit: contain;
+}
+
+.image-container--fill img {
+  object-fit: fill;
+}
+
+.image-container--scale-down img {
+  object-fit: scale-down;
+}
+
+/* Border radius variants */
+.image-container--rounded-sm {
+  border-radius: 8px;
+}
+
+.image-container--rounded-md {
+  border-radius: var(--border-radius);
+}
+
+.image-container--rounded-lg {
+  border-radius: 20px;
+}
+
+.image-container--rounded-full {
+  border-radius: 50%;
+}
+
+/* Loading state */
+.image-container--loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.image-container--loading img {
+  filter: blur(2px);
+}
+
+/* Error state */
+.image-container--error {
+  background: var(--bg-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.image-container--error::before {
+  content: "🖼️";
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .image-container--large img {
+    height: 250px;
+  }
+  
+  .image-container--xlarge img {
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .image-container--large img {
+    height: 200px;
+  }
+  
+  .image-container--xlarge img {
+    height: 250px;
+  }
+  
+  .image-container--medium img {
+    height: 180px;
+  }
+} 

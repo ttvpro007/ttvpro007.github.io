@@ -1,0 +1,99 @@
+/* =====================
+   Project Card Styles (Default Variant)
+   ===================== */
+
+/* Default project card container */
+.project-card-default {
+  background: var(--card-bg);
+  border: 2px solid var(--primary);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1), 0 2px 8px #fc94601a;
+  cursor: var(--cursor-pointer);
+  transition: all 0.3s ease;
+}
+
+/* Hover effect for default project cards */
+.project-card-default:hover {
+  cursor: var(--cursor-pointer) !important;
+  transform: translateY(-4px) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15), 0 4px 12px #fc94602a !important;
+}
+
+/* Ensure cursor pointer on all interactive elements within project card */
+.project-card-default .project-card-image,
+.project-card-default .project-card-content,
+.project-card-default .project-card-title-section,
+.project-card-default img,
+.project-card-default .image-container {
+  cursor: var(--cursor-pointer) !important;
+}
+
+/* Compact cards - same cursor behavior */
+.project-card-compact .project-card-image,
+.project-card-compact .project-card-content,
+.project-card-compact .project-card-title-section,
+.project-card-compact img,
+.project-card-compact .image-container {
+  cursor: var(--cursor-pointer) !important;
+}
+
+/* Default project card description */
+.project-card-default .project-card-description {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
+
+/* Default project card title dot */
+.project-card-default .project-card-title-dot {
+  width: 8px;
+  height: 8px;
+}
+
+.project-card-default.project-card-small .project-card-title-dot {
+  width: 6px;
+  height: 6px;
+}
+
+/* Default project card content padding */
+.project-card-default .project-card-content {
+  padding: 0.75rem;
+}
+
+.project-card-default.project-card-small .project-card-content {
+  padding: 0.5rem;
+}
+
+/* Default project card description lines */
+.project-card-default .project-card-description {
+  -webkit-line-clamp: 3;
+}
+
+.project-card-default.project-card-small .project-card-description {
+  -webkit-line-clamp: 2;
+}
+
+.project-card-default.project-card-large .project-card-description {
+  -webkit-line-clamp: 4;
+}
+
+/* Featured project cards - maintain current behavior */
+.project-card-featured {
+  cursor: default !important;
+}
+
+.project-card-featured:hover {
+  cursor: default !important;
+  transform: none !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1), 0 2px 8px #fc94601a !important;
+}
+
+/* Compact project cards - same as default */
+.project-card-compact {
+  cursor: var(--cursor-pointer) !important;
+}
+
+.project-card-compact:hover {
+  cursor: var(--cursor-pointer) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12), 0 3px 10px #fc946025 !important;
+} 

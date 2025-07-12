@@ -1,0 +1,126 @@
+/* =====================
+   Project Card Base Styles
+   ===================== */
+
+/* Base container styles */
+.project-card-base {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  border-radius: var(--border-radius);
+  padding: 0;
+  cursor: var(--cursor-pointer);
+}
+
+/* Content overlay for featured variants */
+.project-card-content-overlay {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Content section */
+.project-card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+  min-height: 0;
+}
+
+/* Title section */
+.project-card-title-section {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  cursor: var(--cursor-pointer);
+}
+
+/* Title dot indicator */
+.project-card-title-dot {
+  background: var(--primary);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--primary);
+}
+
+.project-card-title {
+  color: var(--text);
+  font-size: 1.3rem;
+  font-weight: bold;
+  line-height: 1.2;
+  margin: 0;
+  font-family: inherit;
+  text-shadow:
+    0 2px 4px rgba(0,0,0,0.5),
+    0 0 8px var(--primary),
+    0 0 16px var(--primary);
+}
+
+/* Project description */
+.project-card-description {
+  margin: 0.75rem 0 1.25rem 0;
+  line-height: 1.6;
+  flex: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+/* Action buttons container */
+.project-card-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Action buttons within project cards */
+.project-card-actions .button {
+  cursor: var(--cursor-pointer);
+}
+
+/* Year badge container */
+.project-card-year-badge {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
+  padding-top: 0.75rem;
+}
+
+/* Background image for featured variants */
+.project-card-bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+/* Badge container */
+.project-card-badge-container {
+  margin-bottom: 1rem;
+}
+
+/* Project card image */
+.project-card-image {
+  margin: 4px;
+}
+
+/* No hover state */
+.project-card-base.no-hover {
+  transition: none;
+  cursor: default;
+}
+
+.project-card-base.no-hover:hover {
+  transform: none;
+  box-shadow: none;
+} 
