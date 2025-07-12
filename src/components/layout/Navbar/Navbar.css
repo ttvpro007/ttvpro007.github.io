@@ -23,7 +23,7 @@
   color: var(--primary);
   font-size: 1.3rem;
   letter-spacing: 1px;
-  cursor: var(--cursor-pointer);
+  cursor: var(--cursor-default);
   transition: all 0.3s ease;
   text-shadow: 0 0 8px rgba(238, 182, 75, 0.3);
 }
