@@ -99,6 +99,7 @@
   font-weight: 600;
   color: var(--primary);
   font-size: var(--font-size-body);
+  cursor: var(--cursor-default);
 }
 
 .label-icon {
