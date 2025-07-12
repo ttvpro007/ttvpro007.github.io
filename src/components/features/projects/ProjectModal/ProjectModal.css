@@ -143,6 +143,14 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   box-shadow: 0 2px 8px rgba(238, 182, 75, 0.3);
+  transition: all 0.3s ease;
+  cursor: var(--cursor-default);
+}
+
+.tech-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(238, 182, 75, 0.4);
+  background: linear-gradient(135deg, var(--secondary), var(--primary));
 }
 
 /* Action Buttons */

@@ -98,7 +98,7 @@
   position: relative !important;
   overflow: hidden !important;
   transition: all 0.3s ease !important;
-  cursor: var(--cursor-default) !important;
+  cursor: var(--cursor-pointer) !important;
   box-shadow: 0 2px 8px rgba(238, 182, 75, 0.3) !important;
 }
 
@@ -135,7 +135,7 @@
   overflow: hidden !important;
   transition: all 0.3s ease !important;
   backdrop-filter: blur(10px) !important;
-  cursor: var(--cursor-default) !important;
+  cursor: var(--cursor-pointer) !important;
   box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2) !important;
 }
 
