@@ -49,7 +49,7 @@ const Projects = ({ isTransitioning = false }) => {
   // Determine card size based on available space and content
   const getProjectSize = (index) => {
     // Use a simple pattern but let CSS Grid handle the actual sizing
-    const pattern = ['small', 'medium', 'large'];
+    const pattern = ['small', 'small','large']
     return pattern[index % pattern.length];
   };
 

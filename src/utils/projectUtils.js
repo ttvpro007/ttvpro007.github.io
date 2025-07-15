@@ -79,5 +79,6 @@ export const formatImageCounter = (current, total) => {
  * @returns {string} The description to display
  */
 export const getProjectDescription = (project) => {
-  return project.longDescription || project.description;
+  if (!project) return '';
+  return project.longDescription || project.description || '';
 }; 

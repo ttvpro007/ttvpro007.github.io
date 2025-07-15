@@ -1,0 +1,168 @@
+/* Markdown Renderer Styles */
+.markdown-content {
+  color: var(--text);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Headings */
+.markdown-h1 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--primary);
+  margin: 1.5rem 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border);
+  font-family: 'Orbitron', monospace;
+}
+
+.markdown-h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin: 1.2rem 0 0.8rem 0;
+  padding-left: 0.5rem;
+  border-left: 3px solid var(--primary);
+}
+
+.markdown-h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 1rem 0 0.5rem 0;
+}
+
+/* Paragraphs */
+.markdown-p {
+  margin: 0.8rem 0;
+  color: var(--text-secondary);
+  text-align: justify;
+}
+
+/* Lists */
+.markdown-ul,
+.markdown-ol {
+  margin: 0.8rem 0;
+  padding-left: 1.5rem;
+}
+
+.markdown-li {
+  margin: 0.4rem 0;
+  color: var(--text-secondary);
+}
+
+.markdown-ul .markdown-li::marker {
+  color: var(--primary);
+}
+
+/* Text formatting */
+.markdown-strong {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.markdown-em {
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+/* Code */
+.markdown-code {
+  background: rgba(238, 182, 75, 0.1);
+  color: var(--primary);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  border: 1px solid rgba(238, 182, 75, 0.2);
+}
+
+.markdown-pre {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+  backdrop-filter: blur(10px);
+}
+
+.markdown-pre .markdown-code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--text);
+}
+
+/* Blockquotes */
+.markdown-blockquote {
+  border-left: 4px solid var(--primary);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+  color: var(--text-secondary);
+  background: rgba(238, 182, 75, 0.05);
+  padding: 1rem;
+  border-radius: 0 8px 8px 0;
+}
+
+/* Loading and Error States */
+.markdown-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+}
+
+.loading-spinner {
+  font-size: 2rem;
+  animation: pulse 1.5s ease-in-out infinite;
+  margin-bottom: 1rem;
+}
+
+.markdown-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: #ff6b6b;
+  text-align: center;
+}
+
+.markdown-error small {
+  margin-top: 0.5rem;
+  opacity: 0.7;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .markdown-h1 {
+    font-size: 1.5rem;
+  }
+  
+  .markdown-h2 {
+    font-size: 1.2rem;
+  }
+  
+  .markdown-h3 {
+    font-size: 1rem;
+  }
+  
+  .markdown-p {
+    font-size: 0.9rem;
+  }
+} 

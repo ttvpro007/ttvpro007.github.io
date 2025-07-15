@@ -148,7 +148,7 @@ const ProjectCardBase = ({
           {/* Tech Stack */}
           {showTech && project.tech && (
             <TechStack 
-              tech={project.tech}
+              tech={[...project.tech, project.category]}
               maxDisplay={4}
               style={{ marginBottom: "1rem" }}
             />

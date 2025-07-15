@@ -6,6 +6,7 @@ export { default as Card } from './Card/Card';
 export { default as Icon } from './Icon/Icon';
 export { default as ImageContainer } from './ImageContainer/ImageContainer';
 export { default as IndicatorDots } from './IndicatorDots/IndicatorDots';
+export { default as MarkdownRenderer } from './MarkdownRenderer/MarkdownRenderer';
 export { default as ProgressBar } from './ProgressBar/ProgressBar';
 export { default as ProjectCardBase } from './ProjectCardBase/ProjectCardBase';
 export { default as Section } from './Section/Section';
