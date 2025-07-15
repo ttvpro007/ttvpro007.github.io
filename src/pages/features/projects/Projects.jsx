@@ -83,31 +83,7 @@ const Projects = ({ isTransitioning = false }) => {
           transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="projects-main-container"
         >
-          {/* Floating Background Elements */}
-          <div className="projects-floating-background">
-            {[...Array(6)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="projects-floating-element"
-                style={{
-                  width: Math.random() * 200 + 50,
-                  height: Math.random() * 200 + 50,
-                  top: `${Math.random() * 100}%`,
-                  left: `${Math.random() * 100}%`,
-                }}
-                animate={{
-                  y: [0, -30, 0],
-                  x: [0, 20, 0],
-                  rotate: [0, 180, 360],
-                }}
-                transition={{
-                  duration: 20 + Math.random() * 10,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-              />
-            ))}
-          </div>
+
 
           {/* Featured Project - Centered with Offset */}
           {featuredProject && (

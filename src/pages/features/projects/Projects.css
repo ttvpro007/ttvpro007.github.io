@@ -6,24 +6,7 @@
   overflow: visible;
 }
 
-.projects-floating-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: -1;
-}
 
-.projects-floating-element {
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
-  opacity: 0.03;
-  border-radius: 50%;
-}
 
 .projects-featured-container {
   width: 100%;
