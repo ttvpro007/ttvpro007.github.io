@@ -2,39 +2,12 @@
    Portfolio Styling System
    ===================== */
 
-/* Import Google Fonts */
+/* Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
 
-/* Import Theme Variables */
-@import './themes/variables.css';
-
-/* Import Base Styles */
-@import './base/reset.css';
-
-/* Import Animations */
-@import './animations/keyframes.css';
-
-/* Import Component Styles */
-/* Note: Component styles are imported directly in their respective components for better tree-shaking */
-
-/* Import Utilities */
-@import './utils/utilities.css';
-
-/* =====================
-   Global Layout Utilities
-   ===================== */
-
-/* Note: Page-specific layout utilities are defined in their respective page CSS files */
-
-/* =====================
-   Global Header Styles
-   ===================== */
-
-/* Note: Page-specific header styles are defined in their respective page CSS files */
-
-/* =====================
-   Global Responsive Design
-   ===================== */
-
-/* Note: Page-specific responsive styles are defined in their respective page CSS files */ 
+/* Core Styling System */
+@import './themes/variables.css';      /* CSS Variables & Theme */
+@import './base/base.css';             /* Base Styles & Reset */
+@import './animations/keyframes.css';  /* Animations & Keyframes */
+@import './utils/utilities.css';       /* Utility Classes */ 

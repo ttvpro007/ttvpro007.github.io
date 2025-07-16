@@ -1,5 +1,5 @@
 /* =====================
-   Global Style Reset
+   Base Styles & Global Reset
    ===================== */
 * {
   box-sizing: border-box;
@@ -60,6 +60,7 @@ body {
   font-family: 'Rajdhani', 'Orbitron', 'Segoe UI', Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
+  padding: 0;
   min-height: 100vh;
   letter-spacing: 0.01em;
   transition: background var(--transition-slow), color var(--transition-slow);
@@ -68,6 +69,7 @@ body {
 main {
   min-height: 90vh;
   width: 100%;
+  padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
@@ -132,9 +134,8 @@ button:hover {
    ===================== */
 .body-panel {
   max-width: var(--max-width);
-  margin: 0 auto;
-  padding-left: var(--spacing-xl);
-  padding-right: var(--spacing-xl);
+  margin: auto;
+  padding: 0;
   width: 100%;
   box-sizing: border-box;
 }
@@ -171,15 +172,8 @@ select:focus {
 }
 
 @media (prefers-contrast: high) {
-  .project-card {
-    border: 2px solid var(--text);
-  }
-  
-  .category-filter {
-    border: 2px solid var(--text);
-  }
-  
-  .search-input {
+  /* High contrast mode adjustments */
+  button, input, textarea, select {
     border: 2px solid var(--text);
   }
 }
@@ -190,7 +184,7 @@ select:focus {
 @media (max-width: 768px) {
   /* Reduce main content padding */
   main {
-    padding: 2rem 0;
+    padding: 0;
     min-height: 85vh;
   }
 
@@ -225,7 +219,7 @@ select:focus {
 @media (max-width: 480px) {
   /* Further reduce padding for very small screens */
   main {
-    padding: 1.5rem 0;
+    padding: 0;
   }
 
   .body-panel {

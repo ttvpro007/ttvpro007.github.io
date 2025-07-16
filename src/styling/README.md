@@ -6,32 +6,87 @@ A comprehensive, modular CSS architecture for the Portfolio project with a gamer
 
 ```
 src/styling/
-├── index.css              # Main entry point (fonts, variables, base, animations, utilities)
-├── README.md              # This documentation
+├── index.css                    # Main entry point (fonts, variables, base, animations, utilities)
+├── README.md                    # This documentation
 ├── themes/
-│   └── variables.css      # CSS custom properties & theme definitions
+│   └── variables.css            # CSS custom properties & theme definitions
 ├── base/
-│   └── reset.css          # Global reset & base styles
+│   └── base.css                 # Base styles & global reset
 ├── animations/
-│   └── keyframes.css      # Keyframes & animation utilities
-├── components/            # Component-specific styles (imported directly in components)
-│   ├── quest-form.css     # QuestForm component styles
-│   ├── hq.css            # HQ component styles
-│   ├── social-links.css   # SocialLinks component styles
-│   ├── featured-project.css # FeaturedProject component styles
-│   ├── project-modal.css  # ProjectModal component styles
-│   ├── flip-card.css      # FlipCard component styles
-│   ├── navbar.css         # Navbar component styles
-│   ├── search-and-filter.css # SearchAndFilter component styles
-│   ├── confirmation-modal.css # ConfirmationModal component styles
-│   ├── timeline.css       # Timeline component styles
-│   ├── fun-facts.css      # FunFacts component styles
-│   └── show-and-tell.css  # ShowAndTell component styles
+│   └── keyframes.css            # Keyframes & animation utilities
 └── utils/
-    └── utilities.css      # Utility classes & helper functions
+    └── utilities.css            # Utility classes & helper functions
 ```
 
-**Note**: Page-specific styles are now co-located with their respective page components in `src/pages/features/[page-name]/[PageName].css` for better organization and maintainability.
+## 📋 Import Strategy
+
+### Global Styles (via index.css)
+The main styling system is imported once in `src/main.jsx`:
+```javascript
+import './styling/index.css';
+```
+
+This loads:
+- Google Fonts (Orbitron, Rajdhani)
+- CSS Variables & Theme
+- Base Styles & Reset
+- Animations & Keyframes
+- Utility Classes
+
+### Component & Page Styles
+Component and page styles are imported directly in their respective files for better tree-shaking and component isolation:
+
+#### Page Components
+```javascript
+// src/pages/features/projects/Projects.jsx
+import "./Projects.css";
+
+// src/pages/features/contact/Contact.jsx  
+import "./Contact.css";
+
+// src/pages/features/home/Home.jsx
+import './Home.css';
+
+// src/pages/features/resume/Resume.jsx
+import "./Resume.css";
+```
+
+#### Feature Components
+```javascript
+// src/components/features/forms/QuestForm/QuestForm.jsx
+import './QuestForm.css';
+
+// src/components/features/projects/ProjectCard/ProjectCard.jsx
+import './ProjectCard.css';
+
+// src/components/features/projects/ProjectModal/ProjectModal.jsx
+import './ProjectModal.css';
+
+// src/components/features/projects/SearchAndFilter/SearchAndFilter.jsx
+import './SearchAndFilter.css';
+```
+
+#### Base Components
+```javascript
+// src/components/base/Button/Button.jsx
+import "./Button.css";
+
+// src/components/base/ProjectCardBase/ProjectCardBase.jsx
+import "./ProjectCardBase.css";
+
+// src/components/base/Section/Section.jsx
+import "./Section.css";
+
+// src/components/layout/Navbar/Navbar.jsx
+import "./Navbar.css";
+```
+
+**Benefits of this approach:**
+- ✅ Better tree-shaking (only loads CSS for used components)
+- ✅ Component isolation (styles are co-located)
+- ✅ Easier maintenance (find styles with component)
+- ✅ No duplicate imports
+- ✅ Clear dependency management
 
 ## 🎨 Design System
 

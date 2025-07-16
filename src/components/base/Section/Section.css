@@ -1,0 +1,71 @@
+/* =====================
+   Section Component Styles
+   ===================== */
+
+.section-container {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  border: 2px solid var(--primary);
+  width: 100%;
+}
+
+.section-header {
+  margin-bottom: 1.5rem;
+}
+
+.section-header.centered {
+  text-align: center;
+}
+
+.section-header.left-aligned {
+  text-align: left;
+}
+
+.section-title {
+  color: var(--text);
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-title.centered {
+  justify-content: center;
+}
+
+.section-title.left-aligned {
+  justify-content: flex-start;
+}
+
+.section-subtitle {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* =====================
+   Responsive Design
+   ===================== */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.25rem;
+  }
+  
+  .section-subtitle {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: 1.1rem;
+  }
+  
+  .section-subtitle {
+    font-size: 0.85rem;
+  }
+} 

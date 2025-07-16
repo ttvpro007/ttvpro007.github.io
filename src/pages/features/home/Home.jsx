@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Confetti from 'react-dom-confetti';
 import { profile } from '@/data';
+import { Section } from '@/components/base';
 import FlipCards from '@/components/features/showcase/FlipCards';
 import Timeline from '@/components/features/showcase/Timeline';
 import FunFacts from '@/components/features/showcase/FunFacts';
@@ -26,10 +27,10 @@ export default function Home() {
       <div className="body-panel">
         <section className="home-main-section">
           {/* Hero Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: 'easeOut' }}
+          <Section
+            title={profile.personal?.name}
+            subtitle={profile.personal?.tagline}
+            centered={true}
             className="home-hero"
           >
             <div className="home-profile-container">
@@ -65,11 +66,6 @@ export default function Home() {
               </div>
             </div>
             
-            <h1 className="header-1 home-hero-title">{profile.personal?.name}</h1>
-            <p className="body-text home-hero-tagline">
-              {profile.personal?.tagline}
-            </p>
-            
             <div className="home-social-links">
               {profile.socialLinks?.map(link => (
                 <a
@@ -88,7 +84,7 @@ export default function Home() {
                 </a>
               ))}
             </div>
-          </motion.div>
+          </Section>
 
           {/* Timeline Section */}
           <Timeline />

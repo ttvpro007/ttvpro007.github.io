@@ -61,9 +61,92 @@
   --z-tooltip: 1070;
   
   /* Cursor Paths */
-  --cursor-default: url('/public/kenney_cursor-pack/CurFormatted/pointer_scifi_a.cur') 4 2, auto;
-  --cursor-pointer: url('/public/kenney_cursor-pack/CurFormatted/hand_thin_point.cur') 4 2, pointer;
-  --cursor-text: url('/public/kenney_cursor-pack/CurFormatted/bracket_a_vertical.cur') 4 2, text;
+  --cursor-default: url('/kenney_cursor-pack/CurFormatted/pointer_scifi_a.cur') 4 2, auto;
+  --cursor-pointer: url('/kenney_cursor-pack/CurFormatted/hand_thin_point.cur') 4 2, pointer;
+  --cursor-text: url('/kenney_cursor-pack/CurFormatted/bracket_a_vertical.cur') 4 2, text;
+
+  /* =====================
+     Responsive Design Breakpoints
+     ===================== */
+  
+  /* Screen Size Breakpoints
+     These define the minimum width for each breakpoint.
+     Use with min-width media queries for mobile-first approach.
+     
+     Usage Examples:
+     @media (min-width: var(--breakpoint-sm)) { ... }  // 768px and up
+     @media (max-width: calc(var(--breakpoint-sm) - 1px)) { ... }  // Below 768px
+     @media (min-width: var(--breakpoint-md)) and (max-width: calc(var(--breakpoint-lg) - 1px)) { ... }  // 1024px to 1199px
+  */
+  --breakpoint-xs: 480px;    /* Extra Small: Mobile phones in portrait */
+  --breakpoint-sm: 768px;    /* Small: Mobile phones in landscape, tablets in portrait */
+  --breakpoint-md: 1024px;   /* Medium: Tablets in landscape, small laptops */
+  --breakpoint-lg: 1200px;   /* Large: Standard laptops and desktops */
+  --breakpoint-xl: 1440px;   /* Extra Large: Large desktops and high-res displays */
+  --breakpoint-2xl: 1920px;  /* 2X Large: Ultra-wide displays and 4K monitors */
+
+  /* Responsive Typography Scale
+     Font sizes that scale with screen size for better readability */
+  --font-size-xs: 0.8rem;      /* 12.8px at 16px base */
+  --font-size-sm: 0.9rem;      /* 14.4px at 16px base */
+  --font-size-base: 1.08rem;   /* 17.28px at 16px base - Enhanced readability */
+  --font-size-lg: 1.2rem;      /* 19.2px at 16px base */
+  --font-size-xl: 1.5rem;      /* 24px at 16px base */
+  --font-size-2xl: 1.8rem;     /* 28.8px at 16px base */
+  --font-size-3xl: 2rem;       /* 32px at 16px base */
+  --font-size-4xl: 2.5rem;     /* 40px at 16px base */
+  --font-size-5xl: 3rem;       /* 48px at 16px base */
+
+  /* Responsive Spacing Scale
+     Spacing values that adapt to screen size for better proportions */
+  --spacing-responsive-xs: 0.5rem;   /* 8px - Compact spacing for mobile */
+  --spacing-responsive-sm: 1rem;     /* 16px - Standard spacing */
+  --spacing-responsive-md: 1.5rem;   /* 24px - Comfortable spacing */
+  --spacing-responsive-lg: 2rem;     /* 32px - Generous spacing */
+  --spacing-responsive-xl: 3rem;     /* 48px - Large spacing for desktop */
+  --spacing-responsive-2xl: 4rem;    /* 64px - Extra large spacing */
+
+  /* Container Max Widths
+     Maximum content widths for different screen sizes */
+  --container-xs: 100%;              /* Full width on extra small screens */
+  --container-sm: 540px;             /* 540px max on small screens */
+  --container-md: 720px;             /* 720px max on medium screens */
+  --container-lg: 960px;             /* 960px max on large screens */
+  --container-xl: 1140px;            /* 1140px max on extra large screens */
+  --container-2xl: 1320px;           /* 1320px max on 2x large screens */
+
+  /* Modal Specific Variables
+     These are specifically for modal components like ProjectModal */
+  --modal-max-width: 1400px;         /* Maximum width for modal content */
+  --modal-max-width-large: 1800px;   /* Maximum width for large modals */
+  --modal-padding-xs: 0.25rem;       /* 4px - Minimal padding for mobile */
+  --modal-padding-sm: 0.5rem;        /* 8px - Small padding */
+  --modal-padding-md: 1rem;          /* 16px - Standard padding */
+  --modal-padding-lg: 1.5rem;        /* 24px - Large padding */
+  --modal-padding-xl: 2rem;          /* 32px - Extra large padding */
+  
+  /* Thumbnail Sizes for Media Galleries */
+  --thumbnail-size-xs: 90px;         /* 90px - Extra small thumbnails */
+  --thumbnail-size-sm: 100px;        /* 100px - Small thumbnails */
+  --thumbnail-size-md: 120px;        /* 120px - Medium thumbnails */
+  --thumbnail-size-lg: 140px;        /* 140px - Large thumbnails */
+  --thumbnail-size-xl: 160px;        /* 160px - Extra large thumbnails */
+  --thumbnail-size-2xl: 180px;       /* 180px - 2x large thumbnails */
+
+  /* Button Sizes for Responsive Design */
+  --button-size-xs: 35px;            /* 35px - Extra small buttons */
+  --button-size-sm: 40px;            /* 40px - Small buttons */
+  --button-size-md: 50px;            /* 50px - Medium buttons */
+  --button-size-lg: 60px;            /* 60px - Large buttons */
+  --button-size-xl: 70px;            /* 70px - Extra large buttons */
+
+  /* Grid Breakpoints for Layout Systems */
+  --grid-cols-xs: 1;                 /* 1 column on extra small screens */
+  --grid-cols-sm: 2;                 /* 2 columns on small screens */
+  --grid-cols-md: 3;                 /* 3 columns on medium screens */
+  --grid-cols-lg: 4;                 /* 4 columns on large screens */
+  --grid-cols-xl: 5;                 /* 5 columns on extra large screens */
+  --grid-cols-2xl: 6;                /* 6 columns on 2x large screens */
 }
 
 /* Dark Theme (Default) */

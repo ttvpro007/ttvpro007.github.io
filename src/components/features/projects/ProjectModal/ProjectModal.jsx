@@ -431,64 +431,66 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                   </motion.h1>
                 </div>
 
-                {/* Roles */}
-                {hasRoles && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 }}
-                    className="detail-section"
-                  >
-                    <h3 className="section-title">
-                      <span className="section-icon">👨‍💻</span>
-                      Roles
-                    </h3>
-                    <ul className="roles-list">
-                      {project.roles.map((role, index) => (
-                        <motion.li
-                          key={index}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.7 + index * 0.1 }}
-                          className="role-item"
-                        >
-                          <span className="role-icon">🎯</span>
-                          <p className="role-text">{role}</p>
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </motion.div>
-                )}
+                {/* Details Sections Container for Landscape Layout */}
+                <div className="details-sections-container">
+                  {/* Roles */}
+                  {hasRoles && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6 }}
+                      className="detail-section landscape-section"
+                    >
+                      <h3 className="section-title">
+                        <span className="section-icon">👨‍💻</span>
+                        Roles
+                      </h3>
+                      <ul className="roles-list">
+                        {project.roles.map((role, index) => (
+                          <motion.li
+                            key={index}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.7 + index * 0.1 }}
+                            className="role-item"
+                          >
+                            <span className="role-icon">🎯</span>
+                            <p className="role-text">{role}</p>
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </motion.div>
+                  )}
 
-                {/* Tech Stack */}
-                {hasTechStack && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.7 }}
-                    className="detail-section"
-                  >
-                    <h3 className="section-title">
-                      <span className="section-icon">⚙️</span>
-                      {uiContent.ui.projectModal.content.techStack}
-                    </h3>
-                    <div className="tech-grid">
-                      {project.tech.map((tech, index) => (
-                        <motion.div
-                          key={index}
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 0.8 + index * 0.1 }}
-                        >
-                          <Badge size="small" className="tech-badge">
-                            {tech}
-                          </Badge>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-
+                  {/* Tech Stack */}
+                  {hasTechStack && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.7 }}
+                      className="detail-section landscape-section"
+                    >
+                      <h3 className="section-title">
+                        <span className="section-icon">⚙️</span>
+                        {uiContent.ui.projectModal.content.techStack}
+                      </h3>
+                      <div className="tech-grid">
+                        {project.tech.map((tech, index) => (
+                          <motion.div
+                            key={index}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.8 + index * 0.1 }}
+                          >
+                            <Badge size="small" className="tech-badge">
+                              {tech}
+                            </Badge>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
 
 
                 {/* Metrics & Outcome */}

@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import "./Section.css";
 
 const Section = ({ 
   title, 
@@ -10,56 +11,36 @@ const Section = ({
   padding = "2rem",
   marginBottom = "2rem",
   style = {},
+  className = "",
   ...props 
 }) => {
   const sectionStyle = {
-    background: 'var(--card-bg)',
-    borderRadius: 'var(--border-radius)',
-    boxShadow: 'var(--shadow)',
     padding,
     marginBottom,
-    border: '2px solid var(--primary)',
-    width: '100%',
     ...style
   };
 
-  const headerStyle = {
-    textAlign: centered ? 'center' : 'left',
-    marginBottom: '1.5rem'
-  };
-
-  const titleStyle = {
-    color: 'var(--text)',
-    margin: '0 0 0.5rem 0',
-    fontSize: '1.5rem',
-    fontWeight: 'bold',
-    textShadow: '0 0 10px var(--primary)',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '0.5rem',
-    justifyContent: centered ? 'center' : 'flex-start'
-  };
+  const headerClassName = `section-header ${centered ? 'centered' : 'left-aligned'}`;
+  const titleClassName = `section-title ${centered ? 'centered' : 'left-aligned'}`;
+  const containerClassName = `section-container ${className}`.trim();
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
+      className={containerClassName}
       style={sectionStyle}
       {...props}
     >
-      {(title || icon) && (
-        <div style={headerStyle}>
-          <h3 style={titleStyle}>
+      {title && (
+        <div className={headerClassName}>
+          <h3 className={titleClassName}>
             {icon && <span>{icon}</span>}
             {title}
           </h3>
           {subtitle && (
-            <p style={{
-              color: 'var(--text-secondary)',
-              margin: 0,
-              fontSize: '1rem'
-            }}>
+            <p className="section-subtitle">
               {subtitle}
             </p>
           )}

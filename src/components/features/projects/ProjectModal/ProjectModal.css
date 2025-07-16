@@ -2,39 +2,117 @@
    Project Modal Styles - Redesigned Project Showcase
    ===================== */
 
-/* CSS Custom Properties for consistent theming */
+/*
+  RESPONSIVE DESIGN SYSTEM INTEGRATION
+  
+  This component now uses the global CSS variables defined in src/styling/themes/variables.css
+  for consistent theming and responsive design across the application.
+  
+  KEY VARIABLES USED:
+  
+  Breakpoints:
+  - --breakpoint-xs: 480px (Mobile phones in portrait)
+  - --breakpoint-sm: 768px (Mobile phones in landscape, tablets in portrait)
+  - --breakpoint-md: 1024px (Tablets in landscape, small laptops)
+  - --breakpoint-lg: 1200px (Standard laptops and desktops)
+  - --breakpoint-xl: 1440px (Large desktops and high-res displays)
+  - --breakpoint-2xl: 1920px (Ultra-wide displays and 4K monitors)
+  
+  Typography:
+  - --font-size-xs: 0.8rem (12.8px at 16px base)
+  - --font-size-sm: 0.9rem (14.4px at 16px base)
+  - --font-size-base: 1.08rem (17.28px at 16px base - Enhanced readability)
+  - --font-size-lg: 1.2rem (19.2px at 16px base)
+  - --font-size-xl: 1.5rem (24px at 16px base)
+  - --font-size-2xl: 1.8rem (28.8px at 16px base)
+  - --font-size-3xl: 2rem (32px at 16px base)
+  - --font-size-4xl: 2.5rem (40px at 16px base)
+  - --font-size-5xl: 3rem (48px at 16px base)
+  
+  Responsive Spacing:
+  - --spacing-responsive-xs: 0.5rem (8px - Compact spacing for mobile)
+  - --spacing-responsive-sm: 1rem (16px - Standard spacing)
+  - --spacing-responsive-md: 1.5rem (24px - Comfortable spacing)
+  - --spacing-responsive-lg: 2rem (32px - Generous spacing)
+  - --spacing-responsive-xl: 3rem (48px - Large spacing for desktop)
+  - --spacing-responsive-2xl: 4rem (64px - Extra large spacing)
+  
+  Modal-Specific Variables:
+  - --modal-max-width: 1400px (Maximum width for modal content)
+  - --modal-max-width-large: 1800px (Maximum width for large modals)
+  - --modal-padding-xs: 0.25rem (4px - Minimal padding for mobile)
+  - --modal-padding-sm: 0.5rem (8px - Small padding)
+  - --modal-padding-md: 1rem (16px - Standard padding)
+  - --modal-padding-lg: 1.5rem (24px - Large padding)
+  - --modal-padding-xl: 2rem (32px - Extra large padding)
+  
+  Thumbnail Sizes:
+  - --thumbnail-size-xs: 90px (Extra small thumbnails)
+  - --thumbnail-size-sm: 100px (Small thumbnails)
+  - --thumbnail-size-md: 120px (Medium thumbnails)
+  - --thumbnail-size-lg: 140px (Large thumbnails)
+  - --thumbnail-size-xl: 160px (Extra large thumbnails)
+  - --thumbnail-size-2xl: 180px (2x large thumbnails)
+  
+  Button Sizes:
+  - --button-size-xs: 35px (Extra small buttons)
+  - --button-size-sm: 40px (Small buttons)
+  - --button-size-md: 50px (Medium buttons)
+  - --button-size-lg: 60px (Large buttons)
+  - --button-size-xl: 70px (Extra large buttons)
+  
+  Z-Index Layers:
+  - --z-modal-backdrop: 1040 (Modal backdrop layer)
+  - --z-modal: 1050 (Modal content layer)
+  
+  USAGE PATTERNS:
+  
+  1. Media Queries:
+     @media (min-width: var(--breakpoint-sm)) { ... }  // 768px and up
+     @media (max-width: calc(var(--breakpoint-sm) - 1px)) { ... }  // Below 768px
+     @media (min-width: var(--breakpoint-md)) and (max-width: calc(var(--breakpoint-lg) - 1px)) { ... }  // 1024px to 1199px
+  
+  2. Responsive Spacing:
+     padding: var(--spacing-responsive-md);  // Adapts to screen size
+     margin: var(--spacing-responsive-lg);
+  
+  3. Typography:
+     font-size: var(--font-size-base);  // Consistent, readable text
+     font-size: var(--font-size-xl);    // Larger text for emphasis
+  
+  4. Component Sizing:
+     width: var(--thumbnail-size-lg);   // Responsive thumbnail sizing
+     width: var(--button-size-md);      // Consistent button sizing
+  
+  BENEFITS:
+  - Consistent design system across all components
+  - Easy maintenance and updates
+  - Responsive design that adapts to all screen sizes
+  - Improved accessibility with proper text sizing
+  - Better performance with optimized spacing
+*/
+
+/* =====================
+   Project Modal CSS Custom Properties
+   ===================== */
+
+/* Note: This component now uses the global CSS variables defined in src/styling/themes/variables.css
+   for consistent theming across the application. The following are modal-specific overrides
+   and additions that extend the global design system. */
+
+/* Modal-specific custom properties that extend the global variables */
 :root {
+  /* Modal-specific shadows and effects */
   --modal-shadow: 0 8px 32px rgba(238, 182, 75, 0.15);
   --modal-shadow-hover: 0 6px 25px rgba(238, 182, 75, 0.4);
-  --modal-border-radius: 16px;
+  --modal-border-radius: var(--border-radius);
   --modal-backdrop: blur(10px);
-  --button-transition: all 0.3s ease;
+  --button-transition: var(--transition-normal);
+  
+  /* Scrollbar styling for modal content */
   --scrollbar-width: 8px;
   --scrollbar-thumb-color: var(--primary);
   --scrollbar-track-color: rgba(255, 255, 255, 0.1);
-  
-  /* Responsive Breakpoints */
-  --breakpoint-xs: 480px;
-  --breakpoint-sm: 768px;
-  --breakpoint-md: 1024px;
-  --breakpoint-lg: 1200px;
-  --breakpoint-xl: 1440px;
-  
-  /* Responsive Spacing */
-  --spacing-xs: 0.5rem;
-  --spacing-sm: 1rem;
-  --spacing-md: 1.5rem;
-  --spacing-lg: 2rem;
-  --spacing-xl: 3rem;
-  
-  /* Responsive Typography */
-  --font-size-xs: 0.8rem;
-  --font-size-sm: 0.9rem;
-  --font-size-base: 1.08rem;
-  --font-size-lg: 1.2rem;
-  --font-size-xl: 1.5rem;
-  --font-size-2xl: 1.8rem;
-  --font-size-3xl: 2rem;
 }
 
 /* =====================
@@ -49,16 +127,10 @@ body.modal-open {
 }
 
 /* Global mobile fixes to prevent horizontal overflow */
-@media (max-width: 1023px) {
-  .project-modal-overlay * {
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-  }
+@media (max-width: calc(var(--breakpoint-md) - 1px)) {
   
   .project-modal-overlay {
     overflow-x: hidden !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
   }
   
   .project-modal-layout {
@@ -81,11 +153,11 @@ body.modal-open {
   
   .project-modal-close-container {
     position: fixed !important;
-    top: 0.5rem !important;
-    right: 0.5rem !important;
-    width: 40px !important;
-    height: 40px !important;
-    z-index: 10010 !important;
+    top: var(--modal-padding-sm) !important;
+    right: var(--modal-padding-sm) !important;
+    width: var(--button-size-sm) !important;
+    height: var(--button-size-sm) !important;
+    z-index: calc(var(--z-modal-backdrop) + 10) !important;
   }
   
   .project-modal-close-button {
@@ -105,38 +177,41 @@ body.modal-open {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 9999;
+  z-index: var(--z-modal-backdrop);
   background: var(--bg);
   overflow: auto;
   overflow-x: hidden;
-  padding: 2rem;
+  padding: var(--modal-padding-lg);
   cursor: var(--cursor-default);
-  font-size: 1.08rem;
+  font-size: var(--font-size-base);
   width: 100vw;
   max-width: 100vw;
   box-sizing: border-box;
   margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .project-modal-close-container {
   position: fixed;
-  top: 2rem;
-  right: 2rem;
-  z-index: 10010;
-  width: 60px;
-  height: 60px;
+  top: var(--modal-padding-lg);
+  right: var(--modal-padding-lg);
+  z-index: calc(var(--z-modal-backdrop) + 10);
+  width: var(--button-size-lg);
+  height: var(--button-size-lg);
   box-sizing: border-box;
 }
 
 .project-modal-close-button {
   padding: 1rem;
   min-width: auto;
-  width: 60px;
-  height: 60px;
+  width: var(--button-size-lg);
+  height: var(--button-size-lg);
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
-  font-size: 1.5rem;
+  font-size: var(--font-size-xl);
   font-weight: bold;
   color: var(--text);
   box-shadow: var(--modal-shadow);
@@ -156,19 +231,11 @@ body.modal-open {
 
 .project-modal-layout {
   display: flex;
-  gap: 2rem;
-  max-width: 1600px;
-  margin: 0 auto;
-  height: calc(100vh - 4rem);
   align-items: flex-start;
-  padding-right: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb-color) transparent;
+  max-width: var(--modal-max-width);
   width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
+  margin: auto;
+  gap: var(--spacing-responsive-lg);
 }
 
 /* Scrollbar Styles */
@@ -383,7 +450,7 @@ body.modal-open {
 
 .thumbnail-item {
   flex-shrink: 0;
-  width: 160px;
+  width: var(--thumbnail-size-xl);
   aspect-ratio: 16/9;
   border-radius: 8px;
   overflow: hidden;
@@ -477,8 +544,8 @@ body.modal-open {
   gap: 0.5rem;
 }
 
-.overview-title::before,
-.section-title::before {
+.project-modal .overview-title::before,
+.project-modal .section-title::before {
   content: '';
   position: absolute;
   left: 0.5rem;
@@ -564,8 +631,8 @@ body.modal-open {
 
 .details-card {
   background: var(--card-bg);
-  padding: 2rem;
-  margin-right: 1.5rem;
+  padding: var(--spacing-md);
+  margin-right: var(--spacing-md);
   border-radius: var(--modal-border-radius);
   height: 100%;
   overflow-y: auto;
@@ -575,16 +642,16 @@ body.modal-open {
 
 /* Project Header */
 .project-header {
-  margin-bottom: 1.5rem;
-  padding: 1rem;
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-sm);
   border-bottom: 2px solid var(--border);
 }
 
 .project-title {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: bold;
   color: var(--text);
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--spacing-xs);
   background: linear-gradient(45deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -604,12 +671,12 @@ body.modal-open {
 
 /* Section Styles */
 .detail-section {
-  margin-bottom: 1.5rem;
-  padding: 0 0.5rem;
+  margin-bottom: var(--spacing-md);
+  padding: 0 var(--spacing-sm);
 }
 
 .section-title {
-  margin-bottom: 0.75rem;
+  margin-bottom: var(--spacing-sm);
   font-size: 1rem;
 }
 
@@ -621,13 +688,13 @@ body.modal-open {
 .tech-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  padding: 0.5rem 0;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs) 0;
 }
 
 .tech-badge {
   font-size: 0.9rem;
-  padding: 0.5rem 1rem;
+  padding: var(--spacing-sm) var(--spacing-md);
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: var(--card-bg);
   border: none;
@@ -650,7 +717,7 @@ body.modal-open {
 .roles-list,
 .features-list {
   list-style: none;
-  padding: 0.5rem 0;
+  padding: var(--spacing-xs) 0;
   margin: 0;
 }
 
@@ -658,8 +725,8 @@ body.modal-open {
 .feature-item {
   display: flex;
   align-items: flex-start;
-  gap: 0.75rem;
-  padding: 0.5rem 0;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs) 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -688,13 +755,13 @@ body.modal-open {
 .metrics-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 1rem;
-  padding: 0.5rem 0;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs) 0;
 }
 
 .metric-item {
   text-align: center;
-  padding: 0.75rem;
+  padding: var(--spacing-sm);
   background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   border: 1px solid var(--border);
@@ -718,9 +785,9 @@ body.modal-open {
 .action-buttons {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  margin-top: 1.5rem;
-  padding: 0.5rem 0;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-xs) 0;
 }
 
 .action-button {
@@ -758,8 +825,8 @@ body.modal-open {
 
 /* Supplementary Links */
 .supplementary-links {
-  margin-top: 1.5rem;
-  padding: 1rem 0.5rem 0 0.5rem;
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-sm) 0 var(--spacing-sm);
   border-top: 1px solid var(--border);
 }
 
@@ -779,10 +846,10 @@ body.modal-open {
 .supplementary-link {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--spacing-sm);
   color: var(--text-secondary);
   text-decoration: none;
-  padding: 0.5rem;
+  padding: var(--spacing-sm);
   border-radius: 8px;
   transition: var(--button-transition);
 }
@@ -844,33 +911,206 @@ body.modal-open {
 }
 
 /* =====================
+   Landscape Mode - Side by Side Layout
+   ===================== */
+
+/* Landscape orientation styles for details sections */
+@media (orientation: landscape) and (min-width: var(--breakpoint-sm)) {
+  /* Container for side-by-side sections */
+  .details-sections-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-responsive-lg);
+    margin-bottom: var(--spacing-responsive-lg);
+  }
+
+  /* Individual section styling for landscape */
+  .detail-section.landscape-section {
+    margin-bottom: 0;
+    padding: var(--spacing-responsive-md);
+    background: transparent;
+    border-radius: var(--modal-border-radius);
+    border: none;
+    height: fit-content;
+  }
+
+  /* Section titles in landscape mode */
+  .detail-section.landscape-section .section-title {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-responsive-md);
+    padding-bottom: var(--spacing-responsive-sm);
+    border-bottom: 2px solid var(--primary);
+    text-align: center;
+  }
+
+  /* Tech stack in landscape mode */
+  .detail-section.landscape-section .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: var(--spacing-responsive-sm);
+    padding: var(--spacing-responsive-sm) 0;
+  }
+
+  .detail-section.landscape-section .tech-badge {
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-responsive-sm) var(--spacing-responsive-md);
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Roles list in landscape mode */
+  .detail-section.landscape-section .roles-list {
+    padding: var(--spacing-responsive-sm) 0;
+  }
+
+  .detail-section.landscape-section .role-item {
+    padding: var(--spacing-responsive-sm) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    align-items: center;
+  }
+
+  .detail-section.landscape-section .role-icon {
+    font-size: var(--font-size-lg);
+    margin-top: 0;
+  }
+
+  .detail-section.landscape-section .role-text {
+    font-size: var(--font-size-base);
+    line-height: 1.3;
+  }
+
+  /* Features list in landscape mode */
+  .detail-section.landscape-section .features-list {
+    padding: var(--spacing-responsive-sm) 0;
+  }
+
+  .detail-section.landscape-section .feature-item {
+    padding: var(--spacing-responsive-sm) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    align-items: center;
+  }
+
+  .detail-section.landscape-section .feature-icon {
+    font-size: var(--font-size-lg);
+    margin-top: 0;
+  }
+
+  .detail-section.landscape-section .feature-text {
+    font-size: var(--font-size-base);
+    line-height: 1.3;
+  }
+
+  /* Metrics in landscape mode */
+  .detail-section.landscape-section .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-responsive-sm);
+    padding: var(--spacing-responsive-sm) 0;
+  }
+
+  .detail-section.landscape-section .metric-item {
+    padding: var(--spacing-responsive-sm);
+  }
+
+  .detail-section.landscape-section .metric-value {
+    font-size: var(--font-size-lg);
+  }
+
+  .detail-section.landscape-section .metric-label {
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* Large landscape screens - optimize spacing */
+@media (orientation: landscape) and (min-width: var(--breakpoint-md)) {
+  .details-sections-container {
+    gap: var(--spacing-responsive-xl);
+  }
+
+  .detail-section.landscape-section {
+    padding: var(--spacing-responsive-lg);
+  }
+
+  .detail-section.landscape-section .tech-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--spacing-responsive-md);
+  }
+
+  .detail-section.landscape-section .tech-badge {
+    font-size: var(--font-size-base);
+    padding: var(--spacing-responsive-md) var(--spacing-responsive-lg);
+  }
+}
+
+/* Extra large landscape screens */
+@media (orientation: landscape) and (min-width: var(--breakpoint-xl)) {
+  .details-sections-container {
+    gap: var(--spacing-responsive-xl);
+  }
+
+  .detail-section.landscape-section {
+    padding: var(--spacing-responsive-xl);
+  }
+
+  .detail-section.landscape-section .section-title {
+    font-size: var(--font-size-xl);
+  }
+
+  .detail-section.landscape-section .tech-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+
+  .detail-section.landscape-section .tech-badge {
+    font-size: var(--font-size-lg);
+    padding: var(--spacing-responsive-lg) var(--spacing-responsive-xl);
+  }
+}
+
+/* =====================
    Responsive Design - Mobile-First Approach
    ===================== */
 
 /* Large Desktop (1440px+) */
-@media (min-width: 1440px) {
+@media (min-width: var(--breakpoint-xl)) {
+  .project-modal-overlay {
+    padding: var(--modal-padding-xl);
+  }
+  
+  .project-modal-close-container {
+    top: var(--modal-padding-xl);
+    right: var(--modal-padding-xl);
+  }
+  
   .project-modal-layout {
-    max-width: 1800px;
-    gap: var(--spacing-xl);
+    max-width: var(--modal-max-width-large);
+    gap: var(--spacing-responsive-xl);
   }
   
   .project-title {
-    font-size: 2.5rem;
+    font-size: var(--font-size-4xl);
   }
   
   .thumbnail-item {
-    width: 180px;
+    width: var(--thumbnail-size-2xl);
   }
   
   .details-card {
-    padding: var(--spacing-xl);
+    padding: var(--spacing-responsive-lg);
   }
 }
 
 /* Desktop (1200px - 1439px) */
-@media (max-width: 1439px) and (min-width: 1200px) {
+@media (max-width: calc(var(--breakpoint-xl) - 1px)) and (min-width: var(--breakpoint-lg)) {
+  .project-modal-overlay {
+    padding: var(--modal-padding-lg);
+  }
+  
+  .project-modal-close-container {
+    top: var(--modal-padding-lg);
+    right: var(--modal-padding-lg);
+  }
+  
   .project-modal-layout {
-    gap: var(--spacing-md);
+    gap: var(--spacing-responsive-md);
   }
   
   .project-title {
@@ -878,14 +1118,23 @@ body.modal-open {
   }
   
   .thumbnail-item {
-    width: 140px;
+    width: var(--thumbnail-size-lg);
   }
 }
 
 /* Tablet Landscape (1024px - 1199px) */
-@media (max-width: 1199px) and (min-width: 1024px) {
+@media (max-width: calc(var(--breakpoint-lg) - 1px)) and (min-width: var(--breakpoint-md)) {
+  .project-modal-overlay {
+    padding: var(--modal-padding-md);
+  }
+  
+  .project-modal-close-container {
+    top: var(--modal-padding-md);
+    right: var(--modal-padding-md);
+  }
+  
   .project-modal-layout {
-    gap: var(--spacing-md);
+    gap: var(--spacing-responsive-md);
   }
   
   .project-title {
@@ -893,34 +1142,37 @@ body.modal-open {
   }
   
   .thumbnail-item {
-    width: 130px;
+    width: var(--thumbnail-size-md);
   }
   
   .details-card {
-    padding: var(--spacing-lg);
+    padding: var(--spacing-responsive-md);
   }
 }
 
 /* Tablet Portrait (768px - 1023px) */
-@media (max-width: 1023px) and (min-width: 768px) {
+@media (max-width: calc(var(--breakpoint-md) - 1px)) and (min-width: var(--breakpoint-sm)) {
   .project-modal-overlay {
-    padding: 0;
+    padding: var(--modal-padding-sm);
     overflow-x: hidden;
     width: 100vw;
     max-width: 100vw;
     box-sizing: border-box;
+    align-items: flex-start;
+  }
+  
+  .project-modal-close-container {
+    top: var(--modal-padding-sm);
+    right: var(--modal-padding-sm);
   }
   
   .project-modal-layout {
     flex-direction: column;
-    gap: var(--spacing-sm);
-    height: auto;
-    padding: var(--spacing-sm);
+    gap: var(--spacing-responsive-sm);
+    padding: var(--spacing-responsive-sm);
+    margin: 0 auto;
+    max-width: 95%;
     width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-    box-sizing: border-box;
-    margin: 0;
   }
   
   /* Details card at the top */
@@ -938,35 +1190,35 @@ body.modal-open {
   }
   
   .hero-viewer {
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: var(--spacing-responsive-sm);
   }
   
   .thumbnail-strip {
     height: 100px;
-    padding: var(--spacing-sm);
-    margin-bottom: var(--spacing-sm);
+    padding: var(--spacing-responsive-sm);
+    margin-bottom: var(--spacing-responsive-sm);
   }
   
   .project-overview-section {
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-responsive-sm);
   }
   
   .project-overview-content {
-    padding: var(--spacing-md);
+    padding: var(--spacing-responsive-md);
   }
   
   .overview-title {
     font-size: var(--font-size-lg);
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-responsive-sm);
   }
   
   .thumbnail-item {
-    width: 120px;
+    width: var(--thumbnail-size-md);
   }
   
   .thumbnail-video-indicator {
-    width: 35px;
-    height: 35px;
+    width: var(--button-size-xs);
+    height: var(--button-size-xs);
   }
   
   .play-button {
@@ -982,39 +1234,34 @@ body.modal-open {
   }
   
   .nav-button {
-    width: 50px;
-    height: 50px;
+    width: var(--button-size-md);
+    height: var(--button-size-md);
     font-size: var(--font-size-lg);
   }
   
   .nav-left {
-    left: var(--spacing-md);
+    left: var(--spacing-responsive-md);
   }
   
   .nav-right {
-    right: var(--spacing-md);
+    right: var(--spacing-responsive-md);
   }
   
   .media-counter {
-    bottom: var(--spacing-md);
-    right: var(--spacing-md);
-    padding: var(--spacing-sm) var(--spacing-md);
+    bottom: var(--spacing-responsive-md);
+    right: var(--spacing-responsive-md);
+    padding: var(--spacing-responsive-sm) var(--spacing-responsive-md);
     font-size: var(--font-size-sm);
   }
   
-  .project-modal-close-container {
-    top: var(--spacing-md);
-    right: var(--spacing-md);
-  }
-  
   .project-modal-close-button {
-    width: 50px;
-    height: 50px;
+    width: var(--button-size-md);
+    height: var(--button-size-md);
     font-size: var(--font-size-lg);
   }
   
   .details-card {
-    padding: var(--spacing-lg);
+    padding: var(--spacing-responsive-md);
   }
   
   .metrics-grid {
@@ -1023,9 +1270,9 @@ body.modal-open {
 }
 
 /* Mobile Large (481px - 767px) */
-@media (max-width: 767px) and (min-width: 481px) {
+@media (max-width: calc(var(--breakpoint-sm) - 1px)) and (min-width: var(--breakpoint-xs)) {
   .project-modal-overlay {
-    padding: 0;
+    padding: var(--modal-padding-xs);
     overflow-x: hidden;
     width: 100vw;
     max-width: 100vw;
@@ -1033,18 +1280,21 @@ body.modal-open {
     position: fixed;
     left: 0;
     right: 0;
+    align-items: flex-start;
+  }
+  
+  .project-modal-close-container {
+    top: var(--modal-padding-xs);
+    right: var(--modal-padding-xs);
   }
   
   .project-modal-layout {
     flex-direction: column;
-    gap: var(--spacing-xs);
-    height: auto;
-    padding: var(--spacing-xs);
+    gap: var(--spacing-responsive-xs);
+    padding: var(--spacing-responsive-xs);
+    margin: 0 auto;
+    max-width: 98%;
     width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-    box-sizing: border-box;
-    margin: 0;
   }
   
   /* Details card at the top */
@@ -1070,7 +1320,7 @@ body.modal-open {
   }
   
   .hero-viewer {
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: var(--spacing-responsive-xs);
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -1078,20 +1328,20 @@ body.modal-open {
   
   .thumbnail-strip {
     height: 80px;
-    padding: var(--spacing-xs);
-    margin-bottom: var(--spacing-xs);
+    padding: var(--spacing-responsive-xs);
+    margin-bottom: var(--spacing-responsive-xs);
     width: 100%;
     max-width: 100%;
   }
   
   .project-overview-section {
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: var(--spacing-responsive-xs);
     width: 100%;
     max-width: 100%;
   }
   
   .project-overview-content {
-    padding: var(--spacing-sm);
+    padding: var(--spacing-responsive-sm);
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -1099,16 +1349,16 @@ body.modal-open {
   
   .overview-title {
     font-size: var(--font-size-sm);
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: var(--spacing-responsive-xs);
   }
   
   .thumbnail-item {
-    width: 100px;
+    width: var(--thumbnail-size-sm);
   }
   
   .thumbnail-video-indicator {
-    width: 30px;
-    height: 30px;
+    width: var(--button-size-xs);
+    height: var(--button-size-xs);
   }
   
   .play-button {
@@ -1124,43 +1374,43 @@ body.modal-open {
   }
   
   .nav-button {
-    width: 40px;
-    height: 40px;
+    width: var(--button-size-sm);
+    height: var(--button-size-sm);
     font-size: var(--font-size-sm);
   }
   
   .nav-left {
-    left: var(--spacing-xs);
+    left: var(--spacing-responsive-xs);
   }
   
   .nav-right {
-    right: var(--spacing-xs);
+    right: var(--spacing-responsive-xs);
   }
   
   .media-counter {
-    bottom: var(--spacing-xs);
-    right: var(--spacing-xs);
-    padding: var(--spacing-xs) var(--spacing-sm);
+    bottom: var(--spacing-responsive-xs);
+    right: var(--spacing-responsive-xs);
+    padding: var(--spacing-responsive-xs) var(--spacing-responsive-sm);
     font-size: var(--font-size-xs);
   }
   
   .project-modal-close-container {
-    top: var(--spacing-xs);
-    right: var(--spacing-xs);
-    width: 40px;
-    height: 40px;
+    top: var(--modal-padding-xs);
+    right: var(--modal-padding-xs);
+    width: var(--button-size-sm);
+    height: var(--button-size-sm);
     box-sizing: border-box;
   }
   
   .project-modal-close-button {
-    width: 40px;
-    height: 40px;
+    width: var(--button-size-sm);
+    height: var(--button-size-sm);
     font-size: var(--font-size-sm);
     box-sizing: border-box;
   }
   
   .details-card {
-    padding: var(--spacing-sm);
+    padding: var(--spacing-responsive-sm);
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -1172,19 +1422,19 @@ body.modal-open {
   
   /* Ensure everything fits horizontally */
   .tech-grid {
-    gap: 0.5rem;
+    gap: var(--spacing-responsive-sm);
     width: 100%;
     max-width: 100%;
   }
   
   .tech-badge {
     font-size: var(--font-size-xs);
-    padding: 0.3rem 0.6rem;
+    padding: var(--spacing-responsive-xs) var(--spacing-responsive-sm);
     word-break: break-word;
   }
   
   .action-button {
-    padding: 0.6rem 1rem;
+    padding: var(--spacing-responsive-sm) var(--spacing-responsive-md);
     font-size: var(--font-size-sm);
     width: 100%;
     box-sizing: border-box;
@@ -1211,9 +1461,9 @@ body.modal-open {
 }
 
 /* Mobile Small (320px - 480px) */
-@media (max-width: 480px) {
+@media (max-width: calc(var(--breakpoint-xs) - 1px)) {
   .project-modal-overlay {
-    padding: 0;
+    padding: var(--modal-padding-xs);
     overflow-x: hidden;
     width: 100vw;
     max-width: 100vw;
@@ -1221,12 +1471,20 @@ body.modal-open {
     position: fixed;
     left: 0;
     right: 0;
+    align-items: flex-start;
+  }
+  
+  .project-modal-close-container {
+    top: var(--modal-padding-xs);
+    right: var(--modal-padding-xs);
   }
   
   .project-modal-layout {
     flex-direction: column;
-    gap: 0.5rem;
-    height: auto;
+    gap: var(--spacing-responsive-xs);
+    margin: 0 auto;
+    max-width: 100%;
+    width: 100%;
   }
   
   /* Details card at the top */
@@ -1248,27 +1506,27 @@ body.modal-open {
   }
   
   .hero-viewer {
-    margin-bottom: 0.25rem;
+    margin-bottom: var(--spacing-responsive-xs);
     width: 100%;
     max-width: 100%;
   }
   
   .thumbnail-strip {
     height: 70px;
-    padding: 0.25rem;
-    margin-bottom: 0.25rem;
+    padding: var(--spacing-responsive-xs);
+    margin-bottom: var(--spacing-responsive-xs);
     width: 100%;
     max-width: 100%;
   }
   
   .project-overview-section {
-    margin-bottom: 0.25rem;
+    margin-bottom: var(--spacing-responsive-xs);
     width: 100%;
     max-width: 100%;
   }
   
   .project-overview-content {
-    padding: 0.5rem;
+    padding: var(--spacing-responsive-sm);
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -1276,11 +1534,11 @@ body.modal-open {
   
   .overview-title {
     font-size: var(--font-size-xs);
-    margin-bottom: 0.25rem;
+    margin-bottom: var(--spacing-responsive-xs);
   }
   
   .thumbnail-item {
-    width: 90px;
+    width: var(--thumbnail-size-xs);
   }
   
   .thumbnail-video-indicator {
@@ -1306,11 +1564,11 @@ body.modal-open {
   
   .tech-badge {
     font-size: 0.7rem;
-    padding: 0.25rem 0.5rem;
+    padding: var(--spacing-responsive-xs) var(--spacing-responsive-sm);
   }
   
   .action-button {
-    padding: 0.5rem 0.8rem;
+    padding: var(--spacing-responsive-sm) var(--spacing-responsive-md);
     font-size: var(--font-size-xs);
   }
   
@@ -1321,23 +1579,23 @@ body.modal-open {
   }
   
   .nav-left {
-    left: 0.25rem;
+    left: var(--spacing-responsive-xs);
   }
   
   .nav-right {
-    right: 0.25rem;
+    right: var(--spacing-responsive-xs);
   }
   
   .media-counter {
-    bottom: 0.25rem;
-    right: 0.25rem;
-    padding: 0.25rem 0.5rem;
+    bottom: var(--spacing-responsive-xs);
+    right: var(--spacing-responsive-xs);
+    padding: var(--spacing-responsive-xs) var(--spacing-responsive-sm);
     font-size: 0.7rem;
   }
   
   .project-modal-close-container {
-    top: 0.25rem;
-    right: 0.25rem;
+    top: var(--modal-padding-xs);
+    right: var(--modal-padding-xs);
     width: 35px;
     height: 35px;
     box-sizing: border-box;
@@ -1370,16 +1628,16 @@ body.modal-open {
   }
   
   .project-header {
-    padding: 0.5rem;
-    margin-bottom: 0.75rem;
+    padding: var(--spacing-responsive-sm);
+    margin-bottom: var(--spacing-responsive-sm);
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
   }
   
   .detail-section {
-    padding: 0 0.25rem;
-    margin-bottom: 0.75rem;
+    padding: 0 var(--spacing-responsive-xs);
+    margin-bottom: var(--spacing-responsive-sm);
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -1387,15 +1645,15 @@ body.modal-open {
   
   .roles-list,
   .features-list {
-    padding: 0.25rem 0;
+    padding: var(--spacing-responsive-xs) 0;
     width: 100%;
     max-width: 100%;
   }
   
   .role-item,
   .feature-item {
-    padding: 0.25rem 0;
-    gap: 0.5rem;
+    padding: var(--spacing-responsive-xs) 0;
+    gap: var(--spacing-responsive-sm);
     width: 100%;
     max-width: 100%;
   }
@@ -1408,7 +1666,7 @@ body.modal-open {
   }
   
   .metric-item {
-    padding: 0.5rem;
+    padding: var(--spacing-responsive-sm);
     width: 100%;
     box-sizing: border-box;
   }
@@ -1422,15 +1680,15 @@ body.modal-open {
   }
   
   .action-buttons {
-    gap: 0.5rem;
-    margin-top: 0.75rem;
+    gap: var(--spacing-responsive-sm);
+    margin-top: var(--spacing-responsive-sm);
     width: 100%;
     max-width: 100%;
   }
   
   .supplementary-links {
-    margin-top: 0.75rem;
-    padding: 0.5rem 0.25rem 0 0.25rem;
+    margin-top: var(--spacing-responsive-sm);
+    padding: var(--spacing-responsive-sm) var(--spacing-responsive-xs) 0 var(--spacing-responsive-xs);
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -1475,7 +1733,7 @@ body.modal-open {
 /* Extra Small Mobile (320px and below) */
 @media (max-width: 320px) {
   .project-modal-overlay {
-    padding: 0.25rem;
+    padding: var(--modal-padding-xs);
   }
   
   .project-title {
@@ -1483,7 +1741,7 @@ body.modal-open {
   }
   
   .thumbnail-item {
-    width: 90px;
+    width: var(--thumbnail-size-xs);
   }
   
   .thumbnail-strip {
@@ -1498,114 +1756,7 @@ body.modal-open {
   }
   
   .details-card {
-    padding: var(--spacing-xs);
-  }
-}
-
-/* Landscape Orientation Adjustments */
-@media (max-height: 600px) and (orientation: landscape) {
-  .project-modal-overlay {
-    padding: var(--spacing-xs);
-  }
-  
-  .hero-viewer {
-    margin-bottom: var(--spacing-xs);
-  }
-  
-  .thumbnail-strip {
-    height: 100px;
-    margin-bottom: var(--spacing-xs);
-    min-height: 100px;
-  }
-  
-  .thumbnail-container {
-    height: 100%;
-    min-height: 80px;
-  }
-  
-  .thumbnail-item {
-    height: 100%;
-    aspect-ratio: 16/9;
-    width: auto;
-  }
-  
-  .thumbnail-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .project-overview-section {
-    margin-bottom: var(--spacing-xs);
-  }
-  
-  .details-card {
-    padding: var(--spacing-sm);
-  }
-}
-
-/* Very Short Landscape (height < 500px) */
-@media (max-height: 500px) and (orientation: landscape) {
-  .project-modal-overlay {
-    padding: 0.25rem;
-  }
-  
-  .project-modal-layout {
-    height: calc(100vh - 0.5rem);
-    gap: 0.5rem;
-  }
-  
-  .hero-viewer {
-    margin-bottom: 0.25rem;
-  }
-  
-  .thumbnail-strip {
-    height: 85px;
-    min-height: 85px;
-    margin-bottom: 0.25rem;
-    padding: 0.25rem;
-  }
-  
-  .thumbnail-container {
-    height: 100%;
-    min-height: 65px;
-  }
-  
-  .thumbnail-item {
-    height: 100%;
-    aspect-ratio: 16/9;
-    width: auto;
-  }
-  
-  .thumbnail-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .thumbnail-video-indicator {
-    width: 28px;
-    height: 28px;
-  }
-  
-  .play-button {
-    font-size: 0.8rem;
-  }
-  
-  .project-overview-section {
-    margin-bottom: 0.25rem;
-  }
-  
-  .details-card {
-    padding: 0.5rem;
-  }
-  
-  .project-title {
-    font-size: var(--font-size-lg);
-  }
-  
-  .project-subtitle {
-    font-size: var(--font-size-sm);
+    padding: var(--spacing-responsive-xs);
   }
 }
 
