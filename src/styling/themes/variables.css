@@ -1,57 +1,144 @@
 /* =====================
-   Theme Variables
+   CSS Custom Properties (Variables)
+   Design System & Theme Configuration
    ===================== */
-:root {
-  /* Color Palette */
-  --gold: #EEB64B;
-  --orange: #FC9460;
-  --red-pink: #E54264;
-  --magenta: #A92F5F;
-  --deep-purple: #442261;
-  --navy: #283D5E;
-  --green: #327F51;
-  --mint: #64A47F;
-  --light-gold: #C3C48A;
 
-  /* Semantic Colors */
-  --primary: var(--gold);
-  --secondary: var(--orange);
-  --accent: var(--red-pink);
-  --bg: #181622;
-  --bg-alt: var(--deep-purple);
-  --card-bg: #221B36;
-  --text: #F3F3F3;
-  --text-secondary: #B8B8B8;
-  --border: #3A3A3A;
-  
-  /* Layout */
+:root {
+  /* =====================
+     Color Palette - Base Colors
+     ===================== */
+  --color-gold: #EEB64B;
+  --color-orange: #FC9460;
+  --color-red-pink: #E54264;
+  --color-magenta: #A92F5F;
+  --color-deep-purple: #442261;
+  --color-navy: #283D5E;
+  --color-green: #327F51;
+  --color-mint: #64A47F;
+  --color-light-gold: #C3C48A;
+
+  /* =====================
+     Semantic Colors - Dark Theme (Default)
+     ===================== */
+  --color-primary: var(--color-gold);
+  --color-secondary: var(--color-orange);
+  --color-accent: var(--color-red-pink);
+  --color-background: #181622;
+  --color-background-alt: var(--color-deep-purple);
+  --color-card-background: #221B36;
+  --color-text-primary: #F3F3F3;
+  --color-text-secondary: #B8B8B8;
+  --color-border: #3A3A3A;
+  --color-overlay: rgba(20, 20, 30, 0.65);
+
+  /* =====================
+     Layout & Spacing
+     ===================== */
   --border-radius: 16px;
-  --shadow: 0 2px 24px rgba(238,182,75,0.12);
+  --shadow: 0 2px 24px rgba(238, 182, 75, 0.12);
   --max-width: 800px;
   
-  /* Typography */
-  --font-size-hero: 3.5rem;
-  --font-size-header-1: 2.5rem;
-  --font-size-header-2: 2rem;
-  --font-size-header-3: 1.5rem;
-  --font-size-body: 1rem;
-  --font-size-small: 0.875rem;
-  --font-size-xsmall: 0.75rem;
+  /* Spacing Scale */
+  --spacing-xs: 0.25rem;    /* 4px */
+  --spacing-sm: 0.5rem;     /* 8px */
+  --spacing-md: 1rem;       /* 16px */
+  --spacing-lg: 1.5rem;     /* 24px */
+  --spacing-xl: 2rem;       /* 32px */
+  --spacing-2xl: 3rem;      /* 48px */
+
+  /* =====================
+     Typography Scale
+     ===================== */
+  --font-size-xs: 0.7rem;      /* 11.2px */
+  --font-size-sm: 0.8rem;      /* 12.8px */
+  --font-size-base: 1rem;      /* 16px */
+  --font-size-md: 1.1rem;      /* 17.6px */
+  --font-size-lg: 1.2rem;      /* 19.2px */
+  --font-size-xl: 1.5rem;      /* 24px */
+  --font-size-2xl: 1.8rem;     /* 28.8px */
+  --font-size-3xl: 2rem;       /* 32px */
+  --font-size-4xl: 2.5rem;     /* 40px */
+  --font-size-5xl: 3rem;       /* 48px */
+  --font-size-hero: 3.5rem;    /* 56px */
+
+  /* =====================
+     Heading Styles
+     ===================== */
   
-  /* Spacing */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-2xl: 3rem;
+  /* H1 - Hero/Page Title */
+  --h1-font-size: var(--font-size-hero);
+  --h1-font-weight: 700;
+  --h1-line-height: 1.1;
+  --h1-color: var(--color-primary);
+  --h1-text-shadow: 0 2px 8px rgba(238, 182, 75, 0.3);
+  --h1-letter-spacing: -0.02em;
+  --h1-margin-bottom: var(--spacing-lg);
   
-  /* Transitions */
+  /* H2 - Section Headers */
+  --h2-font-size: var(--font-size-4xl);
+  --h2-font-weight: 600;
+  --h2-line-height: 1.2;
+  --h2-color: var(--color-text-primary);
+  --h2-text-shadow: 0 1px 4px rgba(238, 182, 75, 0.2);
+  --h2-letter-spacing: -0.01em;
+  --h2-margin-bottom: var(--spacing-md);
+  
+  /* H3 - Subsection Headers */
+  --h3-font-size: var(--font-size-3xl);
+  --h3-font-weight: 600;
+  --h3-line-height: 1.3;
+  --h3-color: var(--color-text-primary);
+  --h3-text-shadow: 0 1px 3px rgba(238, 182, 75, 0.15);
+  --h3-letter-spacing: 0;
+  --h3-margin-bottom: var(--spacing-sm);
+  
+  /* H4 - Card/Component Titles */
+  --h4-font-size: var(--font-size-xl);
+  --h4-font-weight: 500;
+  --h4-line-height: 1.4;
+  --h4-color: var(--color-text-primary);
+  --h4-text-shadow: 0 1px 2px rgba(238, 182, 75, 0.1);
+  --h4-letter-spacing: 0;
+  --h4-margin-bottom: var(--spacing-xs);
+  
+  /* H5 - Small Headers */
+  --h5-font-size: var(--font-size-lg);
+  --h5-font-weight: 500;
+  --h5-line-height: 1.4;
+  --h5-color: var(--color-text-secondary);
+  --h5-text-shadow: none;
+  --h5-letter-spacing: 0;
+  --h5-margin-bottom: var(--spacing-xs);
+  
+  /* H6 - Micro Headers */
+  --h6-font-size: var(--font-size-md);
+  --h6-font-weight: 500;
+  --h6-line-height: 1.4;
+  --h6-color: var(--color-text-secondary);
+  --h6-text-shadow: none;
+  --h6-letter-spacing: 0;
+  --h6-margin-bottom: var(--spacing-xs);
+
+  /* =====================
+     Responsive Heading Sizes
+     ===================== */
+  --h1-font-size-fluid: clamp(2rem, 6vw, var(--h1-font-size));
+  --h2-font-size-fluid: clamp(1.5rem, 4vw, var(--h2-font-size));
+  --h3-font-size-fluid: clamp(1.25rem, 3vw, var(--h3-font-size));
+  --h4-font-size-fluid: clamp(1.1rem, 2.5vw, var(--h4-font-size));
+  --h5-font-size-fluid: clamp(1rem, 2vw, var(--h5-font-size));
+  --h6-font-size-fluid: clamp(0.9rem, 1.5vw, var(--h6-font-size));
+
+  /* =====================
+     Transitions & Animations
+     ===================== */
   --transition-fast: 0.2s ease;
   --transition-normal: 0.3s ease;
-  --transition-slow: 0.5s cubic-bezier(.4,2,.6,1);
-  
-  /* Z-index layers */
+  --transition-slow: 0.5s cubic-bezier(0.4, 2, 0.6, 1);
+
+  /* =====================
+     Z-Index Scale
+     ===================== */
   --z-dropdown: 1000;
   --z-sticky: 1020;
   --z-fixed: 1030;
@@ -59,128 +146,186 @@
   --z-modal: 1050;
   --z-popover: 1060;
   --z-tooltip: 1070;
-  
-  /* Cursor Paths */
+
+  /* =====================
+     Custom Cursors
+     ===================== */
   --cursor-default: url('/kenney_cursor-pack/CurFormatted/pointer_scifi_a.cur') 4 2, auto;
   --cursor-pointer: url('/kenney_cursor-pack/CurFormatted/hand_thin_point.cur') 4 2, pointer;
   --cursor-text: url('/kenney_cursor-pack/CurFormatted/bracket_a_vertical.cur') 4 2, text;
 
   /* =====================
-     Responsive Design Breakpoints
+     Responsive Breakpoints
+     ===================== */
+  --breakpoint-xs: 480px;    /* Mobile portrait */
+  --breakpoint-sm: 768px;    /* Mobile landscape, tablet portrait */
+  --breakpoint-md: 1024px;   /* Tablet landscape, small laptops */
+  --breakpoint-lg: 1200px;   /* Standard laptops and desktops */
+  --breakpoint-xl: 1440px;   /* Large desktops */
+  --breakpoint-2xl: 1920px;  /* Ultra-wide displays */
+
+  /* =====================
+     Container Max Widths
+     ===================== */
+  --container-xs: 100%;
+  --container-sm: 540px;
+  --container-md: 720px;
+  --container-lg: 960px;
+  --container-xl: 1140px;
+  --container-2xl: 1320px;
+
+  /* =====================
+     Grid System
+     ===================== */
+  --grid-cols-xs: 1;
+  --grid-cols-sm: 2;
+  --grid-cols-md: 3;
+  --grid-cols-lg: 4;
+  --grid-cols-xl: 5;
+  --grid-cols-2xl: 6;
+
+  /* =====================
+     Component-Specific Variables
      ===================== */
   
-  /* Screen Size Breakpoints
-     These define the minimum width for each breakpoint.
-     Use with min-width media queries for mobile-first approach.
-     
-     Usage Examples:
-     @media (min-width: var(--breakpoint-sm)) { ... }  // 768px and up
-     @media (max-width: calc(var(--breakpoint-sm) - 1px)) { ... }  // Below 768px
-     @media (min-width: var(--breakpoint-md)) and (max-width: calc(var(--breakpoint-lg) - 1px)) { ... }  // 1024px to 1199px
-  */
-  --breakpoint-xs: 480px;    /* Extra Small: Mobile phones in portrait */
-  --breakpoint-sm: 768px;    /* Small: Mobile phones in landscape, tablets in portrait */
-  --breakpoint-md: 1024px;   /* Medium: Tablets in landscape, small laptops */
-  --breakpoint-lg: 1200px;   /* Large: Standard laptops and desktops */
-  --breakpoint-xl: 1440px;   /* Extra Large: Large desktops and high-res displays */
-  --breakpoint-2xl: 1920px;  /* 2X Large: Ultra-wide displays and 4K monitors */
-
-  /* Responsive Typography Scale
-     Font sizes that scale with screen size for better readability */
-  --font-size-xs: 0.8rem;      /* 12.8px at 16px base */
-  --font-size-sm: 0.9rem;      /* 14.4px at 16px base */
-  --font-size-base: 1.08rem;   /* 17.28px at 16px base - Enhanced readability */
-  --font-size-lg: 1.2rem;      /* 19.2px at 16px base */
-  --font-size-xl: 1.5rem;      /* 24px at 16px base */
-  --font-size-2xl: 1.8rem;     /* 28.8px at 16px base */
-  --font-size-3xl: 2rem;       /* 32px at 16px base */
-  --font-size-4xl: 2.5rem;     /* 40px at 16px base */
-  --font-size-5xl: 3rem;       /* 48px at 16px base */
-
-  /* Responsive Spacing Scale
-     Spacing values that adapt to screen size for better proportions */
-  --spacing-responsive-xs: 0.5rem;   /* 8px - Compact spacing for mobile */
-  --spacing-responsive-sm: 1rem;     /* 16px - Standard spacing */
-  --spacing-responsive-md: 1.5rem;   /* 24px - Comfortable spacing */
-  --spacing-responsive-lg: 2rem;     /* 32px - Generous spacing */
-  --spacing-responsive-xl: 3rem;     /* 48px - Large spacing for desktop */
-  --spacing-responsive-2xl: 4rem;    /* 64px - Extra large spacing */
-
-  /* Container Max Widths
-     Maximum content widths for different screen sizes */
-  --container-xs: 100%;              /* Full width on extra small screens */
-  --container-sm: 540px;             /* 540px max on small screens */
-  --container-md: 720px;             /* 720px max on medium screens */
-  --container-lg: 960px;             /* 960px max on large screens */
-  --container-xl: 1140px;            /* 1140px max on extra large screens */
-  --container-2xl: 1320px;           /* 1320px max on 2x large screens */
-
-  /* Modal Specific Variables
-     These are specifically for modal components like ProjectModal */
-  --modal-max-width: 1400px;         /* Maximum width for modal content */
-  --modal-max-width-large: 1800px;   /* Maximum width for large modals */
-  --modal-padding-xs: 0.25rem;       /* 4px - Minimal padding for mobile */
-  --modal-padding-sm: 0.5rem;        /* 8px - Small padding */
-  --modal-padding-md: 1rem;          /* 16px - Standard padding */
-  --modal-padding-lg: 1.5rem;        /* 24px - Large padding */
-  --modal-padding-xl: 2rem;          /* 32px - Extra large padding */
+  /* Modal */
+  --modal-max-width: 1400px;
+  --modal-max-width-large: 1800px;
+  --modal-padding-xs: 0.25rem;
+  --modal-padding-sm: 0.5rem;
+  --modal-padding-md: 1rem;
+  --modal-padding-lg: 1.5rem;
+  --modal-padding-xl: 2rem;
   
-  /* Thumbnail Sizes for Media Galleries */
-  --thumbnail-size-xs: 90px;         /* 90px - Extra small thumbnails */
-  --thumbnail-size-sm: 100px;        /* 100px - Small thumbnails */
-  --thumbnail-size-md: 120px;        /* 120px - Medium thumbnails */
-  --thumbnail-size-lg: 140px;        /* 140px - Large thumbnails */
-  --thumbnail-size-xl: 160px;        /* 160px - Extra large thumbnails */
-  --thumbnail-size-2xl: 180px;       /* 180px - 2x large thumbnails */
+  /* Modal Shadows & Effects */
+  --modal-shadow: 0 8px 32px rgba(238, 182, 75, 0.15);
+  --modal-shadow-hover: 0 6px 25px rgba(238, 182, 75, 0.4);
+  --modal-border-radius: var(--border-radius);
+  --modal-backdrop-blur: 10px;
+  
+  /* Modal Fluid Sizing */
+  --modal-max-width-fluid: min(95vw, var(--modal-max-width));
+  --modal-max-width-large-fluid: min(98vw, var(--modal-max-width-large));
+  --modal-padding-fluid: clamp(0.5rem, 2vw, var(--modal-padding-xl));
+  --modal-gap-fluid: clamp(1rem, 3vw, var(--spacing-xl));
+  
+  /* Modal Typography */
+  --modal-title-size-fluid: clamp(1.5rem, 4vw, var(--font-size-4xl));
+  --modal-subtitle-size-fluid: clamp(0.9rem, 2vw, var(--font-size-lg));
+  --modal-body-size-fluid: clamp(0.9rem, 1.5vw, var(--font-size-md));
+  --modal-small-size-fluid: clamp(0.8rem, 1.2vw, var(--font-size-base));
+  
+  /* Modal Spacing */
+  --modal-spacing-fluid-xs: clamp(0.25rem, 1vw, var(--spacing-sm));
+  --modal-spacing-fluid-sm: clamp(0.5rem, 1.5vw, var(--spacing-md));
+  --modal-spacing-fluid-md: clamp(1rem, 2vw, var(--spacing-lg));
+  --modal-spacing-fluid-lg: clamp(1.5rem, 3vw, var(--spacing-xl));
+  --modal-spacing-fluid-xl: clamp(2rem, 4vw, var(--spacing-2xl));
+  
+  /* Modal Component Sizes */
+  --modal-thumbnail-size-fluid: clamp(80px, 15vw, 160px);
+  --modal-button-size-fluid: clamp(35px, 8vw, 60px);
+  --modal-close-button-size-fluid: clamp(40px, 10vw, 60px);
+  
+  /* Modal Scrollbar */
+  --modal-scrollbar-width: 8px;
+  --modal-scrollbar-thumb-color: var(--color-primary);
+  --modal-scrollbar-track-color: rgba(255, 255, 255, 0.1);
 
-  /* Button Sizes for Responsive Design */
-  --button-size-xs: 35px;            /* 35px - Extra small buttons */
-  --button-size-sm: 40px;            /* 40px - Small buttons */
-  --button-size-md: 50px;            /* 50px - Medium buttons */
-  --button-size-lg: 60px;            /* 60px - Large buttons */
-  --button-size-xl: 70px;            /* 70px - Extra large buttons */
+  /* Thumbnails */
+  --thumbnail-size-xs: 90px;
+  --thumbnail-size-sm: 100px;
+  --thumbnail-size-md: 120px;
+  --thumbnail-size-lg: 140px;
+  --thumbnail-size-xl: 160px;
+  --thumbnail-size-2xl: 180px;
 
-  /* Grid Breakpoints for Layout Systems */
-  --grid-cols-xs: 1;                 /* 1 column on extra small screens */
-  --grid-cols-sm: 2;                 /* 2 columns on small screens */
-  --grid-cols-md: 3;                 /* 3 columns on medium screens */
-  --grid-cols-lg: 4;                 /* 4 columns on large screens */
-  --grid-cols-xl: 5;                 /* 5 columns on extra large screens */
-  --grid-cols-2xl: 6;                /* 6 columns on 2x large screens */
+  /* Buttons */
+  --button-size-xs: 35px;
+  --button-size-sm: 40px;
+  --button-size-md: 50px;
+  --button-size-lg: 60px;
+  --button-size-xl: 70px;
 }
+
+/* =====================
+   Theme Variations
+   ===================== */
 
 /* Dark Theme (Default) */
 .theme-dark {
-  --primary: var(--gold);
-  --secondary: var(--orange);
-  --accent: var(--red-pink);
-  --bg: #181622;
-  --bg-alt: var(--deep-purple);
-  --card-bg: #221B36;
-  --text: #F3F3F3;
-  --text-secondary: #B8B8B8;
-  --border: #3A3A3A;
-  --border-radius: 16px;
-  --shadow: 0 2px 24px rgba(238,182,75,0.18);
+  --color-primary: var(--color-gold);
+  --color-secondary: var(--color-orange);
+  --color-accent: var(--color-red-pink);
+  --color-background: #181622;
+  --color-background-alt: var(--color-deep-purple);
+  --color-card-background: #221B36;
+  --color-text-primary: #F3F3F3;
+  --color-text-secondary: #B8B8B8;
+  --color-border: #3A3A3A;
+  --color-overlay: rgba(20, 20, 30, 0.65);
+  --shadow: 0 2px 24px rgba(238, 182, 75, 0.18);
   --max-width: 700px;
-  --card-overlay: rgba(20, 20, 30, 0.65);
-  --mint: var(--mint);
 }
 
 /* Light Theme */
 .theme-light {
-  --primary: #FC9460;
-  --secondary: #EEB64B;
-  --accent: #A92F5F;
-  --bg: #C3C48A;
-  --bg-alt: #64A47F;
-  --card-bg: #F3F3F3;
-  --text: #181622;
-  --text-secondary: #442261;
-  --border: #A92F5F;
-  --border-radius: 16px;
+  --color-primary: var(--color-orange);
+  --color-secondary: var(--color-gold);
+  --color-accent: var(--color-magenta);
+  --color-background: var(--color-light-gold);
+  --color-background-alt: var(--color-mint);
+  --color-card-background: #F3F3F3;
+  --color-text-primary: #181622;
+  --color-text-secondary: var(--color-deep-purple);
+  --color-border: var(--color-magenta);
+  --color-overlay: rgba(195, 196, 138, 0.65);
   --shadow: 0 2px 24px rgba(252, 148, 96, 0.25);
   --max-width: 700px;
-  --card-overlay: rgba(195, 196, 138, 0.65);
-  --mint: #327F51;
+}
+
+/* =====================
+   Legacy Variable Aliases (for backward compatibility)
+   ===================== */
+:root {
+  /* Color aliases */
+  --primary: var(--color-primary);
+  --secondary: var(--color-secondary);
+  --accent: var(--color-accent);
+  --bg: var(--color-background);
+  --bg-alt: var(--color-background-alt);
+  --card-bg: var(--color-card-background);
+  --text: var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+  --border: var(--color-border);
+  
+  /* Typography aliases */
+  --font-size-body: var(--font-size-base);
+  --font-size-small: var(--font-size-sm);
+  --font-size-xsmall: var(--font-size-xs);
+  --font-size-header-1: var(--font-size-4xl);
+  --font-size-header-2: var(--font-size-3xl);
+  --font-size-header-3: var(--font-size-xl);
+  --font-size-s: var(--font-size-base);
+  --font-size-m: var(--font-size-md);
+  --font-size-l: var(--font-size-lg);
+  --font-size-xl-s: var(--font-size-lg);
+  --font-size-base-s: var(--font-size-md);
+  --font-size-xxs: var(--font-size-xs);
+  
+  /* Heading style aliases */
+  --h1-style: var(--h1-font-size) var(--h1-font-weight) var(--h1-line-height) var(--h1-color);
+  --h2-style: var(--h2-font-size) var(--h2-font-weight) var(--h2-line-height) var(--h2-color);
+  --h3-style: var(--h3-font-size) var(--h3-font-weight) var(--h3-line-height) var(--h3-color);
+  --h4-style: var(--h4-font-size) var(--h4-font-weight) var(--h4-line-height) var(--h4-color);
+  --h5-style: var(--h5-font-size) var(--h5-font-weight) var(--h5-line-height) var(--h5-color);
+  --h6-style: var(--h6-font-size) var(--h6-font-weight) var(--h6-line-height) var(--h6-color);
+  
+  /* Spacing aliases */
+  --spacing-responsive-xs: var(--spacing-sm);
+  --spacing-responsive-sm: var(--spacing-md);
+  --spacing-responsive-md: var(--spacing-lg);
+  --spacing-responsive-lg: var(--spacing-xl);
+  --spacing-responsive-xl: var(--spacing-2xl);
+  --spacing-responsive-2xl: 4rem;
 } 

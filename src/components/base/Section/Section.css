@@ -2,6 +2,25 @@
    Section Component Styles
    ===================== */
 
+/*
+  This component provides the base styling for section titles and containers
+  used throughout the application. The .section-title class is designed for
+  main section headings with a distinctive glow effect and responsive sizing.
+  
+  Note: This styling may be overridden by specific components (like ProjectModal)
+  that need different visual treatment for their section titles.
+  
+  Variables Used:
+  - --font-size-xl: 1.5rem (24px at 16px base) - Main section title size
+  - --font-size-lg: 1.2rem (19.2px at 16px base) - Medium screens
+  - --font-size-m: 1.1rem (17.6px at 16px base) - Small screens
+  - --font-size-s: 1rem (16px at 16px base) - Subtitle size
+  - --font-size-sm: 0.9rem (14.4px at 16px base) - Small subtitle
+  - --font-size-xs: 0.8rem (12.8px at 16px base) - Extra small subtitle
+  - --breakpoint-sm: 768px - Small screen breakpoint
+  - --breakpoint-xs: 480px - Extra small screen breakpoint
+*/
+
 .section-container {
   background: var(--card-bg);
   border-radius: var(--border-radius);
@@ -25,7 +44,7 @@
 .section-title {
   color: var(--text);
   margin: 0 0 0.5rem 0;
-  font-size: 1.5rem;
+  font-size: var(--font-size-xl);
   font-weight: bold;
   text-shadow: 0 0 10px var(--primary);
   display: flex;
@@ -44,28 +63,28 @@
 .section-subtitle {
   color: var(--text-secondary);
   margin: 0;
-  font-size: 1rem;
+  font-size: var(--font-size-s);
 }
 
 /* =====================
    Responsive Design
    ===================== */
-@media (max-width: 768px) {
+@media (max-width: var(--breakpoint-sm)) {
   .section-title {
-    font-size: 1.25rem;
+    font-size: var(--font-size-lg);
   }
   
   .section-subtitle {
-    font-size: 0.9rem;
+    font-size: var(--font-size-sm);
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: var(--breakpoint-xs)) {
   .section-title {
-    font-size: 1.1rem;
+    font-size: var(--font-size-m);
   }
   
   .section-subtitle {
-    font-size: 0.85rem;
+    font-size: var(--font-size-xs);
   }
 } 

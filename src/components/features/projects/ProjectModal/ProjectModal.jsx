@@ -49,6 +49,7 @@ const getYouTubeThumbnailUrl = (videoId, quality = 'mqdefault') => {
 
 const ProjectModal = ({ project, isOpen, onClose }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isTouchActive, setIsTouchActive] = useState(false);
 
   // Reset image index when modal opens
   useEffect(() => {
@@ -60,6 +61,8 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
       }, 100);
     }
   }, [isOpen]);
+
+
 
   // Handle escape key
   useEffect(() => {
@@ -213,7 +216,25 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
               {/* Hero Viewer */}
               {hasMedia && (
                 <div className="hero-viewer">
-                  <div className="hero-container">
+                  <div 
+                    className={`hero-container ${isTouchActive ? 'touch-active' : ''}`}
+                    onTouchStart={() => {
+                      // Show controls on touch for all devices (mobile, tablet, desktop)
+                      setIsTouchActive(true);
+                    }}
+                    onTouchEnd={() => {
+                      // Auto-hide controls after 2 seconds to allow for button interactions
+                      setTimeout(() => setIsTouchActive(false), 2000);
+                    }}
+                    onMouseEnter={() => {
+                      // Hide touch state on mouse enter for all devices
+                      setIsTouchActive(false);
+                    }}
+                    onMouseLeave={() => {
+                      // Hide touch state on mouse leave for all devices
+                      setIsTouchActive(false);
+                    }}
+                  >
                     {/* VideoBackgroundEffect temporarily hidden
                     {currentMedia?.type === 'video' && (
                       <VideoBackgroundEffect theme={project.videoBackgroundTheme || 'raindrops'} />
@@ -253,78 +274,60 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                       )}
                     </AnimatePresence>
                     
-                    {/* Navigation Arrows */}
-                    {mediaItems.length > 1 && (
-                      <>
-                        <motion.div
-                          initial={{ opacity: 0, x: -30 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: -30 }}
-                          transition={{ delay: 0.5 }}
-                          className="nav-arrow nav-left"
-                        >
-                          <Button
-                            onClick={prevImage}
-                            variant="outline"
-                            className="nav-button"
-                            whileHover={{ background: "rgba(0, 0, 0, 0.9)" }}
+                    {/* Overlay Controls Container */}
+                    <div className="overlay-controls-container">
+                      {/* Navigation Arrows */}
+                      {mediaItems.length > 1 && (
+                        <>
+                          <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -30 }}
+                            transition={{ delay: 0.5 }}
+                            className="nav-arrow nav-left"
                           >
-                            {uiContent.ui.projectModal.navigation.previous}
-                          </Button>
-                        </motion.div>
-                        <motion.div
-                          initial={{ opacity: 0, x: 30 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: 30 }}
-                          transition={{ delay: 0.5 }}
-                          className="nav-arrow nav-right"
-                        >
-                          <Button
-                            onClick={nextImage}
-                            variant="outline"
-                            className="nav-button"
-                            whileHover={{ background: "rgba(0, 0, 0, 0.9)" }}
+                            <Button
+                              onClick={prevImage}
+                              variant="outline"
+                              className="nav-button"
+                              whileHover={{ background: "rgba(0, 0, 0, 0.9)" }}
+                            >
+                              {uiContent.ui.projectModal.navigation.previous}
+                            </Button>
+                          </motion.div>
+                          <motion.div
+                            initial={{ opacity: 0, x: 30 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: 30 }}
+                            transition={{ delay: 0.5 }}
+                            className="nav-arrow nav-right"
                           >
-                            {uiContent.ui.projectModal.navigation.next}
-                          </Button>
+                            <Button
+                              onClick={nextImage}
+                              variant="outline"
+                              className="nav-button"
+                              whileHover={{ background: "rgba(0, 0, 0, 0.9)" }}
+                            >
+                              {uiContent.ui.projectModal.navigation.next}
+                            </Button>
+                          </motion.div>
+                        </>
+                      )}
+
+                      {/* Media Counter */}
+                      {mediaItems.length > 1 && (
+                        <motion.div
+                          initial={{ y: 20 }}
+                          animate={{ y: 0 }}
+                          exit={{ y: 20 }}
+                          transition={{ delay: 0.6 }}
+                          className="media-counter"
+                        >
+                          {formatImageCounter(currentImageIndex + 1, mediaItems.length)}
                         </motion.div>
-                      </>
-                    )}
+                      )}
 
-                    {/* Media Counter */}
-                    {mediaItems.length > 1 && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 20 }}
-                        transition={{ delay: 0.6 }}
-                        className="media-counter"
-                      >
-                        {formatImageCounter(currentImageIndex + 1, mediaItems.length)}
-                      </motion.div>
-                    )}
 
-                    {/* Media Controls */}
-                    <div className="media-controls">
-                      <Button
-                        variant="outline"
-                        className="media-control-button"
-                        onClick={() => window.open(currentMedia?.src, '_blank')}
-                      >
-                        🔍
-                      </Button>
-                      <Button
-                        variant="outline"
-                        className="media-control-button"
-                        onClick={() => {
-                          const element = document.querySelector('.hero-media') || document.querySelector('.project-modal-video-container');
-                          if (element) {
-                            element.requestFullscreen?.() || element.webkitRequestFullscreen?.();
-                          }
-                        }}
-                      >
-                        ⛶
-                      </Button>
                     </div>
                   </div>
                 </div>
