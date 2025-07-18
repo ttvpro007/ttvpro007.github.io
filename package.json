@@ -7,7 +7,12 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "css:stats": "node scripts/css-stats.js",
+    "css:quick": "node scripts/css-quick-stats.js",
+    "css:size": "node scripts/css-size-analysis.js",
+    "css:analyze": "npm run css:stats && npm run build && npm run css:size",
+    "css:analyze:quick": "npm run css:quick"
   },
   "dependencies": {
     "@google-cloud/local-auth": "^2.1.0",
@@ -24,6 +29,9 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.5.2",
+    "css-size": "^6.0.4",
+    "cssnano-cli": "^1.0.5",
+    "cssstats": "^4.0.5",
     "eslint": "^9.29.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",

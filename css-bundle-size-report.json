@@ -1,0 +1,26 @@
+{
+  "summary": {
+    "files": 1,
+    "totalSize": {
+      "raw": 85040,
+      "rawKB": "83.05",
+      "gzipped": 25512,
+      "gzippedKB": "24.91",
+      "minified": 68032,
+      "minifiedKB": "66.44"
+    }
+  },
+  "fileDetails": [
+    {
+      "file": "dist\\assets\\index-BnjcwOzp.css",
+      "size": {
+        "raw": 85040,
+        "rawKB": "83.05",
+        "gzipped": 25512,
+        "gzippedKB": "24.91",
+        "minified": 68032,
+        "minifiedKB": "66.44"
+      }
+    }
+  ]
+}

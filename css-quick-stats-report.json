@@ -1,0 +1,367 @@
+{
+  "summary": {
+    "files": 35,
+    "totalSize": {
+      "bytes": 124757,
+      "kb": "121.83",
+      "gzipped": "37.00"
+    },
+    "selectors": 763,
+    "properties": 914,
+    "mediaQueries": 48,
+    "lines": 5586,
+    "comments": 274
+  },
+  "fileDetails": [
+    {
+      "file": "src\\styling\\animations\\keyframes.css",
+      "lines": 208,
+      "selectors": 39,
+      "properties": 19,
+      "mediaQueries": 0,
+      "comments": 5,
+      "size": 3498,
+      "sizeKB": "3.42"
+    },
+    {
+      "file": "src\\styling\\base\\base.css",
+      "lines": 240,
+      "selectors": 28,
+      "properties": 34,
+      "mediaQueries": 4,
+      "comments": 23,
+      "size": 5501,
+      "sizeKB": "5.37"
+    },
+    {
+      "file": "src\\styling\\index.css",
+      "lines": 13,
+      "selectors": 0,
+      "properties": 0,
+      "mediaQueries": 0,
+      "comments": 3,
+      "size": 589,
+      "sizeKB": "0.58"
+    },
+    {
+      "file": "src\\styling\\themes\\variables.css",
+      "lines": 331,
+      "selectors": 3,
+      "properties": 125,
+      "mediaQueries": 0,
+      "comments": 38,
+      "size": 11416,
+      "sizeKB": "11.15"
+    },
+    {
+      "file": "src\\styling\\utils\\utilities.css",
+      "lines": 240,
+      "selectors": 182,
+      "properties": 0,
+      "mediaQueries": 2,
+      "comments": 18,
+      "size": 8100,
+      "sizeKB": "7.91"
+    },
+    {
+      "file": "src\\components\\base\\AnimatedContainer\\AnimatedContainer.css",
+      "lines": 56,
+      "selectors": 7,
+      "properties": 10,
+      "mediaQueries": 2,
+      "comments": 9,
+      "size": 1110,
+      "sizeKB": "1.08"
+    },
+    {
+      "file": "src\\components\\base\\Badge\\Badge.css",
+      "lines": 152,
+      "selectors": 18,
+      "properties": 19,
+      "mediaQueries": 2,
+      "comments": 7,
+      "size": 2989,
+      "sizeKB": "2.92"
+    },
+    {
+      "file": "src\\components\\base\\Button\\Button.css",
+      "lines": 132,
+      "selectors": 15,
+      "properties": 20,
+      "mediaQueries": 2,
+      "comments": 8,
+      "size": 2524,
+      "sizeKB": "2.46"
+    },
+    {
+      "file": "src\\components\\base\\ImageContainer\\ImageContainer.css",
+      "lines": 152,
+      "selectors": 24,
+      "properties": 22,
+      "mediaQueries": 2,
+      "comments": 10,
+      "size": 2662,
+      "sizeKB": "2.60"
+    },
+    {
+      "file": "src\\components\\base\\MarkdownRenderer\\MarkdownRenderer.css",
+      "lines": 168,
+      "selectors": 21,
+      "properties": 27,
+      "mediaQueries": 1,
+      "comments": 9,
+      "size": 3027,
+      "sizeKB": "2.96"
+    },
+    {
+      "file": "src\\components\\base\\ProjectCardBase\\ProjectCardBase.css",
+      "lines": 126,
+      "selectors": 15,
+      "properties": 35,
+      "mediaQueries": 0,
+      "comments": 14,
+      "size": 2428,
+      "sizeKB": "2.37"
+    },
+    {
+      "file": "src\\components\\base\\Section\\Section.css",
+      "lines": 90,
+      "selectors": 8,
+      "properties": 17,
+      "mediaQueries": 2,
+      "comments": 3,
+      "size": 2267,
+      "sizeKB": "2.21"
+    },
+    {
+      "file": "src\\components\\base\\VideoBackgroundEffect\\VideoBackgroundEffect.css",
+      "lines": 24,
+      "selectors": 3,
+      "properties": 12,
+      "mediaQueries": 0,
+      "comments": 0,
+      "size": 437,
+      "sizeKB": "0.43"
+    },
+    {
+      "file": "src\\components\\features\\forms\\ConfirmationModal\\ConfirmationModal.css",
+      "lines": 123,
+      "selectors": 12,
+      "properties": 31,
+      "mediaQueries": 1,
+      "comments": 2,
+      "size": 2375,
+      "sizeKB": "2.32"
+    },
+    {
+      "file": "src\\components\\features\\forms\\QuestForm\\QuestForm.css",
+      "lines": 257,
+      "selectors": 29,
+      "properties": 39,
+      "mediaQueries": 2,
+      "comments": 10,
+      "size": 5037,
+      "sizeKB": "4.92"
+    },
+    {
+      "file": "src\\components\\features\\projects\\FeaturedProject\\FeaturedProject.css",
+      "lines": 186,
+      "selectors": 16,
+      "properties": 36,
+      "mediaQueries": 3,
+      "comments": 13,
+      "size": 5020,
+      "sizeKB": "4.90"
+    },
+    {
+      "file": "src\\components\\features\\projects\\ProjectCard\\ProjectCard.css",
+      "lines": 102,
+      "selectors": 15,
+      "properties": 14,
+      "mediaQueries": 0,
+      "comments": 11,
+      "size": 2895,
+      "sizeKB": "2.83"
+    },
+    {
+      "file": "src\\components\\features\\projects\\ProjectModal\\ProjectModal.css",
+      "lines": 1035,
+      "selectors": 105,
+      "properties": 70,
+      "mediaQueries": 4,
+      "comments": 43,
+      "size": 25419,
+      "sizeKB": "24.82"
+    },
+    {
+      "file": "src\\components\\features\\projects\\SearchAndFilter\\SearchAndFilter.css",
+      "lines": 229,
+      "selectors": 23,
+      "properties": 34,
+      "mediaQueries": 2,
+      "comments": 2,
+      "size": 4664,
+      "sizeKB": "4.55"
+    },
+    {
+      "file": "src\\components\\features\\projects\\StatsCard\\StatsCard.css",
+      "lines": 117,
+      "selectors": 7,
+      "properties": 22,
+      "mediaQueries": 2,
+      "comments": 9,
+      "size": 2286,
+      "sizeKB": "2.23"
+    },
+    {
+      "file": "src\\components\\features\\showcase\\FlipCard\\FlipCard.css",
+      "lines": 177,
+      "selectors": 16,
+      "properties": 37,
+      "mediaQueries": 2,
+      "comments": 5,
+      "size": 3442,
+      "sizeKB": "3.36"
+    },
+    {
+      "file": "src\\components\\features\\showcase\\FunFacts\\FunFacts.css",
+      "lines": 16,
+      "selectors": 2,
+      "properties": 6,
+      "mediaQueries": 0,
+      "comments": 1,
+      "size": 265,
+      "sizeKB": "0.26"
+    },
+    {
+      "file": "src\\components\\features\\showcase\\HQ\\HQ.css",
+      "lines": 227,
+      "selectors": 32,
+      "properties": 34,
+      "mediaQueries": 2,
+      "comments": 9,
+      "size": 3963,
+      "sizeKB": "3.87"
+    },
+    {
+      "file": "src\\components\\features\\showcase\\ShowAndTell\\ShowAndTell.css",
+      "lines": 34,
+      "selectors": 6,
+      "properties": 9,
+      "mediaQueries": 0,
+      "comments": 1,
+      "size": 549,
+      "sizeKB": "0.54"
+    },
+    {
+      "file": "src\\components\\features\\showcase\\SocialLinks\\SocialLinks.css",
+      "lines": 128,
+      "selectors": 11,
+      "properties": 32,
+      "mediaQueries": 2,
+      "comments": 3,
+      "size": 2465,
+      "sizeKB": "2.41"
+    },
+    {
+      "file": "src\\components\\features\\showcase\\Timeline\\Timeline.css",
+      "lines": 65,
+      "selectors": 8,
+      "properties": 20,
+      "mediaQueries": 1,
+      "comments": 2,
+      "size": 1040,
+      "sizeKB": "1.02"
+    },
+    {
+      "file": "src\\components\\layout\\Navbar\\Navbar.css",
+      "lines": 200,
+      "selectors": 17,
+      "properties": 29,
+      "mediaQueries": 2,
+      "comments": 4,
+      "size": 4051,
+      "sizeKB": "3.96"
+    },
+    {
+      "file": "src\\pages\\base\\PageContainer\\PageContainer.css",
+      "lines": 17,
+      "selectors": 2,
+      "properties": 5,
+      "mediaQueries": 1,
+      "comments": 0,
+      "size": 244,
+      "sizeKB": "0.24"
+    },
+    {
+      "file": "src\\pages\\base\\PageFooter\\PageFooter.css",
+      "lines": 43,
+      "selectors": 3,
+      "properties": 17,
+      "mediaQueries": 1,
+      "comments": 0,
+      "size": 1024,
+      "sizeKB": "1.00"
+    },
+    {
+      "file": "src\\pages\\base\\PageHeader\\PageHeader.css",
+      "lines": 43,
+      "selectors": 4,
+      "properties": 12,
+      "mediaQueries": 1,
+      "comments": 0,
+      "size": 831,
+      "sizeKB": "0.81"
+    },
+    {
+      "file": "src\\pages\\features\\contact\\Contact.css",
+      "lines": 45,
+      "selectors": 6,
+      "properties": 18,
+      "mediaQueries": 0,
+      "comments": 1,
+      "size": 800,
+      "sizeKB": "0.78"
+    },
+    {
+      "file": "src\\pages\\features\\home\\Home.css",
+      "lines": 90,
+      "selectors": 13,
+      "properties": 27,
+      "mediaQueries": 0,
+      "comments": 1,
+      "size": 1658,
+      "sizeKB": "1.62"
+    },
+    {
+      "file": "src\\pages\\features\\projects\\Projects.css",
+      "lines": 188,
+      "selectors": 20,
+      "properties": 31,
+      "mediaQueries": 4,
+      "comments": 8,
+      "size": 4240,
+      "sizeKB": "4.14"
+    },
+    {
+      "file": "src\\pages\\features\\resume\\Resume.css",
+      "lines": 276,
+      "selectors": 47,
+      "properties": 30,
+      "mediaQueries": 0,
+      "comments": 2,
+      "size": 4752,
+      "sizeKB": "4.64"
+    },
+    {
+      "file": "src\\pages\\layout\\ErrorPage\\ErrorPage.css",
+      "lines": 56,
+      "selectors": 6,
+      "properties": 21,
+      "mediaQueries": 1,
+      "comments": 0,
+      "size": 1189,
+      "sizeKB": "1.16"
+    }
+  ]
+}

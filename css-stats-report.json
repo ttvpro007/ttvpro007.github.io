@@ -1,0 +1,1069 @@
+{
+  "summary": {
+    "files": 35,
+    "totalSize": {
+      "raw": 124757,
+      "gzipped": 37427,
+      "minified": 99806
+    },
+    "selectors": 955,
+    "declarations": 2549,
+    "rules": 906,
+    "averageSpecificity": 0,
+    "maxSpecificity": 0
+  },
+  "topProperties": [],
+  "topValues": [],
+  "fileDetails": [
+    {
+      "file": "src\\styling\\animations\\keyframes.css",
+      "size": {
+        "raw": 3498,
+        "gzipped": 1049,
+        "minified": 2798
+      },
+      "selectors": {
+        "total": 19,
+        "id": 0,
+        "class": 19,
+        "type": 0,
+        "pseudoClass": 5,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 62,
+        "unique": 55
+      },
+      "rules": {
+        "total": 41,
+        "mediaQueries": 0
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\styling\\base\\base.css",
+      "size": {
+        "raw": 5501,
+        "gzipped": 1650,
+        "minified": 4401
+      },
+      "selectors": {
+        "total": 61,
+        "id": 0,
+        "class": 18,
+        "type": 37,
+        "pseudoClass": 12,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 90,
+        "unique": 70
+      },
+      "rules": {
+        "total": 39,
+        "mediaQueries": 4
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\styling\\index.css",
+      "size": {
+        "raw": 589,
+        "gzipped": 177,
+        "minified": 471
+      },
+      "selectors": {
+        "total": 0,
+        "id": 0,
+        "class": 0,
+        "type": 0,
+        "pseudoClass": 0,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 0,
+        "unique": 0
+      },
+      "rules": {
+        "total": 0,
+        "mediaQueries": 0
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\styling\\themes\\variables.css",
+      "size": {
+        "raw": 11416,
+        "gzipped": 3425,
+        "minified": 9133
+      },
+      "selectors": {
+        "total": 4,
+        "id": 0,
+        "class": 2,
+        "type": 0,
+        "pseudoClass": 2,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 24,
+        "unique": 23
+      },
+      "rules": {
+        "total": 4,
+        "mediaQueries": 0
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\styling\\utils\\utilities.css",
+      "size": {
+        "raw": 8100,
+        "gzipped": 2430,
+        "minified": 6480
+      },
+      "selectors": {
+        "total": 182,
+        "id": 0,
+        "class": 182,
+        "type": 0,
+        "pseudoClass": 0,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 182,
+        "unique": 168
+      },
+      "rules": {
+        "total": 182,
+        "mediaQueries": 2
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\base\\AnimatedContainer\\AnimatedContainer.css",
+      "size": {
+        "raw": 1110,
+        "gzipped": 333,
+        "minified": 888
+      },
+      "selectors": {
+        "total": 9,
+        "id": 0,
+        "class": 9,
+        "type": 0,
+        "pseudoClass": 2,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 14,
+        "unique": 13
+      },
+      "rules": {
+        "total": 9,
+        "mediaQueries": 2
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\base\\Badge\\Badge.css",
+      "size": {
+        "raw": 2989,
+        "gzipped": 897,
+        "minified": 2391
+      },
+      "selectors": {
+        "total": 24,
+        "id": 0,
+        "class": 24,
+        "type": 0,
+        "pseudoClass": 8,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 67,
+        "unique": 49
+      },
+      "rules": {
+        "total": 24,
+        "mediaQueries": 2
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\base\\Button\\Button.css",
+      "size": {
+        "raw": 2524,
+        "gzipped": 757,
+        "minified": 2019
+      },
+      "selectors": {
+        "total": 21,
+        "id": 0,
+        "class": 21,
+        "type": 0,
+        "pseudoClass": 6,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 55,
+        "unique": 44
+      },
+      "rules": {
+        "total": 21,
+        "mediaQueries": 2
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\base\\ImageContainer\\ImageContainer.css",
+      "size": {
+        "raw": 2662,
+        "gzipped": 799,
+        "minified": 2130
+      },
+      "selectors": {
+        "total": 29,
+        "id": 0,
+        "class": 29,
+        "type": 17,
+        "pseudoClass": 4,
+        "pseudoElement": 1
+      },
+      "declarations": {
+        "total": 49,
+        "unique": 36
+      },
+      "rules": {
+        "total": 29,
+        "mediaQueries": 2
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\base\\MarkdownRenderer\\MarkdownRenderer.css",
+      "size": {
+        "raw": 3027,
+        "gzipped": 908,
+        "minified": 2422
+      },
+      "selectors": {
+        "total": 23,
+        "id": 0,
+        "class": 23,
+        "type": 1,
+        "pseudoClass": 0,
+        "pseudoElement": 1
+      },
+      "declarations": {
+        "total": 84,
+        "unique": 62
+      },
+      "rules": {
+        "total": 24,
+        "mediaQueries": 1
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\base\\ProjectCardBase\\ProjectCardBase.css",
+      "size": {
+        "raw": 2428,
+        "gzipped": 728,
+        "minified": 1942
+      },
+      "selectors": {
+        "total": 15,
+        "id": 0,
+        "class": 15,
+        "type": 0,
+        "pseudoClass": 1,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 62,
+        "unique": 47
+      },
+      "rules": {
+        "total": 15,
+        "mediaQueries": 0
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\base\\Section\\Section.css",
+      "size": {
+        "raw": 2267,
+        "gzipped": 680,
+        "minified": 1814
+      },
+      "selectors": {
+        "total": 12,
+        "id": 0,
+        "class": 12,
+        "type": 0,
+        "pseudoClass": 0,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 25,
+        "unique": 25
+      },
+      "rules": {
+        "total": 12,
+        "mediaQueries": 2
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\base\\VideoBackgroundEffect\\VideoBackgroundEffect.css",
+      "size": {
+        "raw": 437,
+        "gzipped": 131,
+        "minified": 350
+      },
+      "selectors": {
+        "total": 3,
+        "id": 0,
+        "class": 3,
+        "type": 0,
+        "pseudoClass": 0,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 16,
+        "unique": 13
+      },
+      "rules": {
+        "total": 3,
+        "mediaQueries": 0
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\features\\forms\\ConfirmationModal\\ConfirmationModal.css",
+      "size": {
+        "raw": 2375,
+        "gzipped": 713,
+        "minified": 1900
+      },
+      "selectors": {
+        "total": 15,
+        "id": 0,
+        "class": 15,
+        "type": 0,
+        "pseudoClass": 2,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 72,
+        "unique": 61
+      },
+      "rules": {
+        "total": 15,
+        "mediaQueries": 1
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\features\\forms\\QuestForm\\QuestForm.css",
+      "size": {
+        "raw": 5037,
+        "gzipped": 1511,
+        "minified": 4030
+      },
+      "selectors": {
+        "total": 43,
+        "id": 0,
+        "class": 43,
+        "type": 9,
+        "pseudoClass": 3,
+        "pseudoElement": 2
+      },
+      "declarations": {
+        "total": 126,
+        "unique": 87
+      },
+      "rules": {
+        "total": 36,
+        "mediaQueries": 2
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\features\\projects\\FeaturedProject\\FeaturedProject.css",
+      "size": {
+        "raw": 5020,
+        "gzipped": 1506,
+        "minified": 4016
+      },
+      "selectors": {
+        "total": 20,
+        "id": 0,
+        "class": 20,
+        "type": 0,
+        "pseudoClass": 4,
+        "pseudoElement": 4
+      },
+      "declarations": {
+        "total": 104,
+        "unique": 69
+      },
+      "rules": {
+        "total": 19,
+        "mediaQueries": 3
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\features\\projects\\ProjectCard\\ProjectCard.css",
+      "size": {
+        "raw": 2895,
+        "gzipped": 869,
+        "minified": 2316
+      },
+      "selectors": {
+        "total": 24,
+        "id": 0,
+        "class": 24,
+        "type": 2,
+        "pseudoClass": 3,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 33,
+        "unique": 26
+      },
+      "rules": {
+        "total": 16,
+        "mediaQueries": 0
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\features\\projects\\ProjectModal\\ProjectModal.css",
+      "size": {
+        "raw": 25419,
+        "gzipped": 7626,
+        "minified": 20335
+      },
+      "selectors": {
+        "total": 158,
+        "id": 0,
+        "class": 158,
+        "type": 3,
+        "pseudoClass": 20,
+        "pseudoElement": 5
+      },
+      "declarations": {
+        "total": 508,
+        "unique": 235
+      },
+      "rules": {
+        "total": 128,
+        "mediaQueries": 4
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\features\\projects\\SearchAndFilter\\SearchAndFilter.css",
+      "size": {
+        "raw": 4664,
+        "gzipped": 1399,
+        "minified": 3731
+      },
+      "selectors": {
+        "total": 29,
+        "id": 0,
+        "class": 29,
+        "type": 0,
+        "pseudoClass": 2,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 134,
+        "unique": 89
+      },
+      "rules": {
+        "total": 29,
+        "mediaQueries": 2
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\features\\projects\\StatsCard\\StatsCard.css",
+      "size": {
+        "raw": 2286,
+        "gzipped": 686,
+        "minified": 1829
+      },
+      "selectors": {
+        "total": 16,
+        "id": 0,
+        "class": 16,
+        "type": 0,
+        "pseudoClass": 0,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 51,
+        "unique": 40
+      },
+      "rules": {
+        "total": 16,
+        "mediaQueries": 2
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\features\\showcase\\FlipCard\\FlipCard.css",
+      "size": {
+        "raw": 3442,
+        "gzipped": 1033,
+        "minified": 2754
+      },
+      "selectors": {
+        "total": 28,
+        "id": 0,
+        "class": 28,
+        "type": 0,
+        "pseudoClass": 5,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 87,
+        "unique": 66
+      },
+      "rules": {
+        "total": 26,
+        "mediaQueries": 2
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\features\\showcase\\FunFacts\\FunFacts.css",
+      "size": {
+        "raw": 265,
+        "gzipped": 80,
+        "minified": 212
+      },
+      "selectors": {
+        "total": 2,
+        "id": 0,
+        "class": 2,
+        "type": 0,
+        "pseudoClass": 0,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 7,
+        "unique": 7
+      },
+      "rules": {
+        "total": 2,
+        "mediaQueries": 0
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\features\\showcase\\HQ\\HQ.css",
+      "size": {
+        "raw": 3963,
+        "gzipped": 1189,
+        "minified": 3170
+      },
+      "selectors": {
+        "total": 34,
+        "id": 0,
+        "class": 34,
+        "type": 0,
+        "pseudoClass": 0,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 100,
+        "unique": 75
+      },
+      "rules": {
+        "total": 37,
+        "mediaQueries": 2
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\features\\showcase\\ShowAndTell\\ShowAndTell.css",
+      "size": {
+        "raw": 549,
+        "gzipped": 165,
+        "minified": 439
+      },
+      "selectors": {
+        "total": 6,
+        "id": 0,
+        "class": 6,
+        "type": 0,
+        "pseudoClass": 0,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 13,
+        "unique": 13
+      },
+      "rules": {
+        "total": 6,
+        "mediaQueries": 0
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\features\\showcase\\SocialLinks\\SocialLinks.css",
+      "size": {
+        "raw": 2465,
+        "gzipped": 740,
+        "minified": 1972
+      },
+      "selectors": {
+        "total": 19,
+        "id": 0,
+        "class": 19,
+        "type": 0,
+        "pseudoClass": 3,
+        "pseudoElement": 2
+      },
+      "declarations": {
+        "total": 68,
+        "unique": 50
+      },
+      "rules": {
+        "total": 19,
+        "mediaQueries": 2
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\features\\showcase\\Timeline\\Timeline.css",
+      "size": {
+        "raw": 1040,
+        "gzipped": 312,
+        "minified": 832
+      },
+      "selectors": {
+        "total": 10,
+        "id": 0,
+        "class": 10,
+        "type": 0,
+        "pseudoClass": 0,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 29,
+        "unique": 25
+      },
+      "rules": {
+        "total": 10,
+        "mediaQueries": 1
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\components\\layout\\Navbar\\Navbar.css",
+      "size": {
+        "raw": 4051,
+        "gzipped": 1215,
+        "minified": 3241
+      },
+      "selectors": {
+        "total": 29,
+        "id": 0,
+        "class": 29,
+        "type": 0,
+        "pseudoClass": 8,
+        "pseudoElement": 4
+      },
+      "declarations": {
+        "total": 107,
+        "unique": 68
+      },
+      "rules": {
+        "total": 27,
+        "mediaQueries": 2
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\pages\\base\\PageContainer\\PageContainer.css",
+      "size": {
+        "raw": 244,
+        "gzipped": 73,
+        "minified": 195
+      },
+      "selectors": {
+        "total": 3,
+        "id": 0,
+        "class": 3,
+        "type": 0,
+        "pseudoClass": 0,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 7,
+        "unique": 6
+      },
+      "rules": {
+        "total": 3,
+        "mediaQueries": 1
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\pages\\base\\PageFooter\\PageFooter.css",
+      "size": {
+        "raw": 1024,
+        "gzipped": 307,
+        "minified": 819
+      },
+      "selectors": {
+        "total": 5,
+        "id": 0,
+        "class": 5,
+        "type": 0,
+        "pseudoClass": 1,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 27,
+        "unique": 27
+      },
+      "rules": {
+        "total": 5,
+        "mediaQueries": 1
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\pages\\base\\PageHeader\\PageHeader.css",
+      "size": {
+        "raw": 831,
+        "gzipped": 249,
+        "minified": 665
+      },
+      "selectors": {
+        "total": 7,
+        "id": 0,
+        "class": 7,
+        "type": 0,
+        "pseudoClass": 0,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 21,
+        "unique": 20
+      },
+      "rules": {
+        "total": 7,
+        "mediaQueries": 1
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\pages\\features\\contact\\Contact.css",
+      "size": {
+        "raw": 800,
+        "gzipped": 240,
+        "minified": 640
+      },
+      "selectors": {
+        "total": 6,
+        "id": 0,
+        "class": 6,
+        "type": 0,
+        "pseudoClass": 0,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 26,
+        "unique": 21
+      },
+      "rules": {
+        "total": 6,
+        "mediaQueries": 0
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\pages\\features\\home\\Home.css",
+      "size": {
+        "raw": 1658,
+        "gzipped": 497,
+        "minified": 1326
+      },
+      "selectors": {
+        "total": 13,
+        "id": 0,
+        "class": 13,
+        "type": 0,
+        "pseudoClass": 2,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 50,
+        "unique": 41
+      },
+      "rules": {
+        "total": 13,
+        "mediaQueries": 0
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\pages\\features\\projects\\Projects.css",
+      "size": {
+        "raw": 4240,
+        "gzipped": 1272,
+        "minified": 3392
+      },
+      "selectors": {
+        "total": 31,
+        "id": 0,
+        "class": 30,
+        "type": 1,
+        "pseudoClass": 1,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 85,
+        "unique": 65
+      },
+      "rules": {
+        "total": 28,
+        "mediaQueries": 4
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\pages\\features\\resume\\Resume.css",
+      "size": {
+        "raw": 4752,
+        "gzipped": 1426,
+        "minified": 3802
+      },
+      "selectors": {
+        "total": 47,
+        "id": 0,
+        "class": 47,
+        "type": 0,
+        "pseudoClass": 6,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 133,
+        "unique": 71
+      },
+      "rules": {
+        "total": 47,
+        "mediaQueries": 0
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    },
+    {
+      "file": "src\\pages\\layout\\ErrorPage\\ErrorPage.css",
+      "size": {
+        "raw": 1189,
+        "gzipped": 357,
+        "minified": 951
+      },
+      "selectors": {
+        "total": 8,
+        "id": 0,
+        "class": 8,
+        "type": 0,
+        "pseudoClass": 1,
+        "pseudoElement": 0
+      },
+      "declarations": {
+        "total": 31,
+        "unique": 30
+      },
+      "rules": {
+        "total": 8,
+        "mediaQueries": 1
+      },
+      "properties": {},
+      "values": {},
+      "specificity": {
+        "average": 0,
+        "max": 0
+      }
+    }
+  ]
+}
