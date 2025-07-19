@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "@/components/layout/Navbar";
+import { Navbar } from "@/components/layout";
 import { Home, Projects, Resume, Contact } from "./pages";
 import { AnimatePresence, motion } from "framer-motion";
 

@@ -2,31 +2,76 @@
    Quest Form Styles
    ===================== */
 
-.quest-form {
-  display: flex;
-  flex-direction: column;
-}
-
 .quest-form-container {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  border: 2px solid var(--primary);
+  box-shadow: var(--shadow);
+  max-width: 600px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
-/* Center the submit button */
-.center-submit {
-  display: block;
+.quest-form-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.quest-form-title {
+  font: var(--text-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(238, 182, 75, 0.3);
+}
+
+.quest-form-subtitle {
+  font: var(--text-lg);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.quest-field {
   width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text);
+  font: var(--text-base);
+  transition: all 0.3s ease;
+  outline: none;
 }
 
-/* Consistent sizing for form fields */
-.quest-field,
+.quest-field:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(238, 182, 75, 0.2);
+}
+
+.quest-field.error {
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 3px rgba(100, 164, 127, 0.2);
+}
+
 .quest-form select,
 .quest-form textarea {
-  padding: 1rem;
-  font-size: 1.1rem;
-  min-height: 44px;
-  border-radius: 10px;
+  font-family: inherit;
+  font: var(--text-base);
+  resize: vertical;
+}
+
+.quest-form textarea {
+  min-height: 100px;
 }
 
 .quest-form select {
@@ -34,168 +79,46 @@
 }
 
 .quest-form select option {
-  cursor: var(--cursor-default);
-}
-
-/* Adjust spacing between fields */
-.form-fields {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-/* Progress Bar */
-.xp-progress-container {
   background: var(--card-bg);
-  border: 2px solid var(--border);
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-}
-
-.xp-label {
-  display: flex;
-  align-items: center;
-  font-weight: 600;
-  color: var(--primary);
-}
-
-.xp-icon {
-  font-size: 1.2rem;
-}
-
-.xp-bar {
-  height: 12px;
-  background: var(--border);
-  border-radius: 6px;
-  overflow: hidden;
-  position: relative;
-}
-
-.xp-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
-  border-radius: 6px;
-  position: relative;
-}
-
-.xp-fill::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.3) 50%,
-    transparent 100%
-  );
-  animation: shimmer 2s infinite;
-}
-
-/* Form Fields */
-.field-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.field-label {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  font-weight: 600;
-  color: var(--primary);
-  font-size: var(--font-size-body);
-  cursor: var(--cursor-default);
-}
-
-.label-icon {
-  font-size: 1.5rem;
-}
-
-.quest-field {
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-  background: var(--card-bg);
-  border: 2px solid var(--border);
-  border-radius: 8px;
   color: var(--text);
-  font-family: inherit;
-  font-size: var(--font-size-body);
-  transition: all var(--transition-normal);
-  resize: vertical;
-  width: 100%;
-  box-sizing: border-box;
 }
 
-.quest-field:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(238, 182, 75, 0.2);
-  background: var(--card-bg);
+.center-submit {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
 }
 
-.quest-field.valid {
-  border-color: var(--mint);
-  box-shadow: 0 0 0 2px rgba(100, 164, 127, 0.2);
-}
-
-.quest-field::placeholder {
-  color: var(--text-secondary);
-  opacity: 0.7;
-}
-
-/* Submit Button */
-.quest-submit {
-  background: var(--border);
-  color: #666;
+.quest-submit-button {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: var(--card-bg);
   border: none;
   border-radius: 12px;
-  padding: var(--spacing-md) var(--spacing-xl);
-  font-size: 1.1rem;
-  font-weight: 700;
-  cursor: not-allowed;
-  transition: all var(--transition-normal);
+  padding: 1rem 2rem;
+  font: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  cursor: var(--cursor-pointer);
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-sm);
-  min-height: 60px;
-  margin-top: var(--spacing-xl);
-}
-
-.quest-submit:disabled {
-  background: var(--border);
-  color: #666;
-  cursor: not-allowed;
-}
-
-.quest-submit.ready {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-  color: #fff;
-  cursor: var(--cursor-pointer);
   box-shadow: 0 0 20px rgba(238, 182, 75, 0.4), 0 0 40px rgba(238, 182, 75, 0.2), 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.quest-submit.ready:hover {
-  transform: scale(1.02);
+.quest-submit-button:hover {
+  transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(238, 182, 75, 0.5), 0 0 50px rgba(238, 182, 75, 0.3), 0 4px 12px rgba(0,0,0,0.15);
 }
 
-.quest-submit.submitting {
-  background: var(--border);
-  color: var(--text-secondary);
+.quest-submit-button:active {
+  transform: translateY(0);
 }
 
-.submit-icon {
-  font-size: 1.2rem;
-  margin-right: 0.5rem;
-  margin-bottom: 0.25rem;
+.quest-submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
-/* Confetti Container */
 .quest-submit-container {
   position: relative;
   width: 100%;
@@ -210,25 +133,41 @@
   z-index: 10;
 }
 
-/* Responsive Design */
+/* Responsive Design (Updated) */
 @media (max-width: 768px) {
   .quest-form-container {
     padding: 1.25rem;
     gap: 1.25rem;
   }
+  
   .form-fields {
     gap: 0.75rem;
     margin-bottom: 1.25rem;
   }
+  
   .center-submit {
     margin-top: 1.25rem;
   }
+  
   .quest-field,
   .quest-form select,
   .quest-form textarea {
-    font-size: 1rem;
+    font: var(--text-base);
     padding: 0.5rem 0.75rem;
     min-height: 38px;
+  }
+  
+  .quest-form-title {
+    font: var(--text-xl);
+  }
+  
+  .quest-form-subtitle {
+    font: var(--text-base);
+  }
+  
+  .quest-submit-button {
+    font: var(--text-base);
+    padding: 0.75rem 1.5rem;
   }
 }
 
@@ -236,18 +175,33 @@
   .quest-field,
   .quest-form select,
   .quest-form textarea {
-    font-size: 0.875rem;
+    font: var(--text-sm);
     padding: 0.25rem 0.5rem;
     min-height: 32px;
   }
+  
   .form-fields {
     gap: 0.5rem;
     margin-bottom: 0.75rem;
   }
+  
   .center-submit {
     margin-top: 0.75rem;
   }
-} 
+  
+  .quest-form-title {
+    font: var(--text-lg);
+  }
+  
+  .quest-form-subtitle {
+    font: var(--text-sm);
+  }
+  
+  .quest-submit-button {
+    font: var(--text-sm);
+    padding: 0.5rem 1rem;
+  }
+}
 
 /* Make quest details textarea larger */
 .quest-field.quest-details,

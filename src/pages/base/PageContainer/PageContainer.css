@@ -1,6 +1,7 @@
 .page-container {
   min-height: 100vh;
   width: 100%;
+  font-family: inherit;
 }
 
 .page-content {
@@ -8,6 +9,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: var(--spacing-lg);
+  font-family: inherit;
 }
 
 @media (max-width: 768px) {

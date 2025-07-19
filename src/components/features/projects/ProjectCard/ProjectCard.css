@@ -66,14 +66,17 @@
 /* Default project card description lines */
 .project-card-default .project-card-description {
   -webkit-line-clamp: 3;
+  line-clamp: 3;
 }
 
 .project-card-default.project-card-small .project-card-description {
   -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 .project-card-default.project-card-large .project-card-description {
   -webkit-line-clamp: 4;
+  line-clamp: 4;
 }
 
 /* Featured project cards - maintain current behavior */

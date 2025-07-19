@@ -9,15 +9,15 @@ const YearBadge = ({
   const sizeStyles = {
     small: {
       padding: "0.2rem 0.4rem",
-      fontSize: "0.65rem"
+      fontSize: "var(--font-size-xs)"
     },
     medium: {
       padding: "0.25rem 0.5rem",
-      fontSize: "0.75rem"
+      fontSize: "var(--font-size-sm)"
     },
     large: {
       padding: "0.3rem 0.6rem",
-      fontSize: "0.85rem"
+      fontSize: "var(--font-size-base)"
     }
   };
 
@@ -25,7 +25,7 @@ const YearBadge = ({
     background: "var(--primary)",
     color: "white",
     borderRadius: "16px",
-    fontWeight: "bold",
+    fontWeight: "var(--font-weight-bold)",
     border: "2px solid var(--primary)",
     boxShadow: "0 2px 8px rgba(252, 148, 96, 0.4), 0 1px 3px rgba(0, 0, 0, 0.2)",
     ...sizeStyles[size],

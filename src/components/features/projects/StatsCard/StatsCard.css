@@ -17,8 +17,8 @@
 /* Title Styles */
 .projects-compact-stats-title {
   margin: 0 0 1rem 0;
-  font-size: var(--font-size-m);
-  font-weight: 600;
+  font: var(--text-md);
+  font-weight: var(--font-weight-semibold);
   color: var(--text);
   display: flex;
   align-items: center;
@@ -43,9 +43,9 @@
 
 /* Item Label */
 .projects-compact-stats-label {
-  font-size: var(--font-size-sm);
+  font: var(--text-sm);
   color: var(--text-secondary);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   white-space: nowrap;
   min-width: 60px;
   max-width: 80px;
@@ -59,15 +59,15 @@
 
 /* Count Display */
 .projects-compact-stats-count {
-  font-size: var(--font-size-sm);
+  font: var(--text-sm);
   color: var(--primary);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   min-width: 25px;
   text-align: right;
 }
 
 /* =====================
-   Responsive Design
+   Responsive Design (Updated)
    ===================== */
 
 @media (max-width: 768px) {
@@ -80,18 +80,18 @@
   }
   
   .projects-compact-stats-label {
-    font-size: var(--font-size-xs);
+    font: var(--text-xs);
     min-width: 50px;
     max-width: 70px;
   }
   
   .projects-compact-stats-count {
-    font-size: var(--font-size-xs);
+    font: var(--text-xs);
     min-width: 20px;
   }
   
   .projects-compact-stats-title {
-    font-size: 1rem;
+    font: var(--text-base);
   }
 }
 
@@ -100,18 +100,27 @@
     padding: 0.75rem;
   }
   
-  .projects-compact-stats-item {
+  .projects-compact-stats-title {
+    font: var(--text-sm);
+    margin-bottom: 0.75rem;
+  }
+  
+  .projects-compact-stats-items {
     gap: 0.5rem;
   }
   
+  .projects-compact-stats-item {
+    gap: 0.25rem;
+  }
+  
   .projects-compact-stats-label {
-    font-size: 0.75rem;
-    min-width: 50px;
+    font: var(--text-xs);
+    min-width: 40px;
     max-width: 60px;
   }
   
   .projects-compact-stats-count {
-    font-size: 0.75rem;
-    min-width: 20px;
+    font: var(--text-xs);
+    min-width: 15px;
   }
 }

@@ -47,28 +47,80 @@
   --spacing-2xl: 3rem;      /* 48px */
 
   /* =====================
-     Typography Scale
+     Typography Scale - 1.25 Ratio (Major Third)
      ===================== */
-  --font-size-xs: 0.7rem;      /* 11.2px */
-  --font-size-sm: 0.8rem;      /* 12.8px */
-  --font-size-base: 1rem;      /* 16px */
-  --font-size-md: 1.1rem;      /* 17.6px */
-  --font-size-lg: 1.2rem;      /* 19.2px */
-  --font-size-xl: 1.5rem;      /* 24px */
-  --font-size-2xl: 1.8rem;     /* 28.8px */
-  --font-size-3xl: 2rem;       /* 32px */
-  --font-size-4xl: 2.5rem;     /* 40px */
-  --font-size-5xl: 3rem;       /* 48px */
-  --font-size-hero: 3.5rem;    /* 56px */
+  --font-size-xs: 0.75rem;      /* 12px */
+  --font-size-sm: 0.875rem;     /* 14px */
+  --font-size-base: 1rem;       /* 16px */
+  --font-size-md: 1.125rem;     /* 18px */
+  --font-size-lg: 1.25rem;      /* 20px */
+  --font-size-xl: 1.5rem;       /* 24px */
+  --font-size-2xl: 1.875rem;    /* 30px */
+  --font-size-3xl: 2.25rem;     /* 36px */
+  --font-size-4xl: 2.75rem;     /* 44px */
+  --font-size-5xl: 3.5rem;      /* 56px */
 
   /* =====================
-     Heading Styles
+     Line Heights
+     ===================== */
+  --line-height-tight: 1.2;     /* Headings */
+  --line-height-normal: 1.5;    /* Body text */
+  --line-height-relaxed: 1.7;   /* Long-form content */
+
+  /* =====================
+     Font Weights
+     ===================== */
+  --font-weight-normal: 400;    /* Body text */
+  --font-weight-medium: 500;    /* Emphasis */
+  --font-weight-semibold: 600;  /* Subheadings */
+  --font-weight-bold: 700;      /* Headings */
+
+  /* =====================
+     Typography Mixins (font-size / line-height)
+     ===================== */
+  --text-xs: var(--font-size-xs) / var(--line-height-tight)
+  --text-sm: var(--font-size-sm) / var(--line-height-normal)
+  --text-base: var(--font-size-base) / var(--line-height-normal)
+  --text-md: var(--font-size-md) / var(--line-height-normal)
+  --text-lg: var(--font-size-lg) / var(--line-height-tight)
+  --text-xl: var(--font-size-xl) / var(--line-height-tight)
+  --text-2xl: var(--font-size-2xl) / var(--line-height-tight)
+  --text-3xl: var(--font-size-3xl) / var(--line-height-tight)
+  --text-4xl: var(--font-size-4xl) / var(--line-height-tight)
+  --text-5xl: var(--font-size-5xl) / var(--line-height-tight)
+
+  /* =====================
+     Heading Typography Mixins (Orbitron Font)
+     ===================== */
+  --heading-xs: var(--font-size-xs) / var(--line-height-tight)
+  --heading-sm: var(--font-size-sm) / var(--line-height-tight)
+  --heading-base: var(--font-size-base) / var(--line-height-tight)
+  --heading-md: var(--font-size-md) / var(--line-height-tight)
+  --heading-lg: var(--font-size-lg) / var(--line-height-tight)
+  --heading-xl: var(--font-size-xl) / var(--line-height-tight)
+  --heading-2xl: var(--font-size-2xl) / var(--line-height-tight)
+  --heading-3xl: var(--font-size-3xl) / var(--line-height-tight)
+  --heading-4xl: var(--font-size-4xl) / var(--line-height-tight)
+  --heading-5xl: var(--font-size-5xl) / var(--line-height-tight)
+
+  /* =====================
+     Responsive Typography Scaling
+     ===================== */
+  --text-fluid-sm: clamp(var(--font-size-sm), 2vw, var(--font-size-md));
+  --text-fluid-base: clamp(var(--font-size-base), 2.5vw, var(--font-size-lg));
+  --text-fluid-lg: clamp(var(--font-size-lg), 3vw, var(--font-size-xl));
+  --text-fluid-xl: clamp(var(--font-size-xl), 4vw, var(--font-size-2xl));
+  --text-fluid-2xl: clamp(var(--font-size-2xl), 5vw, var(--font-size-3xl));
+  --text-fluid-hero: clamp(var(--font-size-3xl), 6vw, var(--font-size-5xl));
+
+  /* =====================
+     Heading Styles (Updated)
      ===================== */
   
   /* H1 - Hero/Page Title */
-  --h1-font-size: var(--font-size-hero);
-  --h1-font-weight: 700;
-  --h1-line-height: 1.1;
+  --h1-font-size: var(--font-size-5xl);
+  --h1-font-weight: var(--font-weight-bold);
+  --h1-line-height: var(--line-height-tight);
   --h1-color: var(--color-primary);
   --h1-text-shadow: 0 2px 8px rgba(238, 182, 75, 0.3);
   --h1-letter-spacing: -0.02em;
@@ -76,8 +128,8 @@
   
   /* H2 - Section Headers */
   --h2-font-size: var(--font-size-4xl);
-  --h2-font-weight: 600;
-  --h2-line-height: 1.2;
+  --h2-font-weight: var(--font-weight-semibold);
+  --h2-line-height: var(--line-height-tight);
   --h2-color: var(--color-text-primary);
   --h2-text-shadow: 0 1px 4px rgba(238, 182, 75, 0.2);
   --h2-letter-spacing: -0.01em;
@@ -85,8 +137,8 @@
   
   /* H3 - Subsection Headers */
   --h3-font-size: var(--font-size-3xl);
-  --h3-font-weight: 600;
-  --h3-line-height: 1.3;
+  --h3-font-weight: var(--font-weight-semibold);
+  --h3-line-height: var(--line-height-tight);
   --h3-color: var(--color-text-primary);
   --h3-text-shadow: 0 1px 3px rgba(238, 182, 75, 0.15);
   --h3-letter-spacing: 0;
@@ -94,8 +146,8 @@
   
   /* H4 - Card/Component Titles */
   --h4-font-size: var(--font-size-xl);
-  --h4-font-weight: 500;
-  --h4-line-height: 1.4;
+  --h4-font-weight: var(--font-weight-medium);
+  --h4-line-height: var(--line-height-tight);
   --h4-color: var(--color-text-primary);
   --h4-text-shadow: 0 1px 2px rgba(238, 182, 75, 0.1);
   --h4-letter-spacing: 0;
@@ -103,8 +155,8 @@
   
   /* H5 - Small Headers */
   --h5-font-size: var(--font-size-lg);
-  --h5-font-weight: 500;
-  --h5-line-height: 1.4;
+  --h5-font-weight: var(--font-weight-medium);
+  --h5-line-height: var(--line-height-tight);
   --h5-color: var(--color-text-secondary);
   --h5-text-shadow: none;
   --h5-letter-spacing: 0;
@@ -112,22 +164,22 @@
   
   /* H6 - Micro Headers */
   --h6-font-size: var(--font-size-md);
-  --h6-font-weight: 500;
-  --h6-line-height: 1.4;
+  --h6-font-weight: var(--font-weight-medium);
+  --h6-line-height: var(--line-height-tight);
   --h6-color: var(--color-text-secondary);
   --h6-text-shadow: none;
   --h6-letter-spacing: 0;
   --h6-margin-bottom: var(--spacing-xs);
 
   /* =====================
-     Responsive Heading Sizes
+     Responsive Heading Sizes (Updated)
      ===================== */
-  --h1-font-size-fluid: clamp(2rem, 6vw, var(--h1-font-size));
-  --h2-font-size-fluid: clamp(1.5rem, 4vw, var(--h2-font-size));
-  --h3-font-size-fluid: clamp(1.25rem, 3vw, var(--h3-font-size));
-  --h4-font-size-fluid: clamp(1.1rem, 2.5vw, var(--h4-font-size));
-  --h5-font-size-fluid: clamp(1rem, 2vw, var(--h5-font-size));
-  --h6-font-size-fluid: clamp(0.9rem, 1.5vw, var(--h6-font-size));
+  --h1-font-size-fluid: var(--text-fluid-hero);
+  --h2-font-size-fluid: var(--text-fluid-2xl);
+  --h3-font-size-fluid: var(--text-fluid-xl);
+  --h4-font-size-fluid: var(--text-fluid-lg);
+  --h5-font-size-fluid: var(--text-fluid-base);
+  --h6-font-size-fluid: var(--text-fluid-sm);
 
   /* =====================
      Transitions & Animations
@@ -209,11 +261,11 @@
   --modal-padding-fluid: clamp(0.5rem, 2vw, var(--modal-padding-xl));
   --modal-gap-fluid: clamp(1rem, 3vw, var(--spacing-xl));
   
-  /* Modal Typography */
-  --modal-title-size-fluid: clamp(1.5rem, 4vw, var(--font-size-4xl));
-  --modal-subtitle-size-fluid: clamp(0.9rem, 2vw, var(--font-size-lg));
-  --modal-body-size-fluid: clamp(0.9rem, 1.5vw, var(--font-size-md));
-  --modal-small-size-fluid: clamp(0.8rem, 1.2vw, var(--font-size-base));
+  /* Modal Typography (Updated) */
+  --modal-title-size-fluid: var(--text-fluid-2xl);
+  --modal-subtitle-size-fluid: var(--text-fluid-lg);
+  --modal-body-size-fluid: var(--text-fluid-base);
+  --modal-small-size-fluid: var(--text-fluid-sm);
   
   /* Modal Spacing */
   --modal-spacing-fluid-xs: clamp(0.25rem, 1vw, var(--spacing-sm));
@@ -299,19 +351,13 @@
   --text-secondary: var(--color-text-secondary);
   --border: var(--color-border);
   
-  /* Typography aliases */
+  /* Typography aliases (Simplified) */
   --font-size-body: var(--font-size-base);
   --font-size-small: var(--font-size-sm);
   --font-size-xsmall: var(--font-size-xs);
   --font-size-header-1: var(--font-size-4xl);
   --font-size-header-2: var(--font-size-3xl);
   --font-size-header-3: var(--font-size-xl);
-  --font-size-s: var(--font-size-base);
-  --font-size-m: var(--font-size-md);
-  --font-size-l: var(--font-size-lg);
-  --font-size-xl-s: var(--font-size-lg);
-  --font-size-base-s: var(--font-size-md);
-  --font-size-xxs: var(--font-size-xs);
   
   /* Heading style aliases */
   --h1-style: var(--h1-font-size) var(--h1-font-weight) var(--h1-line-height) var(--h1-color);

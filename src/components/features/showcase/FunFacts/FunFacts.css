@@ -9,8 +9,22 @@
 
 .fun-facts-text {
   margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.4;
+  font: var(--text-base);
+  line-height: var(--line-height-normal);
   font-style: italic;
   text-align: center;
+  color: var(--text-secondary);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .fun-facts-text {
+    font: var(--text-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .fun-facts-text {
+    font: var(--text-xs);
+  }
 } 

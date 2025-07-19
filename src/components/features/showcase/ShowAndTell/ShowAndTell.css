@@ -17,18 +17,50 @@
 
 .show-and-tell-title {
   margin: 0 0 0.25rem 0;
-  font-size: 1rem;
+  font: var(--text-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text);
 }
 
 .show-and-tell-description {
   margin: 0 0 0.5rem 0;
-  font-size: 0.9rem;
+  font: var(--text-sm);
   opacity: 0.8;
+  color: var(--text-secondary);
 }
 
 .show-and-tell-caption {
-  font-size: 0.8rem;
+  font: var(--text-xs);
   font-style: italic;
   color: var(--primary);
-  font-weight: bold;
+  font-weight: var(--font-weight-bold);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .show-and-tell-title {
+    font: var(--text-sm);
+  }
+  
+  .show-and-tell-description {
+    font: var(--text-xs);
+  }
+  
+  .show-and-tell-caption {
+    font: var(--text-xs);
+  }
+}
+
+@media (max-width: 480px) {
+  .show-and-tell-title {
+    font: var(--text-xs);
+  }
+  
+  .show-and-tell-description {
+    font: var(--text-xs);
+  }
+  
+  .show-and-tell-caption {
+    font: var(--text-xs);
+  }
 } 

@@ -1,9 +1,8 @@
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Confetti from 'react-dom-confetti';
-import QuestForm from "@/components/features/forms/QuestForm";
-import SocialLinks from "@/components/features/showcase/SocialLinks";
-import HQ from "@/components/features/showcase/HQ";
+import { QuestForm } from "@/components/features/forms";
+import { SocialLinks, HQ } from "@/components/features/showcase";
 import { profile as profileData, contact } from "@/data";
 import "./Contact.css";
 

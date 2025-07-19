@@ -44,15 +44,18 @@
 
 .timeline-title {
   margin: 0 0 0.25rem 0;
-  font-size: 0.9rem;
+  font: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text);
 }
 
 .timeline-year {
-  font-size: 0.8rem;
+  font: var(--text-xs);
   opacity: 0.7;
+  color: var(--text-secondary);
 }
 
-/* Responsive Design */
+/* Responsive Design (Updated) */
 @media (max-width: 768px) {
   .timeline-container {
     flex-direction: column;
@@ -61,5 +64,23 @@
   
   .timeline-line {
     display: none;
+  }
+  
+  .timeline-title {
+    font: var(--text-xs);
+  }
+  
+  .timeline-year {
+    font: var(--text-xs);
+  }
+}
+
+@media (max-width: 480px) {
+  .timeline-title {
+    font: var(--text-xs);
+  }
+  
+  .timeline-year {
+    font: var(--text-xs);
   }
 } 

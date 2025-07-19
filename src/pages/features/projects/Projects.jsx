@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import ProjectCard from "@/components/features/projects/ProjectCard";
-import FeaturedProject from "@/components/features/projects/FeaturedProject";
-import SearchAndFilter from "@/components/features/projects/SearchAndFilter";
-import ProjectModal from "@/components/features/projects/ProjectModal";
-import StatsCard from "@/components/features/projects/StatsCard";
+import { ProjectCard, FeaturedProject, SearchAndFilter, ProjectModal, StatsCard } from "@/components/features/projects";
 import { projects, uiContent } from "@/data";
 import { ProgressBar, Section } from "@/components/base";
 import "./Projects.css";

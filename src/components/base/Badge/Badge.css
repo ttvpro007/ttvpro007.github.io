@@ -6,7 +6,7 @@
   background: var(--primary);
   color: var(--card-bg);
   border-radius: 12px;
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -49,20 +49,20 @@
   border: 1px solid rgba(238, 182, 75, 0.3);
 }
 
-/* Badge Sizes */
+/* Badge Sizes (Updated) */
 .badge--small {
   padding: 0.25rem 0.5rem;
-  font-size: 0.75rem;
+  font: var(--text-xs);
 }
 
 .badge--medium {
   padding: 0.25rem 0.75rem;
-  font-size: 0.8rem;
+  font: var(--text-sm);
 }
 
 .badge--large {
   padding: 0.5rem 1rem;
-  font-size: 0.9rem;
+  font: var(--text-base);
 }
 
 /* Badge States */
@@ -116,37 +116,37 @@
   outline-offset: 2px;
 }
 
-/* Responsive Design */
+/* Responsive Design (Updated) */
 @media (max-width: 768px) {
   .badge--large {
     padding: 0.4rem 0.875rem;
-    font-size: 0.85rem;
+    font: var(--text-sm);
   }
   
   .badge--medium {
     padding: 0.2rem 0.625rem;
-    font-size: 0.75rem;
+    font: var(--text-xs);
   }
   
   .badge--small {
     padding: 0.2rem 0.4rem;
-    font-size: 0.7rem;
+    font: var(--text-xs);
   }
 }
 
 @media (max-width: 480px) {
   .badge--large {
     padding: 0.35rem 0.75rem;
-    font-size: 0.8rem;
+    font: var(--text-sm);
   }
   
   .badge--medium {
     padding: 0.175rem 0.5rem;
-    font-size: 0.7rem;
+    font: var(--text-xs);
   }
   
   .badge--small {
     padding: 0.175rem 0.35rem;
-    font-size: 0.65rem;
+    font: var(--text-xs);
   }
 } 
