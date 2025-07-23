@@ -78,30 +78,30 @@
   /* =====================
      Typography Mixins (font-size / line-height)
      ===================== */
-  --text-xs: var(--font-size-xs) / var(--line-height-tight)
-  --text-sm: var(--font-size-sm) / var(--line-height-normal)
-  --text-base: var(--font-size-base) / var(--line-height-normal)
-  --text-md: var(--font-size-md) / var(--line-height-normal)
-  --text-lg: var(--font-size-lg) / var(--line-height-tight)
-  --text-xl: var(--font-size-xl) / var(--line-height-tight)
-  --text-2xl: var(--font-size-2xl) / var(--line-height-tight)
-  --text-3xl: var(--font-size-3xl) / var(--line-height-tight)
-  --text-4xl: var(--font-size-4xl) / var(--line-height-tight)
-  --text-5xl: var(--font-size-5xl) / var(--line-height-tight)
+  --text-xs: var(--font-size-xs) / var(--line-height-tight);
+  --text-sm: var(--font-size-sm) / var(--line-height-normal);
+  --text-base: var(--font-size-base) / var(--line-height-normal);
+  --text-md: var(--font-size-md) / var(--line-height-normal);
+  --text-lg: var(--font-size-lg) / var(--line-height-tight);
+  --text-xl: var(--font-size-xl) / var(--line-height-tight);
+  --text-2xl: var(--font-size-2xl) / var(--line-height-tight);
+  --text-3xl: var(--font-size-3xl) / var(--line-height-tight);
+  --text-4xl: var(--font-size-4xl) / var(--line-height-tight);
+  --text-5xl: var(--font-size-5xl) / var(--line-height-tight);
 
   /* =====================
      Heading Typography Mixins (Orbitron Font)
      ===================== */
-  --heading-xs: var(--font-size-xs) / var(--line-height-tight)
-  --heading-sm: var(--font-size-sm) / var(--line-height-tight)
-  --heading-base: var(--font-size-base) / var(--line-height-tight)
-  --heading-md: var(--font-size-md) / var(--line-height-tight)
-  --heading-lg: var(--font-size-lg) / var(--line-height-tight)
-  --heading-xl: var(--font-size-xl) / var(--line-height-tight)
-  --heading-2xl: var(--font-size-2xl) / var(--line-height-tight)
-  --heading-3xl: var(--font-size-3xl) / var(--line-height-tight)
-  --heading-4xl: var(--font-size-4xl) / var(--line-height-tight)
-  --heading-5xl: var(--font-size-5xl) / var(--line-height-tight)
+  --heading-xs: var(--font-size-xs) / var(--line-height-tight);
+  --heading-sm: var(--font-size-sm) / var(--line-height-tight);
+  --heading-base: var(--font-size-base) / var(--line-height-tight);
+  --heading-md: var(--font-size-md) / var(--line-height-tight);
+  --heading-lg: var(--font-size-lg) / var(--line-height-tight);
+  --heading-xl: var(--font-size-xl) / var(--line-height-tight);
+  --heading-2xl: var(--font-size-2xl) / var(--line-height-tight);
+  --heading-3xl: var(--font-size-3xl) / var(--line-height-tight);
+  --heading-4xl: var(--font-size-4xl) / var(--line-height-tight);
+  --heading-5xl: var(--font-size-5xl) / var(--line-height-tight);
 
   /* =====================
      Responsive Typography Scaling
