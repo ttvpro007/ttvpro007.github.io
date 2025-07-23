@@ -42,4 +42,45 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+}
+
+/* Responsive Design for Small Screens */
+@media (max-width: 768px) {
+  .quest-content-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .contact-sidebar {
+    position: static;
+    order: 1; /* This will be overridden by individual component order */
+  }
+
+  /* Reorder components for mobile */
+  .contact-sidebar .hq-container {
+    order: 2; /* HQ comes second after banner */
+  }
+
+  .contact-sidebar .social-links-container {
+    order: 3; /* Social links come third */
+  }
+
+  /* Quest form container is outside sidebar, comes first */
+  .quest-form-container {
+    order: 1;
+  }
+
+  /* Adjust spacing for mobile */
+  .contact-section {
+    gap: 1.5rem;
+  }
+
+  .contact-header-banner {
+    padding: 2rem 1.5rem;
+  }
+
+  .contact-sidebar {
+    gap: 1.5rem;
+  }
 } 
