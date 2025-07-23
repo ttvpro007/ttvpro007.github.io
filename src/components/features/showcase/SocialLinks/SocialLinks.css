@@ -4,7 +4,7 @@
 
 .social-links-title {
   color: var(--text);
-  margin: 0 0 2rem 0; /* More space below title */
+  margin: 0 0 1rem 0; /* More space below title */
   font: var(--text-lg);
   font-weight: var(--font-weight-bold);
   display: flex;
