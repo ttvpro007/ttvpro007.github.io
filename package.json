@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@google-cloud/local-auth": "^3.0.1",
+    "autoprefixer": "^10.4.21",
     "framer-motion": "^12.23.6",
     "googleapis": "^153.0.0",
     "postcss": "^8.5.6",
