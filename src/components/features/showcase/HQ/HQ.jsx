@@ -21,14 +21,14 @@ const HQ = ({
     <div className="hq-container" style={style}>
       {/* Header */}
       <div className="hq-header">
-        <div className="hq-title-row">
+        <h3 className="hq-title">
           <Icon 
             emoji={icon}
             size="large"
             className="hq-icon"
           />
-          <h3 className="hq-title">{title}</h3>
-        </div>
+          Headquarters
+        </h3>
         {/* Status Indicator */}
         <div className={statusClass}>
           <div className={statusDotClass} />

@@ -13,6 +13,16 @@
   filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
 }
 
+.hq-title {
+  color: var(--text);
+  margin: 0 0 1rem 0; /* More space below title */
+  font: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
 /* Status Indicators */
 .hq-status-grid {
   display: grid;
@@ -134,25 +144,26 @@
 
 .hq-info-text {
   color: var(--text);
-  font: var(--text-sm);
-  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-xs);
+  font-family: monospace;
 }
 
 .hq-info-text.coordinates {
-  color: var(--text-secondary);
-  font: var(--text-xs);
+  color: var(--text);
+  font-size: var(--font-size-xs);
   font-family: monospace;
 }
 
 .hq-info-text.timezone {
-  color: var(--text-secondary);
-  font: var(--text-xs);
+  color: var(--text);
+  font-size: var(--font-size-xs);
+  font-family: monospace;
 }
 
 /* Description */
 .hq-description {
   color: var(--text-secondary);
-  font: var(--text-sm);
+  font-size: var(--font-size-sm);
   margin: 1.5rem 0 0 0;
   line-height: var(--line-height-normal);
   text-shadow: 0 1px 1px rgba(0,0,0,0.05);
