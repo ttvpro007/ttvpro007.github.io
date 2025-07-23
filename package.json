@@ -13,7 +13,7 @@
     "css:size": "node scripts/css-size-analysis.js",
     "css:analyze": "npm run css:stats && npm run build && npm run css:size",
     "css:analyze:quick": "npm run css:quick",
-    "deploy": "npm run build && gh-pages -d dist"
+    "deploy": "node scripts/deploy.js"
   },
   "dependencies": {
     "@google-cloud/local-auth": "^2.1.0",
