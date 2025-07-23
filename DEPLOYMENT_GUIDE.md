@@ -11,9 +11,10 @@ This guide explains how to deploy your portfolio to GitHub Pages.
 
 The repository includes a GitHub Actions workflow that automatically deploys your site when you push to the main branch.
 
-### Steps:
+### Steps
 
 1. **Push your changes to GitHub:**
+
    ```bash
    git add .
    git commit -m "Update portfolio"
@@ -35,11 +36,13 @@ The repository includes a GitHub Actions workflow that automatically deploys you
 If you prefer to deploy manually:
 
 1. **Build the project:**
+
    ```bash
    npm run build
    ```
 
 2. **Deploy to GitHub Pages:**
+
    ```bash
    npm run deploy
    ```
@@ -55,16 +58,19 @@ If you prefer to deploy manually:
 
 ## Troubleshooting
 
-### Site not updating:
+### Site not updating
+
 - Check the GitHub Actions tab for any errors
 - Ensure the workflow completed successfully
 - Wait a few minutes for changes to propagate
 
-### 404 errors:
+### 404 errors
+
 - Make sure your repository is named exactly `mylogin.github.io`
 - Check that the base URL in `vite.config.js` is set to `/`
 
-### Build errors:
+### Build errors
+
 - Run `npm run build` locally to check for build issues
 - Check the Actions tab for detailed error messages
 
@@ -80,4 +86,4 @@ To use a custom domain:
 
 - The site is built from the `dist` folder after running `npm run build`
 - GitHub Pages serves static files, so all routing must be handled client-side
-- The site is automatically updated when you push to the main branch 
+- The site is automatically updated when you push to the main branch
