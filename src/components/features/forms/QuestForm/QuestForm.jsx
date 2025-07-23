@@ -337,7 +337,7 @@ const QuestForm = forwardRef(function QuestForm({
               className="xp-fill"
               initial={{ width: 0 }}
               animate={{ width: progressPercentage }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+              transition={{ duration: 0.1, ease: "easeInOut" }}
             />
           </div>
         </div>
