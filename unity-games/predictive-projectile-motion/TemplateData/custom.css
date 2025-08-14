@@ -1,0 +1,66 @@
+/* Clean Unity integration - hide all UI elements outside canvas */
+
+/* Reset body and container */
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+#unity-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+/* Make canvas fill container */
+#unity-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  background: #000;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain;
+}
+
+/* Hide ALL Unity UI elements outside canvas */
+#unity-loading-bar {
+  display: none !important;
+}
+
+#unity-warning {
+  display: none !important;
+}
+
+#unity-footer {
+  display: none !important;
+}
+
+#unity-logo-title-footer {
+  display: none !important;
+}
+
+#unity-fullscreen-button {
+  display: none !important;
+}
+
+#unity-build-title {
+  display: none !important;
+}
+
+/* Hide any other Unity elements that might appear */
+#unity-logo {
+  display: none !important;
+}
+
+#unity-progress-bar-empty {
+  display: none !important;
+}
+
+#unity-progress-bar-full {
+  display: none !important;
+}
