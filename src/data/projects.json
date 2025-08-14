@@ -1,9 +1,9 @@
 {
   "_metadata": {
     "version": "1.0",
-    "lastUpdated": "2024",
+    "lastUpdated": "2025-08-12",
     "description": "Vi Tiet's Project Portfolio - Game Development & Programming Projects",
-    "totalProjects": 5,
+    "totalProjects": 7,
     "featuredProjects": 1
   },
 
@@ -36,6 +36,35 @@
       "resumeOrder": 1,
       "markdownPath": "/markdown/unity-physics-simulator.md"
     },
+    
+    {
+      "title": "Predictive Projectile Motion",
+      "description": "A Unity WebGL game demonstrating advanced physics simulation with predictive trajectory calculations.",
+      "longDescription": "An interactive physics simulation that showcases real-time projectile motion prediction. Players can adjust launch parameters and see instant trajectory predictions, demonstrating advanced Unity physics and mathematical modeling capabilities. The game features realistic physics simulation with customizable parameters including launch angle, velocity, gravity, and air resistance effects.",
+      "roles": ["Game Developer", "Physics Programmer", "UI Developer"],
+      "features": [
+        "2D physics simulation",
+        "Projectile motion",
+        "Predictive trajectory",
+        "UI for adjusting initial velocity and angle",
+        "Cross-platform compatibility"
+      ],
+      "tech": ["Unity", "C#"],
+      "link": "https://github.com/ttvpro007/PredictiveProjectile",
+      "image": "/projects-images/ppm-1.png",
+      "images": ["/projects-images/ppm-1.png", "/projects-images/ppm-2.png", "/projects-images/ppm-3.png"],
+      "video": "https://www.youtube.com/embed/t8yccMvoEUc?si=e2Hn357GuW3BpMYi",
+      "demo": "/unity-games/predictive-projectile-motion/index.html",
+      "videoBackgroundTheme": "pulsingParticlesGlass",
+      "linkSource": "github",
+      "category": "Game Dev",
+      "year": 2024,
+      "featured": false,
+      "appStore": null,
+      "showOnResume": false,
+      "resumeOrder": 2,
+      "markdownPath": "/markdown/predictive-projectile-motion.md"
+    },
 
     {
       "title": "Planet Runner",
@@ -64,7 +93,7 @@
       "demo": "https://ttvpro007.itch.io/planet-runner",
       "appStore": null,
       "showOnResume": true,
-      "resumeOrder": 2,
+      "resumeOrder": 3,
       "markdownPath": "/markdown/planet-runner.md"
     },
 
@@ -95,7 +124,7 @@
       "demo": null,
       "appStore": null,
       "showOnResume": true,
-      "resumeOrder": 3
+      "resumeOrder": 4
     },
 
     {
@@ -125,7 +154,7 @@
       "featured": true,
       "appStore": null,
       "showOnResume": true,
-      "resumeOrder": 4,
+      "resumeOrder": 5,
       "markdownPath": "/markdown/catavaneer.md"
     },
 
@@ -155,7 +184,7 @@
       "demo": null,
       "appStore": null,
       "showOnResume": true,
-      "resumeOrder": 5
+      "resumeOrder": 6
     },
 
     {
@@ -184,7 +213,7 @@
       "featured": false,
       "appStore": null,
       "showOnResume": true,
-      "resumeOrder": 6
+      "resumeOrder": 7
     }
   ],
 

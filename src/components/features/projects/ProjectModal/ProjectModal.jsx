@@ -47,20 +47,59 @@ const getYouTubeThumbnailUrl = (videoId, quality = 'mqdefault') => {
   return `https://img.youtube.com/vi/${videoId}/${quality}.jpg`;
 };
 
+// Utility function to check if demo is a local Unity WebGL build
+const isUnityWebGLBuild = (demoUrl) => {
+  if (!demoUrl) return false;
+  // Check if it's a local path (starts with /) and contains unity-games
+  return demoUrl.startsWith('/') && demoUrl.includes('unity-games');
+};
+
 const ProjectModal = ({ project, isOpen, onClose }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isTouchActive, setIsTouchActive] = useState(false);
+  const [activeTab, setActiveTab] = useState('overview'); // New state for tab management
 
-  // Reset image index when modal opens
+  // Reset image index and tab when modal opens
   useEffect(() => {
     if (isOpen) {
       setCurrentImageIndex(0);
+      setActiveTab('overview'); // Always start with overview tab
       // Scroll to first thumbnail when modal opens
       setTimeout(() => {
         scrollThumbnailIntoView(0);
       }, 100);
+    } else {
+      // Clean up Unity WebGL instance when modal closes
+      cleanupUnityInstance();
     }
   }, [isOpen]);
+
+  // Function to clean up Unity WebGL instance
+  const cleanupUnityInstance = () => {
+    try {
+      // Find the Unity iframe
+      const unityIframe = document.querySelector('.unity-webgl-frame');
+      if (unityIframe) {
+        // Try to access the Unity instance inside the iframe
+        const iframeWindow = unityIframe.contentWindow;
+        if (iframeWindow && iframeWindow.cleanupUnity) {
+          // Use the exposed cleanup function
+          iframeWindow.cleanupUnity();
+          console.log('Unity instance cleaned up successfully');
+        } else if (iframeWindow && iframeWindow.unityInstance) {
+          // Fallback: try to quit directly
+          iframeWindow.unityInstance.Quit();
+          console.log('Unity instance cleaned up via direct access');
+        }
+        
+        // Remove the iframe src to stop loading
+        unityIframe.src = '';
+      }
+    } catch (error) {
+      // Cross-origin restrictions might prevent access to iframe content
+      console.log('Unity cleanup attempted (cross-origin restrictions may apply)');
+    }
+  };
 
 
 
@@ -163,6 +202,10 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
   const hasRoles = project?.roles && project.roles.length > 0;
   const hasTechStack = project?.tech && project.tech.length > 0;
   const hasMedia = mediaItems.length > 0;
+  
+  // Check if project has Unity WebGL build
+  const hasUnityWebGLBuild = isUnityWebGLBuild(project?.demo);
+  const showTabs = hasUnityWebGLBuild && hasOverview;
 
   return (
     <AnimatePresence mode="wait" onExitComplete={() => {}}>
@@ -380,32 +423,137 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                 </motion.div>
               )}
 
-              {/* Project Overview */}
-              {hasOverview && (
+              {/* Tab System for Overview and Web Build */}
+              {showTabs ? (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 20 }}
                   transition={{ delay: 0.8 }}
-                  className="project-overview-section"
+                  className="project-tabs-section"
                 >
-                  <div className="project-overview-content">
-                    <h3 className="overview-title">
-                      <span className="overview-icon">📋</span>
+                  {/* Tab Navigation */}
+                  <div className="tabs-navigation">
+                    <button
+                      className={`tab-button ${activeTab === 'overview' ? 'active' : ''}`}
+                      onClick={() => setActiveTab('overview')}
+                    >
+                      <span className="tab-icon">📋</span>
                       Overview
-                    </h3>
-                    {project.markdownPath ? (
-                      <MarkdownRenderer 
-                        markdownPath={project.markdownPath}
-                        className="overview-markdown"
-                      />
-                    ) : (
-                      <p className="overview-text">
-                        {project.overview || projectDescription}
-                      </p>
-                    )}
+                    </button>
+                    <button
+                      className={`tab-button ${activeTab === 'web-build' ? 'active' : ''}`}
+                      onClick={() => setActiveTab('web-build')}
+                    >
+                      <span className="tab-icon">🎮</span>
+                      Web Build
+                    </button>
+                  </div>
+
+                  {/* Tab Content */}
+                  <div className="tab-content">
+                    <AnimatePresence mode="wait">
+                      {activeTab === 'overview' && (
+                        <motion.div
+                          key="overview"
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: 20 }}
+                          transition={{ duration: 0.3 }}
+                          className="tab-panel"
+                        >
+                          <div className="project-overview-content">
+                            <h3 className="overview-title">
+                              <span className="overview-icon">📋</span>
+                              Overview
+                            </h3>
+                            {project.markdownPath ? (
+                              <MarkdownRenderer 
+                                markdownPath={project.markdownPath}
+                                className="overview-markdown"
+                              />
+                            ) : (
+                              <p className="overview-text">
+                                {project.overview || projectDescription}
+                              </p>
+                            )}
+                          </div>
+                        </motion.div>
+                      )}
+
+                      {activeTab === 'web-build' && (
+                        <motion.div
+                          key="web-build"
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: -20 }}
+                          transition={{ duration: 0.3 }}
+                          className="tab-panel"
+                        >
+                                                    <div className="web-build-content">
+                            <h3 className="web-build-title">
+                              <span className="web-build-icon">🎮</span>
+                              Unity WebGL Game
+                            </h3>
+                                                         <div className="unity-webgl-container">
+                               <iframe
+                                 src={project.demo}
+                                 title={`${project.title} - Unity WebGL Build`}
+                                 className="unity-webgl-frame"
+                                 frameBorder="0"
+                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                                 allowFullScreen
+                                 sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-presentation allow-top-navigation"
+                                 onLoad={() => console.log('Unity iframe loaded successfully')}
+                                 onError={(e) => console.error('Unity iframe error:', e)}
+                               />
+                             </div>
+                             <button
+                               className="unity-fullscreen-button"
+                               onClick={() => window.open(project.demo, '_blank')}
+                             >
+                               <span className="fullscreen-icon">⛶</span>
+                               Play Fullscreen
+                             </button>
+                            <div className="web-build-info">
+                              <p className="web-build-description">
+                                This is a Unity WebGL build of the game. Use your mouse and keyboard to play!
+                              </p>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </motion.div>
+              ) : (
+                /* Fallback to original overview section when no tabs */
+                hasOverview && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ delay: 0.8 }}
+                    className="project-overview-section"
+                  >
+                    <div className="project-overview-content">
+                      <h3 className="overview-title">
+                        <span className="overview-icon">📋</span>
+                        Overview
+                      </h3>
+                      {project.markdownPath ? (
+                        <MarkdownRenderer 
+                          markdownPath={project.markdownPath}
+                          className="overview-markdown"
+                        />
+                      ) : (
+                        <p className="overview-text">
+                          {project.overview || projectDescription}
+                        </p>
+                      )}
+                    </div>
+                  </motion.div>
+                )
               )}
             </motion.div>
 
