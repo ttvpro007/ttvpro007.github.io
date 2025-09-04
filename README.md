@@ -1,4 +1,4 @@
-# 🎮 Vi Tiet's Portfolio
+# 🎮 Vi Tiet's Portfolio [Live Demo](https://ttvpro007.github.io/)
 
 A modern, gamer-themed portfolio built with React + Vite, featuring smooth animations, interactive elements, and a fully customizable data-driven architecture. Perfect for developers, designers, and creators who want to showcase their work with style.
 
