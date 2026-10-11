@@ -84,7 +84,7 @@ Registry: [`src/lib/content/linkTypes.js`](../src/lib/content/linkTypes.js) — 
 
 ## Site structure (pages and sections)
 
-`content/site/layout.json` decides which pages exist, their order in the nav, and what each page shows, top to bottom. The admin's **Site map** page edits it (drag to reorder pages and sections — also between pages — toggle them, add sections, edit their options); so does `npm run content -- layout …`.
+`content/site/layout.json` decides which pages exist, their order in the nav, and what each page shows, top to bottom. The admin's **Site map** page edits it (drag to reorder pages and sections — also between pages — toggle them, add sections, edit their options); `npm run content -- layout …` can do every one of those edits too, with the same validation.
 
 ```jsonc
 {
@@ -95,21 +95,26 @@ Registry: [`src/lib/content/linkTypes.js`](../src/lib/content/linkTypes.js) — 
       "slug": "home",          // /?page=home opens this page
       "enabled": true,         // false = hidden from the nav
       "order": 0,              // nav position (rewritten to 0…n-1 on every save)
-      "sections": [            // rendered in this order
-        { "id": "hero", "type": "hero", "enabled": true, "options": { "profilePicSize": "medium", "showSocialLinks": true } },
-        { "id": "timeline", "type": "timeline", "enabled": true }
+      "sections": [            // rendered top to bottom
+        { "type": "hero", "id": "hero", "enabled": true },                       // all options at their defaults
+        { "type": "hero", "id": "hero-2", "enabled": false,                      // a second hero, switched off
+          "options": { "profilePicSize": "small" } },                             // only what differs from the default
+        { "type": "timeline", "id": "timeline", "enabled": true }
       ]
     }
   ]
 }
 ```
 
+- Every section is a node `{ type, id, enabled, options?, children? }`. `type` picks the component from the registry; `id` is a readable name, unique on its page (it defaults to the type; a second one becomes `hero-2`).
+- `options` holds only values that differ from the type's defaults. Saves drop default-valued options, so setting one back to its default removes it.
+- `children` is reserved for nested blocks (rows, columns, headings, images…). A type opts in with `children: true` in the registry. No type does yet, so `children` is currently rejected, but the format won't need a migration when one does.
+- Keys starting with `_` are notes and are kept. Any other unknown key is reported as a typo.
 - The first enabled page is the landing page. `?project=<slug>` opens the first enabled page that has a `projectsBrowser` section, with that project's modal.
-- `options` override the type's defaults; leave it out to use them all. Section `id`s default to the type name and are unique within a page (`hero-2` for a second one).
-- Saves are validated (store.js `saveLayout`, also run by `validate` and `npm test`): unknown section types or options, wrong option values, duplicate page ids/slugs or section ids, and no enabled page are refused.
+- Every save is validated (store.js `saveLayout`; `validate` and `npm test` run the same check). Unknown types, keys or options, wrong option values, duplicate page ids/slugs or section ids, and having no enabled page are all refused. Each problem prints as one line: the path, what's wrong, and the fix. For example: `pages[0] "home".sections[2] "flipCard": unknown section type "flipCard" — use one of: hero, timeline, flipCards, …`
 - `navigation.json`'s `pages` list is no longer read — nav labels come from `layout.json`.
 
-Section registry: [`src/lib/content/sectionTypes.js`](../src/lib/content/sectionTypes.js). Components: [`src/pages/sections.jsx`](../src/pages/sections.jsx). Layout helpers (validation, edits): [`src/lib/content/siteLayout.js`](../src/lib/content/siteLayout.js).
+Section registry: [`src/lib/content/sectionTypes.js`](../src/lib/content/sectionTypes.js). Components: [`src/pages/sections.jsx`](../src/pages/sections.jsx). Layout helpers (validation, normalization, edits): [`src/lib/content/siteLayout.js`](../src/lib/content/siteLayout.js).
 
 | type | shows | reads | options |
 |---|---|---|---|
@@ -122,7 +127,7 @@ Section registry: [`src/lib/content/sectionTypes.js`](../src/lib/content/section
 | `resumeProfile` / `resumeSkills` / `resumeEducation` / `resumeProjects` | the resume cards | `profile.json` personal / skills / education; projects with `showOnResume` | `title` (not on profile) |
 | `contactQuest` | contact banner, socials, HQ, quest form | `contact.json`; `profile.json` socialLinks, hq | — |
 
-**Adding a section type** (e.g. `testimonials`): add an entry to `SECTION_TYPES` (label, icon, description, `frame`, `reads`, `options` with a `kind` — `boolean`, `select` + `values`, `text`, `number` — and a `default` each), then add its component to `SECTION_COMPONENTS`. The component receives its options as props. The admin's add-section menu and option forms, the CLI and validation pick it up from there. `frame` says how consecutive sections are wrapped: `stack` (the home column), `resume` (the resume card column) or `page` (no wrapper — the section lays out the whole page).
+**Adding a section type** (e.g. `testimonials`): add an entry to `SECTION_TYPES` (label, icon, description, `frame`, `reads`, `options` with a `kind` — `boolean`, `select` + `values`, `text`, `number` — and a `default` each — plus `children: false`), then add its component to `SECTION_COMPONENTS`. The component receives its options as props. The admin's add-section menu and option forms, the CLI and validation pick it up from there. `frame` says how consecutive sections are wrapped: `stack` (the home column), `resume` (the resume card column) or `page` (no wrapper — the section lays out the whole page).
 
 ## Site text
 
@@ -151,9 +156,10 @@ Section registry: [`src/lib/content/sectionTypes.js`](../src/lib/content/section
 | `order` · `order set <slug…>` · `order move <slug> <pos>` | display order (unknown/duplicate slugs refused) |
 | `theme` · `theme active <preset>` · `theme preset <name> [--set colors.primary=#hex …] [--json …] [--delete]` | theme presets |
 | `site` · `site <id> [--field path] [--set path=value …] [--json …]` | `content/site/<id>.json` |
-| `layout [show [page]]` · `layout types` | the site structure / the section types with options and what they read |
+| `layout` · `layout show [page [section]]` · `layout types` | the whole tree in one call / one page or section / every section type with its description, options (kind, default) and what it reads |
+| `layout replace <file\|->` | write the whole layout.json (what the admin's Save does): validated, stored normalized |
 | `layout page add <id> [--label --slug --position --disabled]` · `page remove/enable/disable <id>` · `page move <id> <pos>` · `page set <id> [--label --slug]` | pages in the nav |
-| `layout section add <page> <type> [--id --position --disabled --set opt=value]` · `section remove/enable/disable <page> <section>` · `section move <page> <section> <pos>` · `section set <page> <section> --set opt=value [--unset opt]` | a page's sections (`<section>` = id or 0-based index); option values are typed by the registry |
+| `layout section add <page> <type> [--id --position --disabled --set opt=value]` · `section remove/enable/disable <page> <section>` · `section move <page> <section> [pos] [--to page]` · `section set <page> <section> --set opt=value [--unset opt]` | a page's sections (`<section>` = id or 0-based index); option values are typed by the registry; every edit prints the whole saved layout |
 | `validate` | everything `npm test` checks about content, plus schema errors; exit 1 if not ok |
 | `release status` · `release test [--serve]` · `release stage -m …` · `release publish -m …` | the admin's Test → Stage → Go live gate ([release.md](release.md)) |
 

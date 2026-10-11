@@ -17,6 +17,9 @@
  *                (keys are top-level fields of that JSON file; 'projects/' means every project)
  *   options      per-section settings, stored in the section's "options" object:
  *                  { kind: 'boolean' | 'select' | 'text' | 'number', label, default, values? (select), hint? }
+ *   children     whether a section of this type may hold child blocks (nodes of the same
+ *                { type, id, enabled, options, children? } shape) — false for every type today;
+ *                reserved so nested rows/columns/blocks can be added without changing the format
  *   exitDelay    ms to wait before leaving a page that shows this section (lets its own exit animation run)
  *   deepLink     the section opens ?project=<slug> links; the first enabled page that has it receives them
  */
@@ -26,6 +29,7 @@ export const SECTION_TYPES = {
     icon: '👋',
     description: 'Profile picture, name, tagline and social links',
     frame: 'stack',
+    children: false,
     reads: [{ file: 'site/profile.json', keys: ['personal', 'socialLinks'] }],
     options: {
       profilePicSize: { kind: 'select', label: 'Picture size', values: ['small', 'medium', 'large'], default: 'medium' },
@@ -37,6 +41,7 @@ export const SECTION_TYPES = {
     icon: '⏰',
     description: 'Milestones from profile.journey',
     frame: 'stack',
+    children: false,
     reads: [
       { file: 'site/profile.json', keys: ['journey'] },
       { file: 'site/uiContent.json', keys: ['sections', 'animations'] },
@@ -48,6 +53,7 @@ export const SECTION_TYPES = {
     icon: '🃏',
     description: 'Cards that flip to reveal a back side',
     frame: 'stack',
+    children: false,
     reads: [{ file: 'site/profile.json', keys: ['flipCards'] }],
     options: {},
   },
@@ -56,6 +62,7 @@ export const SECTION_TYPES = {
     icon: '🤔',
     description: '“Did you know…?” facts carousel',
     frame: 'stack',
+    children: false,
     reads: [
       { file: 'site/profile.json', keys: ['funFacts'] },
       { file: 'site/uiContent.json', keys: ['sections', 'config'] },
@@ -67,6 +74,7 @@ export const SECTION_TYPES = {
     icon: '📸',
     description: 'Photo strip with captions',
     frame: 'stack',
+    children: false,
     reads: [
       { file: 'site/profile.json', keys: ['showAndTell'] },
       { file: 'site/uiContent.json', keys: ['sections', 'config'] },
@@ -78,6 +86,7 @@ export const SECTION_TYPES = {
     icon: '🗂️',
     description: 'Featured project, stats, search and the project grid with its modal',
     frame: 'page',
+    children: false,
     reads: [
       { file: 'projects/' },
       { file: 'site/uiContent.json', keys: ['ui'] },
@@ -95,6 +104,7 @@ export const SECTION_TYPES = {
     icon: '🪪',
     description: 'Picture, name and tagline card',
     frame: 'resume',
+    children: false,
     reads: [{ file: 'site/profile.json', keys: ['personal'] }],
     options: {},
   },
@@ -103,6 +113,7 @@ export const SECTION_TYPES = {
     icon: '⚡',
     description: 'Skill bars by category',
     frame: 'resume',
+    children: false,
     reads: [{ file: 'site/profile.json', keys: ['skills'] }],
     options: {
       title: { kind: 'text', label: 'Heading', default: 'Skills' },
@@ -113,6 +124,7 @@ export const SECTION_TYPES = {
     icon: '🎓',
     description: 'Degrees and relevant courses',
     frame: 'resume',
+    children: false,
     reads: [{ file: 'site/profile.json', keys: ['education'] }],
     options: {
       title: { kind: 'text', label: 'Heading', default: 'Education' },
@@ -123,6 +135,7 @@ export const SECTION_TYPES = {
     icon: '🧾',
     description: 'Projects marked “show on resume”, by resume order',
     frame: 'resume',
+    children: false,
     reads: [{ file: 'projects/', keys: ['showOnResume', 'resumeOrder'] }],
     options: {
       title: { kind: 'text', label: 'Heading', default: 'Projects' },
@@ -133,6 +146,7 @@ export const SECTION_TYPES = {
     icon: '🗺️',
     description: 'Contact banner, social links, HQ card and the quest form',
     frame: 'page',
+    children: false,
     reads: [
       { file: 'site/contact.json' },
       { file: 'site/profile.json', keys: ['socialLinks', 'hq'] },
@@ -150,6 +164,13 @@ export const sectionOptions = (section) => {
   const schema = sectionTypeOf(section)?.options || {};
   const defaults = Object.fromEntries(Object.entries(schema).map(([k, o]) => [k, o.default]));
   return { ...defaults, ...(section?.options || {}) };
+};
+
+/** Only the options that differ from the type's defaults (undefined when none) — what layout.json stores. */
+export const compactOptions = (type, options) => {
+  const schema = SECTION_TYPES[type]?.options || {};
+  const kept = Object.entries(options || {}).filter(([k, v]) => !schema[k] || JSON.stringify(v) !== JSON.stringify(schema[k].default));
+  return kept.length ? Object.fromEntries(kept) : undefined;
 };
 
 /** Problem with one option value, or null. */

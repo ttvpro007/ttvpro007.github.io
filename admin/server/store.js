@@ -294,10 +294,13 @@ export const saveSite = (id, data) => {
 
 export const readLayout = () => readJson(LAYOUT_FILE, { pages: [] });
 
-/** Save layout.json — refused (nothing written) when it fails validateLayout; pages are stored in order. */
+/**
+ * Save layout.json — refused (nothing written) when it fails validateLayout. Stored normalized:
+ * pages in order, canonical key order, options only where they differ from the defaults.
+ */
 export const saveLayout = (layout) => {
   const errors = validateLayout(layout);
-  if (errors.length) throw fail(422, `Layout is invalid — nothing saved`, errors);
+  if (errors.length) throw fail(422, `content/site/layout.json would be invalid — nothing saved (${errors.length} problem${errors.length > 1 ? 's' : ''})`, errors);
   const next = normalizeLayout(layout);
   writeJson(LAYOUT_FILE, next);
   return { ok: true, layout: next };

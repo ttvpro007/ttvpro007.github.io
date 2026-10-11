@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import { SECTION_TYPES, sectionOptions } from '@/lib/content/sectionTypes';
 import {
-  ID_PATTERN, sortedPages, validateLayout, addPage, removePage, updatePage, movePage,
-  addSection, removeSection, moveSection, updateSection, uniqueId,
+  ID_PATTERN, sortedPages, validateLayout, normalizeLayout, addPage, removePage, updatePage, movePage,
+  addSection, removeSection, moveSection, updateSection, transferSection, uniqueId,
 } from '@/lib/content/siteLayout';
 import { slugify } from '@/lib/content/projectSchema';
 import { api } from './api';
@@ -32,13 +32,17 @@ export default function SiteMap({ layout, act, onOpenFile, onOpenProjects }) {
     if (same(draft, base)) setDraft(layout);
   }
 
-  const dirty = !same(draft, layout);
+  // Compare the stored shape: an option set back to its default is not a change
+  const dirty = !same(normalizeLayout(draft), layout);
   const errors = validateLayout(draft);
   useDirty('sitemap', dirty);
 
   const save = async () => {
     setSaving(true);
-    try { await act(() => api.saveLayout(draft), 'Site map saved'); } finally { setSaving(false); }
+    try {
+      const out = await act(() => api.saveLayout(draft), 'Site map saved');
+      setDraft(out.layout);
+    } finally { setSaving(false); }
   };
   useSaveShortcut(save, dirty && !saving && !errors.length);
 
@@ -85,17 +89,8 @@ export default function SiteMap({ layout, act, onOpenFile, onOpenProjects }) {
 
   /** Sections can be dropped into another page; their id is made unique there. */
   const dropSection = (from, to) => {
-    edit((d) => {
-      if (from.pageId === to.pageId) {
-        return moveSection(d, from.pageId, from.index, to.index > from.index ? to.index - 1 : to.index);
-      }
-      const section = d.pages.find((p) => p.id === from.pageId).sections[from.index];
-      const target = d.pages.find((p) => p.id === to.pageId);
-      const id = uniqueId(section.id, target.sections.map((s) => s.id));
-      return updatePage(removeSection(d, from.pageId, from.index), to.pageId, {
-        sections: [...target.sections.slice(0, to.index), { ...section, id }, ...target.sections.slice(to.index)],
-      });
-    });
+    const at = from.pageId === to.pageId && to.index > from.index ? to.index - 1 : to.index;
+    edit((d) => transferSection(d, from.pageId, from.index, to.pageId, at));
   };
 
   const endDrag = () => { setDrag(null); setDropAt(null); };
@@ -259,6 +254,7 @@ export default function SiteMap({ layout, act, onOpenFile, onOpenProjects }) {
                             {section.id !== section.type && <span className="tag mono">{section.id}</span>}
                             {!type && <span className="badge badge-error">Unknown type</span>}
                           </div>
+                          {type && <div className="muted small">{type.description}</div>}
                           {type && (
                             <div className="sitemap-reads" aria-label="Reads">
                               {type.reads.map((r) => {

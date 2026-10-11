@@ -167,52 +167,74 @@ test('site: get, set dotted path, unknown id', () => {
 });
 
 test('layout: pages and sections, validated', () => {
-  const layoutJson = () => JSON.parse(fs.readFileSync(path.join(root, 'content/site/layout.json'), 'utf8'));
-  assert.deepEqual(ok(['layout']).pages.map((p) => p.id), ['home', 'projects', 'resume', 'contact']);
-  assert.ok(ok(['layout', 'types']).hero.options.profilePicSize);
+  const file = path.join(root, 'content/site/layout.json');
+  const layoutJson = () => JSON.parse(fs.readFileSync(file, 'utf8'));
+  const ids = (layout) => layout.pages.map((p) => p.id);
+  const page = (layout, id) => layout.pages.find((p) => p.id === id);
+
+  // reads: the whole tree in one call, one page, one section, the registry
+  assert.deepEqual(ok(['layout']), layoutJson());
+  assert.deepEqual(ok(['layout', 'show']), layoutJson());
   assert.equal(ok(['layout', 'show', 'home']).sections[0].type, 'hero');
+  assert.deepEqual(ok(['layout', 'show', 'home', 'hero']), { type: 'hero', id: 'hero', enabled: true });
+  const types = ok(['layout', 'types']);
+  assert.equal(types.hero.options.profilePicSize.default, 'medium');
+  assert.equal(types.hero.children, false);
 
-  // pages: add, move, disable, set
-  assert.equal(ok(['layout', 'page', 'add', 'blog', '--label', 'Blog', '--position', '1'])[1].id, 'blog');
-  assert.deepEqual(ok(['layout', 'page', 'move', 'blog', '3']).map((p) => p.id), ['home', 'projects', 'resume', 'blog', 'contact']);
-  assert.equal(ok(['layout', 'page', 'disable', 'blog']).find((p) => p.id === 'blog').enabled, false);
-  ok(['layout', 'page', 'set', 'blog', '--slug', 'notes']);
-  assert.equal(layoutJson().pages.find((p) => p.id === 'blog').slug, 'notes');
-  assert.equal(cli(['layout', 'page', 'add', 'home']).code, 1, 'duplicate page id');
-  assert.equal(cli(['layout', 'page', 'set', 'blog', '--slug', 'home']).code, 1, 'duplicate slug');
+  // pages: every edit prints the whole saved layout
+  assert.deepEqual(ids(ok(['layout', 'page', 'add', 'blog', '--label', 'Blog', '--position', '1'])), ['home', 'blog', 'projects', 'resume', 'contact']);
+  assert.deepEqual(ids(ok(['layout', 'page', 'move', 'blog', '3'])), ['home', 'projects', 'resume', 'blog', 'contact']);
+  assert.equal(page(ok(['layout', 'page', 'disable', 'blog']), 'blog').enabled, false);
+  assert.equal(page(ok(['layout', 'page', 'set', 'blog', '--slug', 'notes']), 'blog').slug, 'notes');
+  assert.match(cli(['layout', 'page', 'add', 'home']).err, /already exists/);
+  assert.match(cli(['layout', 'page', 'set', 'blog', '--slug', 'home']).err, /pages\[3\] "blog": duplicate slug "home"/);
 
-  // sections: add (typed options), move, toggle, set, remove
-  const blog = ok(['layout', 'section', 'add', 'blog', 'hero', '--set', 'profilePicSize=small', '--set', 'showSocialLinks=false']);
-  assert.deepEqual(blog.sections[0], { id: 'hero', type: 'hero', enabled: true, options: { profilePicSize: 'small', showSocialLinks: false } });
-  assert.equal(ok(['layout', 'section', 'add', 'blog', 'hero']).sections[1].id, 'hero-2');
-  assert.deepEqual(ok(['layout', 'section', 'move', 'blog', 'hero-2', '0']).sections.map((s) => s.id), ['hero-2', 'hero']);
-  assert.equal(ok(['layout', 'section', 'disable', 'blog', '1']).sections[1].enabled, false);
-  assert.equal(ok(['layout', 'section', 'set', 'blog', 'hero', '--set', 'profilePicSize=large']).sections[1].options.profilePicSize, 'large');
-  assert.equal(ok(['layout', 'section', 'set', 'blog', 'hero', '--unset', 'profilePicSize', '--unset', 'showSocialLinks']).sections[1].options, undefined);
-  assert.equal(ok(['layout', 'section', 'remove', 'blog', 'hero-2']).sections.length, 1);
+  // sections: typed options, defaults not stored, move within and across pages
+  let l = ok(['layout', 'section', 'add', 'blog', 'hero', '--set', 'profilePicSize=small', '--set', 'showSocialLinks=true']);
+  assert.deepEqual(page(l, 'blog').sections[0], { type: 'hero', id: 'hero', enabled: true, options: { profilePicSize: 'small' } });
+  assert.equal(page(ok(['layout', 'section', 'add', 'blog', 'hero']), 'blog').sections[1].id, 'hero-2');
+  assert.deepEqual(page(ok(['layout', 'section', 'move', 'blog', 'hero-2', '0']), 'blog').sections.map((s) => s.id), ['hero-2', 'hero']);
+  assert.equal(page(ok(['layout', 'section', 'disable', 'blog', '1']), 'blog').sections[1].enabled, false);
+  assert.equal(page(ok(['layout', 'section', 'set', 'blog', 'hero', '--set', 'profilePicSize=large']), 'blog').sections[1].options.profilePicSize, 'large');
+  assert.equal(page(ok(['layout', 'section', 'set', 'blog', 'hero', '--unset', 'profilePicSize']), 'blog').sections[1].options, undefined);
+  l = ok(['layout', 'section', 'move', 'blog', 'hero-2', '0', '--to', 'contact']);
+  assert.deepEqual(page(l, 'contact').sections.map((s) => s.id), ['hero-2', 'contactQuest']);
+  assert.deepEqual(page(l, 'blog').sections.map((s) => s.id), ['hero']);
+  assert.deepEqual(page(ok(['layout', 'section', 'move', 'contact', 'hero-2', '--to', 'blog']), 'blog').sections.map((s) => s.id), ['hero', 'hero-2']);
+  assert.equal(page(ok(['layout', 'section', 'remove', 'blog', 'hero-2']), 'blog').sections.length, 1);
 
-  // refusals leave the file alone
-  const before = fs.readFileSync(path.join(root, 'content/site/layout.json'), 'utf8');
-  assert.equal(cli(['layout', 'section', 'add', 'blog', 'nope']).code, 1);
+  // refusals leave the file alone and say how to fix it
+  const before = fs.readFileSync(file, 'utf8');
+  assert.match(cli(['layout', 'section', 'add', 'blog', 'nope']).err, /Unknown section type "nope" — use one of: hero/);
   assert.match(cli(['layout', 'section', 'set', 'blog', 'hero', '--set', 'profilePicSize=huge']).err, /must be one of small, medium, large/);
-  assert.match(cli(['layout', 'section', 'set', 'blog', 'hero', '--set', 'colour=red']).err, /no option "colour"/);
-  assert.equal(cli(['layout', 'section', 'remove', 'blog', 'ghost']).code, 1);
+  assert.match(cli(['layout', 'section', 'set', 'blog', 'hero', '--set', 'colour=red']).err, /no option "colour" — its options are: profilePicSize, showSocialLinks/);
+  assert.match(cli(['layout', 'section', 'remove', 'blog', 'ghost']).err, /its sections are: hero/);
   for (const id of ['home', 'projects', 'resume']) ok(['layout', 'page', 'disable', id]);
   const last = cli(['layout', 'page', 'disable', 'contact']);
   assert.equal(last.code, 1);
-  assert.match(last.err, /at least one page must be enabled/);
+  assert.match(last.err, /content\/site\/layout\.json would be invalid — nothing saved[\s\S]*at least one page must be enabled/);
   assert.equal(cli(['layout', 'section', 'move', 'blog', 'hero', 'x']).code, 2);
   for (const id of ['home', 'projects', 'resume']) ok(['layout', 'page', 'enable', id]);
   ok(['layout', 'page', 'remove', 'blog']);
-  assert.notEqual(fs.readFileSync(path.join(root, 'content/site/layout.json'), 'utf8'), before);
+  assert.notEqual(fs.readFileSync(file, 'utf8'), before);
   assert.deepEqual(layoutJson(), JSON.parse(fs.readFileSync(path.resolve('content/site/layout.json'), 'utf8')), 'back to the default');
+
+  // replace: whole file from stdin, validated and normalized
+  const draft = layoutJson();
+  draft.pages.reverse();
+  draft.pages.find((p) => p.id === 'projects').sections[0].options = { showStats: true };
+  const replaced = ok(['layout', 'replace', '-'], JSON.stringify(draft));
+  assert.deepEqual(ids(replaced), ['home', 'projects', 'resume', 'contact'], 'order wins over array position');
+  assert.equal(page(replaced, 'projects').sections[0].options, undefined, 'default-valued options dropped');
+  draft.pages[0].sections[0].enable = true;
+  assert.match(cli(['layout', 'replace', '-'], JSON.stringify(draft)).err, /pages\[0\] "contact"\.sections\[0\] "contactQuest": unknown key "enable"/);
 
   // validate reports a hand-broken layout
   const broken = layoutJson();
-  broken.pages[0].sections.push({ id: 'x', type: 'carousel' });
-  fs.writeFileSync(path.join(root, 'content/site/layout.json'), JSON.stringify(broken));
-  assert.match(cli(['validate']).json.errors.join('\n'), /unknown section type "carousel"/);
-  fs.writeFileSync(path.join(root, 'content/site/layout.json'), before);
+  broken.pages[0].sections.push({ type: 'carousel', id: 'x' });
+  fs.writeFileSync(file, JSON.stringify(broken));
+  assert.match(cli(['validate']).json.errors.join('\n'), /site\/layout\.json: pages\[0\] "home"\.sections\[5\] "x": unknown section type "carousel"/);
+  fs.writeFileSync(file, before);
 });
 
 test('validate fails with errors on broken content', () => {

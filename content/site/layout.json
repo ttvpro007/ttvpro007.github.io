@@ -8,32 +8,28 @@
       "order": 0,
       "sections": [
         {
-          "id": "hero",
           "type": "hero",
-          "enabled": true,
-          "options": {
-            "profilePicSize": "medium",
-            "showSocialLinks": true
-          }
+          "id": "hero",
+          "enabled": true
         },
         {
-          "id": "timeline",
           "type": "timeline",
+          "id": "timeline",
           "enabled": true
         },
         {
-          "id": "flipCards",
           "type": "flipCards",
+          "id": "flipCards",
           "enabled": true
         },
         {
-          "id": "funFacts",
           "type": "funFacts",
+          "id": "funFacts",
           "enabled": true
         },
         {
-          "id": "showAndTell",
           "type": "showAndTell",
+          "id": "showAndTell",
           "enabled": true
         }
       ]
@@ -46,8 +42,8 @@
       "order": 1,
       "sections": [
         {
-          "id": "projectsBrowser",
           "type": "projectsBrowser",
+          "id": "projectsBrowser",
           "enabled": true
         }
       ]
@@ -60,23 +56,23 @@
       "order": 2,
       "sections": [
         {
-          "id": "resumeProfile",
           "type": "resumeProfile",
+          "id": "resumeProfile",
           "enabled": true
         },
         {
-          "id": "resumeSkills",
           "type": "resumeSkills",
+          "id": "resumeSkills",
           "enabled": true
         },
         {
-          "id": "resumeEducation",
           "type": "resumeEducation",
+          "id": "resumeEducation",
           "enabled": true
         },
         {
-          "id": "resumeProjects",
           "type": "resumeProjects",
+          "id": "resumeProjects",
           "enabled": true
         }
       ]
@@ -89,8 +85,8 @@
       "order": 3,
       "sections": [
         {
-          "id": "contactQuest",
           "type": "contactQuest",
+          "id": "contactQuest",
           "enabled": true
         }
       ]
