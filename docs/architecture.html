@@ -93,6 +93,7 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
     <div class="fact"><b>4 · 11</b><span>theme presets · color tokens</span></div>
     <div class="fact"><b>16</b><span>admin API routes</span></div>
     <div class="fact"><b>113 MB</b><span>content/projects on disk</span></div>
+    <div class="fact"><b>6</b><span>automated tests · content + media</span></div>
   </div>
 
   <h2>Where a project lives — before and after</h2>
@@ -271,7 +272,7 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
         </g>
       </svg>
     </div>
-    <figcaption><b>Only content that was built, unchanged, can ship.</b> The fingerprint (<code>admin/server/release.js</code>) hashes path, size and mtime of every file under <code>content/</code>, the <code>HEAD</code> commit, and the diff of uncommitted non-content changes. Stage and Go live commit only <code>content/</code>; uncommitted code is in the test but would not ship, which the Release page warns about. CI lints and builds every push to <code>master</code> or <code>staging</code> and every PR; only <code>master</code> deploys live.</figcaption>
+    <figcaption><b>Only content that was built, unchanged, can ship.</b> The fingerprint (<code>admin/server/release.js</code>) hashes path, size and mtime of every file under <code>content/</code>, the <code>HEAD</code> commit, and the diff of uncommitted non-content changes. A passed fingerprint is saved to <code>.release-tested.json</code> (gitignored), so a dev-server restart does not undo a Test. Stage and Go live commit only <code>content/</code>; uncommitted code is in the test but would not ship, which the Release page warns about. CI lints, runs <code>npm test</code> and builds every push to <code>master</code> or <code>staging</code> and every PR; only <code>master</code> deploys live.</figcaption>
   </figure>
 
   <h2>Invariants</h2>
@@ -298,25 +299,25 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
         <tr><td><code>src/lib/content/</code></td><td>mediaTypes, linkTypes, projectSchema (fields, validation, view model)</td><td class="mono">194</td></tr>
         <tr><td><code>src/lib/theme/applyTheme.js</code></td><td>token → CSS variable mapping, font loading</td><td class="mono">68</td></tr>
         <tr><td><code>src/components/features/projects/media/</code></td><td>View and Thumb per media type</td><td class="mono">112</td></tr>
-        <tr><td><code>admin/server/</code></td><td>API routes, jobs, image optimisation (sharp), release gate + preview</td><td class="mono">470</td></tr>
+        <tr><td><code>admin/server/</code></td><td>API routes, jobs, image optimisation (sharp), release gate + preview</td><td class="mono">476</td></tr>
         <tr><td><code>admin/src/</code></td><td>editor UI: projects, media, links, theme, site JSON, release</td><td class="mono">1,000</td></tr>
-        <tr><td><code>.github/workflows/deploy.yml</code></td><td>lint + build; live deploy on master; staging deploy when configured</td><td class="mono">—</td></tr>
+        <tr><td><code>tests/</code></td><td>node:test — committed content loads, media files exist, order.json matches; WebP conversion</td><td class="mono">60</td></tr>
+        <tr><td><code>.github/workflows/deploy.yml</code></td><td>lint + test + build; live deploy on master; staging deploy when configured</td><td class="mono">—</td></tr>
       </tbody>
     </table>
   </div>
 
   <h2>Unresolved</h2>
   <ul class="open prose">
-    <li><b>No automated tests.</b> Verification so far is lint, a production build, and a manual browser pass: create/upload/save/delete through the API, WebP conversion (9.1 MB PNG → 2.0 MB), Test gate lock and unlock, theme presets, and overflow checks at 320–2560 px.</li>
-    <li><b>Staging relies on one deploy key.</b> <code>ttvpro007/portfolio-staging</code> is deployed by CI with a write deploy key scoped to that repo, stored as <code>STAGING_DEPLOY_KEY</code>. Nothing rotates it automatically; the steps are in docs/release.md.</li>
-    <li><b>The test fingerprint lives in memory.</b> Restarting the dev server, which also happens whenever an admin or plugin file is edited, clears it, and you have to run Test again. It fails safe, but it is surprising.</li>
-    <li><b>Large binaries live in git.</b> The Unity build is about 96 MB of the 113 MB under <code>content/projects</code>, with no LFS. That is within GitHub Pages' limits, but it makes the repo slower to clone.</li>
+    <li><b>The admin API and release flow have no automated tests.</b> <code>npm test</code> covers committed content (it loads, every local media file exists, <code>order.json</code> matches) and upload image optimisation. Routes, git commits and the Test gate were checked by hand: create/upload/save/delete through the API, Test gate lock and unlock, theme presets, and overflow at 320–2560 px. Testing them would mean mocking git and child processes, which was judged not worth it for a one-person site.</li>
+    <li class="minor"><b>Staging relies on one deploy key.</b> <code>ttvpro007/portfolio-staging</code> is deployed by CI with a write deploy key scoped to that repo, stored as <code>STAGING_DEPLOY_KEY</code>. Deploy keys do not expire, so there is no rotation schedule; rotate only if it leaks, using the steps in docs/release.md.</li>
+    <li class="minor"><b>Large binaries live in git.</b> The Unity build is about 96 MB of the 113 MB under <code>content/projects</code>. LFS was considered and declined: every CI checkout would download the build, using up the free 1 GB/month LFS bandwidth in about ten deploys, and converting means rewriting history. If the build grows, host it outside the repo (e.g. a GitHub Release asset) instead.</li>
     <li class="minor"><b>Content gaps.</b> Broken videos and wrong links found during the migration were removed rather than replaced. Five projects now have no video, Lumina Adfecto and Planet Runner have no external link, and Unity Physics Simulator and Programming Problems Solution have no images until real screenshots are added.</li>
     <li class="minor"><b>Fonts load from Google at runtime</b>, so the first paint can show fallback fonts.</li>
   </ul>
 
   <footer>
-    <span>Measured at <span class="mono">3a6209c</span> (branch <span class="mono">content-admin-restructure</span>, PR #1), 2026-10-11. Re-pin to the merge commit on <span class="mono">master</span> after the PR merges.</span>
+    <span>Measured at <span class="mono">6a8db0a</span> (branch <span class="mono">content-admin-restructure</span>, PR #1), 2026-10-11. Re-pin to the merge commit on <span class="mono">master</span> after the PR merges.</span>
     <span>Source: <span class="mono">docs/architecture.html</span>. Usage docs: <span class="mono">docs/content.md</span>, <span class="mono">docs/release.md</span>.</span>
   </footer>
 </div>
