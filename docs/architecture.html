@@ -88,11 +88,11 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
 
   <div class="facts" aria-label="Measured figures">
     <div class="fact"><b>7</b><span>project folders</span></div>
-    <div class="fact"><b>20</b><span>media items · 14 image, 5 YouTube, 1 Unity</span></div>
+    <div class="fact"><b>13</b><span>media items · 11 image, 1 YouTube, 1 Unity</span></div>
     <div class="fact"><b>5 / 7</b><span>media / link types registered</span></div>
     <div class="fact"><b>4 · 11</b><span>theme presets · color tokens</span></div>
     <div class="fact"><b>16</b><span>admin API routes</span></div>
-    <div class="fact"><b>121 MB</b><span>content/projects on disk</span></div>
+    <div class="fact"><b>113 MB</b><span>content/projects on disk</span></div>
   </div>
 
   <h2>Where a project lives — before and after</h2>
@@ -308,15 +308,15 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
   <h2>Unresolved</h2>
   <ul class="open prose">
     <li><b>No automated tests.</b> Verification so far is lint, a production build, and a manual browser pass: create/upload/save/delete through the API, WebP conversion (9.1 MB PNG → 2.0 MB), Test gate lock and unlock, theme presets, and overflow checks at 320–2560 px.</li>
-    <li><b>Staging is not configured.</b> The workflow step is in place, but it needs a second repo, a token and three settings (docs/release.md). Until then Stage only runs CI.</li>
+    <li><b>Staging relies on one deploy key.</b> <code>ttvpro007/portfolio-staging</code> is deployed by CI with a write deploy key scoped to that repo, stored as <code>STAGING_DEPLOY_KEY</code>. Nothing rotates it automatically; the steps are in docs/release.md.</li>
     <li><b>The test fingerprint lives in memory.</b> Restarting the dev server, which also happens whenever an admin or plugin file is edited, clears it, and you have to run Test again. It fails safe, but it is surprising.</li>
-    <li><b>Large binaries live in git.</b> The Unity build is about 96 MB of the 121 MB under <code>content/projects</code>, with no LFS. That is within GitHub Pages' limits, but it makes the repo slower to clone.</li>
-    <li class="minor"><b>Content problems found during the migration and left unchanged:</b> one project's YouTube video reports "unavailable", Lumina Adfecto links to the Catavaneer itch.io page, and it reuses Bull Cow Game's video.</li>
+    <li><b>Large binaries live in git.</b> The Unity build is about 96 MB of the 113 MB under <code>content/projects</code>, with no LFS. That is within GitHub Pages' limits, but it makes the repo slower to clone.</li>
+    <li class="minor"><b>Content gaps.</b> Broken videos and wrong links found during the migration were removed rather than replaced. Five projects now have no video, Lumina Adfecto and Planet Runner have no external link, and Unity Physics Simulator and Programming Problems Solution have no images until real screenshots are added.</li>
     <li class="minor"><b>Fonts load from Google at runtime</b>, so the first paint can show fallback fonts.</li>
   </ul>
 
   <footer>
-    <span>Measured at <span class="mono">56ff098</span> plus the uncommitted content/admin restructure, 2026-10-11. Re-pin this page to the commit that contains the restructure once it is committed.</span>
+    <span>Measured at <span class="mono">3a6209c</span> (branch <span class="mono">content-admin-restructure</span>, PR #1), 2026-10-11. Re-pin to the merge commit on <span class="mono">master</span> after the PR merges.</span>
     <span>Source: <span class="mono">docs/architecture.html</span>. Usage docs: <span class="mono">docs/content.md</span>, <span class="mono">docs/release.md</span>.</span>
   </footer>
 </div>
