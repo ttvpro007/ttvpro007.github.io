@@ -14,7 +14,7 @@ const Projects = ({ isTransitioning = false }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    let filtered = projects.items;
+    let filtered = [...projects.items];
 
     // Filter by search term
     if (searchTerm) {
@@ -39,6 +39,16 @@ const Projects = ({ isTransitioning = false }) => {
 
     setFilteredProjects(filtered);
   }, [searchTerm, selectedCategory, sortBy]);
+
+  // ?project=<slug> opens that project's modal (used by the admin's "View on site")
+  useEffect(() => {
+    const slug = new URLSearchParams(window.location.search).get("project");
+    const linked = slug && projects.items.find((p) => p.slug === slug);
+    if (linked) {
+      setSelectedProject(linked);
+      setIsModalOpen(true);
+    }
+  }, []);
 
   const featuredProject = projects.items.find(project => project.featured);
   const nonFeaturedProjects = filteredProjects.filter(project => !project.featured);
@@ -190,7 +200,7 @@ const Projects = ({ isTransitioning = false }) => {
                     
                     return (
                       <motion.div
-                        key={project.title}
+                        key={project.slug}
                         initial={{ opacity: 0, y: 30, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -30, scale: 0.95 }}

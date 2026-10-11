@@ -1,58 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button, Badge, Card, MarkdownRenderer } from "@/components/base";
-import { projects, uiContent } from "@/data";
-import { 
-  generateProjectButtons, 
-  getProjectImages, 
-  formatImageCounter, 
-  getProjectDescription 
-} from "../../../../utils/projectUtils";
+import { uiContent } from "@/data";
+import {
+  generateProjectButtons,
+  getGalleryMedia,
+  getPlayableMedia,
+  formatImageCounter,
+  getProjectDescription
+} from "@/utils/projectUtils";
+import { MEDIA_TYPES } from "@/lib/content/mediaTypes";
+import { MediaView, MediaThumb } from "../media/renderers";
 import './ProjectModal.css';
 import VideoBackgroundEffect from "@/components/base/VideoBackgroundEffect/VideoBackgroundEffect";
-
-// Utility function to extract YouTube video ID from various URL formats
-const extractYouTubeVideoId = (url) => {
-  if (!url) return null;
-  
-  // Handle youtu.be format
-  if (url.includes('youtu.be/')) {
-    const match = url.match(/youtu\.be\/([^?&]+)/);
-    return match ? match[1] : null;
-  }
-  
-  // Handle embed format (check this BEFORE general youtube.com format)
-  if (url.includes('youtube.com/embed/')) {
-    const match = url.match(/embed\/([^?&]+)/);
-    return match ? match[1] : null;
-  }
-  
-  // Handle youtube.com format (watch URLs)
-  if (url.includes('youtube.com/')) {
-    const match = url.match(/[?&]v=([^&]+)/);
-    return match ? match[1] : null;
-  }
-  
-  // If it's already just a video ID (11 characters, alphanumeric)
-  if (/^[a-zA-Z0-9_-]{11}$/.test(url)) {
-    return url;
-  }
-  
-  return null;
-};
-
-// Utility function to generate YouTube thumbnail URL
-const getYouTubeThumbnailUrl = (videoId, quality = 'mqdefault') => {
-  if (!videoId) return null;
-  return `https://img.youtube.com/vi/${videoId}/${quality}.jpg`;
-};
-
-// Utility function to check if demo is a local Unity WebGL build
-const isUnityWebGLBuild = (demoUrl) => {
-  if (!demoUrl) return false;
-  // Check if it's a local path (starts with /) and contains unity-games
-  return demoUrl.startsWith('/') && demoUrl.includes('unity-games');
-};
 
 const ProjectModal = ({ project, isOpen, onClose }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -68,38 +28,8 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
       setTimeout(() => {
         scrollThumbnailIntoView(0);
       }, 100);
-    } else {
-      // Clean up Unity WebGL instance when modal closes
-      cleanupUnityInstance();
     }
   }, [isOpen]);
-
-  // Function to clean up Unity WebGL instance
-  const cleanupUnityInstance = () => {
-    try {
-      // Find the Unity iframe
-      const unityIframe = document.querySelector('.unity-webgl-frame');
-      if (unityIframe) {
-        // Try to access the Unity instance inside the iframe
-        const iframeWindow = unityIframe.contentWindow;
-        if (iframeWindow && iframeWindow.cleanupUnity) {
-          // Use the exposed cleanup function
-          iframeWindow.cleanupUnity();
-          console.log('Unity instance cleaned up successfully');
-        } else if (iframeWindow && iframeWindow.unityInstance) {
-          // Fallback: try to quit directly
-          iframeWindow.unityInstance.Quit();
-          console.log('Unity instance cleaned up via direct access');
-        }
-        
-        // Remove the iframe src to stop loading
-        unityIframe.src = '';
-      }
-    } catch (error) {
-      // Cross-origin restrictions might prevent access to iframe content
-      console.log('Unity cleanup attempted (cross-origin restrictions may apply)');
-    }
-  };
 
 
 
@@ -122,20 +52,11 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
     };
   }, [isOpen, onClose]);
 
-  const images = getProjectImages(project);
   const actionButtons = generateProjectButtons(project);
-  
-  // Create a combined media array that includes both video and images
-  const mediaItems = [];
-  if (project?.video) {
-    mediaItems.push({ type: 'video', src: project.video, title: project?.title || '' });
-  }
-  if (project) {
-    images.forEach(image => {
-      mediaItems.push({ type: 'image', src: image, title: project.title || '' });
-    });
-  }
-  
+
+  // Gallery media (images, videos, embeds) feed the carousel; playable builds get their own tabs
+  const mediaItems = getGalleryMedia(project);
+  const playables = getPlayableMedia(project);
   const currentMedia = mediaItems[currentImageIndex];
 
   const nextImage = () => {
@@ -198,14 +119,13 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
   const hasMetrics = metrics.length > 0;
   const hasSupplementaryLinks = supplementaryLinks.length > 0;
   const projectDescription = getProjectDescription(project);
-  const hasOverview = project?.overview || project?.markdownPath || (projectDescription && projectDescription.trim() !== '');
+  const hasOverview = project?.overview || (projectDescription && projectDescription.trim() !== '');
   const hasRoles = project?.roles && project.roles.length > 0;
   const hasTechStack = project?.tech && project.tech.length > 0;
   const hasMedia = mediaItems.length > 0;
   
-  // Check if project has Unity WebGL build
-  const hasUnityWebGLBuild = isUnityWebGLBuild(project?.demo);
-  const showTabs = hasUnityWebGLBuild && hasOverview;
+  // Playable builds (Unity WebGL, …) each get a tab next to Overview
+  const showTabs = playables.length > 0;
 
   return (
     <AnimatePresence mode="wait" onExitComplete={() => {}}>
@@ -284,37 +204,16 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                     )}
                     */}
                     <AnimatePresence mode="wait">
-                      {currentMedia?.type === 'video' ? (
-                        <motion.div
-                          key={`video-${currentImageIndex}`}
-                          initial={{ opacity: 0, scale: 1.1 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0, scale: 0.9 }}
-                          transition={{ duration: 0.4 }}
-                          className="project-modal-video-container"
-                        >
-                          <iframe
-                            width="100%"
-                            height="100%"
-                            src={currentMedia.src}
-                            title={currentMedia.title}
-                            frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                          />
-                        </motion.div>
-                      ) : (
-                        <motion.img
-                          key={`image-${currentImageIndex}`}
-                          src={currentMedia?.src}
-                          alt={currentMedia?.title}
-                          initial={{ opacity: 0, scale: 1.1 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0, scale: 0.9 }}
-                          transition={{ duration: 0.4 }}
-                          className="hero-media"
-                        />
-                      )}
+                      <motion.div
+                        key={`media-${currentImageIndex}`}
+                        initial={{ opacity: 0, scale: 1.1 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        transition={{ duration: 0.4 }}
+                        className={`project-modal-video-container media-${currentMedia?.type}`}
+                      >
+                        <MediaView item={currentMedia} title={project.title} />
+                      </motion.div>
                     </AnimatePresence>
                     
                     {/* Overlay Controls Container */}
@@ -395,28 +294,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                         className={`thumbnail-item ${index === currentImageIndex ? 'active' : ''}`}
                         onClick={() => selectThumbnail(index)}
                       >
-                        {item.type === 'video' ? (
-                          <>
-                            <img
-                              src={getYouTubeThumbnailUrl(extractYouTubeVideoId(item.src)) || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwIiBoZWlnaHQ9IjkwIiB2aWV3Qm94PSIwIDAgMTYwIDkwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjkwIiBmaWxsPSIjMzMzIi8+CjxwYXRoIGQ9Ik02MCA0NUw4MCA2MEw2MCA3NVY0NVoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo='}
-                              alt={`Video thumbnail ${index + 1}`}
-                              className="thumbnail-image"
-                              onError={(e) => {
-                                // Fallback to a default video thumbnail if YouTube thumbnail fails
-                                e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwIiBoZWlnaHQ9IjkwIiB2aWV3Qm94PSIwIDAgMTYwIDkwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjkwIiBmaWxsPSIjMzMzIi8+CjxwYXRoIGQ9Ik02MCA0NUw4MCA2MEw2MCA3NVY0NVoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=';
-                              }}
-                            />
-                            <div className="thumbnail-video-indicator">
-                              <div className="play-button">▶</div>
-                            </div>
-                          </>
-                        ) : (
-                          <img
-                            src={item.src}
-                            alt={`Image ${index + 1}`}
-                            className="thumbnail-image"
-                          />
-                        )}
+                        <MediaThumb item={item} index={index} />
                       </motion.div>
                     ))}
                   </div>
@@ -441,13 +319,16 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                       <span className="tab-icon">📋</span>
                       Overview
                     </button>
-                    <button
-                      className={`tab-button ${activeTab === 'web-build' ? 'active' : ''}`}
-                      onClick={() => setActiveTab('web-build')}
-                    >
-                      <span className="tab-icon">🎮</span>
-                      Web Build
-                    </button>
+                    {playables.map((item, i) => (
+                      <button
+                        key={i}
+                        className={`tab-button ${activeTab === `play-${i}` ? 'active' : ''}`}
+                        onClick={() => setActiveTab(`play-${i}`)}
+                      >
+                        <span className="tab-icon">{MEDIA_TYPES[item.type].icon}</span>
+                        {item.title || MEDIA_TYPES[item.type].tabLabel}
+                      </button>
+                    ))}
                   </div>
 
                   {/* Tab Content */}
@@ -467,62 +348,32 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                               <span className="overview-icon">📋</span>
                               Overview
                             </h3>
-                            {project.markdownPath ? (
-                              <MarkdownRenderer 
-                                markdownPath={project.markdownPath}
+                            {project.overview ? (
+                              <MarkdownRenderer
+                                content={project.overview}
                                 className="overview-markdown"
                               />
                             ) : (
                               <p className="overview-text">
-                                {project.overview || projectDescription}
+                                {projectDescription}
                               </p>
                             )}
                           </div>
                         </motion.div>
                       )}
 
-                      {activeTab === 'web-build' && (
+                      {playables.map((item, i) => activeTab === `play-${i}` && (
                         <motion.div
-                          key="web-build"
+                          key={`play-${i}`}
                           initial={{ opacity: 0, x: 20 }}
                           animate={{ opacity: 1, x: 0 }}
                           exit={{ opacity: 0, x: -20 }}
                           transition={{ duration: 0.3 }}
                           className="tab-panel"
                         >
-                                                    <div className="web-build-content">
-                            <h3 className="web-build-title">
-                              <span className="web-build-icon">🎮</span>
-                              Unity WebGL Game
-                            </h3>
-                                                         <div className="unity-webgl-container">
-                               <iframe
-                                 src={project.demo}
-                                 title={`${project.title} - Unity WebGL Build`}
-                                 className="unity-webgl-frame"
-                                 frameBorder="0"
-                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                                 allowFullScreen
-                                 sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-presentation allow-top-navigation"
-                                 onLoad={() => console.log('Unity iframe loaded successfully')}
-                                 onError={(e) => console.error('Unity iframe error:', e)}
-                               />
-                             </div>
-                             <button
-                               className="unity-fullscreen-button"
-                               onClick={() => window.open(project.demo, '_blank')}
-                             >
-                               <span className="fullscreen-icon">⛶</span>
-                               Play Fullscreen
-                             </button>
-                            <div className="web-build-info">
-                              <p className="web-build-description">
-                                This is a Unity WebGL build of the game. Use your mouse and keyboard to play!
-                              </p>
-                            </div>
-                          </div>
+                          <MediaView item={item} title={project.title} />
                         </motion.div>
-                      )}
+                      ))}
                     </AnimatePresence>
                   </div>
                 </motion.div>
@@ -541,14 +392,14 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                         <span className="overview-icon">📋</span>
                         Overview
                       </h3>
-                      {project.markdownPath ? (
-                        <MarkdownRenderer 
-                          markdownPath={project.markdownPath}
+                      {project.overview ? (
+                        <MarkdownRenderer
+                          content={project.overview}
                           className="overview-markdown"
                         />
                       ) : (
                         <p className="overview-text">
-                          {project.overview || projectDescription}
+                          {projectDescription}
                         </p>
                       )}
                     </div>

@@ -1,65 +1,34 @@
-import { projects, uiContent } from "../data";
+import { uiContent } from "../data";
+import { LINK_TYPES } from "@/lib/content/linkTypes";
+import { MEDIA_TYPES } from "@/lib/content/mediaTypes";
 
 /**
- * Generate action buttons for a project based on its data
- * @param {Object} project - The project object
- * @returns {Array} Array of button configuration objects
+ * Action buttons for a project, one per entry in its `links`, ordered as in LINK_TYPES.
+ * A playable build (e.g. Unity) adds a Live Demo button when no demo link is listed.
+ * @param {Object} project - A project view model (see toViewModel)
+ * @returns {Array<{label, url, variant, icon}>}
  */
 export const generateProjectButtons = (project) => {
-  const buttons = [];
-  const linkConfig = uiContent.ui.projectModal.content.links;
-
-  // GitHub Repository
-  if (project?.link && project?.linkSource === "github") {
-    buttons.push({
-      label: linkConfig.github.label,
-      url: project.link,
-      variant: linkConfig.github.variant,
-      icon: linkConfig.github.icon
+  if (!project) return [];
+  const order = Object.keys(LINK_TYPES);
+  const links = [...(project.links || [])];
+  if (project.demo && !links.some((l) => l.type === 'demo')) links.push({ type: 'demo', url: project.demo });
+  return links
+    .filter((l) => l.url)
+    .sort((a, b) => order.indexOf(a.type) - order.indexOf(b.type))
+    .map((l) => {
+      const t = LINK_TYPES[l.type] || LINK_TYPES.website;
+      return { label: l.label || t.label, url: l.url, variant: t.variant, icon: t.icon };
     });
-  }
-
-  // itch.io Game
-  if (project?.link && project?.linkSource === "itchio") {
-    buttons.push({
-      label: linkConfig.itchio.label,
-      url: project.link,
-      variant: linkConfig.itchio.variant,
-      icon: linkConfig.itchio.icon
-    });
-  }
-
-  // Live Demo
-  if (project?.demo) {
-    buttons.push({
-      label: linkConfig.liveDemo.label,
-      url: project.demo,
-      variant: linkConfig.liveDemo.variant,
-      icon: linkConfig.liveDemo.icon
-    });
-  }
-
-  // App Store
-  if (project?.appStore) {
-    buttons.push({
-      label: linkConfig.appStore.label,
-      url: project.appStore,
-      variant: linkConfig.appStore.variant,
-      icon: linkConfig.appStore.icon
-    });
-  }
-
-  return buttons;
 };
 
-/**
- * Get project images array, falling back to single image if no images array
- * @param {Object} project - The project object
- * @returns {Array} Array of image URLs
- */
-export const getProjectImages = (project) => {
-  return project?.images || [project?.image];
-};
+/** Media shown in the modal carousel (images, videos, embeds), in project order. */
+export const getGalleryMedia = (project) =>
+  (project?.media || []).filter((m) => MEDIA_TYPES[m.type]?.placement === 'gallery');
+
+/** Media that gets its own tab in the modal (playable builds). */
+export const getPlayableMedia = (project) =>
+  (project?.media || []).filter((m) => MEDIA_TYPES[m.type]?.placement === 'playable');
 
 /**
  * Format image counter text using the configured format
@@ -81,4 +50,4 @@ export const formatImageCounter = (current, total) => {
 export const getProjectDescription = (project) => {
   if (!project) return '';
   return project.longDescription || project.description || '';
-}; 
+};

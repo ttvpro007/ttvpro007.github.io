@@ -32,7 +32,7 @@
 .show-and-tell-caption {
   font: var(--text-xs);
   font-style: italic;
-  color: var(--primary);
+  color: var(--color-primary);
   font-weight: var(--font-weight-bold);
 }
 

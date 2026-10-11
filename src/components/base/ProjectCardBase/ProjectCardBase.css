@@ -45,9 +45,9 @@
 
 /* Title dot indicator */
 .project-card-title-dot {
-  background: var(--primary);
+  background: var(--color-primary);
   border-radius: 50%;
-  box-shadow: 0 0 10px var(--primary);
+  box-shadow: 0 0 10px var(--color-primary);
 }
 
 .project-card-title {
@@ -59,8 +59,8 @@
   font-family: inherit;
   text-shadow:
     0 2px 4px rgba(0,0,0,0.5),
-    0 0 8px var(--primary),
-    0 0 16px var(--primary);
+    0 0 8px var(--color-primary),
+    0 0 16px var(--color-primary);
 }
 
 /* Project description */

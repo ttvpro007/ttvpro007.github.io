@@ -1,0 +1,53 @@
+{
+  "title": "Predictive Projectile Motion",
+  "description": "A Unity WebGL game demonstrating advanced physics simulation with predictive trajectory calculations.",
+  "longDescription": "An interactive physics simulation that showcases real-time projectile motion prediction. Players can adjust launch parameters and see instant trajectory predictions, demonstrating advanced Unity physics and mathematical modeling capabilities. The game features realistic physics simulation with customizable parameters including launch angle, velocity, gravity, and air resistance effects.",
+  "category": "Game Dev",
+  "year": 2024,
+  "tech": [
+    "Unity",
+    "C#"
+  ],
+  "roles": [
+    "Game Developer",
+    "Physics Programmer",
+    "UI Developer"
+  ],
+  "features": [
+    "2D physics simulation",
+    "Projectile motion",
+    "Predictive trajectory",
+    "UI for adjusting initial velocity and angle",
+    "Cross-platform compatibility"
+  ],
+  "cover": null,
+  "media": [
+    {
+      "type": "image",
+      "src": "ppm-1.png"
+    },
+    {
+      "type": "image",
+      "src": "ppm-2.png"
+    },
+    {
+      "type": "image",
+      "src": "ppm-3.png"
+    },
+    {
+      "type": "unity",
+      "src": "unity/index.html",
+      "title": "Play in browser"
+    }
+  ],
+  "links": [
+    {
+      "type": "github",
+      "url": "https://github.com/ttvpro007/PredictiveProjectile"
+    }
+  ],
+  "featured": false,
+  "showOnResume": false,
+  "resumeOrder": 2,
+  "draft": false
+}

@@ -36,7 +36,6 @@ function findCSSFiles(dir) {
 function analyzeCSSSize(filePath) {
   try {
     const stats = fs.statSync(filePath);
-    const css = fs.readFileSync(filePath, 'utf8');
     
     // Calculate sizes
     const rawSize = stats.size;

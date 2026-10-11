@@ -40,12 +40,12 @@
 
 /* Focus states */
 .image-container--clickable:focus {
-  outline: 2px solid var(--primary);
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
 .image-container--hover:focus {
-  outline: 2px solid var(--primary);
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 

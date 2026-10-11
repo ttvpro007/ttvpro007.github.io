@@ -25,7 +25,6 @@ function analyzeCSSSimple(css) {
   const comments = [];
   
   let inMediaQuery = false;
-  let currentMediaQuery = '';
   
   lines.forEach(line => {
     const trimmed = line.trim();
@@ -42,7 +41,6 @@ function analyzeCSSSimple(css) {
     // Detect media queries
     if (trimmed.startsWith('@media')) {
       inMediaQuery = true;
-      currentMediaQuery = trimmed;
       mediaQueries.push(trimmed);
       return;
     }
@@ -51,7 +49,6 @@ function analyzeCSSSimple(css) {
     if (trimmed === '}') {
       if (inMediaQuery) {
         inMediaQuery = false;
-        currentMediaQuery = '';
       }
       return;
     }

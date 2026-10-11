@@ -1,0 +1,38 @@
+{
+  "title": "Programming Problems Solution",
+  "description": "A collection of programming problems and solutions from Codewars and other platforms.",
+  "longDescription": "A comprehensive collection of programming problems and their solutions from various competitive programming platforms including Codewars, LeetCode, and HackerRank. The repository includes solutions in multiple languages and demonstrates different algorithmic approaches and optimization techniques.",
+  "category": "Apps",
+  "year": 2024,
+  "tech": [
+    "C#",
+    "C++",
+    "Codewars"
+  ],
+  "roles": [
+    "Algorithm Developer",
+    "Problem Solver"
+  ],
+  "features": [
+    "Comprehensive problem collection",
+    "Multi-language solutions (C#, C++)",
+    "Algorithm optimization techniques",
+    "Competitive programming strategies",
+    "Code efficiency analysis",
+    "Platform-specific solutions",
+    "Educational documentation",
+    "Performance benchmarking"
+  ],
+  "cover": null,
+  "media": [],
+  "links": [
+    {
+      "type": "github",
+      "url": "https://github.com/ttvpro007/Programming-Problems-Solution"
+    }
+  ],
+  "featured": false,
+  "showOnResume": true,
+  "resumeOrder": 6,
+  "draft": false
+}

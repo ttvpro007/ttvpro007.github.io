@@ -1,0 +1,322 @@
+<title>Portfolio Architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Rajdhani:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column (~70ch) with full-bleed figure panels; the site's own Arcade Gold identity, dark-first */
+:root {
+  --bg: #181622;
+  --panel: #221B36;
+  --line: #3a3150;
+  --fg: #F3F3F3;
+  --muted: #b3adc2;
+  --gold: #EEB64B;
+  --orange: #FC9460;
+  --rose: #E54264;
+  --ok: #64A47F;
+  --display: 'Orbitron', 'Segoe UI', system-ui, sans-serif;
+  --label: 'Rajdhani', 'Segoe UI', system-ui, sans-serif;
+  --body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #faf8f3; --panel: #f1ece2; --line: #ddd3c2; --fg: #1d1a24; --muted: #5d566b;
+    --gold: #9a6a0c; --orange: #b4501f; --rose: #b8264a; --ok: #2f7a4f; color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #faf8f3; --panel: #f1ece2; --line: #ddd3c2; --fg: #1d1a24; --muted: #5d566b;
+  --gold: #9a6a0c; --orange: #b4501f; --rose: #b8264a; --ok: #2f7a4f; color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 17px/1.6 var(--body); margin: 0; padding-inline: 20px; }
+.wrap { max-width: 920px; margin: 0 auto; padding-block: 48px 64px; display: flex; flex-direction: column; gap: 28px; }
+.prose { max-width: 70ch; }
+h1, h2 { font-family: var(--display); text-wrap: balance; letter-spacing: 0.02em; margin: 0; }
+h1 { font-size: clamp(1.7rem, 4vw, 2.4rem); color: var(--gold); }
+h2 { font-size: 1.15rem; color: var(--gold); margin-top: 20px; }
+h3 { font-family: var(--label); font-size: 1.15rem; font-weight: 700; margin: 0 0 4px; }
+p { margin: 0; }
+.prose > * + * { margin-top: 12px; }
+.lede { font-size: 1.15rem; color: var(--fg); }
+.eyebrow { font-family: var(--label); text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); font-weight: 600; font-size: 0.85rem; }
+code, .mono { font-family: var(--mono); font-size: 0.86em; }
+code { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; overflow-wrap: anywhere; }
+a { color: var(--gold); }
+a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.fact { background: var(--panel); padding: 12px 14px; display: flex; flex-direction: column; gap: 2px; }
+.fact b { font-family: var(--display); font-size: 1.35rem; color: var(--fg); font-variant-numeric: tabular-nums; }
+.fact span { font-family: var(--label); font-size: 0.95rem; color: var(--muted); }
+
+figure { margin: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.fig-scroll { overflow-x: auto; }
+figure svg { display: block; width: 100%; min-width: 640px; height: auto; color: var(--fg); }
+figcaption { font-size: 0.95rem; color: var(--muted); max-width: 75ch; }
+figcaption b { color: var(--fg); }
+
+table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+.table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--label); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.82rem; color: var(--muted); background: var(--panel); }
+tr:last-child td { border-bottom: 0; }
+td:first-child { white-space: nowrap; }
+
+.rules { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.rules li { display: grid; grid-template-columns: 22px 1fr; gap: 8px; }
+.rules li::before { content: '◆'; color: var(--gold); font-size: 0.8rem; padding-top: 4px; }
+.open { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.open li { border-left: 3px solid var(--rose); padding: 4px 0 4px 12px; }
+.open li.minor { border-left-color: var(--line); }
+footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--muted); font-size: 0.9rem; display: flex; flex-direction: column; gap: 4px; }
+@media (max-width: 560px) { body { font-size: 16px; } td:first-child { white-space: normal; } }
+</style>
+
+<div class="wrap">
+  <header class="prose">
+    <div class="eyebrow">ttvpro007.github.io · architecture map</div>
+    <h1>Portfolio Architecture</h1>
+  </header>
+
+  <section class="prose">
+    <p class="lede">The site is a pure function of the <code>content/</code> folder. Every project, image, Unity build, label and color the visitor sees is read from there at build time; code never holds content, and the admin GUI is just a local editor for that folder plus a gated way to ship it.</p>
+    <p>Once that is clear the rest follows: the Vite plugin exists to turn the folder into data and copy its media, the registries exist so a new kind of media or link is a data change rather than a code change, and the release gate exists because the only thing that can break the live site is content that was never built.</p>
+  </section>
+
+  <div class="facts" aria-label="Measured figures">
+    <div class="fact"><b>7</b><span>project folders</span></div>
+    <div class="fact"><b>13</b><span>media items · 11 image, 1 YouTube, 1 Unity</span></div>
+    <div class="fact"><b>5 / 7</b><span>media / link types registered</span></div>
+    <div class="fact"><b>4 · 11</b><span>theme presets · color tokens</span></div>
+    <div class="fact"><b>16</b><span>admin API routes</span></div>
+    <div class="fact"><b>113 MB</b><span>content/projects on disk</span></div>
+  </div>
+
+  <h2>Where a project lives — before and after</h2>
+  <figure>
+    <div class="fig-scroll">
+      <svg viewBox="0 0 860 300" role="img" aria-label="Before, one project's data was split across four places in public and src; after, it is one folder under content/projects with project.json, overview.md and media.">
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+        </defs>
+        <text x="20" y="26" font-family="Rajdhani, sans-serif" font-size="15" font-weight="700" fill="currentColor" letter-spacing="1.5">BEFORE · 56ff098</text>
+        <g font-family="JetBrains Mono, monospace" font-size="12" fill="currentColor">
+          <rect x="20" y="44" width="300" height="44" rx="6" fill="none" stroke="currentColor" opacity="0.6"/>
+          <text x="34" y="63">src/data/projects.json</text><text x="34" y="79" opacity="0.65">one array entry, 20+ fields</text>
+          <rect x="20" y="100" width="300" height="44" rx="6" fill="none" stroke="currentColor" opacity="0.6"/>
+          <text x="34" y="119">public/projects-images/ppm-*.png</text><text x="34" y="135" opacity="0.65">referenced by absolute path</text>
+          <rect x="20" y="156" width="300" height="44" rx="6" fill="none" stroke="currentColor" opacity="0.6"/>
+          <text x="34" y="175">public/markdown/ppm.md</text><text x="34" y="191" opacity="0.65">fetched at runtime via markdownPath</text>
+          <rect x="20" y="212" width="300" height="44" rx="6" fill="none" stroke="currentColor" opacity="0.6"/>
+          <text x="34" y="231">public/unity-games/ppm/</text><text x="34" y="247" opacity="0.65">detected by "unity-games" in demo URL</text>
+        </g>
+        <text x="20" y="284" font-family="Source Sans 3, sans-serif" font-size="13" fill="currentColor" opacity="0.75">4 places to edit, nothing checks they agree</text>
+
+        <line x1="350" y1="150" x2="470" y2="150" style="stroke:var(--gold)" stroke-width="2" marker-end="url(#ah)"/>
+        <text x="410" y="140" text-anchor="middle" font-family="Rajdhani, sans-serif" font-size="13" font-weight="600" style="fill:var(--gold)">migrated</text>
+
+        <text x="500" y="26" font-family="Rajdhani, sans-serif" font-size="15" font-weight="700" style="fill:var(--gold)" letter-spacing="1.5">AFTER · working tree</text>
+        <rect x="500" y="44" width="340" height="212" rx="8" fill="none" style="stroke:var(--gold)" stroke-width="1.5"/>
+        <g font-family="JetBrains Mono, monospace" font-size="12" fill="currentColor">
+          <text x="516" y="68">content/projects/predictive-…/</text>
+          <text x="532" y="96">project.json</text><text x="680" y="96" opacity="0.65">fields · media[] · links[]</text>
+          <text x="532" y="122">overview.md</text><text x="680" y="122" opacity="0.65">inlined at build</text>
+          <text x="532" y="148">media/ppm-1.png …</text><text x="680" y="148" opacity="0.65">type: image</text>
+          <text x="532" y="174">media/unity/index.html</text><text x="680" y="174" opacity="0.65">type: unity</text>
+          <text x="516" y="210" opacity="0.65">content/projects/order.json</text>
+          <text x="516" y="232" opacity="0.65">display order, one list of slugs</text>
+        </g>
+        <text x="500" y="284" font-family="Source Sans 3, sans-serif" font-size="13" fill="currentColor" opacity="0.75">1 folder: add, rename or delete a project as a unit</text>
+      </svg>
+    </div>
+    <figcaption><b>A project is now a folder.</b> The old shape spread one project over four locations and recognised a Unity build by a substring in a URL. The migration moved the Unity build and write-ups with <code>git mv</code> and copied images, so history is intact; <code>public/projects-images/</code> remains only because <code>content/site/profile.json</code> still points at three of its files.</figcaption>
+  </figure>
+
+  <h2>From folder to screen</h2>
+  <figure>
+    <div class="fig-scroll">
+      <svg viewBox="0 0 860 330" role="img" aria-label="content/projects is read by plugins/content.js into the virtual:projects module, shaped by toViewModel in src/data/index.js, and rendered by Projects, ProjectModal and the media renderers. Media files take a separate path: served by dev middleware, copied to dist on build.">
+        <defs>
+          <marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+          <marker id="ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--ok)"/></marker>
+        </defs>
+        <g font-family="JetBrains Mono, monospace" font-size="12" fill="currentColor">
+          <rect x="20" y="60" width="170" height="70" rx="8" fill="none" stroke="currentColor"/>
+          <text x="105" y="90" text-anchor="middle">content/projects/</text>
+          <text x="105" y="108" text-anchor="middle" opacity="0.65">*.json · *.md</text>
+
+          <rect x="250" y="60" width="180" height="70" rx="8" fill="none" style="stroke:var(--gold)" stroke-width="1.5"/>
+          <text x="340" y="90" text-anchor="middle">plugins/content.js</text>
+          <text x="340" y="108" text-anchor="middle" opacity="0.65">loadProjects()</text>
+
+          <rect x="490" y="60" width="160" height="70" rx="8" fill="none" stroke="currentColor"/>
+          <text x="570" y="90" text-anchor="middle">src/data/index.js</text>
+          <text x="570" y="108" text-anchor="middle" opacity="0.65">toViewModel()</text>
+
+          <rect x="700" y="20" width="140" height="44" rx="8" fill="none" stroke="currentColor"/>
+          <text x="770" y="47" text-anchor="middle">Projects / Resume</text>
+          <rect x="700" y="74" width="140" height="44" rx="8" fill="none" stroke="currentColor"/>
+          <text x="770" y="101" text-anchor="middle">ProjectModal</text>
+          <rect x="700" y="128" width="140" height="44" rx="8" fill="none" stroke="currentColor"/>
+          <text x="770" y="155" text-anchor="middle">MEDIA_RENDERERS</text>
+        </g>
+        <g font-family="Rajdhani, sans-serif" font-size="13" font-weight="600" fill="currentColor">
+          <line x1="190" y1="95" x2="246" y2="95" stroke="currentColor" marker-end="url(#ah2)"/>
+          <text x="218" y="86" text-anchor="middle">reads</text>
+          <line x1="430" y1="95" x2="486" y2="95" stroke="currentColor" marker-end="url(#ah2)"/>
+          <text x="458" y="86" text-anchor="middle">virtual:projects</text>
+          <line x1="650" y1="85" x2="696" y2="45" stroke="currentColor" marker-end="url(#ah2)"/>
+          <line x1="650" y1="95" x2="696" y2="96" stroke="currentColor" marker-end="url(#ah2)"/>
+          <text x="673" y="130" text-anchor="middle" font-size="12">projects.items</text>
+          <line x1="770" y1="118" x2="770" y2="124" stroke="currentColor" marker-end="url(#ah2)"/>
+        </g>
+
+        <line x1="20" y1="200" x2="840" y2="200" stroke="currentColor" opacity="0.25" stroke-dasharray="4 4"/>
+        <text x="20" y="222" font-family="Rajdhani, sans-serif" font-size="13" font-weight="700" style="fill:var(--ok)" letter-spacing="1.2">MEDIA FILES · bypass the bundler</text>
+        <g font-family="JetBrains Mono, monospace" font-size="12" fill="currentColor">
+          <rect x="20" y="236" width="170" height="64" rx="8" fill="none" style="stroke:var(--ok)"/>
+          <text x="105" y="264" text-anchor="middle">&lt;slug&gt;/media/**</text>
+          <text x="105" y="282" text-anchor="middle" opacity="0.65">png · webp · wasm …</text>
+          <rect x="300" y="236" width="230" height="28" rx="6" fill="none" stroke="currentColor" opacity="0.7"/>
+          <text x="415" y="255" text-anchor="middle">dev: middleware streams</text>
+          <rect x="300" y="272" width="230" height="28" rx="6" fill="none" stroke="currentColor" opacity="0.7"/>
+          <text x="415" y="291" text-anchor="middle">build: closeBundle copies</text>
+          <text x="660" y="262" text-anchor="middle">/projects/&lt;slug&gt;/&lt;file&gt;</text>
+          <text x="660" y="282" text-anchor="middle" opacity="0.65">same URL in dev and dist</text>
+        </g>
+        <line x1="190" y1="256" x2="296" y2="250" style="stroke:var(--ok)" marker-end="url(#ahg)"/>
+        <line x1="190" y1="280" x2="296" y2="286" style="stroke:var(--ok)" marker-end="url(#ahg)"/>
+        <line x1="530" y1="250" x2="568" y2="258" style="stroke:var(--ok)" marker-end="url(#ahg)"/>
+        <line x1="530" y1="286" x2="568" y2="278" style="stroke:var(--ok)" marker-end="url(#ahg)"/>
+      </svg>
+    </div>
+    <figcaption><b>Data goes through the module graph; media goes around it.</b> Project JSON and overviews become one virtual module (drafts dropped when <code>command === 'build'</code>), then <code>toViewModel</code> resolves media URLs and derives the two fields the cards read, <code>image</code> and <code>demo</code>. Media never enters Rollup — a 96 MB Unity build would be pointless to hash — and keeps one URL shape in both modes, so <code>resolveMediaUrl</code> needs no dev/prod branch. Content edits reach open site tabs through a custom HMR event, <code>portfolio:content-changed</code>, not a full reload, so the admin tab is not reset.</figcaption>
+  </figure>
+
+  <h2>Registries: one entry, three consumers</h2>
+  <figure>
+    <div class="fig-scroll">
+      <svg viewBox="0 0 860 220" role="img" aria-label="The MEDIA_TYPES registry entry for a type is read by the site's renderers, by the admin's upload panel, and by project validation; adding a type means one registry entry and one renderer.">
+        <defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+        <rect x="20" y="40" width="300" height="140" rx="8" fill="none" style="stroke:var(--gold)" stroke-width="1.5"/>
+        <g font-family="JetBrains Mono, monospace" font-size="12" fill="currentColor">
+          <text x="36" y="64" style="fill:var(--gold)">src/lib/content/mediaTypes.js</text>
+          <text x="36" y="92">unity: {</text>
+          <text x="52" y="110">placement: 'playable',</text>
+          <text x="52" y="128">source: 'folder',</text>
+          <text x="52" y="146">entry: 'index.html', tabLabel }</text>
+          <rect x="560" y="20" width="280" height="48" rx="8" fill="none" stroke="currentColor"/>
+          <text x="576" y="40">site · renderers.jsx</text><text x="576" y="58" opacity="0.65">View in a modal tab + Live Demo</text>
+          <rect x="560" y="86" width="280" height="48" rx="8" fill="none" stroke="currentColor"/>
+          <text x="576" y="106">admin · MediaPanel.jsx</text><text x="576" y="124" opacity="0.65">folder picker, index.html check</text>
+          <rect x="560" y="152" width="280" height="48" rx="8" fill="none" stroke="currentColor"/>
+          <text x="576" y="172">projectSchema · validateProject</text><text x="576" y="190" opacity="0.65">unknown type blocks Test</text>
+        </g>
+        <g font-family="Rajdhani, sans-serif" font-size="13" font-weight="600" fill="currentColor">
+          <line x1="320" y1="90" x2="556" y2="44" stroke="currentColor" marker-end="url(#ah3)"/>
+          <text x="440" y="56" text-anchor="middle">placement → tab vs carousel</text>
+          <line x1="320" y1="110" x2="556" y2="110" stroke="currentColor" marker-end="url(#ah3)"/>
+          <text x="440" y="103" text-anchor="middle">source → upload UI</text>
+          <line x1="320" y1="130" x2="556" y2="176" stroke="currentColor" marker-end="url(#ah3)"/>
+          <text x="440" y="166" text-anchor="middle">keys → allowed types</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption><b>Extending the site is a data change.</b> The same pattern holds for <code>LINK_TYPES</code> (buttons in the modal, URL auto-detect in the admin), <code>PROJECT_FIELDS</code> (the admin form renders from it) and <code>THEME_TOKENS</code> (CSS variable mapping and the theme editor's color pickers). Registries are plain JS with no React, so the Node-side admin server imports the same files as the browser.</figcaption>
+  </figure>
+
+  <h2>Theming</h2>
+  <section class="prose">
+    <p><code>content/theme.json</code> holds named presets and the <code>active</code> one. At startup <code>applyTheme()</code> writes 11 color tokens, two font stacks and a radius onto <code>:root</code> and injects the Google Fonts link. Stylesheets read only those variables; translucent shades are <code>color-mix(in srgb, var(--color-primary) 30%, transparent)</code> rather than <code>rgba</code> literals, so a shade follows its token. About a hundred hard-coded gold/orange literals were rewritten this way.</p>
+    <p>The admin's theme editor previews unsaved presets by <code>postMessage</code> into an iframe of the dev site (same-origin only), at phone/tablet/laptop/wide sizes, and reports WCAG contrast for three pairs.</p>
+  </section>
+
+  <h2>The release gate</h2>
+  <figure>
+    <div class="fig-scroll">
+      <svg viewBox="0 0 860 210" role="img" aria-label="Test builds and records a fingerprint F; Stage and Go live are allowed only while the current fingerprint equals F; any edit changes the fingerprint and re-locks them.">
+        <defs>
+          <marker id="ah4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+          <marker id="ah4r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--rose)"/></marker>
+        </defs>
+        <g font-family="JetBrains Mono, monospace" font-size="12" fill="currentColor">
+          <rect x="20" y="70" width="120" height="56" rx="8" fill="none" stroke="currentColor"/>
+          <text x="80" y="102" text-anchor="middle">edit content</text>
+          <rect x="200" y="62" width="200" height="72" rx="8" fill="none" style="stroke:var(--gold)" stroke-width="1.5"/>
+          <text x="300" y="88" text-anchor="middle">Test</text>
+          <text x="300" y="106" text-anchor="middle" opacity="0.7">validate · vite build</text>
+          <text x="300" y="122" text-anchor="middle" opacity="0.7">preview :4173 · record F</text>
+          <rect x="520" y="22" width="150" height="50" rx="8" fill="none" stroke="currentColor"/>
+          <text x="595" y="44" text-anchor="middle">Stage</text>
+          <text x="595" y="61" text-anchor="middle" opacity="0.7">push HEAD:staging</text>
+          <rect x="520" y="124" width="150" height="50" rx="8" fill="none" stroke="currentColor"/>
+          <text x="595" y="146" text-anchor="middle">Go live</text>
+          <text x="595" y="163" text-anchor="middle" opacity="0.7">push HEAD:master</text>
+          <text x="760" y="52" text-anchor="middle" opacity="0.8">staging site</text>
+          <text x="760" y="70" text-anchor="middle" opacity="0.6">(if configured)</text>
+          <text x="760" y="154" text-anchor="middle" opacity="0.8">Actions → gh-pages</text>
+        </g>
+        <g font-family="Rajdhani, sans-serif" font-size="13" font-weight="600" fill="currentColor">
+          <line x1="140" y1="98" x2="196" y2="98" stroke="currentColor" marker-end="url(#ah4)"/>
+          <line x1="400" y1="88" x2="516" y2="52" stroke="currentColor" marker-end="url(#ah4)"/>
+          <line x1="400" y1="110" x2="516" y2="146" stroke="currentColor" marker-end="url(#ah4)"/>
+          <text x="458" y="98" text-anchor="middle" style="fill:var(--ok)">only if now = F</text>
+          <line x1="670" y1="47" x2="704" y2="52" stroke="currentColor" marker-end="url(#ah4)"/>
+          <line x1="670" y1="149" x2="696" y2="150" stroke="currentColor" marker-end="url(#ah4)"/>
+          <path d="M 300 134 C 300 190, 80 190, 80 130" fill="none" style="stroke:var(--rose)" stroke-dasharray="5 4" marker-end="url(#ah4r)"/>
+          <text x="190" y="196" text-anchor="middle" style="fill:var(--rose)">any change → fingerprint ≠ F → re-test</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption><b>Only content that was built, unchanged, can ship.</b> The fingerprint (<code>admin/server/release.js</code>) hashes path, size and mtime of every file under <code>content/</code>, the <code>HEAD</code> commit, and the diff of uncommitted non-content changes. Stage and Go live commit only <code>content/</code>; uncommitted code is in the test but would not ship, which the Release page warns about. CI lints and builds every push to <code>master</code> or <code>staging</code> and every PR; only <code>master</code> deploys live.</figcaption>
+  </figure>
+
+  <h2>Invariants</h2>
+  <ul class="rules prose">
+    <li><span>No content in <code>src/</code>. Text, media and colors belong in <code>content/</code>; components receive them from <code>@/data</code>.</span></li>
+    <li><span>No theme color literals in components. Use the CSS variables or <code>color-mix()</code> of them. Exceptions are deliberate: canvas effects, the confetti library, brand logos, and the standalone email template in <code>questUtils.js</code>.</span></li>
+    <li><span>Media <code>src</code> is relative to the project's <code>media/</code> folder or an absolute <code>https://</code> URL; nothing else resolves.</span></li>
+    <li><span>The admin API is dev-server only (<code>apply: 'serve'</code>) and binds to localhost. It writes files and runs git, so never run <code>npm run admin -- --host</code> on an untrusted network.</span></li>
+    <li><span>Deletes from the admin go to <code>.trash/</code> (ignored by git), never straight to removal.</span></li>
+  </ul>
+
+  <h2>Deliberate oddities</h2>
+  <section class="prose">
+    <p><b>Short legacy variable names</b> such as <code>--card-bg</code>, <code>--text</code> and <code>--bg</code> are defined in <code>variables.css</code> as aliases of theme tokens. About twenty components used them after an earlier CSS consolidation removed their definitions, which left cards and the mobile navbar transparent. They are aliases rather than renamed call sites to keep the diff reviewable; migrating them is optional cleanup.</p>
+    <p><b>The <code>staging</code> branch is force-pushed.</b> It is a mirror of whatever is under review, not a line of history.</p>
+  </section>
+
+  <h2>Map of the code</h2>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Path</th><th>Owns</th><th>Lines</th></tr></thead>
+      <tbody>
+        <tr><td><code>plugins/content.js</code></td><td>virtual:projects, media middleware, build copy, change event</td><td class="mono">122</td></tr>
+        <tr><td><code>src/lib/content/</code></td><td>mediaTypes, linkTypes, projectSchema (fields, validation, view model)</td><td class="mono">194</td></tr>
+        <tr><td><code>src/lib/theme/applyTheme.js</code></td><td>token → CSS variable mapping, font loading</td><td class="mono">68</td></tr>
+        <tr><td><code>src/components/features/projects/media/</code></td><td>View and Thumb per media type</td><td class="mono">112</td></tr>
+        <tr><td><code>admin/server/</code></td><td>API routes, jobs, image optimisation (sharp), release gate + preview</td><td class="mono">470</td></tr>
+        <tr><td><code>admin/src/</code></td><td>editor UI: projects, media, links, theme, site JSON, release</td><td class="mono">1,000</td></tr>
+        <tr><td><code>.github/workflows/deploy.yml</code></td><td>lint + build; live deploy on master; staging deploy when configured</td><td class="mono">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Unresolved</h2>
+  <ul class="open prose">
+    <li><b>No automated tests.</b> Verification so far is lint, a production build, and a manual browser pass: create/upload/save/delete through the API, WebP conversion (9.1 MB PNG → 2.0 MB), Test gate lock and unlock, theme presets, and overflow checks at 320–2560 px.</li>
+    <li><b>Staging relies on one deploy key.</b> <code>ttvpro007/portfolio-staging</code> is deployed by CI with a write deploy key scoped to that repo, stored as <code>STAGING_DEPLOY_KEY</code>. Nothing rotates it automatically; the steps are in docs/release.md.</li>
+    <li><b>The test fingerprint lives in memory.</b> Restarting the dev server, which also happens whenever an admin or plugin file is edited, clears it, and you have to run Test again. It fails safe, but it is surprising.</li>
+    <li><b>Large binaries live in git.</b> The Unity build is about 96 MB of the 113 MB under <code>content/projects</code>, with no LFS. That is within GitHub Pages' limits, but it makes the repo slower to clone.</li>
+    <li class="minor"><b>Content gaps.</b> Broken videos and wrong links found during the migration were removed rather than replaced. Five projects now have no video, Lumina Adfecto and Planet Runner have no external link, and Unity Physics Simulator and Programming Problems Solution have no images until real screenshots are added.</li>
+    <li class="minor"><b>Fonts load from Google at runtime</b>, so the first paint can show fallback fonts.</li>
+  </ul>
+
+  <footer>
+    <span>Measured at <span class="mono">3a6209c</span> (branch <span class="mono">content-admin-restructure</span>, PR #1), 2026-10-11. Re-pin to the merge commit on <span class="mono">master</span> after the PR merges.</span>
+    <span>Source: <span class="mono">docs/architecture.html</span>. Usage docs: <span class="mono">docs/content.md</span>, <span class="mono">docs/release.md</span>.</span>
+  </footer>
+</div>

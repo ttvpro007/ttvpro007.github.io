@@ -3,14 +3,17 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import './MarkdownRenderer.css';
 
-const MarkdownRenderer = ({ markdownPath, className = '' }) => {
-  const [content, setContent] = useState('');
-  const [loading, setLoading] = useState(true);
+/**
+ * Renders Markdown from inline `content` (project overviews ship inline) or fetched from `markdownPath`.
+ */
+const MarkdownRenderer = ({ content: inlineContent, markdownPath, className = '' }) => {
+  const [fetched, setFetched] = useState('');
+  const [loading, setLoading] = useState(!inlineContent);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchMarkdown = async () => {
-      if (!markdownPath) {
+      if (inlineContent || !markdownPath) {
         setLoading(false);
         return;
       }
@@ -25,7 +28,7 @@ const MarkdownRenderer = ({ markdownPath, className = '' }) => {
         }
         
         const markdownContent = await response.text();
-        setContent(markdownContent);
+        setFetched(markdownContent);
       } catch (err) {
         console.error('Error loading markdown:', err);
         setError(err.message);
@@ -35,7 +38,9 @@ const MarkdownRenderer = ({ markdownPath, className = '' }) => {
     };
 
     fetchMarkdown();
-  }, [markdownPath]);
+  }, [markdownPath, inlineContent]);
+
+  const content = inlineContent || fetched;
 
   if (loading) {
     return (

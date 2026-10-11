@@ -36,14 +36,17 @@ export default function Navbar({ setPage, currentPage }) {
         </div>
         
         {/* Mobile Menu Button */}
-        <div 
+        <button
+          type="button"
           className={`navbar-mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}
           onClick={handleMobileMenuToggle}
+          aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isMobileMenuOpen}
         >
-          <div className="navbar-mobile-menu-line"></div>
-          <div className="navbar-mobile-menu-line"></div>
-          <div className="navbar-mobile-menu-line"></div>
-        </div>
+          <span className="navbar-mobile-menu-line"></span>
+          <span className="navbar-mobile-menu-line"></span>
+          <span className="navbar-mobile-menu-line"></span>
+        </button>
       </nav>
 
       {/* Mobile Menu Overlay */}

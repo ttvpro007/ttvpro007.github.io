@@ -1,0 +1,49 @@
+# Releasing: test → stage → live
+
+Nothing reaches the public site until it has been built and checked. The admin's **Release** page walks through it; the same steps work by hand.
+
+## 1. Test (local, always)
+
+*Release → Build & test* validates every non-draft project, runs the production build, and serves `dist/` at `http://localhost:4173` — exactly what will be deployed (drafts excluded, media copied, minified).
+
+The admin records a fingerprint of what was tested: every file under `content/`, the current commit, and uncommitted code changes. **Stage** and **Go live** stay locked until that fingerprint matches the current state, so any edit after testing requires a new test.
+
+By hand: `npm run build && npm run preview`.
+
+## 2. Stage (optional, needs one-time setup)
+
+*Push to staging* commits `content/` and force-pushes the current commit to the `staging` branch. CI builds it and publishes it to a separate staging site, so you can check it on real phones and browsers before going live. The `staging` branch is a throwaway mirror — it is overwritten on every stage.
+
+### Setup (done 2026-10-11)
+
+GitHub Pages allows one site per repository, so staging lives in a second repo:
+
+| Piece | Value |
+|---|---|
+| Staging repo | [ttvpro007/portfolio-staging](https://github.com/ttvpro007/portfolio-staging) (public, Pages from `gh-pages`) |
+| Staging URL | https://ttvpro007.github.io/portfolio-staging/ |
+| Auth | deploy key *CI deploy from ttvpro007.github.io* — write access to the staging repo only |
+| This repo, secret | `STAGING_DEPLOY_KEY` — the deploy key's private half |
+| This repo, variables | `STAGING_REPO` = `ttvpro007/portfolio-staging`, `STAGING_BASE_PATH` = `/portfolio-staging/` |
+
+Staging builds set `SITE_ENV=staging`: the page gets `noindex, nofollow` and a `[staging]` title prefix so search engines skip it and a staging tab is easy to tell apart.
+
+**Rotating the key:** generate a new ed25519 key, add the public half as a write deploy key on the staging repo, `gh secret set STAGING_DEPLOY_KEY < key` here, delete the old deploy key and the local files. If `STAGING_REPO` is ever unset, pushes to `staging` are only linted and built.
+
+The build supports serving under a sub-path via `BASE_PATH`: media URLs, CSS assets and root-relative paths in `content/site/profile.json` follow it. Root-relative paths hard-coded in components would not — keep asset paths in content or CSS.
+
+## 3. Go live
+
+*Go live* (only on `master`) commits `content/` with your message and pushes `master`. The workflow in `.github/workflows/deploy.yml` lints, builds and publishes `dist/` to this repo's `gh-pages` branch, which serves https://ttvpro007.github.io/. Watch it under the repo's *Actions* tab (linked from the Release page).
+
+Only `content/` is committed by the admin. Code changes (components, styles) are committed by you as usual; the Release page warns when there are uncommitted code changes, because Test includes them but Go live would not ship them.
+
+## CI summary
+
+| Event | Lint + build | Deploy |
+|---|---|---|
+| Pull request → `master` | ✓ | — |
+| Push `staging` | ✓ (with `STAGING_BASE_PATH`) | staging repo, if configured |
+| Push `master` | ✓ | live site |
+
+Newer pushes cancel an in-progress run for the same branch.

@@ -12,11 +12,11 @@
 }
 
 .search-filter-collapsed {
-  background: linear-gradient(135deg, #1a1a1a 0%, rgba(252, 148, 96, 0.05) 100%);
+  background: linear-gradient(135deg, #1a1a1a 0%, color-mix(in srgb, var(--color-secondary) 5%, transparent) 100%);
   border: 2px solid #333;
   border-radius: 20px;
   padding: 0.5rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 2px 8px #fc94601a;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 2px 8px color-mix(in srgb, var(--color-secondary) 10%, transparent);
   backdrop-filter: blur(10px);
   width: 60px;
   height: 60px;
@@ -28,16 +28,16 @@
 
 .search-filter-collapsed-icon {
   font-size: 1.5rem;
-  color: #FC9460;
-  filter: drop-shadow(0 2px 4px rgba(252, 148, 96, 0.3));
+  color: var(--color-secondary);
+  filter: drop-shadow(0 2px 4px color-mix(in srgb, var(--color-secondary) 30%, transparent));
 }
 
 .search-filter-expanded {
-  background: linear-gradient(135deg, #1a1a1a 0%, rgba(252, 148, 96, 0.05) 100%);
+  background: linear-gradient(135deg, #1a1a1a 0%, color-mix(in srgb, var(--color-secondary) 5%, transparent) 100%);
   border: 2px solid #333;
   border-radius: 20px;
   padding: 1.5rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 2px 8px #fc94601a;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 2px 8px color-mix(in srgb, var(--color-secondary) 10%, transparent);
   backdrop-filter: blur(10px);
   width: 320px;
   display: flex;
@@ -63,21 +63,21 @@
 .search-filter-close-button {
   width: 28px;
   height: 28px;
-  background: #fc94601a;
-  border: 1px solid rgba(252, 148, 96, 0.3);
+  background: color-mix(in srgb, var(--color-secondary) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 30%, transparent);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: var(--cursor-pointer);
   font-size: 14px;
-  color: #FC9460;
+  color: var(--color-secondary);
   padding: 0;
   margin: 0;
 }
 
 .search-filter-close-button:hover {
-  background: rgba(252, 148, 96, 0.2);
+  background: color-mix(in srgb, var(--color-secondary) 20%, transparent);
 }
 
 .search-filter-input-container {
@@ -98,8 +98,8 @@
 }
 
 .search-filter-input:focus {
-  border-color: #FC9460;
-  box-shadow: 0 0 0 3px #fc94601a;
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-secondary) 10%, transparent);
 }
 
 .search-filter-input-icon {
@@ -108,7 +108,7 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: 1rem;
-  color: #FC9460;
+  color: var(--color-secondary);
 }
 
 .search-filter-section {
@@ -133,9 +133,9 @@
 
 .search-filter-category-badge {
   cursor: var(--cursor-pointer);
-  background: #fc94601a;
-  color: #FC9460;
-  border: 1px solid rgba(252, 148, 96, 0.3);
+  background: color-mix(in srgb, var(--color-secondary) 10%, transparent);
+  color: var(--color-secondary);
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 30%, transparent);
   border-radius: 8px;
   padding: 0.4rem 0.8rem;
   font-size: 0.8rem;
@@ -146,10 +146,10 @@
 }
 
 .search-filter-category-badge.active {
-  background: #FC9460;
+  background: var(--color-secondary);
   color: white;
-  border-color: #FC9460;
-  box-shadow: 0 2px 8px rgba(252, 148, 96, 0.4);
+  border-color: var(--color-secondary);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--color-secondary) 40%, transparent);
 }
 
 .search-filter-sort-container {
@@ -176,9 +176,9 @@
 
 .search-filter-summary {
   padding: 0.75rem;
-  background: rgba(252, 148, 96, 0.05);
+  background: color-mix(in srgb, var(--color-secondary) 5%, transparent);
   border-radius: 8px;
-  border: 1px solid rgba(252, 148, 96, 0.2);
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 20%, transparent);
   transform-origin: top;
 }
 

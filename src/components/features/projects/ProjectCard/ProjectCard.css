@@ -5,8 +5,8 @@
 /* Default project card container */
 .project-card-default {
   background: var(--card-bg);
-  border: 2px solid var(--primary);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1), 0 2px 8px #fc94601a;
+  border: 2px solid var(--color-primary);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1), 0 2px 8px color-mix(in srgb, var(--color-secondary) 10%, transparent);
   cursor: var(--cursor-pointer);
   transition: all 0.3s ease;
 }
@@ -15,7 +15,7 @@
 .project-card-default:hover {
   cursor: var(--cursor-pointer) !important;
   transform: translateY(-4px) !important;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15), 0 4px 12px #fc94602a !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15), 0 4px 12px color-mix(in srgb, var(--color-secondary) 16%, transparent) !important;
 }
 
 /* Ensure cursor pointer on all interactive elements within project card */
@@ -87,7 +87,7 @@
 .project-card-featured:hover {
   cursor: default !important;
   transform: none !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1), 0 2px 8px #fc94601a !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1), 0 2px 8px color-mix(in srgb, var(--color-secondary) 10%, transparent) !important;
 }
 
 /* Compact project cards - same as default */
@@ -98,5 +98,5 @@
 .project-card-compact:hover {
   cursor: var(--cursor-pointer) !important;
   transform: translateY(-2px) !important;
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12), 0 3px 10px #fc946025 !important;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12), 0 3px 10px color-mix(in srgb, var(--color-secondary) 15%, transparent) !important;
 } 

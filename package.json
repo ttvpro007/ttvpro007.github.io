@@ -5,22 +5,18 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "admin": "vite --open /admin/",
     "build": "vite build",
-    "lint": "eslint .",
     "preview": "vite preview",
+    "lint": "eslint .",
     "css:stats": "node scripts/css-stats.js",
     "css:quick": "node scripts/css-quick-stats.js",
     "css:size": "node scripts/css-size-analysis.js",
     "css:analyze": "npm run css:stats && npm run build && npm run css:size",
-    "css:analyze:quick": "npm run css:quick",
-    "deploy": "node scripts/deploy.js"
+    "css:analyze:quick": "npm run css:quick"
   },
   "dependencies": {
-    "@google-cloud/local-auth": "^3.0.1",
-    "autoprefixer": "^10.4.21",
     "framer-motion": "^12.23.6",
-    "googleapis": "^153.0.0",
-    "postcss": "^8.5.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-dom-confetti": "^0.2.0",
@@ -38,8 +34,11 @@
     "eslint": "^9.31.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
-    "gh-pages": "^6.3.0",
     "globals": "^16.2.0",
+    "sharp": "^0.34.5",
     "vite": "^7.0.5"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

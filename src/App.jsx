@@ -1,6 +1,10 @@
 import React from "react";
 import { Navbar } from "@/components/layout";
-import { Home, Projects, Resume, Contact } from "./pages";
+// Pages load on first visit, keeping the initial bundle small
+const Home = React.lazy(() => import("./pages/features/home"));
+const Projects = React.lazy(() => import("./pages/features/projects"));
+const Resume = React.lazy(() => import("./pages/features/resume"));
+const Contact = React.lazy(() => import("./pages/features/contact"));
 import { AnimatePresence, motion } from "framer-motion";
 
 const KONAMI_CODE = [
@@ -67,16 +71,16 @@ function SecretBadge({ show }) {
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 2100,
-            background: 'linear-gradient(90deg, #FC9460 0%, #EEB64B 100%)',
+            background: 'linear-gradient(90deg, var(--color-secondary) 0%, var(--color-primary) 100%)',
             color: '#fff',
-            border: '3px solid #A92F5F',
+            border: '3px solid var(--color-highlight)',
             borderRadius: 16,
             padding: '1rem 2.5rem',
-            fontFamily: 'Orbitron, Rajdhani, Segoe UI, Arial, sans-serif',
+            fontFamily: 'var(--font-heading)',
             fontWeight: 700,
             fontSize: '1.5rem',
-            boxShadow: '0 0 24px #FC9460, 0 0 8px #A92F5F',
-            textShadow: '0 0 8px #EEB64B, 0 0 2px #A92F5F',
+            boxShadow: '0 0 24px var(--color-secondary), 0 0 8px var(--color-highlight)',
+            textShadow: '0 0 8px var(--color-primary), 0 0 2px var(--color-highlight)',
             letterSpacing: '0.08em',
             display: 'flex',
             alignItems: 'center',
@@ -91,21 +95,22 @@ function SecretBadge({ show }) {
 }
 
 function App() {
-  const [page, setPage] = React.useState("Home");
-  const [konami, setKonami] = React.useState([]);
+  // ?project=<slug> deep-links straight into a project's modal
+  const [page, setPage] = React.useState(() =>
+    new URLSearchParams(window.location.search).has("project") ? "Projects" : "Home"
+  );
+  const konamiRef = React.useRef([]);
   const [showConfetti, setShowConfetti] = React.useState(false);
   const [isTransitioning, setIsTransitioning] = React.useState(false);
 
   React.useEffect(() => {
     const onKeyDown = (e) => {
-      setKonami((prev) => {
-        const next = [...prev, e.key].slice(-KONAMI_CODE.length);
-        if (next.join() === KONAMI_CODE.join()) {
-          setShowConfetti(true);
-          setTimeout(() => setShowConfetti(false), 2000);
-        }
-        return next;
-      });
+      const next = [...konamiRef.current, e.key].slice(-KONAMI_CODE.length);
+      konamiRef.current = next;
+      if (next.join() === KONAMI_CODE.join()) {
+        setShowConfetti(true);
+        setTimeout(() => setShowConfetti(false), 2000);
+      }
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
@@ -148,13 +153,13 @@ function App() {
       <AnimatePresence mode="wait" initial={false}>
         <motion.main
           key={page}
-          style={{ padding: "2rem", paddingTop: "5rem" }}
+          className="app-main"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -30 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          {renderPage()}
+          <React.Suspense fallback={null}>{renderPage()}</React.Suspense>
         </motion.main>
       </AnimatePresence>
     </div>

@@ -77,7 +77,7 @@
   padding: 1.5rem;
   transform: rotateY(0deg);
   background: var(--card-bg);
-  border: 2px solid var(--primary);
+  border: 2px solid var(--color-primary);
 }
 
 .flip-card-front:hover {
@@ -88,10 +88,10 @@
 .flip-card-back {
   padding: 1.5rem;
   transform: rotateY(180deg);
-  background: var(--primary);
+  background: var(--color-primary);
   color: black;
   font-weight: var(--font-weight-semibold);
-  border: 2px solid var(--primary);
+  border: 2px solid var(--color-primary);
   overflow-wrap: break-word;
   word-break: break-word;
   overflow: hidden;

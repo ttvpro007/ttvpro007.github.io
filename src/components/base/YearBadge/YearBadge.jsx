@@ -22,12 +22,12 @@ const YearBadge = ({
   };
 
   const badgeStyle = {
-    background: "var(--primary)",
+    background: "var(--color-primary)",
     color: "white",
     borderRadius: "16px",
     fontWeight: "var(--font-weight-bold)",
-    border: "2px solid var(--primary)",
-    boxShadow: "0 2px 8px rgba(252, 148, 96, 0.4), 0 1px 3px rgba(0, 0, 0, 0.2)",
+    border: "2px solid var(--color-primary)",
+    boxShadow: "0 2px 8px color-mix(in srgb, var(--color-secondary) 40%, transparent), 0 1px 3px rgba(0, 0, 0, 0.2)",
     ...sizeStyles[size],
     ...style
   };

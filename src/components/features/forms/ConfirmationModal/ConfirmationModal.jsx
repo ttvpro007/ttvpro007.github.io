@@ -93,7 +93,7 @@ export default function ConfirmationModal({ isOpen, title, text, onClose }) {
             transition={{ delay: 1 }}
             whileHover={{ 
               scale: 1.05,
-              boxShadow: '0 8px 20px rgba(238, 182, 75, 0.4)'
+              boxShadow: '0 8px 20px color-mix(in srgb, var(--color-primary) 40%, transparent)'
             }}
             whileTap={{ scale: 0.95 }}
           >

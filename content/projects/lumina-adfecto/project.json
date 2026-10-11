@@ -1,0 +1,40 @@
+{
+  "title": "Lumina Adfecto",
+  "description": "A reimagining of the Harry Potter's Deluminator features with Apple Vision Pro.",
+  "longDescription": "Lumina Adfecto lets you wield a physical Deluminator in Vision Pro to capture, recolor, and unleash ambient light with intuitive hand gestures.",
+  "category": "AR",
+  "year": 2024,
+  "tech": [
+    "Swift"
+  ],
+  "roles": [
+    "AR Developer",
+    "iOS Developer"
+  ],
+  "features": [
+    "Apple Vision Pro AR experience",
+    "Physical Deluminator interaction",
+    "Ambient light capture system",
+    "Dynamic light recoloring",
+    "Intuitive hand gesture controls",
+    "Real-time light manipulation",
+    "Spatial computing integration",
+    "Immersive AR storytelling"
+  ],
+  "cover": "lumina-adfecto.png",
+  "media": [
+    {
+      "type": "image",
+      "src": "lumina-adfecto-color.png"
+    },
+    {
+      "type": "image",
+      "src": "lumina-adfecto.png"
+    }
+  ],
+  "links": [],
+  "featured": false,
+  "showOnResume": true,
+  "resumeOrder": 7,
+  "draft": false
+}

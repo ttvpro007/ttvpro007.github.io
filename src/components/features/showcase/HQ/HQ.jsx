@@ -18,7 +18,7 @@ const HQ = ({
   const statusTextClass = "hq-status-text";
 
   return (
-    <div className="hq-container" style={style}>
+    <div className="hq-container" style={style} {...props}>
       {/* Header */}
       <div className="hq-header">
         <h3 className="hq-title">
@@ -27,7 +27,7 @@ const HQ = ({
             size="large"
             className="hq-icon"
           />
-          Headquarters
+          {title}
         </h3>
         {/* Status Indicator */}
         <div className={statusClass}>

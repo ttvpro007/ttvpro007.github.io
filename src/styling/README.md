@@ -195,11 +195,7 @@ import './PageName.css';
 
 ## 🎭 Themes
 
-### Dark Theme (Default)
-The portfolio uses a dark theme by default with gamer aesthetics.
-
-### Light Theme
-Available via `.theme-light` class with adjusted colors for better contrast.
+Colors, fonts and corner radius come from `content/theme.json` (presets + the active one), applied at startup by `src/lib/theme/applyTheme.js`. The values in `themes/variables.css` are only defaults. Edit themes in the admin (`npm run admin` → Theme), including light presets such as *Paper Light*. See [docs/content.md](../../docs/content.md#theme).
 
 ## 📱 Responsive Design
 

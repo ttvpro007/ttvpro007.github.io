@@ -18,15 +18,15 @@
 
 /* Button Variants */
 .button--primary {
-  background: var(--primary);
+  background: var(--color-primary);
   color: var(--card-bg);
   border: none;
 }
 
 .button--secondary {
   background: rgba(0,0,0,0);
-  color: var(--primary);
-  border: 1px solid var(--primary);
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
 }
 
 .button--outline {
@@ -69,13 +69,13 @@
 
 .button--primary:not(.button--disabled):hover {
   background: var(--secondary);
-  box-shadow: 0 4px 12px rgba(238, 182, 75, 0.3);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--color-primary) 30%, transparent);
 }
 
 .button--secondary:not(.button--disabled):hover {
-  background: var(--primary);
+  background: var(--color-primary);
   color: var(--card-bg);
-  box-shadow: 0 4px 12px rgba(238, 182, 75, 0.3);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--color-primary) 30%, transparent);
 }
 
 .button--outline:not(.button--disabled):hover {
@@ -86,7 +86,7 @@
 
 /* Focus States */
 .button:focus {
-  outline: 2px solid var(--primary);
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 

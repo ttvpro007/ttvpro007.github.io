@@ -5,37 +5,69 @@
 
 :root {
   /* =====================
-     Color Palette - Base Colors
+     Theme Tokens
+     Defaults only — content/theme.json overrides these at runtime
+     (src/lib/theme/applyTheme.js). Edit the theme there, not here.
      ===================== */
-  --color-gold: #EEB64B;
-  --color-orange: #FC9460;
-  --color-red-pink: #E54264;
-  --color-magenta: #A92F5F;
-  --color-deep-purple: #442261;
-  --color-navy: #283D5E;
-  --color-green: #327F51;
-  --color-mint: #64A47F;
-  --color-light-gold: #C3C48A;
-
-  /* =====================
-     Semantic Colors - Dark Theme (Default)
-     ===================== */
-  --color-primary: var(--color-gold);
-  --color-secondary: var(--color-orange);
-  --color-accent: var(--color-red-pink);
+  --color-primary: #EEB64B;
+  --color-secondary: #FC9460;
+  --color-accent: #E54264;
+  --color-highlight: #A92F5F;
+  --color-success: #64A47F;
   --color-background: #181622;
-  --color-background-alt: var(--color-deep-purple);
   --color-card-background: #221B36;
+  --color-background-alt: #442261;
   --color-text-primary: #F3F3F3;
   --color-text-secondary: #B8B8B8;
   --color-border: #3A3A3A;
-  --color-overlay: rgba(20, 20, 30, 0.65);
+  --font-heading: 'Orbitron', system-ui, sans-serif;
+  --font-body: 'Rajdhani', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Derived from the tokens above — never hard-code a theme color in a component */
+  --color-on-primary: var(--color-background);
+  --color-primary-hover: color-mix(in srgb, var(--color-primary) 85%, white);
+  --color-background-hover: color-mix(in srgb, var(--color-card-background) 85%, var(--color-primary));
+  --color-background-tertiary: color-mix(in srgb, var(--color-card-background) 70%, var(--color-background-alt));
+  --color-overlay: color-mix(in srgb, var(--color-background) 65%, transparent);
+
+  /* Legacy palette names, kept so older rules follow the theme */
+  --color-gold: var(--color-primary);
+  --color-orange: var(--color-secondary);
+  --color-red-pink: var(--color-accent);
+  --color-magenta: var(--color-highlight);
+  --color-deep-purple: var(--color-background-alt);
+  --color-mint: var(--color-success);
+  --color-green: var(--color-success);
+  --color-light-gold: color-mix(in srgb, var(--color-primary) 40%, var(--color-text-primary));
+  --color-navy: var(--color-background-alt);
+
+  /* Short names from the original stylesheet, still used by many components
+     (they went undefined in an earlier CSS consolidation — restored here) */
+  --primary: var(--color-primary);
+  --secondary: var(--color-secondary);
+  --accent: var(--color-accent);
+  --bg: var(--color-background);
+  --bg-alt: var(--color-background-alt);
+  --background: var(--color-background);
+  --card-bg: var(--color-card-background);
+  --card-overlay: color-mix(in srgb, var(--color-card-background) 85%, transparent);
+  --text: var(--color-text-primary);
+  --text-primary: var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+  --text-muted: var(--color-text-secondary);
+  --border: var(--color-border);
+  --accent-color: var(--color-accent);
+  --accent-secondary: var(--color-secondary);
+  --surface-primary: var(--color-card-background);
+  --surface-secondary: var(--color-background-alt);
+  --border-radius-md: calc(var(--border-radius) * 0.75);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
 
   /* =====================
      Layout & Spacing
      ===================== */
   --border-radius: 16px;
-  --shadow: 0 2px 24px rgba(238, 182, 75, 0.12);
+  --shadow: 0 2px 24px color-mix(in srgb, var(--color-primary) 12%, transparent);
   --max-width: 800px;
   
   /* Spacing Scale */
@@ -90,7 +122,7 @@
   --text-5xl: var(--font-size-5xl) / var(--line-height-tight);
 
   /* =====================
-     Heading Typography Mixins (Orbitron Font)
+     Heading Typography Mixins (theme heading font)
      ===================== */
   --heading-xs: var(--font-size-xs) / var(--line-height-tight);
   --heading-sm: var(--font-size-sm) / var(--line-height-tight);
@@ -122,7 +154,7 @@
   --h1-font-weight: var(--font-weight-bold);
   --h1-line-height: var(--line-height-tight);
   --h1-color: var(--color-primary);
-  --h1-text-shadow: 0 2px 8px rgba(238, 182, 75, 0.3);
+  --h1-text-shadow: 0 2px 8px color-mix(in srgb, var(--color-primary) 30%, transparent);
   --h1-letter-spacing: -0.02em;
   --h1-margin-bottom: var(--spacing-lg);
   
@@ -131,7 +163,7 @@
   --h2-font-weight: var(--font-weight-semibold);
   --h2-line-height: var(--line-height-tight);
   --h2-color: var(--color-text-primary);
-  --h2-text-shadow: 0 1px 4px rgba(238, 182, 75, 0.2);
+  --h2-text-shadow: 0 1px 4px color-mix(in srgb, var(--color-primary) 20%, transparent);
   --h2-letter-spacing: -0.01em;
   --h2-margin-bottom: var(--spacing-md);
   
@@ -140,7 +172,7 @@
   --h3-font-weight: var(--font-weight-semibold);
   --h3-line-height: var(--line-height-tight);
   --h3-color: var(--color-text-primary);
-  --h3-text-shadow: 0 1px 3px rgba(238, 182, 75, 0.15);
+  --h3-text-shadow: 0 1px 3px color-mix(in srgb, var(--color-primary) 15%, transparent);
   --h3-letter-spacing: 0;
   --h3-margin-bottom: var(--spacing-sm);
   
@@ -149,7 +181,7 @@
   --h4-font-weight: var(--font-weight-medium);
   --h4-line-height: var(--line-height-tight);
   --h4-color: var(--color-text-primary);
-  --h4-text-shadow: 0 1px 2px rgba(238, 182, 75, 0.1);
+  --h4-text-shadow: 0 1px 2px color-mix(in srgb, var(--color-primary) 10%, transparent);
   --h4-letter-spacing: 0;
   --h4-margin-bottom: var(--spacing-xs);
   
@@ -250,8 +282,8 @@
   --modal-padding-xl: 2rem;
   
   /* Modal Shadows & Effects */
-  --modal-shadow: 0 8px 32px rgba(238, 182, 75, 0.15);
-  --modal-shadow-hover: 0 6px 25px rgba(238, 182, 75, 0.4);
+  --modal-shadow: 0 8px 32px color-mix(in srgb, var(--color-primary) 15%, transparent);
+  --modal-shadow-hover: 0 6px 25px color-mix(in srgb, var(--color-primary) 40%, transparent);
   --modal-border-radius: var(--border-radius);
   --modal-backdrop-blur: 10px;
   
@@ -300,78 +332,18 @@
   --button-size-xl: 70px;
 }
 
-/* =====================
-   Theme Variations
-   ===================== */
-
-/* Dark Theme (Default) */
-.theme-dark {
-  --color-primary: var(--color-gold);
-  --color-secondary: var(--color-orange);
-  --color-accent: var(--color-red-pink);
-  --color-background: #181622;
-  --color-background-alt: var(--color-deep-purple);
-  --color-card-background: #221B36;
-  --color-text-primary: #F3F3F3;
-  --color-text-secondary: #B8B8B8;
-  --color-border: #3A3A3A;
-  --color-overlay: rgba(20, 20, 30, 0.65);
-  --shadow: 0 2px 24px rgba(238, 182, 75, 0.18);
-  --max-width: 700px;
-}
-
-/* Light Theme */
-.theme-light {
-  --color-primary: var(--color-orange);
-  --color-secondary: var(--color-gold);
-  --color-accent: var(--color-magenta);
-  --color-background: var(--color-light-gold);
-  --color-background-alt: var(--color-mint);
-  --color-card-background: #F3F3F3;
-  --color-text-primary: #181622;
-  --color-text-secondary: var(--color-deep-purple);
-  --color-border: var(--color-magenta);
-  --color-overlay: rgba(195, 196, 138, 0.65);
-  --shadow: 0 2px 24px rgba(252, 148, 96, 0.25);
-  --max-width: 700px;
-}
 
 /* =====================
-   Legacy Variable Aliases (for backward compatibility)
+   Large screens
+   Type and spacing are rem-based, so raising the root size scales the whole
+   layout on big monitors instead of leaving a narrow column in a sea of space.
    ===================== */
-:root {
-  /* Color aliases */
-  --primary: var(--color-primary);
-  --secondary: var(--color-secondary);
-  --accent: var(--color-accent);
-  --bg: var(--color-background);
-  --bg-alt: var(--color-background-alt);
-  --card-bg: var(--color-card-background);
-  --text: var(--color-text-primary);
-  --text-secondary: var(--color-text-secondary);
-  --border: var(--color-border);
-  
-  /* Typography aliases (Simplified) */
-  --font-size-body: var(--font-size-base);
-  --font-size-small: var(--font-size-sm);
-  --font-size-xsmall: var(--font-size-xs);
-  --font-size-header-1: var(--font-size-4xl);
-  --font-size-header-2: var(--font-size-3xl);
-  --font-size-header-3: var(--font-size-xl);
-  
-  /* Heading style aliases */
-  --h1-style: var(--h1-font-size) var(--h1-font-weight) var(--h1-line-height) var(--h1-color);
-  --h2-style: var(--h2-font-size) var(--h2-font-weight) var(--h2-line-height) var(--h2-color);
-  --h3-style: var(--h3-font-size) var(--h3-font-weight) var(--h3-line-height) var(--h3-color);
-  --h4-style: var(--h4-font-size) var(--h4-font-weight) var(--h4-line-height) var(--h4-color);
-  --h5-style: var(--h5-font-size) var(--h5-font-weight) var(--h5-line-height) var(--h5-color);
-  --h6-style: var(--h6-font-size) var(--h6-font-weight) var(--h6-line-height) var(--h6-color);
-  
-  /* Spacing aliases */
-  --spacing-responsive-xs: var(--spacing-sm);
-  --spacing-responsive-sm: var(--spacing-md);
-  --spacing-responsive-md: var(--spacing-lg);
-  --spacing-responsive-lg: var(--spacing-xl);
-  --spacing-responsive-xl: var(--spacing-2xl);
-  --spacing-responsive-2xl: 4rem;
-} 
+@media (min-width: 1600px) {
+  html { font-size: 112.5%; }   /* 18px */
+  :root { --max-width: 960px; }
+}
+
+@media (min-width: 2200px) {
+  html { font-size: 125%; }     /* 20px */
+  :root { --max-width: 1120px; }
+}

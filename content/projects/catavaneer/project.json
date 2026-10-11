@@ -1,0 +1,58 @@
+{
+  "title": "Catavaneer",
+  "description": "A reimagining of the Catavaneer game with modern C# and Unity features.",
+  "longDescription": "Catavaneer is a multiplayer hack n' slash game where players work as a team of cats tasked with escorting a moving caravan and fighting bandits.",
+  "category": "Tools",
+  "year": 2024,
+  "tech": [
+    "Unity",
+    "C#"
+  ],
+  "roles": [
+    "Game Developer",
+    "Multiplayer Developer"
+  ],
+  "features": [
+    "Multiplayer hack n' slash gameplay",
+    "Team-based caravan escort missions",
+    "Dynamic combat system",
+    "Real-time multiplayer networking",
+    "Character progression system",
+    "Bandit AI and combat mechanics",
+    "Modern Unity C# implementation",
+    "Cross-platform multiplayer support"
+  ],
+  "cover": "catavaneer.png",
+  "media": [
+    {
+      "type": "youtube",
+      "src": "https://www.youtube.com/embed/sgQmPiA-VLU"
+    },
+    {
+      "type": "image",
+      "src": "Catavaneer-1.png"
+    },
+    {
+      "type": "image",
+      "src": "Catavaneer-2.png"
+    },
+    {
+      "type": "image",
+      "src": "Catavaneer-3.png"
+    },
+    {
+      "type": "image",
+      "src": "Catavaneer-4.png"
+    }
+  ],
+  "links": [
+    {
+      "type": "itchio",
+      "url": "https://cryobyte-studio.itch.io/catavaneer"
+    }
+  ],
+  "featured": true,
+  "showOnResume": true,
+  "resumeOrder": 5,
+  "draft": false
+}
