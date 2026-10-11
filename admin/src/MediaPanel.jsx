@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { MEDIA_TYPES, detectMediaType, youTubeId, isExternal } from '@/lib/content/mediaTypes';
 import { slugify } from '@/lib/content/projectSchema';
 import { api, mediaUrl } from './api';
+import { useDialog } from './ui';
 
 /**
  * Media list editor. Every change saves the project immediately (uploads land on
@@ -14,6 +15,9 @@ export default function MediaPanel({ project, draft, onChange, act, notify }) {
   const [optimize, setOptimize] = useState(true);
   const [dragOver, setDragOver] = useState(false);
   const [dragIndex, setDragIndex] = useState(null);
+  const [dropAt, setDropAt] = useState(null);
+  const dialog = useDialog();
+  const listRef = useRef(null);
   const fileInput = useRef(null);
   const folderInput = useRef(null);
   const slug = project.slug;
@@ -75,15 +79,28 @@ export default function MediaPanel({ project, draft, onChange, act, notify }) {
   };
 
   const addUrl = async (type) => {
-    const src = prompt(`${MEDIA_TYPES[type].label} URL`, '');
-    if (!src?.trim()) return;
-    if (type === 'youtube' && !youTubeId(src)) return notify('That does not look like a YouTube link', 'error');
-    await commit([...media, { type, src: src.trim() }]);
+    const src = await dialog.prompt({
+      title: `Add ${MEDIA_TYPES[type].label}`,
+      label: 'URL',
+      placeholder: MEDIA_TYPES[type].placeholder,
+      confirmLabel: 'Add',
+      validate: (v) =>
+        !/^https?:\/\//i.test(v) ? 'Use a full URL starting with https://'
+          : type === 'youtube' && !youTubeId(v) ? 'That does not look like a YouTube link' : null,
+    });
+    if (!src) return;
+    await commit([...media, { type, src }]);
   };
 
   const remove = async (index) => {
     const item = media[index];
-    if (!confirm(`Remove this ${MEDIA_TYPES[item.type]?.label || 'item'}?`)) return;
+    const ok = await dialog.confirm({
+      title: `Remove this ${MEDIA_TYPES[item.type]?.label.toLowerCase() || 'item'}?`,
+      body: isExternal(item.src) ? 'The link is removed from the project.' : 'Its file is deleted from the media folder unless another item still uses it.',
+      confirmLabel: 'Remove',
+      danger: true,
+    });
+    if (!ok) return;
     const next = media.filter((_, i) => i !== index);
     const extra = draft.cover === item.src ? { cover: null } : {};
     await commit(next, extra);
@@ -96,11 +113,13 @@ export default function MediaPanel({ project, draft, onChange, act, notify }) {
   };
 
   const move = (from, to) => {
-    if (to < 0 || to >= media.length || from === to) return;
+    if (from === null || to < 0 || to >= media.length || from === to) return;
     const next = [...media];
     next.splice(to, 0, next.splice(from, 1)[0]);
     commit(next);
   };
+  /** Drop before position `at` (0…length). */
+  const dropBefore = (from, at) => move(from, at > from ? at - 1 : at);
 
   const update = (index, patch) => commit(media.map((m, i) => (i === index ? { ...m, ...patch } : m)));
 
@@ -116,47 +135,88 @@ export default function MediaPanel({ project, draft, onChange, act, notify }) {
           if (e.dataTransfer.files.length) uploadFiles(e.dataTransfer.files);
         }}
       >
-        <div><b>Drop images or videos here</b> <span className="muted">— or</span></div>
+        <div className="dropzone-title">
+          <span className="dropzone-icon" aria-hidden>⬆</span>
+          <div>
+            <b>Drop images or videos here</b>
+            <div className="muted small">PNG, JPEG, WebP, GIF, MP4, WebM — or add from the options below. Media changes save immediately.</div>
+          </div>
+        </div>
         <div className="row wrap">
           <button className="btn" onClick={() => fileInput.current.click()}>🖼️ Choose files…</button>
           <button className="btn" onClick={() => folderInput.current.click()}>🎮 Unity WebGL build folder…</button>
           <button className="btn" onClick={() => addUrl('youtube')}>▶️ YouTube link</button>
           <button className="btn" onClick={() => addUrl('embed')}>🧩 Embed URL</button>
         </div>
-        <label className="switch small">
-          <input type="checkbox" checked={optimize} onChange={(e) => setOptimize(e.target.checked)} />
+        <label className="switch switch-plain small">
+          <input type="checkbox" role="switch" checked={optimize} onChange={(e) => setOptimize(e.target.checked)} />
+          <span className="switch-track" aria-hidden />
           <span>Optimize large PNG/JPEG uploads (resize to ≤2400px, convert to WebP)</span>
         </label>
         <input ref={fileInput} type="file" multiple hidden accept="image/*,video/mp4,video/webm" onChange={(e) => { uploadFiles(e.target.files); e.target.value = ''; }} />
         <input ref={folderInput} type="file" hidden webkitdirectory="" directory="" onChange={(e) => { uploadFolder(e.target.files); e.target.value = ''; }} />
-        {busy && <div className="progress">{busy}</div>}
+        {busy && <div className="progress" role="status"><span className="spinner spinner-small" aria-hidden /> {busy}</div>}
       </div>
 
-      {media.length === 0 && <div className="empty">No media yet. The first image becomes the card cover unless you pick one.</div>}
+      {media.length === 0 && <div className="empty-state empty-state-small"><p className="muted">No media yet. The first image becomes the card cover unless you pick one.</p></div>}
 
-      <ol className="media-list">
+      <ol
+        className="media-list"
+        ref={listRef}
+        onDragOver={(e) => dragIndex !== null && e.preventDefault()}
+        onDrop={(e) => {
+          if (dragIndex === null) return;
+          e.preventDefault();
+          e.stopPropagation();
+          if (dropAt !== null) dropBefore(dragIndex, dropAt);
+          setDragIndex(null);
+          setDropAt(null);
+        }}
+      >
         {media.map((item, i) => {
           const t = MEDIA_TYPES[item.type];
           const isCover = draft.cover ? draft.cover === item.src : i === media.findIndex((m) => m.type === 'image');
           return (
             <li
               key={item.src + i}
-              className={`media-row ${dragIndex === i ? 'dragging' : ''}`}
+              className={[
+                'media-row',
+                dragIndex === i && 'dragging',
+                dragIndex !== null && dropAt === i && 'drop-before',
+                dragIndex !== null && dropAt === i + 1 && i === media.length - 1 && 'drop-after',
+              ].filter(Boolean).join(' ')}
               draggable
-              onDragStart={() => setDragIndex(i)}
-              onDragOver={(e) => e.preventDefault()}
-              onDrop={() => { move(dragIndex, i); setDragIndex(null); }}
+              onDragStart={(e) => { e.dataTransfer.effectAllowed = 'move'; setDragIndex(i); }}
+              onDragEnd={() => { setDragIndex(null); setDropAt(null); }}
+              onDragOver={(e) => {
+                if (dragIndex === null) return;
+                e.preventDefault();
+                const r = e.currentTarget.getBoundingClientRect();
+                setDropAt(e.clientY < r.top + r.height / 2 ? i : i + 1);
+              }}
             >
-              <span className="grip" title="Drag to reorder">⋮⋮</span>
+              <button
+                className="grip grip-btn"
+                aria-label={`Move item ${i + 1} (Alt+↑/↓)`}
+                title="Drag, or focus and press Alt+↑/↓, to reorder"
+                onKeyDown={(e) => {
+                  if (!e.altKey || (e.key !== 'ArrowUp' && e.key !== 'ArrowDown')) return;
+                  e.preventDefault();
+                  const to = e.key === 'ArrowUp' ? i - 1 : i + 1;
+                  move(i, to);
+                  requestAnimationFrame(() => listRef.current?.querySelectorAll('.grip-btn')[to]?.focus());
+                }}
+              >⋮⋮</button>
               <MediaPreview item={item} slug={slug} />
               <div className="media-meta">
                 <div className="row">
                   <span className="tag">{t?.icon} {t?.label || item.type}</span>
-                  {t?.placement === 'playable' && <span className="tag tag-ok">own tab + Live Demo button</span>}
-                  {isCover && <span className="tag tag-gold">cover</span>}
+                  {t?.placement === 'playable' && <span className="badge badge-ok">Own tab + Live Demo button</span>}
+                  {isCover && <span className="badge badge-gold">Cover</span>}
                 </div>
                 <div className="mono small ellipsis" title={item.src}>{item.src}</div>
                 <input
+                  aria-label={t?.placement === 'playable' ? 'Tab title' : 'Caption'}
                   className="input input-small"
                   placeholder={t?.placement === 'playable' ? 'Tab title (e.g. Play in browser)' : 'Caption (optional)'}
                   defaultValue={t?.placement === 'playable' ? item.title || '' : item.caption || ''}
@@ -167,8 +227,8 @@ export default function MediaPanel({ project, draft, onChange, act, notify }) {
                 />
               </div>
               <div className="media-actions">
-                <button className="btn btn-small" disabled={i === 0} onClick={() => move(i, i - 1)}>↑</button>
-                <button className="btn btn-small" disabled={i === media.length - 1} onClick={() => move(i, i + 1)}>↓</button>
+                <button className="icon-btn" aria-label="Move up" title="Move up" disabled={i === 0} onClick={() => move(i, i - 1)}>↑</button>
+                <button className="icon-btn" aria-label="Move down" title="Move down" disabled={i === media.length - 1} onClick={() => move(i, i + 1)}>↓</button>
                 {item.type === 'image' && !isCover && (
                   <button className="btn btn-small" onClick={() => commit(media, { cover: item.src })}>Set cover</button>
                 )}
