@@ -12,6 +12,7 @@ import path from 'node:path';
 import { loadProjects, PROJECTS_DIR, ORDER_FILE, CONTENT_DIR } from '../../plugins/content.js';
 import { slugify, emptyProject, validateProject } from '../../src/lib/content/projectSchema.js';
 import { MEDIA_TYPES, detectMediaType, youTubeId, isExternal } from '../../src/lib/content/mediaTypes.js';
+import { validateLayout, normalizeLayout } from '../../src/lib/content/siteLayout.js';
 import { optimizeImage } from './media.js';
 import { run } from './jobs.js';
 import { contentFingerprint, startPreview, testState, markTested } from './release.js';
@@ -20,6 +21,7 @@ export const ROOT = path.resolve('.');
 const TRASH = path.join(ROOT, '.trash');
 const SITE_DIR = path.join(CONTENT_DIR, 'site');
 const THEME_FILE = path.join(CONTENT_DIR, 'theme.json');
+export const LAYOUT_FILE = path.join(SITE_DIR, 'layout.json');
 export const SITE_FILES = ['profile', 'navigation', 'uiContent', 'contact'];
 
 /** An error with an HTTP status (the API sends it; the CLI exits non-zero) and optional detail lines. */
@@ -288,11 +290,32 @@ export const saveSite = (id, data) => {
   return { ok: true };
 };
 
+/* ── Site layout (pages → sections) ───────────────────────────────────── */
+
+export const readLayout = () => readJson(LAYOUT_FILE, { pages: [] });
+
+/** Save layout.json — refused (nothing written) when it fails validateLayout; pages are stored in order. */
+export const saveLayout = (layout) => {
+  const errors = validateLayout(layout);
+  if (errors.length) throw fail(422, `Layout is invalid — nothing saved`, errors);
+  const next = normalizeLayout(layout);
+  writeJson(LAYOUT_FILE, next);
+  return { ok: true, layout: next };
+};
+
+/** Apply a layout edit (siteLayout.js helper) and save; a bad reference becomes a 404. */
+export const editLayout = (edit) => {
+  let next;
+  try { next = edit(readLayout()); } catch (e) { throw e.status ? e : fail(404, e.message); }
+  return saveLayout(next).layout;
+};
+
 /* ── Validation ───────────────────────────────────────────────────────── */
 
 /**
  * Whole-content check: schema errors (blocking for published projects, warnings for drafts),
- * missing local media, order.json problems, unparseable site/theme JSON and a dangling theme.active.
+ * missing local media, order.json problems, unparseable site/theme JSON, an invalid site layout
+ * (unknown section types, duplicate ids, no enabled page…) and a dangling theme.active.
  */
 export const validateAll = () => {
   const errors = [];
@@ -316,9 +339,10 @@ export const validateAll = () => {
     if (new Set(order).size !== order.length) errors.push('order.json has duplicates');
   }
 
-  for (const file of [THEME_FILE, ...SITE_FILES.map((n) => path.join(SITE_DIR, `${n}.json`))]) {
+  for (const file of [THEME_FILE, LAYOUT_FILE, ...SITE_FILES.map((n) => path.join(SITE_DIR, `${n}.json`))]) {
     try { JSON.parse(fs.readFileSync(file, 'utf8')); } catch (e) { errors.push(`${path.relative(CONTENT_DIR, file)}: ${e.message}`); }
   }
+  if (fs.existsSync(LAYOUT_FILE)) for (const e of validateLayout(readLayout())) errors.push(`site/layout.json: ${e}`);
   const theme = readTheme();
   if (theme.active && !theme.presets?.[theme.active]) errors.push(`theme.json: active preset "${theme.active}" does not exist`);
 
@@ -346,6 +370,7 @@ export const state = async () => ({
   projects: listProjects(),
   theme: readTheme(),
   site: Object.fromEntries(SITE_FILES.map((n) => [n, readJson(path.join(SITE_DIR, `${n}.json`), {})])),
+  layout: readLayout(),
   git: await gitInfo().catch((e) => ({ error: e.message, changes: [] })),
   release: testState(),
 });

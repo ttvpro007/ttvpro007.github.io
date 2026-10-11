@@ -16,6 +16,7 @@ const withBase = (value) => {
 
 export const profile = withBase(profileData);
 export { default as navigation } from '@content/site/navigation.json';
+export { default as layout } from '@content/site/layout.json';
 export { default as uiContent } from '@content/site/uiContent.json';
 export { default as contact } from '@content/site/contact.json';
 export { default as theme } from '@content/theme.json';

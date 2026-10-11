@@ -1,0 +1,99 @@
+{
+  "pages": [
+    {
+      "id": "home",
+      "label": "Home",
+      "slug": "home",
+      "enabled": true,
+      "order": 0,
+      "sections": [
+        {
+          "id": "hero",
+          "type": "hero",
+          "enabled": true,
+          "options": {
+            "profilePicSize": "medium",
+            "showSocialLinks": true
+          }
+        },
+        {
+          "id": "timeline",
+          "type": "timeline",
+          "enabled": true
+        },
+        {
+          "id": "flipCards",
+          "type": "flipCards",
+          "enabled": true
+        },
+        {
+          "id": "funFacts",
+          "type": "funFacts",
+          "enabled": true
+        },
+        {
+          "id": "showAndTell",
+          "type": "showAndTell",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "projects",
+      "label": "Projects",
+      "slug": "projects",
+      "enabled": true,
+      "order": 1,
+      "sections": [
+        {
+          "id": "projectsBrowser",
+          "type": "projectsBrowser",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "resume",
+      "label": "Resume",
+      "slug": "resume",
+      "enabled": true,
+      "order": 2,
+      "sections": [
+        {
+          "id": "resumeProfile",
+          "type": "resumeProfile",
+          "enabled": true
+        },
+        {
+          "id": "resumeSkills",
+          "type": "resumeSkills",
+          "enabled": true
+        },
+        {
+          "id": "resumeEducation",
+          "type": "resumeEducation",
+          "enabled": true
+        },
+        {
+          "id": "resumeProjects",
+          "type": "resumeProjects",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "label": "Contact",
+      "slug": "contact",
+      "enabled": true,
+      "order": 3,
+      "sections": [
+        {
+          "id": "contactQuest",
+          "type": "contactQuest",
+          "enabled": true
+        }
+      ]
+    }
+  ]
+}

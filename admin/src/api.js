@@ -8,7 +8,10 @@ async function request(method, path, body, { raw = false } = {}) {
     body: body === undefined ? undefined : raw ? body : JSON.stringify(body),
   });
   const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data.error || `${method} ${path} failed (${res.status})`);
+  if (!res.ok) {
+    const detail = data.details?.length ? `: ${data.details.join('; ')}` : '';
+    throw new Error((data.error || `${method} ${path} failed (${res.status})`) + detail);
+  }
   return data;
 }
 
@@ -27,6 +30,7 @@ export const api = {
   saveOrder: (slugs) => request('PUT', '/order', slugs),
   saveTheme: (theme) => request('PUT', '/theme', theme),
   saveSite: (name, data) => request('PUT', `/site/${enc(name)}`, data),
+  saveLayout: (layout) => request('PUT', '/layout', layout),
   test: () => request('POST', '/test'),
   stopTest: () => request('POST', '/test/stop'),
   stage: (message) => request('POST', '/stage', { message }),

@@ -23,6 +23,7 @@ const CONFETTI_CONFIG = {
   colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
 };
 
+/** Contact page body (section type "contactQuest"); the page shell comes from SitePage. */
 export default function Contact() {
   const [formData, setFormData] = useState({});
   const [confetti, setConfetti] = useState(false);
@@ -42,63 +43,59 @@ export default function Contact() {
 
 
   return (
-    <main>
-      <div className="body-panel">
-        <section className="contact-section">
-          {/* Header Banner */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: 'easeOut' }}
-            className="contact-header-banner"
-          >
-            <h1 className="header-1 contact-header-title">
-              <span style={{ marginRight: '0.5rem' }}>🗺️</span>
-              {contact.content.titleText}
-            </h1>
-            <p className="body-text contact-header-subtitle">
-              <span style={{ marginRight: '0.5rem' }}>📜</span>
-              {contact.content.subtitleText}
-            </p>
-          </motion.div>
+    <section className="contact-section">
+      {/* Header Banner */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: 'easeOut' }}
+        className="contact-header-banner"
+      >
+        <h1 className="header-1 contact-header-title">
+          <span style={{ marginRight: '0.5rem' }}>🗺️</span>
+          {contact.content.titleText}
+        </h1>
+        <p className="body-text contact-header-subtitle">
+          <span style={{ marginRight: '0.5rem' }}>📜</span>
+          {contact.content.subtitleText}
+        </p>
+      </motion.div>
 
-          {/* Main Content */}
-          <div className="quest-content-grid">
-            {/* Sidebar */}
-            <div className="contact-sidebar">
-              {/* Social Links */}
-              <SocialLinks socialLinks={profileData.socialLinks} />
-              {/* HQ Component */}
-              <HQ 
-                title={profileData.hq.title}
-                location={profileData.hq.location}
-                coordinates={profileData.hq.coordinates}
-                timezone={profileData.hq.timezone}
-                status={profileData.hq.status}
-                description={profileData.hq.description}
-                icon={profileData.hq.icon}
-              />
-            </div>
-            {/* Quest Form Area */}
-            <QuestForm
-              ref={questFormRefs}
-              formFields={contact.formFields}
-              submitLabel={contact.content.submitLabel}
-              progressPerField={contact.formConfig.progressPerField}
-              maxProgress={contact.formConfig.maxProgress}
-              onInputChange={handleInputChange}
-              formData={formData}
-              formConfig={contact.formConfig}
-              onConfettiTrigger={triggerConfetti}
-            />
-          </div>
-
-          {/* Confetti Container */}
-          <div className="quest-confetti-container">
-            <Confetti active={confetti} config={CONFETTI_CONFIG} />
-          </div>
-        </section>
+      {/* Main Content */}
+      <div className="quest-content-grid">
+        {/* Sidebar */}
+        <div className="contact-sidebar">
+          {/* Social Links */}
+          <SocialLinks socialLinks={profileData.socialLinks} />
+          {/* HQ Component */}
+          <HQ 
+            title={profileData.hq.title}
+            location={profileData.hq.location}
+            coordinates={profileData.hq.coordinates}
+            timezone={profileData.hq.timezone}
+            status={profileData.hq.status}
+            description={profileData.hq.description}
+            icon={profileData.hq.icon}
+          />
+        </div>
+        {/* Quest Form Area */}
+        <QuestForm
+          ref={questFormRefs}
+          formFields={contact.formFields}
+          submitLabel={contact.content.submitLabel}
+          progressPerField={contact.formConfig.progressPerField}
+          maxProgress={contact.formConfig.maxProgress}
+          onInputChange={handleInputChange}
+          formData={formData}
+          formConfig={contact.formConfig}
+          onConfettiTrigger={triggerConfetti}
+        />
       </div>
-    </main>
+
+      {/* Confetti Container */}
+      <div className="quest-confetti-container">
+        <Confetti active={confetti} config={CONFETTI_CONFIG} />
+      </div>
+    </section>
   );
 } 

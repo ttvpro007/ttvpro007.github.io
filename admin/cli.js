@@ -25,6 +25,8 @@ process.chdir(process.env.PORTFOLIO_ROOT ? path.resolve(process.env.PORTFOLIO_RO
 const store = await import('./server/store.js');
 const { PROJECT_FIELDS, validateProject } = await import('../src/lib/content/projectSchema.js');
 const { testState, stopPreview } = await import('./server/release.js');
+const { SECTION_TYPES, parseOptionValue } = await import('../src/lib/content/sectionTypes.js');
+const siteLayout = await import('../src/lib/content/siteLayout.js');
 
 const { fail } = store;
 const usage = (message) => Object.assign(new Error(message), { usage: true });
@@ -404,13 +406,150 @@ site <id> --json <file|-> [--replace]       merge (or replace) the whole file`,
     },
   },
 
+  layout: {
+    summary: 'Pages and their sections (content/site/layout.json)',
+    help: `layout [show [<page>]]                          whole layout, or one page
+layout types                                    section types, their options and the content they read
+layout page add <id> [--label <text>] [--slug <slug>] [--position <n>] [--disabled]
+layout page remove <id>
+layout page enable|disable <id>
+layout page move <id> <position>                (0 = first in the nav)
+layout page set <id> [--label <text>] [--slug <slug>]
+layout section add <page> <type> [--id <id>] [--position <n>] [--disabled] [--set option=value …]
+layout section remove <page> <section>
+layout section enable|disable <page> <section>
+layout section move <page> <section> <position>
+layout section set <page> <section> [--set option=value …] [--unset option …]
+
+  The site renders its nav from the enabled pages (in order) and each page from its
+  enabled sections (in order); the first enabled page is the landing page.
+  <section> is a section id (see "layout show <page>") or a 0-based index.
+  Option values follow the option's kind (see "layout types"): showStats=false,
+  profilePicSize=large, title="My skills". Every edit is validated (unknown types or
+  options, duplicate ids/slugs, no enabled page…) and refused with exit 1 if invalid.
+  Page edits print the page list; section edits print the page.`,
+    options: {
+      label: { type: 'string' }, slug: { type: 'string' }, id: { type: 'string' },
+      position: { type: 'string' }, disabled: { type: 'boolean' },
+      set: { type: 'string', multiple: true }, unset: { type: 'string', multiple: true },
+    },
+    run: ([scope, action, ...rest], opts) => {
+      const position = (raw) => {
+        if (raw === undefined) return undefined;
+        if (!/^\d+$/.test(raw)) throw usage(`position must be a whole number, got "${raw}"`);
+        return Number(raw);
+      };
+      const pageList = (l) => siteLayout.sortedPages(l).map(({ id, label, slug, enabled, order, sections }) => ({
+        id, label, slug, enabled: enabled !== false, order,
+        sections: sections.map((x) => `${x.id}${x.enabled === false ? ' (off)' : ''}`),
+      }));
+      const pageOf = (l, id) => {
+        try { return siteLayout.findPage(l, id); } catch (e) { throw fail(404, e.message); }
+      };
+      /** --set / --unset applied to a section's options, typed by the registry schema. */
+      const options = (type, current = {}) => {
+        const schema = SECTION_TYPES[type].options;
+        const next = { ...current };
+        for (const a of opts.set || []) {
+          const [key, raw] = splitAssignment(a);
+          if (!schema[key]) {
+            const known = Object.keys(schema);
+            throw fail(400, `${type} has no option "${key}"${known.length ? ` (options: ${known.join(', ')})` : ' (it has none)'}`);
+          }
+          try { next[key] = parseOptionValue(schema[key], raw); } catch (e) { throw fail(400, `${key} ${e.message}`); }
+        }
+        for (const key of opts.unset || []) delete next[key];
+        return next;
+      };
+
+      switch (scope) {
+        case undefined:
+          return store.readLayout();
+        case 'show':
+          return action ? pageOf(store.readLayout(), action) : store.readLayout();
+        case 'types':
+          return Object.fromEntries(Object.entries(SECTION_TYPES).map(([type, t]) => [type, {
+            label: t.label, description: t.description, frame: t.frame, reads: t.reads, options: t.options,
+          }]));
+
+        case 'page': {
+          const [id, pos] = rest;
+          if (!action || !id) throw usage('layout page needs add|remove|enable|disable|move|set and an <id>');
+          switch (action) {
+            case 'add': {
+              const label = opts.label || id.replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase());
+              const at = position(opts.position);
+              return pageList(store.editLayout((l) => siteLayout.addPage(l, { id, label, slug: opts.slug, enabled: !opts.disabled, position: at })));
+            }
+            case 'remove':
+              return pageList(store.editLayout((l) => siteLayout.removePage(l, id)));
+            case 'enable':
+            case 'disable':
+              return pageList(store.editLayout((l) => siteLayout.updatePage(l, id, { enabled: action === 'enable' })));
+            case 'move': {
+              if (pos === undefined) throw usage('layout page move needs <id> <position>');
+              const at = position(pos);
+              return pageList(store.editLayout((l) => siteLayout.movePage(l, id, at)));
+            }
+            case 'set': {
+              const changes = {
+                ...(opts.label !== undefined && { label: opts.label }),
+                ...(opts.slug !== undefined && { slug: opts.slug }),
+              };
+              if (!Object.keys(changes).length) throw usage('layout page set needs --label and/or --slug');
+              return pageList(store.editLayout((l) => siteLayout.updatePage(l, id, changes)));
+            }
+            default:
+              throw usage(`Unknown layout page action "${action}" (add, remove, enable, disable, move, set)`);
+          }
+        }
+
+        case 'section': {
+          const [pageId, ref, pos] = rest;
+          if (!action || !pageId || ref === undefined) {
+            throw usage(`layout section ${action || '<action>'} needs <page> and ${action === 'add' ? 'a <type>' : 'a <section>'}`);
+          }
+          const edited = (edit) => pageOf(store.editLayout(edit), pageId);
+          switch (action) {
+            case 'add': {
+              if (!SECTION_TYPES[ref]) throw fail(400, `Unknown section type "${ref}" (known: ${Object.keys(SECTION_TYPES).join(', ')})`);
+              const section = { type: ref, id: opts.id, enabled: !opts.disabled, options: options(ref), position: position(opts.position) };
+              return edited((l) => siteLayout.addSection(l, pageId, section));
+            }
+            case 'remove':
+              return edited((l) => siteLayout.removeSection(l, pageId, ref));
+            case 'enable':
+            case 'disable':
+              return edited((l) => siteLayout.updateSection(l, pageId, ref, (x) => ({ ...x, enabled: action === 'enable' })));
+            case 'move': {
+              if (pos === undefined) throw usage('layout section move needs <page> <section> <position>');
+              const at = position(pos);
+              return edited((l) => siteLayout.moveSection(l, pageId, ref, at));
+            }
+            case 'set':
+              if (!opts.set?.length && !opts.unset?.length) throw usage('layout section set needs --set option=value or --unset option');
+              return edited((l) => siteLayout.updateSection(l, pageId, ref, ({ options: current, ...section }) => {
+                const next = options(section.type, current);
+                return Object.keys(next).length ? { ...section, options: next } : section;
+              }));
+            default:
+              throw usage(`Unknown layout section action "${action}" (add, remove, enable, disable, move, set)`);
+          }
+        }
+
+        default:
+          throw usage(`Unknown layout action "${scope}" (show, types, page, section)`);
+      }
+    },
+  },
+
   validate: {
     summary: 'Check all content (exit 1 on errors)',
     help: `validate
 
   Schema errors (published projects block; drafts are warnings), missing local
-  media files, order.json problems, unparseable site/theme JSON and a dangling
-  theme.active. Prints { ok, projects, errors, warnings }; exits 1 when not ok.`,
+  media files, order.json problems, unparseable site/theme JSON, an invalid
+  site layout and a dangling theme.active. Prints { ok, projects, errors, warnings }; exits 1 when not ok.`,
     run: () => {
       const result = store.validateAll();
       if (!result.ok) {
