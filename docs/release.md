@@ -14,19 +14,21 @@ By hand: `npm run build && npm run preview`.
 
 *Push to staging* commits `content/` and force-pushes the current commit to the `staging` branch. CI builds it and publishes it to a separate staging site, so you can check it on real phones and browsers before going live. The `staging` branch is a throwaway mirror — it is overwritten on every stage.
 
-### One-time setup
+### Setup (done 2026-10-11)
 
 GitHub Pages allows one site per repository, so staging lives in a second repo:
 
-1. Create an empty public repo, e.g. `ttvpro007/portfolio-staging`. In its *Settings → Pages*, set the source to the `gh-pages` branch (it appears after the first deploy).
-2. Create a fine-grained personal access token with **Contents: read & write** on that repo only.
-3. In this repo (*Settings → Secrets and variables → Actions*):
-   - secret `STAGING_DEPLOY_TOKEN` = the token
-   - variable `STAGING_REPO` = `ttvpro007/portfolio-staging`
-   - variable `STAGING_BASE_PATH` = `/portfolio-staging/`
-4. Stage once from the admin. The site appears at `https://ttvpro007.github.io/portfolio-staging/`.
+| Piece | Value |
+|---|---|
+| Staging repo | [ttvpro007/portfolio-staging](https://github.com/ttvpro007/portfolio-staging) (public, Pages from `gh-pages`) |
+| Staging URL | https://ttvpro007.github.io/portfolio-staging/ |
+| Auth | deploy key *CI deploy from ttvpro007.github.io* — write access to the staging repo only |
+| This repo, secret | `STAGING_DEPLOY_KEY` — the deploy key's private half |
+| This repo, variables | `STAGING_REPO` = `ttvpro007/portfolio-staging`, `STAGING_BASE_PATH` = `/portfolio-staging/` |
 
-Until `STAGING_REPO` is set, pushes to `staging` are only linted and built (still a useful CI check).
+Staging builds set `SITE_ENV=staging`: the page gets `noindex, nofollow` and a `[staging]` title prefix so search engines skip it and a staging tab is easy to tell apart.
+
+**Rotating the key:** generate a new ed25519 key, add the public half as a write deploy key on the staging repo, `gh secret set STAGING_DEPLOY_KEY < key` here, delete the old deploy key and the local files. If `STAGING_REPO` is ever unset, pushes to `staging` are only linted and built.
 
 The build supports serving under a sub-path via `BASE_PATH`: media URLs, CSS assets and root-relative paths in `content/site/profile.json` follow it. Root-relative paths hard-coded in components would not — keep asset paths in content or CSS.
 

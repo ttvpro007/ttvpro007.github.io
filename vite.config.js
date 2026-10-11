@@ -6,10 +6,23 @@ import contentPlugin from './plugins/content.js'
 import adminPlugin from './admin/server/plugin.js'
 
 const root = path.dirname(fileURLToPath(import.meta.url))
+const isStaging = process.env.SITE_ENV === 'staging'
+
+/** Staging builds must not be indexed or mistaken for the live site */
+const stagingMarker = () => ({
+  name: 'staging-marker',
+  apply: 'build',
+  transformIndexHtml: (html) =>
+    isStaging
+      ? html
+          .replace('<head>', '<head>\n    <meta name="robots" content="noindex, nofollow" />')
+          .replace('<title>', '<title>[staging] ')
+      : html,
+})
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), contentPlugin(), adminPlugin()],
+  plugins: [react(), contentPlugin(), adminPlugin(), stagingMarker()],
   // Live site (ttvpro007.github.io) is served from the domain root; the staging build
   // sets BASE_PATH (e.g. /portfolio-staging/) when it is published under a sub-path
   base: process.env.BASE_PATH || '/',
