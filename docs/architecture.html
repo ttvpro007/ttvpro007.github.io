@@ -82,7 +82,7 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
   </header>
 
   <section class="prose">
-    <p class="lede">The site is a pure function of the <code>content/</code> folder. Every project, image, Unity build, label and color the visitor sees is read from there at build time; code never holds content, and the admin GUI is just a local editor for that folder plus a gated way to ship it.</p>
+    <p class="lede">The site is a pure function of the <code>content/</code> folder. Every project, image, Unity build, label and color the visitor sees is read from there at build time; code never holds content. The admin GUI and a headless CLI are two front doors onto one module that edits that folder, plus a gated way to ship it.</p>
     <p>Once that is clear the rest follows: the Vite plugin exists to turn the folder into data and copy its media, the registries exist so a new kind of media or link is a data change rather than a code change, and the release gate exists because the only thing that can break the live site is content that was never built.</p>
   </section>
 
@@ -91,8 +91,9 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
     <div class="fact"><b>13</b><span>media items · 11 image, 1 YouTube, 1 Unity</span></div>
     <div class="fact"><b>5 / 7</b><span>media / link types registered</span></div>
     <div class="fact"><b>4 · 11</b><span>theme presets · color tokens</span></div>
-    <div class="fact"><b>16</b><span>admin API routes</span></div>
+    <div class="fact"><b>16 · 13</b><span>admin API routes · CLI commands</span></div>
     <div class="fact"><b>113 MB</b><span>content/projects on disk</span></div>
+    <div class="fact"><b>17</b><span>automated tests · content, media, CLI</span></div>
   </div>
 
   <h2>Where a project lives — before and after</h2>
@@ -225,7 +226,7 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
         </g>
       </svg>
     </div>
-    <figcaption><b>Extending the site is a data change.</b> The same pattern holds for <code>LINK_TYPES</code> (buttons in the modal, URL auto-detect in the admin), <code>PROJECT_FIELDS</code> (the admin form renders from it) and <code>THEME_TOKENS</code> (CSS variable mapping and the theme editor's color pickers). Registries are plain JS with no React, so the Node-side admin server imports the same files as the browser.</figcaption>
+    <figcaption><b>Extending the site is a data change.</b> The same pattern holds for <code>LINK_TYPES</code> (buttons in the modal, URL auto-detect in the admin), <code>PROJECT_FIELDS</code> (the admin form renders from it) and <code>THEME_TOKENS</code> (CSS variable mapping and the theme editor's color pickers). Registries are plain JS with no React, so the Node-side admin server and CLI import the same files as the browser.</figcaption>
   </figure>
 
   <h2>Theming</h2>
@@ -233,6 +234,63 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
     <p><code>content/theme.json</code> holds named presets and the <code>active</code> one. At startup <code>applyTheme()</code> writes 11 color tokens, two font stacks and a radius onto <code>:root</code> and injects the Google Fonts link. Stylesheets read only those variables; translucent shades are <code>color-mix(in srgb, var(--color-primary) 30%, transparent)</code> rather than <code>rgba</code> literals, so a shade follows its token. About a hundred hard-coded gold/orange literals were rewritten this way.</p>
     <p>The admin's theme editor previews unsaved presets by <code>postMessage</code> into an iframe of the dev site (same-origin only), at phone/tablet/laptop/wide sizes, and reports WCAG contrast for three pairs.</p>
   </section>
+
+  <h2>Two front doors, one store</h2>
+  <figure>
+    <div class="fig-scroll">
+      <svg viewBox="0 0 860 260" role="img" aria-label="The admin GUI calls api.js over HTTP on the dev server; agents and scripts call cli.js through npm run content. Both call admin/server/store.js, which writes content/, moves deletes to .trash/, and runs git and vite build for the release steps.">
+        <defs><marker id="ah5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+        <g font-family="JetBrains Mono, monospace" font-size="12" fill="currentColor">
+          <rect x="20" y="30" width="170" height="56" rx="8" fill="none" stroke="currentColor"/>
+          <text x="105" y="54" text-anchor="middle">admin/src</text>
+          <text x="105" y="72" text-anchor="middle" opacity="0.65">GUI in the browser</text>
+          <rect x="20" y="160" width="170" height="56" rx="8" fill="none" stroke="currentColor"/>
+          <text x="105" y="184" text-anchor="middle">agent · script</text>
+          <text x="105" y="202" text-anchor="middle" opacity="0.65">no browser, no server</text>
+
+          <rect x="312" y="30" width="186" height="56" rx="8" fill="none" stroke="currentColor"/>
+          <text x="405" y="54" text-anchor="middle">server/api.js</text>
+          <text x="405" y="72" text-anchor="middle" opacity="0.65">HTTP routing · dev only</text>
+          <rect x="312" y="160" width="186" height="56" rx="8" fill="none" stroke="currentColor"/>
+          <text x="405" y="184" text-anchor="middle">admin/cli.js</text>
+          <text x="405" y="202" text-anchor="middle" opacity="0.65">argv · coerce · JSON out</text>
+
+          <rect x="550" y="50" width="160" height="146" rx="8" fill="none" style="stroke:var(--gold)" stroke-width="1.5"/>
+          <text x="630" y="76" text-anchor="middle" style="fill:var(--gold)">server/store.js</text>
+          <text x="630" y="102" text-anchor="middle" opacity="0.75">projects · overview</text>
+          <text x="630" y="120" text-anchor="middle" opacity="0.75">media files + list</text>
+          <text x="630" y="138" text-anchor="middle" opacity="0.75">order · theme · site</text>
+          <text x="630" y="156" text-anchor="middle" opacity="0.75">validateAll</text>
+          <text x="630" y="174" text-anchor="middle" opacity="0.75">release steps</text>
+
+          <rect x="755" y="40" width="88" height="40" rx="6" fill="none" stroke="currentColor"/>
+          <text x="799" y="65" text-anchor="middle">content/</text>
+          <rect x="755" y="104" width="88" height="40" rx="6" fill="none" stroke="currentColor"/>
+          <text x="799" y="129" text-anchor="middle">.trash/</text>
+          <rect x="755" y="168" width="88" height="40" rx="6" fill="none" stroke="currentColor"/>
+          <text x="799" y="186" text-anchor="middle">git ·</text>
+          <text x="799" y="201" text-anchor="middle">vite build</text>
+        </g>
+        <g font-family="Rajdhani, sans-serif" font-size="13" font-weight="600" fill="currentColor">
+          <line x1="190" y1="58" x2="308" y2="58" stroke="currentColor" marker-end="url(#ah5)"/>
+          <text x="255" y="49" text-anchor="middle">fetch /__admin/api</text>
+          <line x1="190" y1="188" x2="308" y2="188" stroke="currentColor" marker-end="url(#ah5)"/>
+          <text x="255" y="179" text-anchor="middle">npm run content</text>
+          <line x1="498" y1="58" x2="546" y2="90" stroke="currentColor" marker-end="url(#ah5)"/>
+          <line x1="498" y1="188" x2="546" y2="158" stroke="currentColor" marker-end="url(#ah5)"/>
+          <text x="522" y="128" text-anchor="middle">calls</text>
+          <line x1="710" y1="80" x2="751" y2="62" stroke="currentColor" marker-end="url(#ah5)"/>
+          <text x="730" y="58" text-anchor="middle" font-size="12">writes</text>
+          <line x1="710" y1="124" x2="751" y2="124" stroke="currentColor" marker-end="url(#ah5)"/>
+          <text x="730" y="117" text-anchor="middle" font-size="12">deletes</text>
+          <line x1="710" y1="168" x2="751" y2="186" stroke="currentColor" marker-end="url(#ah5)"/>
+          <text x="730" y="200" text-anchor="middle" font-size="12">runs</text>
+        </g>
+        <text x="20" y="248" font-family="Source Sans 3, sans-serif" font-size="13" fill="currentColor" opacity="0.75">api.js and cli.js only translate their input; every rule lives in store.js</text>
+      </svg>
+    </div>
+    <figcaption><b>The GUI and agents share one implementation.</b> Slug checks, trash-instead-of-delete, <code>order.json</code> upkeep, WebP optimisation, the Unity <code>index.html</code> check and the release gate all live in <code>admin/server/store.js</code>. <code>api.js</code> turns HTTP into calls to it and only runs inside the dev server; <code>cli.js</code> turns <code>npm run content -- &lt;command&gt;</code> into the same calls, prints JSON on stdout and exits 1 (nothing written) or 2 (bad usage). The CLI adds guard rails the GUI gets from its form: <code>--set</code> values are coerced by the field's kind in <code>PROJECT_FIELDS</code>, unknown fields are refused, and a published project that fails validation is not saved. Usage: docs/content.md, "Agent / CLI editing".</figcaption>
+  </figure>
 
   <h2>The release gate</h2>
   <figure>
@@ -271,7 +329,7 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
         </g>
       </svg>
     </div>
-    <figcaption><b>Only content that was built, unchanged, can ship.</b> The fingerprint (<code>admin/server/release.js</code>) hashes path, size and mtime of every file under <code>content/</code>, the <code>HEAD</code> commit, and the diff of uncommitted non-content changes. Stage and Go live commit only <code>content/</code>; uncommitted code is in the test but would not ship, which the Release page warns about. CI lints and builds every push to <code>master</code> or <code>staging</code> and every PR; only <code>master</code> deploys live.</figcaption>
+    <figcaption><b>Only content that was built, unchanged, can ship.</b> The fingerprint (<code>admin/server/release.js</code>) hashes path, size and mtime of every file under <code>content/</code>, the <code>HEAD</code> commit, and the diff of uncommitted non-content changes. A passed fingerprint is saved to <code>.release-tested.json</code> (gitignored), so a dev-server restart does not undo a Test. Stage and Go live commit only <code>content/</code>; uncommitted code is in the test but would not ship, which the Release page warns about. From the CLI, <code>release test</code> records the fingerprint without starting the preview unless given <code>--serve</code>. CI lints, runs <code>npm test</code> and builds every push to <code>master</code> or <code>staging</code> and every PR; only <code>master</code> deploys live.</figcaption>
   </figure>
 
   <h2>Invariants</h2>
@@ -280,13 +338,15 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
     <li><span>No theme color literals in components. Use the CSS variables or <code>color-mix()</code> of them. Exceptions are deliberate: canvas effects, the confetti library, brand logos, and the standalone email template in <code>questUtils.js</code>.</span></li>
     <li><span>Media <code>src</code> is relative to the project's <code>media/</code> folder or an absolute <code>https://</code> URL; nothing else resolves.</span></li>
     <li><span>The admin API is dev-server only (<code>apply: 'serve'</code>) and binds to localhost. It writes files and runs git, so never run <code>npm run admin -- --host</code> on an untrusted network.</span></li>
-    <li><span>Deletes from the admin go to <code>.trash/</code> (ignored by git), never straight to removal.</span></li>
+    <li><span>Deletes from the admin or the CLI go to <code>.trash/</code> (ignored by git), never straight to removal.</span></li>
+    <li><span>Content writes go through <code>admin/server/store.js</code>. A new admin route or CLI command calls a store function rather than touching <code>content/</code> itself.</span></li>
   </ul>
 
   <h2>Deliberate oddities</h2>
   <section class="prose">
     <p><b>Short legacy variable names</b> such as <code>--card-bg</code>, <code>--text</code> and <code>--bg</code> are defined in <code>variables.css</code> as aliases of theme tokens. About twenty components used them after an earlier CSS consolidation removed their definitions, which left cards and the mobile navbar transparent. They are aliases rather than renamed call sites to keep the diff reviewable; migrating them is optional cleanup.</p>
     <p><b>The <code>staging</code> branch is force-pushed.</b> It is a mirror of whatever is under review, not a line of history.</p>
+    <p><b>The CLI changes directory before it imports anything.</b> <code>plugins/content.js</code> and <code>store.js</code> resolve <code>content/</code> from the working directory when they load, so <code>cli.js</code> runs <code>process.chdir()</code> (to the repo, or <code>PORTFOLIO_ROOT</code>) and then uses dynamic <code>import()</code>. File arguments are resolved against the directory it was run from. The tests rely on this to run against a temp copy of <code>content/</code>.</p>
   </section>
 
   <h2>Map of the code</h2>
@@ -298,25 +358,28 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
         <tr><td><code>src/lib/content/</code></td><td>mediaTypes, linkTypes, projectSchema (fields, validation, view model)</td><td class="mono">194</td></tr>
         <tr><td><code>src/lib/theme/applyTheme.js</code></td><td>token → CSS variable mapping, font loading</td><td class="mono">68</td></tr>
         <tr><td><code>src/components/features/projects/media/</code></td><td>View and Thumb per media type</td><td class="mono">112</td></tr>
-        <tr><td><code>admin/server/</code></td><td>API routes, jobs, image optimisation (sharp), release gate + preview</td><td class="mono">470</td></tr>
-        <tr><td><code>admin/src/</code></td><td>editor UI: projects, media, links, theme, site JSON, release</td><td class="mono">1,000</td></tr>
-        <tr><td><code>.github/workflows/deploy.yml</code></td><td>lint + build; live deploy on master; staging deploy when configured</td><td class="mono">—</td></tr>
+        <tr><td><code>admin/server/store.js</code></td><td>every content operation: projects, media, order, theme, site, validation, release steps</td><td class="mono">409</td></tr>
+        <tr><td><code>admin/server/</code> (rest)</td><td>HTTP routes, Vite plugin, jobs, image optimisation (sharp), fingerprint + preview</td><td class="mono">305</td></tr>
+        <tr><td><code>admin/cli.js</code></td><td><code>npm run content</code>: 13 commands, argument parsing, value coercion, help text</td><td class="mono">534</td></tr>
+        <tr><td><code>admin/src/</code></td><td>editor UI: projects, media, links, theme, site JSON, release</td><td class="mono">1,148</td></tr>
+        <tr><td><code>tests/</code></td><td>node:test: committed content loads, media files exist, order.json matches; WebP conversion; every CLI command group against a temp copy of content/</td><td class="mono">235</td></tr>
+        <tr><td><code>.github/workflows/deploy.yml</code></td><td>lint + test + build; live deploy on master; staging deploy when configured</td><td class="mono">—</td></tr>
       </tbody>
     </table>
   </div>
 
   <h2>Unresolved</h2>
   <ul class="open prose">
-    <li><b>No automated tests.</b> Verification so far is lint, a production build, and a manual browser pass: create/upload/save/delete through the API, WebP conversion (9.1 MB PNG → 2.0 MB), Test gate lock and unlock, theme presets, and overflow checks at 320–2560 px.</li>
-    <li><b>Staging relies on one deploy key.</b> <code>ttvpro007/portfolio-staging</code> is deployed by CI with a write deploy key scoped to that repo, stored as <code>STAGING_DEPLOY_KEY</code>. Nothing rotates it automatically; the steps are in docs/release.md.</li>
-    <li><b>The test fingerprint lives in memory.</b> Restarting the dev server, which also happens whenever an admin or plugin file is edited, clears it, and you have to run Test again. It fails safe, but it is surprising.</li>
-    <li><b>Large binaries live in git.</b> The Unity build is about 96 MB of the 113 MB under <code>content/projects</code>, with no LFS. That is within GitHub Pages' limits, but it makes the repo slower to clone.</li>
+    <li><b>The HTTP layer and the git side of releasing have no automated tests.</b> The content operations do: 11 CLI tests drive <code>store.js</code> against a temp copy of <code>content/</code> (create, update guard rails, overview, WebP upload, Unity folder check, media removal, rename, order, theme, site, validate). The thin routing in <code>api.js</code> was checked by hand after the refactor, with every write route called through a running dev server. Stage and Go live (commit and push) have never run from the CLI; they are the same functions the GUI uses. Testing them would mean mocking git and child processes, which was judged not worth it for a one-person site.</li>
+    <li class="minor"><b>Media-list editing exists twice.</b> The GUI's <code>MediaPanel.jsx</code> still builds the media list in the browser and uploads files one by one through the API, while the CLI uses <code>store.addMedia</code> / <code>removeMedia</code> for the same work. They follow the same rules (unique slugified names, Unity <code>index.html</code> check, clear the cover and trash the file once it's unused) but are separate code. Moving the GUI onto the store functions would need new routes.</li>
+    <li class="minor"><b>Staging relies on one deploy key.</b> <code>ttvpro007/portfolio-staging</code> is deployed by CI with a write deploy key scoped to that repo, stored as <code>STAGING_DEPLOY_KEY</code>. Deploy keys do not expire, so there is no rotation schedule; rotate only if it leaks, using the steps in docs/release.md.</li>
+    <li class="minor"><b>Large binaries live in git.</b> The Unity build is about 96 MB of the 113 MB under <code>content/projects</code>. LFS was considered and declined: every CI checkout would download the build, using up the free 1 GB/month LFS bandwidth in about ten deploys, and converting means rewriting history. If the build grows, host it outside the repo (e.g. a GitHub Release asset) instead.</li>
     <li class="minor"><b>Content gaps.</b> Broken videos and wrong links found during the migration were removed rather than replaced. Five projects now have no video, Lumina Adfecto and Planet Runner have no external link, and Unity Physics Simulator and Programming Problems Solution have no images until real screenshots are added.</li>
     <li class="minor"><b>Fonts load from Google at runtime</b>, so the first paint can show fallback fonts.</li>
   </ul>
 
   <footer>
-    <span>Measured at <span class="mono">3a6209c</span> (branch <span class="mono">content-admin-restructure</span>, PR #1), 2026-10-11. Re-pin to the merge commit on <span class="mono">master</span> after the PR merges.</span>
+    <span>Measured at <span class="mono">20c0099</span> (branch <span class="mono">content-admin-restructure</span>, PR #1), 2026-10-11. Re-pin to the merge commit on <span class="mono">master</span> after the PR merges.</span>
     <span>Source: <span class="mono">docs/architecture.html</span>. Usage docs: <span class="mono">docs/content.md</span>, <span class="mono">docs/release.md</span>.</span>
   </footer>
 </div>

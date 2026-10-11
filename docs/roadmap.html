@@ -1,0 +1,519 @@
+<title>Portfolio Site Builder</title>
+
+<!--
+  Living plan. Claude regenerates this file; the reader's ticks, statuses, target dates and
+  notes live in the artifact's db store (collections `tracking` and `milestones`), keyed by the
+  ids below. Never write progress state (done:, status:) into this file. Never rename an id.
+  Published at https://claude.ai/artifact/78AnkdAhofw8UWt4qQs8tm (see docs/roadmap.md).
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Rajdhani:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;600&display=swap">
+
+<style>
+  /* Layout: one reading column; a pipeline strip and a "freedom ladder" carry the two ideas
+     no table shows — where content travels, and how far toward freeform we go.
+     Palette borrows the site's own Arcade Gold preset (gold on plum) so the plan looks like
+     the thing it plans. Display = Orbitron (the site's heading face), labels = Rajdhani
+     (the site's body face), reading = Source Serif 4, data = JetBrains Mono. */
+  :root{
+    --ground:#F5F2F8; --surface:#FFFFFF; --surface-2:#ECE6F2;
+    --line:#D6CCE0; --line-soft:#E6DFED;
+    --ink:#1E1730; --ink-2:#4A3F5E; --ink-3:#766B88;
+    --accent:#9A6410; --accent-wash:#F7EBD3; --accent-2:#A92F5F;
+    --ok:#2F6B47; --warn:#8A5810; --crit:#A3302A;
+    --sh:0 1px 2px rgba(30,23,48,.07);
+    --f-display:"Orbitron","Rajdhani",system-ui,sans-serif;
+    --f-label:"Rajdhani",system-ui,sans-serif;
+    --f-body:"Source Serif 4",Georgia,serif;
+    --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#181622; --surface:#221B36; --surface-2:#2C2444;
+      --line:#3D3359; --line-soft:#2F2847;
+      --ink:#F3F1F7; --ink-2:#C4BCD3; --ink-3:#958BA8;
+      --accent:#EEB64B; --accent-wash:#3A2E1F; --accent-2:#F07A9E;
+      --ok:#7BC49A; --warn:#E3AD5A; --crit:#EE8173;
+      --sh:0 1px 2px rgba(0,0,0,.4);
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#181622; --surface:#221B36; --surface-2:#2C2444;
+    --line:#3D3359; --line-soft:#2F2847;
+    --ink:#F3F1F7; --ink-2:#C4BCD3; --ink-3:#958BA8;
+    --accent:#EEB64B; --accent-wash:#3A2E1F; --accent-2:#F07A9E;
+    --ok:#7BC49A; --warn:#E3AD5A; --crit:#EE8173;
+    --sh:0 1px 2px rgba(0,0,0,.4);
+    color-scheme:dark;
+  }
+
+  *{box-sizing:border-box}
+  body{background:var(--ground);color:var(--ink);font:17px/1.6 var(--f-body)}
+  .wrap{max-width:980px;margin-inline:auto;padding-inline:20px;padding-block:0 80px}
+  h1,h2,h3{margin:0;text-wrap:balance}
+  h2{font:800 20px/1.2 var(--f-display);letter-spacing:.02em;text-transform:uppercase}
+  h3{font:700 21px/1.25 var(--f-label)}
+  p{margin:0}
+  .lbl{font:700 12px/1.3 var(--f-label);text-transform:uppercase;letter-spacing:.14em;color:var(--ink-3)}
+  .mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+  .prose{max-width:66ch;color:var(--ink-2)}
+  .prose + .prose{margin-top:12px}
+  a{color:var(--accent)}
+  code{font:14px var(--f-mono);background:var(--surface-2);padding:1px 5px;border-radius:4px}
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  header{padding-top:48px}
+  .rev{color:var(--accent)}
+  h1{font:800 clamp(30px,6vw,52px)/1.05 var(--f-display);letter-spacing:.01em;margin-top:12px}
+  .thesis{font-size:19px;color:var(--ink-2);max-width:58ch;margin-top:16px}
+
+  /* now band */
+  .now{margin-top:28px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--sh)}
+  .now-top{display:flex;flex-wrap:wrap;gap:14px 28px;align-items:flex-end;padding:18px 22px;border-bottom:1px solid var(--line-soft)}
+  .now-top > div{display:flex;flex-direction:column;gap:3px;min-width:0}
+  .now-v{font:600 21px var(--f-mono);color:var(--ink)}
+  .now-sub{font:13px var(--f-label);color:var(--ink-3)}
+  .bar{height:9px;border-radius:5px;background:var(--surface-2);overflow:hidden;margin:12px 22px 20px}
+  .bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s ease}
+  .bar i.done{background:var(--ok)}
+  @media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+  .sync{display:inline-flex;align-items:center;gap:7px;font:14px var(--f-label);color:var(--ink-3)}
+  .sync .dot{width:7px;height:7px;border-radius:50%;background:var(--ink-3)}
+  .sync.live .dot{background:var(--ok)} .sync.err .dot{background:var(--crit)} .sync.err{color:var(--crit)}
+
+  /* pipeline */
+  .pipe{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:20px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+  .pipe > div{padding:14px 16px;border-right:1px solid var(--line-soft);min-width:0}
+  .pipe > div:last-child{border-right:0}
+  .pipe .lbl{display:block;margin-bottom:4px}
+  .pipe p{font-size:15px;color:var(--ink-2)}
+  .pipe .step{font:600 13px var(--f-mono);color:var(--accent)}
+  @media (max-width:680px){.pipe{grid-template-columns:1fr 1fr}.pipe > div:nth-child(2){border-right:0}.pipe > div:nth-child(-n+2){border-bottom:1px solid var(--line-soft)}}
+
+  section{padding-top:52px}
+  section > h2{margin-bottom:16px}
+
+  /* how it stays current */
+  .rows{display:grid;gap:0;border-top:1px solid var(--line)}
+  .rows > div{display:grid;grid-template-columns:180px minmax(0,1fr);gap:16px;padding:12px 0;border-bottom:1px solid var(--line-soft)}
+  .rows dt{font:700 15px var(--f-label);color:var(--ink)}
+  .rows dd{margin:0;color:var(--ink-2);font-size:16px}
+  @media (max-width:600px){.rows > div{grid-template-columns:1fr;gap:2px}}
+
+  /* ladder */
+  .ladder{display:grid;gap:8px}
+  .rung{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;align-items:center;padding:12px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+  .rung .n{font:800 18px var(--f-display);color:var(--accent);text-align:center}
+  .rung b{font:700 17px var(--f-label)}
+  .rung p{font-size:15px;color:var(--ink-2)}
+  .rung .ms{font:600 12px var(--f-mono);color:var(--ink-3);white-space:nowrap}
+  .rung.no{background:transparent;border-style:dashed}
+  .rung.no .n,.rung.no b{color:var(--ink-3)}
+  .rung.no b{text-decoration:line-through}
+
+  /* milestones */
+  .track{display:flex;gap:4px;margin-bottom:18px}
+  .track span{flex:1;height:8px;border-radius:4px;background:var(--surface-2)}
+  .track span.done{background:var(--ok)} .track span.active{background:var(--accent)} .track span.blocked{background:var(--crit)}
+  .useful{margin:6px 0 18px;padding:10px 14px;border-left:3px solid var(--accent);background:var(--accent-wash);font-size:15px;color:var(--ink);border-radius:0 8px 8px 0}
+  .m{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:14px;box-shadow:var(--sh)}
+  .m-head{display:flex;gap:10px 16px;align-items:baseline;flex-wrap:wrap}
+  .m-code{font:800 15px var(--f-display);color:var(--accent);min-width:34px}
+  .m-main{flex:1 1 320px;min-width:0}
+  .m-main p{color:var(--ink-2);font-size:16px;margin-top:4px}
+  .m-meta{font:12px var(--f-mono);color:var(--ink-3)}
+  .m-evidence{margin-top:10px;font-size:14px;color:var(--ink-3)}
+  .m-evidence b{font:700 12px var(--f-label);text-transform:uppercase;letter-spacing:.1em;margin-right:6px}
+  .m-ctl{display:flex;flex-wrap:wrap;gap:10px 16px;margin:14px 0;padding:12px 0;border-block:1px solid var(--line-soft);font:15px var(--f-label)}
+  .m-ctl label{display:flex;gap:7px;align-items:center;color:var(--ink-3);min-width:0}
+  .m-ctl select,.m-ctl input{font:15px var(--f-label);padding:4px 8px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);min-width:0}
+  .m-exit{list-style:none;margin:0;padding:0}
+  .m-exit li{padding:4px 0;font-size:16px}
+  .m-exit label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+  .m-exit input{margin-top:6px;accent-color:var(--ok)}
+  .m-exit label.on span{color:var(--ink-3);text-decoration:line-through}
+  .chip{display:inline-block;vertical-align:middle;font:700 11px var(--f-label);text-transform:uppercase;letter-spacing:.1em;padding:2px 9px;border-radius:99px;background:var(--surface-2);color:var(--ink-3);margin-left:6px}
+  .chip.active{background:var(--accent-wash);color:var(--accent)}
+  .chip.done{color:var(--ok)} .chip.blocked{color:var(--crit)}
+
+  /* tables */
+  .tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-size:15px}
+  th{font:700 12px var(--f-label);text-transform:uppercase;letter-spacing:.12em;color:var(--ink-3);text-align:left;padding:10px 14px;border-bottom:1px solid var(--line)}
+  td{padding:10px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink-2)}
+  tr:last-child td{border-bottom:0}
+  td.k{font:600 13px var(--f-mono);color:var(--accent);white-space:nowrap}
+  .st{font:700 11px var(--f-label);text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
+  .st.s{color:var(--ok)} .st.b{color:var(--warn)} .st.i{color:var(--crit)}
+
+  .revlog{display:grid;gap:14px}
+  .revlog > div{display:grid;grid-template-columns:140px minmax(0,1fr);gap:16px}
+  .revlog .when{font:600 13px var(--f-mono);color:var(--accent)}
+  @media (max-width:600px){.revlog > div{grid-template-columns:1fr;gap:2px}}
+
+  .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+  .box{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .box ul{margin:8px 0 0;padding-left:18px;color:var(--ink-2);font-size:16px}
+  .box li + li{margin-top:6px}
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="lbl rev">Living plan &middot; Rev 1 &middot; 11 Oct 2026</p>
+    <h1>Portfolio Site Builder</h1>
+    <p class="thesis">A local-first, git-backed site builder for one portfolio: edit in a GUI or let an agent edit through the CLI, then Test, Stage and Go live. Agents are first-class users, but every file stays readable by a person and the editor stays learnable without docs.</p>
+
+    <div class="now">
+      <div class="now-top">
+        <div><span class="lbl">Tests</span><span class="now-v" style="color:var(--ok)">17 / 17</span><span class="now-sub">npm test, all passing</span></div>
+        <div><span class="lbl">Content</span><span class="now-v">7 projects</span><span class="now-sub">validate: 0 errors, 0 warnings</span></div>
+        <div><span class="lbl">In flight</span><span class="now-v" style="color:var(--accent)" id="stat-active">&mdash;</span><span class="now-sub" id="stat-active-name">first milestone not marked Done</span></div>
+        <div style="margin-left:auto">
+          <span class="lbl">Tracking</span>
+          <span class="sync" id="sync"><span class="dot"></span><span id="sync-text">connecting&hellip;</span></span>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:14px 22px 0">
+        <span class="lbl">Exit criteria ticked</span>
+        <span class="mono" style="font-size:13px;color:var(--ink-3)" id="overall-pct">&mdash;</span>
+      </div>
+      <div class="bar"><i id="overall-bar"></i></div>
+    </div>
+
+    <div class="pipe" aria-label="How content travels">
+      <div><span class="step">01 &middot; edit</span><span class="lbl">Local</span><p>Admin GUI at <code>/admin/</code> or <code>npm run content</code>. Both write <code>content/</code>.</p></div>
+      <div><span class="step">02 &middot; test</span><span class="lbl">Test</span><p>Build + checks. A pass is remembered until content changes.</p></div>
+      <div><span class="step">03 &middot; stage</span><span class="lbl">Staging</span><p>Separate repo, deploy key, <code>noindex</code>. Look before anyone else does.</p></div>
+      <div><span class="step">04 &middot; ship</span><span class="lbl">Go live</span><p>Publish to GitHub Pages. Only after a passed Test.</p></div>
+    </div>
+  </header>
+
+  <section>
+    <h2>How this page stays current</h2>
+    <dl class="rows">
+      <div><dt>The plan</dt><dd>Claude regenerates this whole page from <code>docs/roadmap.html</code> in the repo whenever the plan changes shape. Each revision is a commit you can diff.</dd></div>
+      <div><dt>Your progress</dt><dd>Ticks, status, target dates and notes are saved in this artifact's own store, keyed by stable ids. Regenerating the page never touches them. A task that keeps its id keeps its tick.</dd></div>
+      <div><dt>The detail</dt><dd>Content format: <code>docs/content.md</code>. Release flow: <code>docs/release.md</code>. How the code fits together: the architecture map (<code>docs/architecture.html</code>). Task-level work: git history and the Claude sessions named on each milestone.</dd></div>
+    </dl>
+    <p class="prose" style="margin-top:14px">The "Evidence" line on each milestone is what the repo showed when this revision was written. It is not a tick. The ticks are yours, so a box stays empty until you check it.</p>
+  </section>
+
+  <section>
+    <h2>How far toward freeform</h2>
+    <p class="prose" style="margin-bottom:16px">Each rung adds freedom and a new way for a page to break. We climb to rung 4 and stop before absolute positioning, because pixel-placed elements have to be redesigned for every screen size and can ignore the theme.</p>
+    <div class="ladder">
+      <div class="rung"><span class="n">1</span><div><b>Content in fixed layouts</b><p>Edit text, media, links and theme. Layout lives in code.</p></div><span class="ms">M1&ndash;M3</span></div>
+      <div class="rung"><span class="n">2</span><div><b>Pages and sections as content</b><p>Add, reorder and hide pages and sections from a site map.</p></div><span class="ms">M4</span></div>
+      <div class="rung"><span class="n">3</span><div><b>Flexible sections</b><p>Columns, width, alignment and variants, plus generic text, media and card-grid sections.</p></div><span class="ms">M5</span></div>
+      <div class="rung"><span class="n">4</span><div><b>Nested blocks, edited on the page</b><p>Sections hold rows, columns and blocks. Click on the live preview to edit.</p></div><span class="ms">M6&ndash;M7</span></div>
+      <div class="rung no"><span class="n">5</span><div><b>Absolute positioning</b><p>Not building. See Out of scope.</p></div><span class="ms">&mdash;</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Milestone plan</h2>
+    <div class="track" id="track" aria-hidden="true"></div>
+    <p class="useful"><b>Useful from M1.</b> Projects can be added and shipped without touching code today. <b>M4 is where it becomes a site builder</b>: the first milestone where the site's structure changes without a code edit. Everything after M4 adds freedom and is optional, not owed.</p>
+    <p class="prose" style="margin-bottom:18px">Sizes are rough: S is one agent session, M is two or three, L is several plus your review. None of them has been measured.</p>
+    <div id="milestones"></div>
+  </section>
+
+  <section>
+    <h2>Deliverables</h2>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Milestone</th><th>You get</th><th>Acceptance test</th><th>Status</th></tr></thead>
+        <tbody id="deliv"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Risks</h2>
+    <p class="prose" style="margin-bottom:16px">Ordered by damage if it happens. Each mitigation is marked <span class="st s">Structural</span> (the design prevents it), <span class="st b">Built, not measured</span> (the work exists, the proof does not) or <span class="st i">Intended</span> (someone plans to be careful, which means the risk is still open).</p>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Id</th><th>Risk</th><th>Impact</th><th>Mitigation</th></tr></thead>
+        <tbody>
+          <tr><td class="k">R1</td><td>The layout format gets locked into flat sections, so nested blocks (M6) need a migration of every page.</td><td>High: rework of M4 and every page file</td><td><span class="st i">Intended</span> The M4 session was asked to use one node shape, <code>{type, id, enabled, options, children?}</code>, with the registry declaring which types take children. Not yet checked against what it built.</td></tr>
+          <tr><td class="k">R2</td><td>Untested content reaches the live site.</td><td>High: public breakage</td><td><span class="st s">Structural</span> Go live is refused without a passed Test, and the pass is cleared when content changes (<code>6a8db0a</code>). 17 tests cover content and media.</td></tr>
+          <tr><td class="k">R3</td><td>GUI and CLI drift apart, so an agent can't do something a person can, or skips a check.</td><td>Medium: agents stop being first-class</td><td><span class="st b">Built, not measured</span> Both call the shared <code>admin/server/store.js</code>. No test yet compares the GUI's routes with the CLI's commands.</td></tr>
+          <tr><td class="k">R4</td><td>Parallel agent sessions collide or branch from stale bases.</td><td>Medium: merge pain, lost work</td><td><span class="st b">Built, not measured</span> Writers get their own worktree. It already happened once: the UX branch was cut from <code>master</code> and still lacks the CLI commit.</td></tr>
+          <tr><td class="k">R5</td><td>Content files stop being readable by a person as the format grows: generated ids, deep nesting, defaults written out.</td><td>Medium: the human half of the thesis fails</td><td><span class="st i">Intended</span> The principle is written down and was passed to the M4 session. No lint or test enforces it.</td></tr>
+          <tr><td class="k">R6</td><td>Freeform layouts break on phones or ignore the theme.</td><td>Medium</td><td><span class="st s">Structural</span> No absolute positioning. Colours come only from theme tokens. Blocks sit in a flow layout.</td></tr>
+          <tr><td class="k">R7</td><td>Adopting a page-builder library (Puck or similar) for M6 ties the format to its data model.</td><td>Medium: lock-in</td><td><span class="st i">Intended</span> M6 starts with a decision task: our own format with an adapter, not the library's format as the source of truth.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Revisions</h2>
+    <div class="revlog">
+      <div><span class="when">Rev 1 &middot; 11 Oct 2026</span><p class="prose">First version. M1 and M2 are on <code>content-admin-restructure</code>, and the CLI was verified this revision (17 tests pass, <code>validate</code> clean on 7 projects). M3 is built on its own branch but not merged, so it is not usable from the main line yet. M4 is in progress in a separate session. M5 to M8 are proposals with sizes nobody has measured. Staging has been configured (<code>20c84a1</code>), but a full Test, Stage and Go live round was not run for this revision.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Scope</h2>
+    <div class="two">
+      <div class="box"><span class="lbl">Not building</span>
+        <ul>
+          <li>Absolute (x/y) positioning of elements.</li>
+          <li>Accounts, logins or more than one editor at a time. Git is the history.</li>
+          <li>A hosted service, or building sites for anyone else.</li>
+          <li>A database. Content stays as JSON and Markdown files.</li>
+        </ul>
+      </div>
+      <div class="box"><span class="lbl">Deferred with intent</span>
+        <ul>
+          <li><b>After M7, if you edit away from your desk:</b> host the admin privately to edit from a phone.</li>
+          <li><b>After M6:</b> per-breakpoint overrides beyond show/hide.</li>
+          <li><b>Whenever it's fun:</b> "describe a section" generation by an agent through the CLI.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Standing assumptions</h2>
+    <p class="prose">One owner and one site. Agents do most of the building, in separate sessions, and you review and merge. The site stays a static Vite and React build on GitHub Pages. Tools like Wix, Webflow and Framer already do visual editing better than this ever will. The reasons to build anyway: content stays in your repo, every change is a reviewable commit, and agents can edit the site through the same CLI and checks as you.</p>
+  </section>
+</div>
+
+<script>
+  // Structure only. Reader state lives in the store. Never add done:/status: here; never rename an id.
+  var MILESTONES = [
+    { id:"m1", code:"M1", name:"Content admin and release gate", size:"done before this plan", depends:"—",
+      deliverable:"All content in content/, a local admin GUI, and a Test → Stage → Go live gate.",
+      accept:"A project added in /admin/ appears on staging after Test and Stage, without a code edit",
+      evidence:"ff7e67f, 20c84a1, 6a8db0a on content-admin-restructure. 17 tests pass.",
+      tasks:[
+        {id:"m1-content", text:"Content lives in content/ (projects, site text, theme), never in src/"},
+        {id:"m1-admin", text:"Admin GUI edits projects, media, links, theme and site text"},
+        {id:"m1-gate", text:"Go live refused without a passed Test, and the pass survives restarts"},
+        {id:"m1-staging", text:"Staging deploy works end to end with the repo-scoped key", hot:true},
+        {id:"m1-master", text:"content-admin-restructure merged to master and live"}
+      ]},
+    { id:"m2", code:"M2", name:"Agent CLI", size:"S", depends:"M1",
+      deliverable:"npm run content: every content operation, same validation as the GUI, JSON output.",
+      accept:"npm run content -- validate passes, and an agent can create, edit and release a project with no browser",
+      evidence:"20c0099. validate: 7 projects, 0 errors (run for this revision).",
+      tasks:[
+        {id:"m2-store", text:"Shared logic moved to admin/server/store.js, used by both API and CLI"},
+        {id:"m2-cli", text:"Commands for projects, media, order, theme, site text, validate and release"},
+        {id:"m2-tests", text:"node --test coverage for the core commands"},
+        {id:"m2-agent-try", text:"An agent edits real content through the CLI in a normal session", hot:true}
+      ]},
+    { id:"m3", code:"M3", name:"Editor UX refresh", size:"S", depends:"M1",
+      deliverable:"Guarded saves, inline validation, forms for site text, a Release stepper, sidebar filter and badges.",
+      accept:"You can edit a project and the site text, then release, without reading docs or seeing raw JSON",
+      evidence:"64b54a6 on claude/admin-ux-refine-dbb226. Not merged.",
+      tasks:[
+        {id:"m3-built", text:"Refresh built and checked in the browser"},
+        {id:"m3-merge", text:"Merged with the CLI work on content-admin-restructure", hot:true},
+        {id:"m3-review", text:"You've used it for a real edit and it felt obvious"}
+      ]},
+    { id:"m4", code:"M4", name:"Pages and sections as content", size:"M", depends:"M2, M3",
+      deliverable:"content/site/layout.json, a section-type registry, a Site map page in the admin, and layout commands in the CLI.",
+      accept:"With the default layout.json the site renders exactly as before; a section reorder or hide from the admin or CLI shows up after Test",
+      evidence:"In progress in the session “Content-driven site layout + site map editor”.",
+      tasks:[
+        {id:"m4-format", text:"layout.json is readable on sight: plain ids, shallow, defaults left out"},
+        {id:"m4-node-shape", text:"Uniform node shape that can take children later (R1)", hot:true},
+        {id:"m4-render", text:"App and pages render from layout.json, identical to today by default"},
+        {id:"m4-cli", text:"layout show / page / section commands with the same validation"},
+        {id:"m4-sitemap", text:"Site map page: drag to reorder, toggles, add section, option forms"},
+        {id:"m4-docs", text:"docs/content.md has a commented layout.json example"}
+      ]},
+    { id:"m5", code:"M5", name:"Flexible sections", size:"M", depends:"M4",
+      deliverable:"Layout options on every section and generic section types for text, media and card grids.",
+      accept:"A new About-style page built entirely in the admin, with no code change, looks right at phone and desktop widths",
+      evidence:"Not started.",
+      tasks:[
+        {id:"m5-options", text:"Shared options: width, columns, alignment, spacing, background"},
+        {id:"m5-generic", text:"Generic sections: rich text, media + text, card grid, embed"},
+        {id:"m5-variants", text:"Variants per section (e.g. image left or right)"},
+        {id:"m5-preview", text:"Admin previews a section at phone, tablet and desktop widths"}
+      ]},
+    { id:"m6", code:"M6", name:"Nested blocks", size:"L", depends:"M5",
+      deliverable:"Sections hold rows, columns and blocks; an outline editor with drag between containers; CLI block commands.",
+      accept:"A page with two-column rows of heading, text, image and button blocks is built in the admin and through the CLI, and the JSON still reads clearly",
+      evidence:"Not started.",
+      tasks:[
+        {id:"m6-decide", text:"Decide: our own tree with a Puck adapter, or the library's model (R7)", hot:true},
+        {id:"m6-blocks", text:"Block registry: heading, text, image, button, video, spacer, project list"},
+        {id:"m6-outline", text:"Outline editor with drag and drop between containers"},
+        {id:"m6-cli", text:"CLI block commands that address blocks by readable path"},
+        {id:"m6-readable", text:"A check that fails on generated ids or written-out defaults (R5)"}
+      ]},
+    { id:"m7", code:"M7", name:"On-page visual editing", size:"L", depends:"M6",
+      deliverable:"Click any element in a live preview to select it, edit text in place, drag blocks, and set properties in a side panel.",
+      accept:"A change made by clicking on the preview is the same commit-ready JSON the CLI would write",
+      evidence:"Not started.",
+      tasks:[
+        {id:"m7-bridge", text:"Preview iframe and editor talk over postMessage"},
+        {id:"m7-select", text:"Click to select, with an outline and breadcrumb"},
+        {id:"m7-inline", text:"Edit text in place"},
+        {id:"m7-drag", text:"Drag blocks on the page"},
+        {id:"m7-panel", text:"Property panel generated from the block registry"}
+      ]},
+    { id:"m8", code:"M8", name:"Custom code blocks", size:"M", depends:"M6",
+      deliverable:"A custom block type whose JSX lives in content/blocks/, which an agent can write through the CLI.",
+      accept:"An agent adds a new block with the CLI, it passes Test, and it renders on staging",
+      evidence:"Not started.",
+      tasks:[
+        {id:"m8-format", text:"content/blocks/<name>.jsx with declared options"},
+        {id:"m8-cli", text:"CLI command to scaffold and register a block"},
+        {id:"m8-check", text:"Test step builds and lints custom blocks before Stage"}
+      ]}
+  ];
+
+  var STATUSES = [
+    {v:"not_started", label:"Not started", chip:""},
+    {v:"in_progress", label:"In progress", chip:"active"},
+    {v:"blocked", label:"Blocked", chip:"blocked"},
+    {v:"done", label:"Done", chip:"done"}
+  ];
+
+  var state = {tasks:{}, milestones:{}};
+  var db = null, writable = false;
+  function statusOf(id){ var m = state.milestones[id]; return (m && m.status) || "not_started"; }
+  function statusMeta(v){ for (var i=0;i<STATUSES.length;i++) if (STATUSES[i].v===v) return STATUSES[i]; return STATUSES[0]; }
+  function stamp(){ return new Date().toISOString(); }
+  function el(tag, cls, text){ var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+  function build(){
+    var host = document.getElementById("milestones"), track = document.getElementById("track"), deliv = document.getElementById("deliv");
+    MILESTONES.forEach(function(m){
+      track.appendChild(el("span")).setAttribute("data-track", m.id);
+
+      var card = el("div", "m"); card.id = "ms-" + m.id;
+      var head = el("div", "m-head");
+      head.appendChild(el("span", "m-code", m.code));
+      var main = el("div", "m-main");
+      var h = el("h3", null, m.name + " ");
+      var chip = el("span", "chip"); chip.setAttribute("data-role", "chip"); h.appendChild(chip);
+      main.appendChild(h);
+      main.appendChild(el("p", null, m.deliverable));
+      head.appendChild(main);
+      head.appendChild(el("span", "m-meta", "Size " + m.size + " · needs " + m.depends));
+      card.appendChild(head);
+      var ev = el("p", "m-evidence"); ev.appendChild(el("b", null, "Evidence")); ev.appendChild(document.createTextNode(m.evidence));
+      card.appendChild(ev);
+
+      var ctl = el("div", "m-ctl");
+      var l1 = el("label", null, "Status "), sel = document.createElement("select");
+      sel.id = "status-" + m.id; sel.setAttribute("data-role", "status");
+      STATUSES.forEach(function(s){ var o = el("option", null, s.label); o.value = s.v; sel.appendChild(o); });
+      l1.appendChild(sel); ctl.appendChild(l1);
+      var l2 = el("label", null, "Target "), tgt = document.createElement("input");
+      tgt.type = "date"; tgt.id = "target-" + m.id; tgt.setAttribute("data-role", "target"); l2.appendChild(tgt); ctl.appendChild(l2);
+      var l3 = el("label", null, "Note "), note = document.createElement("input");
+      l3.style.flex = "1 1 220px"; note.type = "text"; note.id = "note-" + m.id; note.style.flex = "1";
+      note.placeholder = "anything worth remembering next time"; note.setAttribute("data-role", "note");
+      l3.appendChild(note); ctl.appendChild(l3);
+      card.appendChild(ctl);
+
+      var prog = el("div"); prog.style.cssText = "display:flex;align-items:center;gap:12px;margin-bottom:10px";
+      prog.appendChild(el("span", "lbl", "Exit criteria"));
+      var bw = el("div", "bar"); bw.style.cssText = "flex:1;margin:0"; var bi = el("i"); bi.setAttribute("data-role", "bar"); bw.appendChild(bi); prog.appendChild(bw);
+      var pct = el("span", "mono"); pct.style.cssText = "font-size:13px;color:var(--ink-3)"; pct.setAttribute("data-role", "pct"); prog.appendChild(pct);
+      card.appendChild(prog);
+
+      var ul = el("ul", "m-exit");
+      m.tasks.forEach(function(t){
+        var li = el("li"), label = el("label"), cb = document.createElement("input"), span = el("span", null, t.text);
+        label.setAttribute("data-task", t.id);
+        cb.type = "checkbox"; cb.id = "task-" + t.id; cb.disabled = true; cb.setAttribute("data-task-input", t.id);
+        if (t.hot) span.style.fontWeight = "600";
+        label.appendChild(cb); label.appendChild(span); li.appendChild(label); ul.appendChild(li);
+        cb.addEventListener("change", function(){ onToggle(t.id, cb.checked); });
+      });
+      card.appendChild(ul);
+      host.appendChild(card);
+
+      sel.addEventListener("change", function(e){ onField(m.id, "status", e.target.value); });
+      tgt.addEventListener("change", function(e){ onField(m.id, "target", e.target.value); });
+      note.addEventListener("change", function(e){ onField(m.id, "note", e.target.value); });
+
+      var tr = el("tr");
+      tr.appendChild(el("td", "k", m.code));
+      tr.appendChild(el("td", null, m.deliverable));
+      tr.appendChild(el("td", null, m.accept));
+      var td = el("td"), c2 = el("span", "chip"); c2.style.marginLeft = "0"; c2.setAttribute("data-dchip", m.id); td.appendChild(c2); tr.appendChild(td);
+      deliv.appendChild(tr);
+    });
+  }
+
+  function paint(){
+    var total = 0, doneAll = 0;
+    MILESTONES.forEach(function(m){
+      var card = document.getElementById("ms-" + m.id); if (!card) return;
+      var done = 0;
+      m.tasks.forEach(function(t){
+        var on = !!(state.tasks[t.id] && state.tasks[t.id].done);
+        if (on) done++;
+        var input = card.querySelector('[data-task-input="' + t.id + '"]');
+        var label = card.querySelector('[data-task="' + t.id + '"]');
+        if (input){ input.checked = on; input.disabled = !writable; }
+        if (label) label.classList.toggle("on", on);
+      });
+      total += m.tasks.length; doneAll += done;
+      var bar = card.querySelector('[data-role="bar"]');
+      bar.style.width = (m.tasks.length ? Math.round(done / m.tasks.length * 100) : 0) + "%";
+      bar.classList.toggle("done", done === m.tasks.length && m.tasks.length > 0);
+      card.querySelector('[data-role="pct"]').textContent = done + " / " + m.tasks.length;
+
+      var meta = statusMeta(statusOf(m.id));
+      var chip = card.querySelector('[data-role="chip"]'); chip.textContent = meta.label; chip.className = "chip " + meta.chip;
+      var dchip = document.querySelector('[data-dchip="' + m.id + '"]'); dchip.textContent = meta.label; dchip.className = "chip " + meta.chip;
+      document.querySelector('[data-track="' + m.id + '"]').className = meta.chip;
+
+      var mv = state.milestones[m.id] || {};
+      var selEl = card.querySelector('[data-role="status"]'), tgtEl = card.querySelector('[data-role="target"]'), noteEl = card.querySelector('[data-role="note"]');
+      selEl.value = statusOf(m.id); selEl.disabled = !writable;
+      if (document.activeElement !== tgtEl) tgtEl.value = mv.target || "";
+      if (document.activeElement !== noteEl) noteEl.value = mv.note || "";
+      tgtEl.disabled = !writable; noteEl.disabled = !writable;
+    });
+    var ob = document.getElementById("overall-bar");
+    ob.style.width = (total ? Math.round(doneAll / total * 100) : 0) + "%";
+    ob.classList.toggle("done", total > 0 && doneAll === total);
+    document.getElementById("overall-pct").textContent = doneAll + " / " + total + " · " + (total ? Math.round(doneAll / total * 100) : 0) + "%";
+    var active = null;
+    for (var i = 0; i < MILESTONES.length; i++){ if (statusOf(MILESTONES[i].id) !== "done"){ active = MILESTONES[i]; break; } }
+    document.getElementById("stat-active").textContent = active ? active.code : "shipped"; document.getElementById("stat-active-name").textContent = active ? active.name : "every milestone marked Done";
+  }
+
+  function onToggle(taskId, done){
+    if (!db || !writable) return;
+    state.tasks[taskId] = {done:done, at:stamp()}; paint();
+    db.doc("tracking/" + taskId).set({done:done, at:stamp()}).catch(flagError);
+  }
+  function onField(msId, field, value){
+    if (!db || !writable) return;
+    var next = Object.assign({}, state.milestones[msId] || {}); next[field] = value; next.at = stamp();
+    state.milestones[msId] = next; paint();
+    db.doc("milestones/" + msId).set(next).catch(flagError);
+  }
+  function setSync(cls, text){ document.getElementById("sync").className = "sync " + cls; document.getElementById("sync-text").textContent = text; }
+  function flagError(e){
+    var code = (e && e.code) || "unavailable";
+    if (code === "revoked" || code === "not_granted"){ writable = false; paint(); setSync("off", "read-only"); return; }
+    setSync("err", "not saved — " + code);
+  }
+
+  build(); paint(); setSync("", "connecting…");
+  var runtime = (typeof window !== "undefined" && window.claude && window.claude.use) ? window.claude.use("db") : Promise.resolve(null);
+  runtime.then(function(store){
+    if (!store){ writable = false; paint(); setSync("off", "tracking unavailable here"); return; }
+    db = store; writable = true; setSync("live", "saved with this page");
+    db.collection("tracking").onSnapshot(function(snap){ var n = {}; snap.docs.forEach(function(d){ n[d.id] = d.data() || {}; }); state.tasks = n; paint(); }, flagError);
+    db.collection("milestones").onSnapshot(function(snap){ var n = {}; snap.docs.forEach(function(d){ n[d.id] = d.data() || {}; }); state.milestones = n; paint(); }, flagError);
+    paint();
+  }).catch(function(){ writable = false; paint(); setSync("off", "tracking unavailable here"); });
+</script>

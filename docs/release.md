@@ -6,7 +6,7 @@ Nothing reaches the public site until it has been built and checked. The admin's
 
 *Release → Build & test* validates every non-draft project, runs the production build, and serves `dist/` at `http://localhost:4173` — exactly what will be deployed (drafts excluded, media copied, minified).
 
-The admin records a fingerprint of what was tested: every file under `content/`, the current commit, and uncommitted code changes. **Stage** and **Go live** stay locked until that fingerprint matches the current state, so any edit after testing requires a new test.
+The admin records a fingerprint of what was tested: every file under `content/`, the current commit, and uncommitted code changes. **Stage** and **Go live** stay locked until that fingerprint matches the current state, so any edit after testing requires a new test. The passed fingerprint is saved in `.release-tested.json` (gitignored), so restarting the dev server doesn't undo a Test.
 
 By hand: `npm run build && npm run preview`.
 

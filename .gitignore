@@ -38,3 +38,6 @@ css-*-report.json
 
 # Admin deletes land here (recoverable, never committed)
 .trash
+
+# Last state that passed the admin's Test step
+.release-tested.json
