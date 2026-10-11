@@ -9,6 +9,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint .",
+    "test": "node --test",
     "css:stats": "node scripts/css-stats.js",
     "css:quick": "node scripts/css-quick-stats.js",
     "css:size": "node scripts/css-size-analysis.js",

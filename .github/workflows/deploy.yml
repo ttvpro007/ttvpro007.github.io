@@ -1,8 +1,8 @@
 name: CI & Deploy
 
-# master  → lint, build, deploy the live site (this repo's gh-pages branch)
-# staging → lint, build, deploy the staging site (only when STAGING_REPO is configured — see docs/release.md)
-# PRs     → lint and build only
+# master  → lint, test, build, deploy the live site (this repo's gh-pages branch)
+# staging → lint, test, build, deploy the staging site (only when STAGING_REPO is configured — see docs/release.md)
+# PRs     → lint, test and build only
 on:
   push:
     branches: [master, staging]
@@ -36,6 +36,9 @@ jobs:
 
       - name: Lint
         run: npm run lint
+
+      - name: Test
+        run: npm test
 
       - name: Build
         run: npm run build
