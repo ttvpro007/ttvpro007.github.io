@@ -23,16 +23,7 @@
     "Cross-platform compatibility"
   ],
   "cover": null,
-  "media": [
-    {
-      "type": "image",
-      "src": "portfolio-profile-pic.png"
-    },
-    {
-      "type": "image",
-      "src": "catavaneer.png"
-    }
-  ],
+  "media": [],
   "links": [
     {
       "type": "github",

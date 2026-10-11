@@ -24,10 +24,6 @@
   "cover": "lumina-adfecto.png",
   "media": [
     {
-      "type": "youtube",
-      "src": "https://www.youtube.com/embed/M_Aj7-9t5CA"
-    },
-    {
       "type": "image",
       "src": "lumina-adfecto-color.png"
     },
@@ -36,12 +32,7 @@
       "src": "lumina-adfecto.png"
     }
   ],
-  "links": [
-    {
-      "type": "itchio",
-      "url": "https://cryobyte-studio.itch.io/catavaneer"
-    }
-  ],
+  "links": [],
   "featured": false,
   "showOnResume": true,
   "resumeOrder": 7,

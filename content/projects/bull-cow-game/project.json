@@ -25,12 +25,8 @@
   "cover": null,
   "media": [
     {
-      "type": "youtube",
-      "src": "https://www.youtube.com/embed/M_Aj7-9t5CA"
-    },
-    {
       "type": "image",
-      "src": "https://static.wixstatic.com/media/84b145_2ce8582889a149b4a94b4070eba05c8c~mv2.png/v1/fill/w_310,h_496,al_c,q_80,usm_0.66_1.00_0.01/84b145_2ce8582889a149b4a94b4070eba05c8c~mv2.png"
+      "src": "bull-cow-game.png"
     }
   ],
   "links": [
