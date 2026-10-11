@@ -82,9 +82,51 @@ Registry: [`src/lib/content/linkTypes.js`](../src/lib/content/linkTypes.js) — 
 
 **Rule for code changes:** never hard-code a theme color in a component — use `var(--color-primary)` etc., or `color-mix(in srgb, var(--color-primary) 30%, transparent)` for a translucent shade. Token → variable mapping is `THEME_TOKENS`.
 
+## Site structure (pages and sections)
+
+`content/site/layout.json` decides which pages exist, their order in the nav, and what each page shows, top to bottom. The admin's **Site map** page edits it (drag to reorder pages and sections — also between pages — toggle them, add sections, edit their options); so does `npm run content -- layout …`.
+
+```jsonc
+{
+  "pages": [
+    {
+      "id": "home",            // stable key (lowercase, digits, dashes)
+      "label": "Home",         // nav button text
+      "slug": "home",          // /?page=home opens this page
+      "enabled": true,         // false = hidden from the nav
+      "order": 0,              // nav position (rewritten to 0…n-1 on every save)
+      "sections": [            // rendered in this order
+        { "id": "hero", "type": "hero", "enabled": true, "options": { "profilePicSize": "medium", "showSocialLinks": true } },
+        { "id": "timeline", "type": "timeline", "enabled": true }
+      ]
+    }
+  ]
+}
+```
+
+- The first enabled page is the landing page. `?project=<slug>` opens the first enabled page that has a `projectsBrowser` section, with that project's modal.
+- `options` override the type's defaults; leave it out to use them all. Section `id`s default to the type name and are unique within a page (`hero-2` for a second one).
+- Saves are validated (store.js `saveLayout`, also run by `validate` and `npm test`): unknown section types or options, wrong option values, duplicate page ids/slugs or section ids, and no enabled page are refused.
+- `navigation.json`'s `pages` list is no longer read — nav labels come from `layout.json`.
+
+Section registry: [`src/lib/content/sectionTypes.js`](../src/lib/content/sectionTypes.js). Components: [`src/pages/sections.jsx`](../src/pages/sections.jsx). Layout helpers (validation, edits): [`src/lib/content/siteLayout.js`](../src/lib/content/siteLayout.js).
+
+| type | shows | reads | options |
+|---|---|---|---|
+| `hero` | picture, name, tagline, socials | `profile.json` personal, socialLinks | `profilePicSize` small/medium/large, `showSocialLinks` |
+| `timeline` | journey milestones | `profile.json` journey; `uiContent.json` sections, animations | — |
+| `flipCards` | flip cards | `profile.json` flipCards | — |
+| `funFacts` | “Did you know…?” facts | `profile.json` funFacts; `uiContent.json` sections, config | — |
+| `showAndTell` | photo strip | `profile.json` showAndTell; `uiContent.json` sections, config | — |
+| `projectsBrowser` | featured project, stats, search, grid + modal | `projects/`; `uiContent.json` ui | `showFeatured`, `showStats`, `showSearch` |
+| `resumeProfile` / `resumeSkills` / `resumeEducation` / `resumeProjects` | the resume cards | `profile.json` personal / skills / education; projects with `showOnResume` | `title` (not on profile) |
+| `contactQuest` | contact banner, socials, HQ, quest form | `contact.json`; `profile.json` socialLinks, hq | — |
+
+**Adding a section type** (e.g. `testimonials`): add an entry to `SECTION_TYPES` (label, icon, description, `frame`, `reads`, `options` with a `kind` — `boolean`, `select` + `values`, `text`, `number` — and a `default` each), then add its component to `SECTION_COMPONENTS`. The component receives its options as props. The admin's add-section menu and option forms, the CLI and validation pick it up from there. `frame` says how consecutive sections are wrapped: `stack` (the home column), `resume` (the resume card column) or `page` (no wrapper — the section lays out the whole page).
+
 ## Site text
 
-`content/site/profile.json` (bio, skills, journey, socials, home cards), `navigation.json`, `uiContent.json` (labels and messages), `contact.json` (contact form). Edited as JSON in the admin's *Site content* page.
+`content/site/profile.json` (bio, skills, journey, socials, home cards), `navigation.json` (brand name, theme toggle), `uiContent.json` (labels and messages), `contact.json` (contact form). Edited in the admin's *Site content* page. Each section on the Site map lists the files it reads; click one to open it there.
 
 ## Agent / CLI editing
 
@@ -109,6 +151,9 @@ Registry: [`src/lib/content/linkTypes.js`](../src/lib/content/linkTypes.js) — 
 | `order` · `order set <slug…>` · `order move <slug> <pos>` | display order (unknown/duplicate slugs refused) |
 | `theme` · `theme active <preset>` · `theme preset <name> [--set colors.primary=#hex …] [--json …] [--delete]` | theme presets |
 | `site` · `site <id> [--field path] [--set path=value …] [--json …]` | `content/site/<id>.json` |
+| `layout [show [page]]` · `layout types` | the site structure / the section types with options and what they read |
+| `layout page add <id> [--label --slug --position --disabled]` · `page remove/enable/disable <id>` · `page move <id> <pos>` · `page set <id> [--label --slug]` | pages in the nav |
+| `layout section add <page> <type> [--id --position --disabled --set opt=value]` · `section remove/enable/disable <page> <section>` · `section move <page> <section> <pos>` · `section set <page> <section> --set opt=value [--unset opt]` | a page's sections (`<section>` = id or 0-based index); option values are typed by the registry |
 | `validate` | everything `npm test` checks about content, plus schema errors; exit 1 if not ok |
 | `release status` · `release test [--serve]` · `release stage -m …` · `release publish -m …` | the admin's Test → Stage → Go live gate ([release.md](release.md)) |
 
@@ -125,6 +170,7 @@ npm run -s content -- media add orbit-runner ./Builds/WebGL          # Unity bui
 npm run -s content -- overview orbit-runner --file ./orbit-overview.md
 npm run -s content -- update orbit-runner --set draft=false
 npm run -s content -- order move orbit-runner 0
+npm run -s content -- layout section add resume hero --position 0 --set profilePicSize=small
 npm run -s content -- validate
 npm run -s content -- release test     # then: release stage / release publish (on master)
 ```

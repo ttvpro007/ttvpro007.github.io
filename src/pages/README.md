@@ -2,6 +2,8 @@
 
 This directory contains the main page components for the portfolio application, organized following the same pattern as the components directory. Each page is a top-level component that represents a distinct section of the portfolio and is responsible for composing other components to create the complete page experience.
 
+> **Pages are content-driven.** `content/site/layout.json` lists the pages and each page's ordered sections; `SitePage.jsx` renders one page from it and `sections.jsx` maps each section type (registry: `src/lib/content/sectionTypes.js`) to its component. The files under `features/` hold those section components and their frames (`HomeFrame`, `ResumeFrame`). See [docs/content.md](../../docs/content.md#site-structure-pages-and-sections).
+
 ## 📁 File Structure
 
 ```

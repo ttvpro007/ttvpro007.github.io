@@ -4,7 +4,7 @@ import { ChipInput, SaveBar, humanize, useDirty, useSaveShortcut } from './ui';
 
 const FILES = {
   profile: { label: 'Profile', about: 'Name, bio, skills, journey, socials and the home page cards' },
-  navigation: { label: 'Navigation', about: 'Page list and brand name' },
+  navigation: { label: 'Navigation', about: 'Brand name, theme toggle and icons (pages and their order: Site map)' },
   uiContent: { label: 'UI text', about: 'Section titles, labels and messages across the site' },
   contact: { label: 'Contact', about: 'Contact form text, fields and the form endpoint' },
 };
@@ -41,8 +41,8 @@ const matches = (q, path, value) => {
  * own shape — so a new key in the JSON shows up here without admin changes.
  * The JSON view stays available for structural edits.
  */
-export default function SiteEditor({ site, act }) {
-  const [name, setName] = useState('profile');
+export default function SiteEditor({ site, act, initialFile }) {
+  const [name, setName] = useState(() => (FILES[initialFile] ? initialFile : 'profile'));
   const [mode, setMode] = useState('form');
   const [drafts, setDrafts] = useState(() => structuredClone(site));
   const [base, setBase] = useState(site);

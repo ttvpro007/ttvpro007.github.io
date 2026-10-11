@@ -5,15 +5,19 @@ import { DirtyContext, Toasts, useDialog, useToasts } from './ui';
 import ProjectEditor from './ProjectEditor';
 import ThemeEditor from './ThemeEditor';
 import SiteEditor from './SiteEditor';
+import SiteMap from './SiteMap';
 import ReleasePanel from './ReleasePanel';
 
 /** The current page lives in the URL hash so a reload keeps your place. */
 const readHash = () => {
   const [kind, slug] = decodeURIComponent(window.location.hash.replace(/^#\/?/, '')).split('/');
-  return ['theme', 'site', 'release'].includes(kind) ? { kind } : { kind: 'project', slug: kind === 'project' ? slug || null : null };
+  if (kind === 'site') return { kind, file: slug || undefined };
+  return ['sitemap', 'theme', 'release'].includes(kind) ? { kind } : { kind: 'project', slug: kind === 'project' ? slug || null : null };
 };
 const writeHash = (view) => {
-  const hash = view.kind === 'project' ? (view.slug ? `#/project/${encodeURIComponent(view.slug)}` : '') : `#/${view.kind}`;
+  const hash = view.kind === 'project'
+    ? (view.slug ? `#/project/${encodeURIComponent(view.slug)}` : '')
+    : `#/${view.kind}${view.file ? `/${view.file}` : ''}`;
   window.history.replaceState(null, '', hash || window.location.pathname);
 };
 
@@ -98,7 +102,7 @@ export default function App() {
   const projects = state?.projects || [];
   const current = view.kind === 'project' ? projects.find((p) => p.slug === view.slug) || projects[0] : null;
   const shownView = current ? { kind: 'project', slug: current.slug } : view;
-  useEffect(() => { writeHash(shownView); }, [shownView.kind, shownView.slug]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { writeHash(shownView); }, [shownView.kind, shownView.slug, shownView.file]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (error && !state) {
     return (
@@ -161,7 +165,15 @@ export default function App() {
             </div>
           )}
           {view.kind === 'theme' && <ThemeEditor theme={state.theme} act={act} />}
-          {view.kind === 'site' && <SiteEditor site={state.site} act={act} />}
+          {view.kind === 'sitemap' && (
+            <SiteMap
+              layout={state.layout}
+              act={act}
+              onOpenFile={(file) => go({ kind: 'site', file })}
+              onOpenProjects={() => go({ kind: 'project', slug: null })}
+            />
+          )}
+          {view.kind === 'site' && <SiteEditor key={view.file} site={state.site} act={act} initialFile={view.file} />}
           {view.kind === 'release' && <ReleasePanel state={state} act={act} reload={reload} onOpenProject={(slug) => go({ kind: 'project', slug })} />}
         </main>
         <Toasts toasts={toasts} dismiss={dismiss} />
@@ -294,6 +306,7 @@ function Sidebar({ projects, view, dirty, release, git, onSelect, onCreate, onRe
 
       <nav className="nav-group" aria-label="Site">
         <div className="nav-heading"><span>Site</span></div>
+        {navItem('sitemap', '🗺️', 'Site map')}
         {navItem('theme', '🎨', 'Theme')}
         {navItem('site', '🧾', 'Site content')}
         {navItem('release', '🚀', 'Release',
