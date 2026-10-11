@@ -24,7 +24,6 @@ const CONFETTI_CONFIG = {
 };
 
 export default function Contact() {
-  const [showConfirmation, setShowConfirmation] = useState(false);
   const [formData, setFormData] = useState({});
   const [confetti, setConfetti] = useState(false);
   const questFormRefs = useRef({ form: null, hiddenMessage: null });
@@ -41,13 +40,6 @@ export default function Contact() {
     setTimeout(() => setConfetti(false), 700); // 700ms duration
   };
 
-  const handleSubmit = (e) => {
-    // Add delay to let confetti animation finish before showing confirmation
-    setTimeout(() => {
-      setShowConfirmation(true);
-    }, 3000); // 3 seconds delay to match confetti duration
-    // Let the form submit naturally
-  };
 
   return (
     <main>
@@ -96,7 +88,6 @@ export default function Contact() {
               maxProgress={contact.formConfig.maxProgress}
               onInputChange={handleInputChange}
               formData={formData}
-              onSubmit={handleSubmit}
               formConfig={contact.formConfig}
               onConfettiTrigger={triggerConfetti}
             />

@@ -7,7 +7,7 @@
   background: var(--card-bg);
   border-radius: var(--border-radius);
   padding: 1.5rem;
-  border: 2px solid var(--primary);
+  border: 2px solid var(--color-primary);
   box-shadow: var(--shadow);
   transition: all 0.3s ease;
   position: relative;
@@ -60,7 +60,7 @@
 /* Count Display */
 .projects-compact-stats-count {
   font: var(--text-sm);
-  color: var(--primary);
+  color: var(--color-primary);
   font-weight: var(--font-weight-semibold);
   min-width: 25px;
   text-align: right;

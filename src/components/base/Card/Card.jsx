@@ -22,7 +22,7 @@ const Card = ({
     borderRadius: 'var(--border-radius)',
     padding,
     boxShadow: shadow ? 'var(--shadow)' : 'none',
-    border: border ? '2px solid var(--primary)' : 'none',
+    border: border ? '2px solid var(--color-primary)' : 'none',
     position: 'relative',
     overflow: 'hidden',
     ...style

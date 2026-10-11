@@ -55,7 +55,6 @@ const ProjectCardBase = ({
 
   // Featured project specific styles
   const isFeatured = variant === 'featured';
-  const isCompact = variant === 'compact';
 
   const handleViewDetails = () => {
     if (onClick) onClick(project);

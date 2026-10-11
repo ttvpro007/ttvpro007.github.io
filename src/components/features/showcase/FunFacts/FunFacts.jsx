@@ -13,21 +13,21 @@ const FunFacts = () => {
   const [currentFact, setCurrentFact] = React.useState(0);
   const [isVisible, setIsVisible] = React.useState(false);
 
-  if (!profile || !profile.funFacts) {
-    return null;
-  }
-
   // Get animations from the centralized system
   const textAnimation = getAnimation(AnimationCategories.SHOW_HIDE, 'slideUp');
 
   React.useEffect(() => {
-    if (isVisible) {
+    if (isVisible && profile?.funFacts?.length) {
       const interval = setInterval(() => {
         setCurrentFact((prev) => (prev + 1) % profile.funFacts.length);
       }, uiContent.config.funFacts.rotationInterval);
       return () => clearInterval(interval);
     }
   }, [isVisible]);
+
+  if (!profile || !profile.funFacts) {
+    return null;
+  }
 
   return (
     <Section 

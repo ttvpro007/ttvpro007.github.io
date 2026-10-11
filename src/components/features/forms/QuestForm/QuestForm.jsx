@@ -401,9 +401,9 @@ const QuestForm = forwardRef(function QuestForm({
             whileTap={isFormReady ? { scale: 0.98 } : {}}
             animate={isFormReady ? {
               boxShadow: [
-                "0 0 20px rgba(255, 215, 0, 0.3)",
-                "0 0 30px rgba(255, 215, 0, 0.6)",
-                "0 0 20px rgba(255, 215, 0, 0.3)"
+                "0 0 20px color-mix(in srgb, var(--color-primary) 30%, transparent)",
+                "0 0 30px color-mix(in srgb, var(--color-primary) 60%, transparent)",
+                "0 0 20px color-mix(in srgb, var(--color-primary) 30%, transparent)"
               ]
             } : {}}
             transition={{ duration: 2, repeat: Infinity }}

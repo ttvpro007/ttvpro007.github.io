@@ -29,13 +29,13 @@ input, textarea, select {
    Font Utilities
    ===================== */
 .font-orbitron {
-  font-family: 'Orbitron', 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: var(--font-heading);
   font-weight: var(--font-weight-bold);
   font-display: swap;
 }
 
 .font-rajdhani {
-  font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: var(--font-body);
   font-weight: var(--font-weight-medium);
   font-display: swap;
 }
@@ -45,13 +45,13 @@ input, textarea, select {
    ===================== */
 .highlighted-keyword {
   font-weight: var(--font-weight-bold);
-  color: var(--primary);
+  color: var(--color-primary);
   transition: color var(--transition-fast), text-shadow var(--transition-fast), font-size var(--transition-normal);
 }
 
 .highlighted-keyword:hover {
   color: var(--accent);
-  text-shadow: 0 0 8px var(--primary), 0 0 2px var(--accent);
+  text-shadow: 0 0 8px var(--color-primary), 0 0 2px var(--accent);
   font-size: 1.18em;
 }
 
@@ -59,7 +59,7 @@ input, textarea, select {
    Base Styles
    ===================== */
 body {
-  font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: var(--font-body);
   font-size: var(--font-size-base);
   line-height: var(--line-height-normal);
   font-weight: var(--font-weight-normal);
@@ -81,12 +81,12 @@ main {
 }
 
 h1, h2, h3 {
-  color: var(--primary);
+  color: var(--color-primary);
   font: var(--heading-xl);
   font-weight: var(--font-weight-bold);
   margin-bottom: var(--spacing-md);
   letter-spacing: 0.04em;
-  text-shadow: 0 0 8px var(--primary), 0 0 2px var(--accent);
+  text-shadow: 0 0 8px var(--color-primary), 0 0 2px var(--accent);
   font-display: swap;
 }
 
@@ -101,7 +101,7 @@ a {
 }
 
 a:hover {
-  color: var(--primary);
+  color: var(--color-primary);
 }
 
 button {
@@ -114,14 +114,14 @@ button {
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-base);
   line-height: var(--line-height-normal);
-  box-shadow: 0 0 8px var(--accent), 0 0 2px var(--primary);
+  box-shadow: 0 0 8px var(--accent), 0 0 2px var(--color-primary);
   transition: background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 button:hover {
-  background: var(--primary);
+  background: var(--color-primary);
   color: var(--bg);
-  box-shadow: 0 0 16px var(--primary), 0 0 4px var(--accent);
+  box-shadow: 0 0 16px var(--color-primary), 0 0 4px var(--accent);
 }
 
 /* =====================
@@ -133,7 +133,7 @@ button:hover {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--primary);
+  background: var(--color-primary);
   border-radius: 8px;
 }
 
@@ -175,7 +175,7 @@ button:focus,
 input:focus,
 textarea:focus,
 select:focus {
-  outline: 2px solid var(--primary);
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
@@ -246,3 +246,8 @@ select:focus {
     margin-left: var(--spacing-sm);
   }
 } 
+/* Page shell: gutters scale from phones to ultrawide */
+.app-main {
+  padding: clamp(0.75rem, 3vw, 2rem);
+  padding-top: clamp(4.5rem, 8vw, 5.5rem);
+}

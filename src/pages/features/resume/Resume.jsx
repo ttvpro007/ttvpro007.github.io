@@ -4,17 +4,6 @@ import { Card, ProgressBar } from "@/components/base";
 import { profile, projects } from "@/data";
 import "./Resume.css";
 
-// Colorful gradients for progress bars
-const gradients = [
-  'linear-gradient(90deg, #ff6b6b, #4ecdc4)',
-  'linear-gradient(90deg, #a8e6cf, #dcedc1)',
-  'linear-gradient(90deg, #8b4513, #d2691e)',
-  'linear-gradient(90deg, #667eea, #764ba2)',
-  'linear-gradient(90deg, #FC9460, #A92F5F)',
-  'linear-gradient(90deg, #64A47F, #EEB64B)',
-  'linear-gradient(90deg, #E54264, #442261)'
-];
-
 const Resume = () => {
   // Use consolidated project data
   const resumeProjects = projects.items

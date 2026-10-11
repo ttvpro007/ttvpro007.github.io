@@ -2,9 +2,7 @@
    Portfolio Styling System
    ===================== */
 
-/* Google Fonts - Optimized for Performance */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
+/* Fonts are loaded by the theme engine (src/lib/theme/applyTheme.js) from content/theme.json */
 
 /* Core Styling System */
 @import './themes/variables.css';      /* CSS Variables & Theme */

@@ -1,0 +1,46 @@
+{
+  "title": "Unity Physics Simulator",
+  "description": "A physics simulation toolkit for Unity, supporting 2D and 3D environments with realistic particle systems and collision detection.",
+  "longDescription": "A comprehensive physics simulation toolkit built for Unity that provides developers with advanced 2D and 3D physics capabilities. Features include realistic particle systems, collision detection, fluid dynamics, and customizable physics materials. The toolkit is designed to be both powerful for experienced developers and accessible for beginners.",
+  "category": "Game Dev",
+  "year": 2024,
+  "tech": [
+    "Unity",
+    "C#"
+  ],
+  "roles": [
+    "Game Developer",
+    "Tool Developer"
+  ],
+  "features": [
+    "2D and 3D physics simulation",
+    "Realistic particle systems",
+    "Advanced collision detection",
+    "Fluid dynamics simulation",
+    "Customizable physics materials",
+    "Beginner-friendly interface",
+    "Performance optimized",
+    "Cross-platform compatibility"
+  ],
+  "cover": null,
+  "media": [
+    {
+      "type": "image",
+      "src": "portfolio-profile-pic.png"
+    },
+    {
+      "type": "image",
+      "src": "catavaneer.png"
+    }
+  ],
+  "links": [
+    {
+      "type": "github",
+      "url": "https://github.com/ttvpro007/UnityPhysicsSimulator"
+    }
+  ],
+  "featured": false,
+  "showOnResume": false,
+  "resumeOrder": 1,
+  "draft": false
+}

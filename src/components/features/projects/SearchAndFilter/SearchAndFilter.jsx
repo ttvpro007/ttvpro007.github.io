@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge, Button } from "@/components/base";
-import { projects, uiContent } from "@/data";
+import { uiContent } from "@/data";
 import { 
   AnimationCategories, 
   getAnimation, 
-  getAvailableStrategies,
   AnimationPresets 
 } from "@/utils/animations";
 import './SearchAndFilter.css';
@@ -22,21 +21,16 @@ const SearchAndFilter = ({
   isPageVisible = true,
   isTransitioning = false
 }) => {
-  const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [currentAnimationStrategy, setCurrentAnimationStrategy] = useState(animationStrategy);
+  const currentAnimationStrategy = animationStrategy;
   const [isVisible, setIsVisible] = useState(false);
   const componentRef = useRef(null);
   
   // Get unique categories from projects
   const categories = ["all", ...new Set(projectItems.map(project => project.category))];
   
-  // Get available animation strategies for entry/exit
-  const availableStrategies = getAvailableStrategies(AnimationCategories.ENTRY_EXIT);
-  
   // Get current animations
   const entryAnimation = getAnimation(AnimationCategories.ENTRY_EXIT, currentAnimationStrategy);
-  const expandAnimation = getAnimation(AnimationCategories.EXPAND_COLLAPSE, 'smooth');
   const hoverAnimation = getAnimation(AnimationCategories.HOVER, 'lift');
 
   // Handle click outside to close and update bounds
@@ -58,13 +52,9 @@ const SearchAndFilter = ({
 
   // Handle search focus
   const handleSearchFocus = () => {
-    setIsSearchFocused(true);
     setIsExpanded(true);
   };
 
-  const handleSearchBlur = () => {
-    setIsSearchFocused(false);
-  };
 
   // Show component after page animation completes
   useEffect(() => {
@@ -131,7 +121,7 @@ const SearchAndFilter = ({
                     <motion.button
                       onClick={() => setIsExpanded(false)}
                       className="search-filter-close-button"
-                      whileHover={{ scale: 1.1, background: "#fc946033" }}
+                      whileHover={{ scale: 1.1, background: "color-mix(in srgb, var(--color-secondary) 20%, transparent)" }}
                       whileTap={{ scale: 0.9 }}
                     >
                       ✕
@@ -145,7 +135,6 @@ const SearchAndFilter = ({
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                       onFocus={handleSearchFocus}
-                      onBlur={handleSearchBlur}
                       placeholder="Search projects..."
                       className="search-filter-input"
                     />

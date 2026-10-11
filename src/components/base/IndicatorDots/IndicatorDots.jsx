@@ -10,7 +10,7 @@ const IndicatorDots = ({
   currentIndex, 
   onDotClick,
   size = "12px",
-  activeColor = "var(--primary)",
+  activeColor = "var(--color-primary)",
   inactiveColor = "var(--text-muted)",
   style = {},
   ...props 

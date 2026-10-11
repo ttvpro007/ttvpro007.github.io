@@ -67,30 +67,8 @@ The data has been consolidated into a simplified structure:
 }
 ```
 
-#### `projects.json` - Project Portfolio
-```json
-{
-  "items": [
-    {
-      "title": "Project Name",
-      "description": "Short description",
-      "longDescription": "Detailed description",
-      "tech": ["React", "Node.js"],
-      "link": "https://github.com/...",
-      "image": "/projects-images/project.png",
-      "images": [...],
-      "linkSource": "github",
-      "category": "Web Development",
-      "year": 2024,
-      "featured": true,
-      "demo": "https://demo.com",
-      "appStore": null,
-      "showOnResume": true,
-      "resumeOrder": 1
-    }
-  ]
-}
-```
+#### Projects
+Projects are no longer a single JSON file: each one is a folder under `content/projects/<slug>/` (`project.json`, optional `overview.md`, `media/`). Components receive them via `projects.items` from `@/data`, already shaped by `toViewModel` (`image` = card cover URL, `demo` = Live Demo target, `media` = resolved list). See [docs/content.md](../../docs/content.md).
 
 #### `uiContent.json` - UI Configuration
 ```json
@@ -356,7 +334,6 @@ src/components/
 │   ├── TechStack.jsx
 │   └── YearBadge.jsx
 ├── README.md               # This documentation
-├── REFACTORING_SUMMARY.md  # Refactoring documentation
 └── [Component].jsx         # Individual components
 ```
 

@@ -29,3 +29,12 @@ credentials.json
 credentials-depricate.json
 token.json
 src/data/credentials.json
+
+# Vite dependency cache
+.vite
+
+# Generated reports
+css-*-report.json
+
+# Admin deletes land here (recoverable, never committed)
+.trash

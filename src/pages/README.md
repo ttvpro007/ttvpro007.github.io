@@ -114,7 +114,7 @@ A comprehensive project showcase with advanced filtering and search capabilities
 - `ProgressBar` - Statistics visualization
 
 #### Data Sources
-- `projects.json` - Project portfolio data
+- `content/projects/*` - Project folders (via `projects.items` from `@/data`)
 - `uiContent.json` - UI configuration and text
 
 #### Key Features
@@ -164,7 +164,7 @@ A professional resume view optimized for printing and sharing.
 
 #### Data Sources
 - `profile.json` - Personal info and skills
-- `projects.json` - Resume projects (filtered by `showOnResume`)
+- `projects.items` - Resume projects (filtered by `showOnResume`)
 
 #### Key Features
 ```jsx

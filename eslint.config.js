@@ -5,7 +5,8 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  // Build output, Vite's dependency cache, and uploaded media (Unity builds…) are not ours to lint
+  globalIgnores(['dist', '.vite', 'public', 'content/**/media', '.trash']),
   {
     files: ['**/*.{js,jsx}'],
     extends: [
@@ -23,7 +24,13 @@ export default defineConfig([
       },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      // Core no-unused-vars can't see JSX usage: components are Capitalized, and `motion` is used as <motion.div>
+      'no-unused-vars': ['error', { varsIgnorePattern: '^([A-Z_]|motion$)' }],
     },
+  },
+  {
+    // Node-side code: build config, scripts, and the local admin server
+    files: ['vite.config.js', 'scripts/**/*.js', 'admin/server/**/*.js'],
+    languageOptions: { globals: globals.node },
   },
 ])

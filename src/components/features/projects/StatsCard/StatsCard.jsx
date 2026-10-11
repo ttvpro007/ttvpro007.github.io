@@ -16,9 +16,9 @@ const StatsCard = ({
     'linear-gradient(90deg, #a8e6cf, #dcedc1)',
     'linear-gradient(90deg, #8b4513, #d2691e)',
     'linear-gradient(90deg, #667eea, #764ba2)',
-    'linear-gradient(90deg, #FC9460, #A92F5F)',
-    'linear-gradient(90deg, #64A47F, #EEB64B)',
-    'linear-gradient(90deg, #E54264, #442261)'
+    'linear-gradient(90deg, var(--color-secondary), var(--color-highlight))',
+    'linear-gradient(90deg, var(--color-success), var(--color-primary))',
+    'linear-gradient(90deg, var(--color-accent), var(--color-background-alt))'
   ];
 
   const getMaxValue = () => {

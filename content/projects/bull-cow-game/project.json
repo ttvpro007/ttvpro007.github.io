@@ -1,0 +1,46 @@
+{
+  "title": "Bull Cow Game",
+  "description": "A classic word guessing game built with Unreal Engine 4.",
+  "longDescription": "A modern implementation of the classic Bull Cow word guessing game using Unreal Engine 4. Features include an intuitive UI, sound effects, particle systems, and a hint system to help players. The game demonstrates advanced C++ programming concepts and Unreal Engine integration.",
+  "category": "Windows",
+  "year": 2023,
+  "tech": [
+    "Unreal",
+    "C++"
+  ],
+  "roles": [
+    "Game Developer",
+    "UI Developer"
+  ],
+  "features": [
+    "Classic word guessing gameplay",
+    "Intuitive user interface",
+    "Immersive sound effects",
+    "Dynamic particle systems",
+    "Smart hint system",
+    "Advanced C++ implementation",
+    "Unreal Engine 4 integration",
+    "Cross-platform compatibility"
+  ],
+  "cover": null,
+  "media": [
+    {
+      "type": "youtube",
+      "src": "https://www.youtube.com/embed/M_Aj7-9t5CA"
+    },
+    {
+      "type": "image",
+      "src": "https://static.wixstatic.com/media/84b145_2ce8582889a149b4a94b4070eba05c8c~mv2.png/v1/fill/w_310,h_496,al_c,q_80,usm_0.66_1.00_0.01/84b145_2ce8582889a149b4a94b4070eba05c8c~mv2.png"
+    }
+  ],
+  "links": [
+    {
+      "type": "github",
+      "url": "https://github.com/ttvpro007/Bull-Cow-Game"
+    }
+  ],
+  "featured": false,
+  "showOnResume": true,
+  "resumeOrder": 4,
+  "draft": false
+}

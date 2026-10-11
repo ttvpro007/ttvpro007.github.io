@@ -9,7 +9,7 @@ const ProgressBar = ({
   progress, 
   max = 100, 
   height = "12px",
-  color = "var(--primary)",
+  color = "var(--color-primary)",
   bgColor = "var(--text-secondary)",
   showLabel = false,
   label,
@@ -30,7 +30,7 @@ const ProgressBar = ({
     background: bgColor,
     borderRadius: '6px',
     overflow: 'hidden',
-    border: '1px solid var(--primary)',
+    border: '1px solid var(--color-primary)',
     position: 'relative',
     ...style
   };
@@ -39,7 +39,7 @@ const ProgressBar = ({
     height: '100%',
     borderRadius: '6px',
     position: 'relative',
-    boxShadow: glow ? `0 0 12px 2px var(--primary), 0 0 24px 4px ${isGradient ? 'rgba(252,148,96,0.4)' : 'var(--primary)'}` : undefined,
+    boxShadow: glow ? `0 0 12px 2px var(--color-primary), 0 0 24px 4px ${isGradient ? 'color-mix(in srgb, var(--color-secondary) 40%, transparent)' : 'var(--color-primary)'}` : undefined,
     transition: animatedGradient ? 'background-position 1.5s linear' : undefined,
     ...(isGradient
       ? {

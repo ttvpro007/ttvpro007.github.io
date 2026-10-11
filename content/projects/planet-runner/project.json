@@ -1,0 +1,46 @@
+{
+  "title": "Planet Runner",
+  "description": "An endless runner game set on a rotating planet. Features procedural generation and power-ups.",
+  "longDescription": "An innovative endless runner game that takes place on a dynamically rotating planet. The game features procedurally generated terrain, unique power-ups, and challenging obstacles that adapt to player skill level. Built with HTML5 and JavaScript for cross-platform compatibility.",
+  "category": "Game Dev",
+  "year": 2023,
+  "tech": [
+    "HTML5",
+    "JavaScript"
+  ],
+  "roles": [
+    "Game Developer",
+    "Game Designer"
+  ],
+  "features": [
+    "Dynamic rotating planet environment",
+    "Procedurally generated terrain",
+    "Adaptive difficulty system",
+    "Unique power-up mechanics",
+    "Challenging obstacle design",
+    "Cross-platform HTML5 compatibility",
+    "Responsive controls",
+    "Progressive scoring system"
+  ],
+  "cover": null,
+  "media": [
+    {
+      "type": "youtube",
+      "src": "https://www.youtube.com/embed/BYTxPFj44uo"
+    },
+    {
+      "type": "image",
+      "src": "https://static.wixstatic.com/media/84b145_f7724c3bd5204f59962de89eaefe378d~mv2.jpg/v1/fill/w_800,h_389,al_c,q_80,usm_0.66_1.00_0.01/84b145_f7724c3bd5204f59962de89eaefe378d~mv2.jpg"
+    }
+  ],
+  "links": [
+    {
+      "type": "itchio",
+      "url": "https://ttvpro007.itch.io/planet-runner"
+    }
+  ],
+  "featured": false,
+  "showOnResume": true,
+  "resumeOrder": 3,
+  "draft": false
+}
