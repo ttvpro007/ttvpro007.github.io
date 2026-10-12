@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { Buffer } from 'node:buffer';
 import crypto from 'node:crypto';
 import sharp from 'sharp';
-import { optimizeImage } from '../admin/server/media.js';
+import { optimizeImage } from '@loom/core/node';
 
 // Noise keeps the PNG large, like a real screenshot
 const png = (width, height) => sharp(crypto.randomBytes(width * height * 3), { raw: { width, height, channels: 3 } }).png().toBuffer();

@@ -1,11 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
-import contentPlugin from './plugins/content.js'
-import adminPlugin from './admin/server/plugin.js'
+import { loomContent } from '@loom/core/node'
+import builder from '@loom/builder/vite'
 
-const root = path.dirname(fileURLToPath(import.meta.url))
 const isStaging = process.env.SITE_ENV === 'staging'
 
 /** Staging builds must not be indexed or mistaken for the live site */
@@ -21,16 +18,20 @@ const stagingMarker = () => ({
 })
 
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [react(), contentPlugin(), adminPlugin(), stagingMarker()],
+export default defineConfig(async () => ({
+  plugins: [react(), await loomContent(), builder(), stagingMarker()],
   // Live site (ttvpro007.github.io) is served from the domain root; the staging build
   // sets BASE_PATH (e.g. /portfolio-staging/) when it is published under a sub-path
   base: process.env.BASE_PATH || '/',
-  resolve: {
-    alias: {
-      '@': path.resolve(root, './src'),
-      '@content': path.resolve(root, './content'),
-    },
+  // The dev server's dependency pre-bundling can't resolve virtual:loom/content inside an
+  // installed @loom/core, so the Loom packages are served as source and only their own
+  // dependencies are pre-bundled. Belongs in @loom/core's content plugin; remove it once it is there.
+  optimizeDeps: {
+    exclude: ['@loom/core', '@loom/blocks', '@loom/builder', '@loom/kit-portfolio'],
+    include: [
+      'react', 'react-dom', 'react-dom/client', 'react/jsx-runtime', 'react/jsx-dev-runtime', 'framer-motion',
+      '@loom/blocks > react-markdown', '@loom/blocks > remark-gfm', '@loom/kit-portfolio > react-dom-confetti',
+    ],
   },
   build: {
     rollupOptions: {
@@ -40,4 +41,4 @@ export default defineConfig({
       },
     },
   },
-})
+}))

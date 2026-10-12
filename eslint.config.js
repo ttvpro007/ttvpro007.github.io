@@ -29,8 +29,8 @@ export default defineConfig([
     },
   },
   {
-    // Node-side code: build config, scripts, and the local admin server
-    files: ['vite.config.js', 'scripts/**/*.js', 'admin/server/**/*.js', 'admin/cli.js', 'tests/**/*.js', 'plugins/**/*.js'],
+    // Node-side code: build and site config, scripts, tests
+    files: ['vite.config.js', 'loom.config.js', 'scripts/**/*.js', 'tests/**/*.js'],
     languageOptions: { globals: globals.node },
   },
 ])

@@ -1,14 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "@content/*": [
-        "content/*"
-      ]
-    },
     "jsx": "react-jsx",
     "module": "ESNext",
     "target": "ES2020",
@@ -18,9 +9,7 @@
     "skipLibCheck": true
   },
   "include": [
-    "src/**/*",
-    "admin/**/*",
-    "plugins/**/*"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules",
