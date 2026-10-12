@@ -3,7 +3,7 @@
 //
 //   node .claude/skills/progress/gather.mjs [scope] [--db <dir>] [--no-test]
 //
-// scope   optional module or milestone (cli, admin, site, format, release, m1..m8, or an alias).
+// scope   optional module or milestone (cli, admin, site, format, release, split, m1..m8, mx, or an alias).
 //         An unknown scope exits 2 and lists the known names. Scope never narrows what is
 //         gathered, only the `scope` block in the output.
 // --db    a directory holding the roadmap store, as ArtifactData list writes it with out_dir:

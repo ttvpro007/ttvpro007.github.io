@@ -126,6 +126,7 @@
   .m-main p{color:var(--ink-2);font-size:16px;margin-top:4px}
   .m-meta{font:12px var(--f-mono);color:var(--ink-3)}
   .m-evidence{margin-top:10px;font-size:14px;color:var(--ink-3)}
+  .m-note,.m-lands{color:var(--ink-2);padding-left:10px;border-left:2px solid var(--accent)}
   .m-evidence b{font:700 12px var(--f-label);text-transform:uppercase;letter-spacing:.1em;margin-right:6px}
   .m-ctl{display:flex;flex-wrap:wrap;gap:10px 16px;margin:14px 0;padding:12px 0;border-block:1px solid var(--line-soft);font:15px var(--f-label)}
   .m-ctl label{display:flex;gap:7px;align-items:center;color:var(--ink-3);min-width:0}
@@ -162,9 +163,10 @@
 
 <div class="wrap">
   <header>
-    <p class="lbl rev">Living plan &middot; Rev 1 &middot; 11 Oct 2026</p>
+    <p class="lbl rev">Living plan &middot; Rev 2 &middot; 11 Oct 2026</p>
     <h1>Portfolio Site Builder</h1>
     <p class="thesis">A local-first, git-backed site builder for one portfolio: edit in a GUI or let an agent edit through the CLI, then Test, Stage and Go live. Agents are first-class users, but every file stays readable by a person and the editor stays learnable without docs.</p>
+    <p class="thesis" style="font-size:17px">It is also the working prototype that <b>Loom</b>, the engine behind the Atelier studio, is extracted from. After milestone MX this repo becomes a plain site repo: it consumes <code>@loom/*</code> and <code>@loom/kit-portfolio</code> and never edits engine or kit code again.</p>
 
     <div class="now">
       <div class="now-top">
@@ -197,6 +199,7 @@
       <div><dt>The plan</dt><dd>Claude regenerates this whole page from <code>docs/roadmap.html</code> in the repo whenever the plan changes shape. Each revision is a commit you can diff.</dd></div>
       <div><dt>Your progress</dt><dd>Ticks, status, target dates and notes are saved in this artifact's own store, keyed by stable ids. Regenerating the page never touches them. A task that keeps its id keeps its tick.</dd></div>
       <div><dt>The detail</dt><dd>Content format: <code>docs/content.md</code>. Release flow: <code>docs/release.md</code>. How the code fits together: the architecture map (<code>docs/architecture.html</code>). Task-level work: git history and the Claude sessions named on each milestone.</dd></div>
+      <div><dt>Where work lands</dt><dd>Until MX, everything is built here. From MX on, engine work (formats, blocks, builder, CLI, release gate) lands in the private <code>loom</code> repo and portfolio-specific blocks in <code>loom-kit-portfolio</code>, both under <code>GitHub/Business</code>. This repo then only bumps package versions and edits <code>content/</code>. Each milestone after M4 says which side its work lands on. The Loom contracts in <code>Business/loom/docs/contracts/</code> are the source of truth for formats.</dd></div>
     </dl>
     <p class="prose" style="margin-top:14px">The "Evidence" line on each milestone is what the repo showed when this revision was written. It is not a tick. The ticks are yours, so a box stays empty until you check it.</p>
   </section>
@@ -207,8 +210,8 @@
     <div class="ladder">
       <div class="rung"><span class="n">1</span><div><b>Content in fixed layouts</b><p>Edit text, media, links and theme. Layout lives in code.</p></div><span class="ms">M1&ndash;M3</span></div>
       <div class="rung"><span class="n">2</span><div><b>Pages and sections as content</b><p>Add, reorder and hide pages and sections from a site map.</p></div><span class="ms">M4</span></div>
-      <div class="rung"><span class="n">3</span><div><b>Flexible sections</b><p>Columns, width, alignment and variants, plus generic text, media and card-grid sections.</p></div><span class="ms">M5</span></div>
-      <div class="rung"><span class="n">4</span><div><b>Nested blocks, edited on the page</b><p>Sections hold rows, columns and blocks. Click on the live preview to edit.</p></div><span class="ms">M6&ndash;M7</span></div>
+      <div class="rung"><span class="n">3</span><div><b>Flexible sections</b><p>Section layouts (stack, columns, grid, split) and theme-token styles, plus generic text, media and card-grid blocks. Built in Loom.</p></div><span class="ms">M5</span></div>
+      <div class="rung"><span class="n">4</span><div><b>Nested blocks, edited on the page</b><p>Blocks nest through declared slots. Click on the live preview to edit. Built in Loom.</p></div><span class="ms">M6&ndash;M7</span></div>
       <div class="rung no"><span class="n">5</span><div><b>Absolute positioning</b><p>Not building. See Out of scope.</p></div><span class="ms">&mdash;</span></div>
     </div>
   </section>
@@ -216,7 +219,7 @@
   <section>
     <h2>Milestone plan</h2>
     <div class="track" id="track" aria-hidden="true"></div>
-    <p class="useful"><b>Useful from M1.</b> Projects can be added and shipped without touching code today. <b>M4 is where it becomes a site builder</b>: the first milestone where the site's structure changes without a code edit. Everything after M4 adds freedom and is optional, not owed.</p>
+    <p class="useful"><b>Useful from M1.</b> Projects can be added and shipped without touching code today. <b>M4 is where it becomes a site builder</b>: the first milestone where the site's structure changes without a code edit. Then <b>MX splits the prototype</b> into Loom, the portfolio kit and this site, and must leave the live site pixel-identical. Everything after MX adds freedom, is built in Loom, and is optional, not owed.</p>
     <p class="prose" style="margin-bottom:18px">Sizes are rough: S is one agent session, M is two or three, L is several plus your review. None of them has been measured.</p>
     <div id="milestones"></div>
   </section>
@@ -238,13 +241,16 @@
       <table>
         <thead><tr><th>Id</th><th>Risk</th><th>Impact</th><th>Mitigation</th></tr></thead>
         <tbody>
-          <tr><td class="k">R1</td><td>The layout format gets locked into flat sections, so nested blocks (M6) need a migration of every page.</td><td>High: rework of M4 and every page file</td><td><span class="st i">Intended</span> The M4 session was asked to use one node shape, <code>{type, id, enabled, options, children?}</code>, with the registry declaring which types take children. Not yet checked against what it built.</td></tr>
+          <tr><td class="k">R8</td><td>M4 lands a content model that differs from Loom's <code>content-format.md</code>, so MX becomes a rewrite of every page file instead of a move.</td><td>High: MX grows from a move into a migration, and the fidelity check gets harder</td><td><span class="st i">Intended</span> Firing now: M4's <code>layout.json</code> on <code>claude/beautiful-bose-7f6dc8</code> keeps all pages in one file with sections as <code>{type, id, enabled}</code>, where the contract has one file per page in <code>content/pages/</code> and sections as <code>{id, layout, style, blocks}</code>. M4's description now asks it to follow the contract where practical; whatever remains becomes MX's <code>mx-content</code> task.</td></tr>
+          <tr><td class="k">R9</td><td>The split changes how the site looks or behaves, and nobody notices until it is live.</td><td>High: public breakage</td><td><span class="st i">Intended</span> MX is only done when the build matches the live site screenshot for screenshot at 375, 768 and 1280px. No screenshot harness exists yet, and R2's gate does not compare visuals.</td></tr>
+          <tr><td class="k">R1</td><td>The layout format gets locked into flat sections, so nested blocks (M6) need a migration of every page.</td><td>High: rework of M4 and every page file</td><td><span class="st i">Intended</span> The M4 session was asked to use one node shape, <code>{type, id, enabled, options, children?}</code>. Loom's <code>content-format.md</code> now settles nesting differently: blocks nest only through inputs a block declares as slots. So R1 is answered on paper by the contract, but only once content is in that format (R8).</td></tr>
           <tr><td class="k">R2</td><td>Untested content reaches the live site.</td><td>High: public breakage</td><td><span class="st s">Structural</span> Go live is refused without a passed Test, and the pass is cleared when content changes (<code>6a8db0a</code>). 17 tests cover content and media.</td></tr>
           <tr><td class="k">R3</td><td>GUI and CLI drift apart, so an agent can't do something a person can, or skips a check.</td><td>Medium: agents stop being first-class</td><td><span class="st b">Built, not measured</span> Both call the shared <code>admin/server/store.js</code>. No test yet compares the GUI's routes with the CLI's commands.</td></tr>
           <tr><td class="k">R4</td><td>Parallel agent sessions collide or branch from stale bases.</td><td>Medium: merge pain, lost work</td><td><span class="st b">Built, not measured</span> Writers get their own worktree. It already happened once: the UX branch was cut from <code>master</code> and still lacks the CLI commit.</td></tr>
           <tr><td class="k">R5</td><td>Content files stop being readable by a person as the format grows: generated ids, deep nesting, defaults written out.</td><td>Medium: the human half of the thesis fails</td><td><span class="st i">Intended</span> The principle is written down and was passed to the M4 session. No lint or test enforces it.</td></tr>
           <tr><td class="k">R6</td><td>Freeform layouts break on phones or ignore the theme.</td><td>Medium</td><td><span class="st s">Structural</span> No absolute positioning. Colours come only from theme tokens. Blocks sit in a flow layout.</td></tr>
-          <tr><td class="k">R7</td><td>Adopting a page-builder library (Puck or similar) for M6 ties the format to its data model.</td><td>Medium: lock-in</td><td><span class="st i">Intended</span> M6 starts with a decision task: our own format with an adapter, not the library's format as the source of truth.</td></tr>
+          <tr><td class="k">R7</td><td>Adopting a page-builder library (Puck or similar) for M6 ties the format to its data model.</td><td>Medium: lock-in</td><td><span class="st b">Decided, not built</span> Loom's content and block contracts fix the format as our own. A library could still sit behind an adapter in <code>@loom/builder</code>, which is what <code>m6-decide</code> now asks.</td></tr>
+          <tr><td class="k">R10</td><td>After MX the site cannot build without the private packages: an expired <code>read:packages</code> token or GitHub Packages limits stop deploys.</td><td>Medium: no releases until fixed</td><td><span class="st i">Intended</span> Decision 0013 names the token as a CI secret and notes the free-tier limits (about 500 MB storage, 1 GB/month transfer, Actions downloads exempt). Nothing monitors either yet.</td></tr>
         </tbody>
       </table>
     </div>
@@ -253,6 +259,7 @@
   <section>
     <h2>Revisions</h2>
     <div class="revlog">
+      <div><span class="when">Rev 2 &middot; 11 Oct 2026</span><p class="prose">The portfolio is now the prototype Loom gets extracted from (Atelier decisions 0012 and 0013). Added milestone <b>MX, Split into Loom and the kit</b>, between M4 and M5. It is coded MX rather than renumbered so M5 to M8 keep their names. M4's description now asks its content model to follow Loom's <code>content-format.md</code>; its tasks are unchanged. M5 to M8 now say where their work lands, and M5 depends on MX. Re-scoped where the contracts made a task's wording obsolete, ids kept: <code>m5-options</code>, <code>m5-generic</code> and <code>m5-variants</code> become section layouts, style tokens and blocks (content-format, blocks); <code>m6-decide</code> no longer decides the format, only whether a library sits behind an adapter (R7); <code>m6-readable</code> becomes schema checks; <code>m8-format</code> and <code>m8-cli</code> follow the block contract (site <code>blocks/</code>, <code>defineBlock</code>, <code>loom block</code>), not <code>content/blocks/*.jsx</code>. New risks R8 (firing: M4's <code>layout.json</code> differs from the contract), R9 and R10. "Building sites for anyone else" moved from Not building to Atelier's repos. Re-run for this revision: 17/17 tests, <code>validate</code> clean on 7 projects. The tracking store was empty when read, so no ticks were affected.</p></div>
       <div><span class="when">Rev 1 &middot; 11 Oct 2026</span><p class="prose">First version. M1 and M2 are on <code>content-admin-restructure</code>, and the CLI was verified this revision (17 tests pass, <code>validate</code> clean on 7 projects). M3 is built on its own branch but not merged, so it is not usable from the main line yet. M4 is in progress in a separate session. M5 to M8 are proposals with sizes nobody has measured. Staging has been configured (<code>20c84a1</code>), but a full Test, Stage and Go live round was not run for this revision.</p></div>
     </div>
   </section>
@@ -264,8 +271,10 @@
         <ul>
           <li>Absolute (x/y) positioning of elements.</li>
           <li>Accounts, logins or more than one editor at a time. Git is the history.</li>
-          <li>A hosted service, or building sites for anyone else.</li>
+          <li>A hosted service, or other people's sites, in this repo. That is Atelier and Loom, in their own repos under <code>GitHub/Business</code>.</li>
           <li>A database. Content stays as JSON and Markdown files.</li>
+          <li>Live fields and an <code>/editor</code> for this site. The portfolio stays a static build; Loom's live fields are for client sites.</li>
+          <li>Engine or kit code in this repo after MX. Changes go to <code>loom</code> or <code>loom-kit-portfolio</code> and arrive as a version bump.</li>
         </ul>
       </div>
       <div class="box"><span class="lbl">Deferred with intent</span>
@@ -280,7 +289,7 @@
 
   <section>
     <h2>Standing assumptions</h2>
-    <p class="prose">One owner and one site. Agents do most of the building, in separate sessions, and you review and merge. The site stays a static Vite and React build on GitHub Pages. Tools like Wix, Webflow and Framer already do visual editing better than this ever will. The reasons to build anyway: content stays in your repo, every change is a reviewable commit, and agents can edit the site through the same CLI and checks as you.</p>
+    <p class="prose">One owner and one site. Agents do most of the building, in separate sessions, and you review and merge. The site stays a static Vite and React build on GitHub Pages. After MX its build pulls private packages from GitHub Packages, published as <code>@ttvpro007/loom-*</code> and aliased to <code>@loom/*</code>. Tools like Wix, Webflow and Framer already do visual editing better than this ever will. The reasons to build anyway: content stays in your repo, every change is a reviewable commit, and agents can edit the site through the same CLI and checks as you.</p>
   </section>
 </div>
 
@@ -320,7 +329,8 @@
     { id:"m4", code:"M4", name:"Pages and sections as content", size:"M", depends:"M2, M3",
       deliverable:"content/site/layout.json, a section-type registry, a Site map page in the admin, and layout commands in the CLI.",
       accept:"With the default layout.json the site renders exactly as before; a section reorder or hide from the admin or CLI shows up after Test",
-      evidence:"In progress in the session “Content-driven site layout + site map editor”.",
+      evidence:"In progress in the session “Content-driven site layout + site map editor”: 4c09966, 2fa4541, 2ac07b9 on claude/beautiful-bose-7f6dc8, not merged. Its layout.json holds every page in one file, with sections as {type, id, enabled}.",
+      note:"Follow Loom's content-format.md (Business/loom/docs/contracts) as far as practical, so MX is a move, not a rewrite: pages → sections → blocks, one file per page, sections as {id, layout, style, blocks}, style values as theme token names only, and live values as { \"field\": … } bindings. Anything that can't follow it yet is recorded so MX can migrate it.",
       tasks:[
         {id:"m4-format", text:"layout.json is readable on sight: plain ids, shallow, defaults left out"},
         {id:"m4-node-shape", text:"Uniform node shape that can take children later (R1)", hot:true},
@@ -329,31 +339,47 @@
         {id:"m4-sitemap", text:"Site map page: drag to reorder, toggles, add section, option forms"},
         {id:"m4-docs", text:"docs/content.md has a commented layout.json example"}
       ]},
-    { id:"m5", code:"M5", name:"Flexible sections", size:"M", depends:"M4",
-      deliverable:"Layout options on every section and generic section types for text, media and card grids.",
+    { id:"mx", code:"MX", name:"Split into Loom and the kit", size:"L", depends:"M4, PR #1",
+      deliverable:"The engine in the private loom repo (history kept), the portfolio blocks in loom-kit-portfolio, both on GitHub Packages, and this repo as a site that depends only on them.",
+      accept:"This repo, depending only on @loom/* and @loom/kit-portfolio, builds a site that matches the live site screenshot for screenshot at 375, 768 and 1280px",
+      evidence:"Not started. Planned in Business/atelier: decisions 0012 (timing) and 0013 (private packages), the migration table in docs/architecture.md, and loom-kit-portfolio/docs/porting.md. Starts once PR #1 is merged and M4 has landed or been frozen.",
+      lands:"loom: content registries, plugins/content.js, theme application and generic src/components/base → @loom/core and @loom/blocks; admin/src and admin/server → @loom/builder; admin/cli.js and store.js → @loom/cli on @loom/ops; release.js and deploy.yml → the release gate in @loom/core plus @loom/deploy. loom-kit-portfolio: project schema, unity and embed media types, project cards, modal and Unity frame as blocks, the home, projects, resume and contact pages as layouts. Stays here: content/, personal public/ assets, personal docs.",
+      tasks:[
+        {id:"mx-loom", text:"Extract loom with history (git filter-repo): registries, admin, CLI, store, release gate"},
+        {id:"mx-kit", text:"Extract loom-kit-portfolio: project schema, media types, project blocks, page layouts"},
+        {id:"mx-publish", text:"Publish privately to GitHub Packages as @ttvpro007/loom-*, aliased to @loom/* in package.json"},
+        {id:"mx-consume", text:"This repo installs the packages with a read:packages token in CI, and no engine or kit code is left in src/ or admin/"},
+        {id:"mx-content", text:"content/ moved to the Loom format: collections/projects, pages/*.json, site.json (R8)"},
+        {id:"mx-fidelity", text:"Build matches the live site screenshot for screenshot at 375, 768 and 1280px (R9)", hot:true}
+      ]},
+    { id:"m5", code:"M5", name:"Flexible sections", size:"M", depends:"MX",
+      deliverable:"Section layouts and theme-token styles on every section, and generic blocks for text, media and card grids.",
       accept:"A new About-style page built entirely in the admin, with no code change, looks right at phone and desktop widths",
       evidence:"Not started.",
+      lands:"Loom. Layouts via registerLayout in @loom/core, generic blocks in @loom/blocks, preview in @loom/builder. Here: a version bump and the new page in content/pages/.",
       tasks:[
-        {id:"m5-options", text:"Shared options: width, columns, alignment, spacing, background"},
-        {id:"m5-generic", text:"Generic sections: rich text, media + text, card grid, embed"},
-        {id:"m5-variants", text:"Variants per section (e.g. image left or right)"},
-        {id:"m5-preview", text:"Admin previews a section at phone, tablet and desktop widths"}
+        {id:"m5-options", text:"Section layouts (stack, columns, grid, split) and style tokens (background, padding) per content-format.md"},
+        {id:"m5-generic", text:"Generic blocks, not section types: rich text, media + text, card grid, embed"},
+        {id:"m5-variants", text:"Variants as a layout (split) or a declared select input on the block, not a per-section option"},
+        {id:"m5-preview", text:"Builder previews a section at 375, 768 and 1280px, the catalog's widths"}
       ]},
     { id:"m6", code:"M6", name:"Nested blocks", size:"L", depends:"M5",
-      deliverable:"Sections hold rows, columns and blocks; an outline editor with drag between containers; CLI block commands.",
+      deliverable:"Blocks nest through declared slots; an outline editor with drag between containers; CLI block commands.",
       accept:"A page with two-column rows of heading, text, image and button blocks is built in the admin and through the CLI, and the JSON still reads clearly",
       evidence:"Not started.",
+      lands:"Loom. defineBlock and the block library in @loom/blocks, the outline editor in @loom/builder, block commands in @loom/cli, checks in @loom/core schemas. The project list is the kit's project-grid block. Here: content only.",
       tasks:[
-        {id:"m6-decide", text:"Decide: our own tree with a Puck adapter, or the library's model (R7)", hot:true},
+        {id:"m6-decide", text:"Decide whether the outline editor uses a library (Puck) behind an adapter; the format is already fixed by content-format.md and blocks.md (R7)", hot:true},
         {id:"m6-blocks", text:"Block registry: heading, text, image, button, video, spacer, project list"},
         {id:"m6-outline", text:"Outline editor with drag and drop between containers"},
         {id:"m6-cli", text:"CLI block commands that address blocks by readable path"},
-        {id:"m6-readable", text:"A check that fails on generated ids or written-out defaults (R5)"}
+        {id:"m6-readable", text:"Schema checks refuse unknown keys, and a check fails on generated ids or written-out defaults (R5)"}
       ]},
     { id:"m7", code:"M7", name:"On-page visual editing", size:"L", depends:"M6",
       deliverable:"Click any element in a live preview to select it, edit text in place, drag blocks, and set properties in a side panel.",
       accept:"A change made by clicking on the preview is the same commit-ready JSON the CLI would write",
       evidence:"Not started.",
+      lands:"Loom, in @loom/builder, editing design content. Not the live-fields /editor, which edits runtime values on client sites and doesn't apply to this static site. The property panel reads each block's declared inputs. Here: nothing beyond a version bump.",
       tasks:[
         {id:"m7-bridge", text:"Preview iframe and editor talk over postMessage"},
         {id:"m7-select", text:"Click to select, with an outline and breadcrumb"},
@@ -362,12 +388,13 @@
         {id:"m7-panel", text:"Property panel generated from the block registry"}
       ]},
     { id:"m8", code:"M8", name:"Custom code blocks", size:"M", depends:"M6",
-      deliverable:"A custom block type whose JSX lives in content/blocks/, which an agent can write through the CLI.",
+      deliverable:"Site blocks in this repo's blocks/ folder, declared with defineBlock, which an agent can write through the CLI.",
       accept:"An agent adds a new block with the CLI, it passes Test, and it renders on staging",
       evidence:"Not started.",
+      lands:"Split. Loom owns defineBlock, folder pickup, loom block fork and the checks. The blocks themselves are site code and live here in blocks/, the one kind of code this repo still writes after MX. A block reused by a second site is promoted into the kit or @loom/blocks.",
       tasks:[
-        {id:"m8-format", text:"content/blocks/<name>.jsx with declared options"},
-        {id:"m8-cli", text:"CLI command to scaffold and register a block"},
+        {id:"m8-format", text:"blocks/<id>/ declared with defineBlock: typed inputs, slots, theme tokens only, no data fetching"},
+        {id:"m8-cli", text:"Scaffold a block with the CLI (loom block fork, or a new block) and have it picked up"},
         {id:"m8-check", text:"Test step builds and lints custom blocks before Stage"}
       ]}
   ];
@@ -404,6 +431,11 @@
       card.appendChild(head);
       var ev = el("p", "m-evidence"); ev.appendChild(el("b", null, "Evidence")); ev.appendChild(document.createTextNode(m.evidence));
       card.appendChild(ev);
+      [["note", "Contract"], ["lands", "Lands in"]].forEach(function(f){
+        if (!m[f[0]]) return;
+        var p = el("p", "m-evidence m-" + f[0]); p.appendChild(el("b", null, f[1])); p.appendChild(document.createTextNode(m[f[0]]));
+        card.appendChild(p);
+      });
 
       var ctl = el("div", "m-ctl");
       var l1 = el("label", null, "Status "), sel = document.createElement("select");

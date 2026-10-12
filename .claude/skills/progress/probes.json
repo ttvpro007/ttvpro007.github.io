@@ -5,7 +5,8 @@
     "admin":   { "aliases": ["gui", "editor", "ux"],   "owns": ["admin/src/", "admin/index.html", "admin/server/api.js"] },
     "site":    { "aliases": ["render", "frontend"],    "owns": ["src/", "plugins/content.js"] },
     "format":  { "aliases": ["content", "schema", "layout"], "owns": ["content/", "src/lib/content/", "docs/content.md"] },
-    "release": { "aliases": ["gate", "deploy", "staging"],   "owns": ["admin/server/release.js", ".github/workflows/", "docs/release.md"] }
+    "release": { "aliases": ["gate", "deploy", "staging"],   "owns": ["admin/server/release.js", ".github/workflows/", "docs/release.md"] },
+    "split":   { "aliases": ["loom", "extraction", "packages"], "owns": ["package.json", ".npmrc"] }
   },
   "tasks": {
     "m1-content":    { "modules": ["format"],  "probe": { "file": "content/projects/order.json" } },
@@ -26,22 +27,28 @@
     "m4-cli":        { "modules": ["cli"],     "probe": { "grep": "^  layout: \\{", "paths": ["admin/cli.js"] } },
     "m4-sitemap":    { "modules": ["admin"],   "probe": { "grep": "[Ss]ite ?[Mm]ap", "paths": ["admin/src/"] } },
     "m4-docs":       { "modules": ["format"],  "probe": { "grep": "layout\\.json", "paths": ["docs/content.md"] } },
-    "m5-options":    { "modules": ["site", "format"], "probe": { "grep": "\\bspacing\\b", "paths": ["src/lib/content/"] } },
+    "mx-loom":       { "modules": ["split"], "human": "happens in the Business/loom repo (git filter-repo import); nothing in this repo shows it" },
+    "mx-kit":        { "modules": ["split"], "human": "happens in the Business/loom-kit-portfolio repo; nothing in this repo shows it" },
+    "mx-publish":    { "modules": ["split"], "human": "published to GitHub Packages, outside this repo; mx-consume's probe finds the aliases once they're used" },
+    "mx-consume":    { "modules": ["split"], "probe": { "grep": "npm:@ttvpro007/loom-", "paths": ["package.json"] }, "human": "the probe finds the aliases; 'no engine or kit code left in src/ or admin/' is a reading of the tree" },
+    "mx-content":    { "modules": ["format"], "probe": { "file": "content/pages" } },
+    "mx-fidelity":   { "modules": ["site", "release"], "human": "a screenshot comparison at 375, 768 and 1280px against the live site (R9)" },
+    "m5-options":    { "modules": ["site", "format"], "probe": { "grep": "registerLayout|['\"](columns|split)['\"]", "paths": ["src/lib/content/"] } },
     "m5-generic":    { "modules": ["site"],    "probe": { "grep": "rich-?text|card-?grid|richText|cardGrid", "paths": ["src/lib/content/"] } },
-    "m5-variants":   { "modules": ["site"],    "probe": { "grep": "variants", "paths": ["src/lib/content/sectionTypes.js"] } },
+    "m5-variants":   { "modules": ["site"], "human": "Rev 2: a variant is the split layout or a select input on a block; no clean probe" },
     "m5-preview":    { "modules": ["admin"],   "probe": { "grep": "SectionPreview|previewSection", "paths": ["admin/src/"] }, "human": "the Theme editor already previews the whole site at phone/tablet/desktop; this task is per section" },
     "m6-decide":     { "modules": ["format"],  "probe": { "grep": "[Pp]uck", "paths": ["docs/content.md", "docs/architecture.md"] }, "human": "a decision; the probe only finds it if it was written down" },
     "m6-blocks":     { "modules": ["site", "format"], "probe": { "grep": "blockTypes|blockRegistry|BLOCK_TYPES", "paths": ["src/"] } },
     "m6-outline":    { "modules": ["admin"],   "probe": { "grep": "[Oo]utline[A-Z ]?[Ee]ditor|OutlineTree", "paths": ["admin/src/"] } },
     "m6-cli":        { "modules": ["cli"],     "probe": { "grep": "^  blocks?: \\{", "paths": ["admin/cli.js"] } },
-    "m6-readable":   { "modules": ["format"],  "probe": { "grep": "[Rr]eadab", "paths": ["tests/"] } },
+    "m6-readable":   { "modules": ["format"], "probe": { "grep": "unknown key|additionalProperties", "paths": ["tests/"] }, "human": "the probe finds an unknown-key test; the generated-id and written-out-default checks need reading" },
     "m7-bridge":     { "modules": ["admin", "site"], "probe": { "grep": "portfolio:(select|block|edit)", "paths": ["admin/src/", "src/"] } },
     "m7-select":     { "modules": ["admin"],   "probe": { "grep": "[Bb]readcrumb", "paths": ["admin/src/"] } },
     "m7-inline":     { "modules": ["admin"],   "probe": { "grep": "contentEditable", "paths": ["admin/src/", "src/"] } },
     "m7-drag":       { "modules": ["admin"],   "human": "no clean probe: the admin already drags projects and media, so a grep would lie" },
     "m7-panel":      { "modules": ["admin"],   "probe": { "grep": "PropertyPanel|[Pp]roperty panel", "paths": ["admin/src/"] } },
-    "m8-format":     { "modules": ["format"],  "probe": { "file": "content/blocks" } },
-    "m8-cli":        { "modules": ["cli"],     "probe": { "grep": "content/blocks", "paths": ["admin/cli.js"] } },
-    "m8-check":      { "modules": ["release"], "probe": { "grep": "content/blocks", "paths": ["admin/server/release.js"] } }
+    "m8-format":     { "modules": ["format"], "probe": { "grep": "defineBlock", "paths": ["blocks/"] } },
+    "m8-cli":        { "modules": ["cli"], "probe": { "grep": "block fork|defineBlock", "paths": ["admin/cli.js"] } },
+    "m8-check":      { "modules": ["release"], "probe": { "grep": "blocks/", "paths": ["admin/server/release.js"] } }
   }
 }

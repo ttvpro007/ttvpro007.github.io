@@ -1,6 +1,6 @@
 ---
 name: progress
-description: Report where the portfolio site builder stands — the in-flight milestone (by the reader's ticks and by the repo), what each milestone can show for itself in git, every task that can be started right now, and drift between the roadmap's ticks, the commits and the branches — then ask which task to start. Read-only. Takes an optional scope, `/progress m4`, `/progress cli`, `/progress admin` (modules cli, admin, site, format, release, or a milestone m1–m8); omit it for the whole roadmap. Use when asked "where are we", "what's next", "status", "progress", "show the roadmap", "how is the CLI doing", "what should I work on", or when picking this repo up cold.
+description: Report where the portfolio site builder stands — the in-flight milestone (by the reader's ticks and by the repo), what each milestone can show for itself in git, every task that can be started right now, and drift between the roadmap's ticks, the commits and the branches — then ask which task to start. Read-only. Takes an optional scope, `/progress m4`, `/progress cli`, `/progress admin` (modules cli, admin, site, format, release, split, or a milestone m1–m8 or mx); omit it for the whole roadmap. Use when asked "where are we", "what's next", "status", "progress", "show the roadmap", "how is the CLI doing", "what should I work on", or when picking this repo up cold.
 ---
 
 # Progress
@@ -22,7 +22,8 @@ The invocation may carry a name: `/progress cli`. With no argument the scope is 
 | `site` | render, frontend | `src/`, `plugins/content.js` |
 | `format` | content, schema, layout | `content/`, `src/lib/content/`, `docs/content.md` |
 | `release` | gate, deploy, staging | `admin/server/release.js`, `.github/workflows/`, `docs/release.md` |
-| `m1` … `m8` | `M1` … | One milestone of `docs/roadmap.html` |
+| `split` | loom, extraction, packages | `package.json`, `.npmrc` (most MX work happens in `Business/loom` and `Business/loom-kit-portfolio`, so its tasks are mostly human-checked) |
+| `m1` … `m8`, `mx` | `M1` …, `MX` | One milestone of `docs/roadmap.html`; MX (the Loom split) sits between M4 and M5 |
 
 **Binding:** task ids are milestone-keyed (`m4-cli`), so module membership is **inferred** from path
 ownership and declared per task in [probes.json](probes.json) (`tasks.<id>.modules`; a task may
