@@ -1,6 +1,7 @@
 name: CI & Deploy
 
-# master  → lint, test, build, deploy the live site (this repo's gh-pages branch)
+# master  → lint, test, build only. Atelier deploys the live site: `atelier site deploy portfolio`
+#           (atelier s4-register); CI deploying too would race it for gh-pages
 # staging → lint, test, build, deploy the staging site (only when STAGING_REPO is configured — see docs/release.md)
 # PRs     → lint, test and build only
 on:
@@ -16,7 +17,7 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
-  contents: write
+  contents: read   # the live site is deployed by Atelier; staging deploys with its own key
   packages: read   # install the @ttvpro007/loom-* packages from GitHub Packages
 
 jobs:
@@ -51,13 +52,6 @@ jobs:
         env:
           BASE_PATH: ${{ github.ref == 'refs/heads/staging' && vars.STAGING_BASE_PATH || '/' }}
           SITE_ENV: ${{ github.ref == 'refs/heads/staging' && 'staging' || 'production' }}
-
-      - name: Deploy live site
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
 
       - name: Deploy staging site
         if: github.event_name == 'push' && github.ref == 'refs/heads/staging' && vars.STAGING_REPO != ''

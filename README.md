@@ -16,7 +16,7 @@ Node 20+. `npm run dev` runs the site without opening the admin (the admin is st
 1. **Edit** — `npm run admin`. Create or edit projects, drop in images/videos, upload a Unity WebGL build folder, paste YouTube links, write the overview in Markdown, pick or tweak a theme. Every save shows up immediately in the site tab.
 2. **Test** — *Release → Build & test* builds the production site and serves it at `http://localhost:4173`. Click through it.
 3. **Stage** *(optional)* — *Push to staging* deploys to a separate staging site for checking on real phones. One-time setup in [docs/release.md](docs/release.md).
-4. **Go live** — unlocks only after Test passes for the exact current content. Commits `content/`, pushes `master`, GitHub Actions deploys.
+4. **Go live** — unlocks only after Test passes for the exact current content. Commits `content/` and pushes `master`; then `atelier site deploy portfolio` deploys it (CI only checks it).
 
 ## Where things live
 

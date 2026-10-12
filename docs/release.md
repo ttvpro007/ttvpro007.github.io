@@ -34,7 +34,14 @@ The build supports serving under a sub-path via `BASE_PATH`: media URLs, CSS ass
 
 ## 3. Go live
 
-*Go live* (only on `master`) commits `content/` with your message and pushes `master`. The workflow in `.github/workflows/deploy.yml` lints, builds and publishes `dist/` to this repo's `gh-pages` branch, which serves https://ttvpro007.github.io/. Watch it under the repo's *Actions* tab (linked from the Release page).
+*Go live* (only on `master`) commits `content/` with your message and pushes `master`. CI then lints, tests and builds it, but **does not deploy**: Atelier is the only deployer of the live site. Deploy from the Business workspace with
+
+```bash
+atelier site deploy portfolio --dry-run   # what would change on gh-pages
+atelier site deploy portfolio             # build, publish dist/ to gh-pages, record the job
+```
+
+It publishes `dist/` to this repo's `gh-pages` branch, which serves https://ttvpro007.github.io/. The admin's Release page still says GitHub Actions deploys; that text lives in `@loom/builder` and is out of date until the next Loom release.
 
 Only `content/` is committed by the admin. Code changes (components, styles) are committed by you as usual; the Release page warns when there are uncommitted code changes, because Test includes them but Go live would not ship them.
 
@@ -44,6 +51,6 @@ Only `content/` is committed by the admin. Code changes (components, styles) are
 |---|---|---|
 | Pull request → `master` | ✓ | — |
 | Push `staging` | ✓ (with `STAGING_BASE_PATH`) | staging repo, if configured |
-| Push `master` | ✓ | live site |
+| Push `master` | ✓ | — (Atelier deploys: `atelier site deploy portfolio`) |
 
 Newer pushes cancel an in-progress run for the same branch.
