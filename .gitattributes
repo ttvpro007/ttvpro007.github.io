@@ -1,0 +1,32 @@
+# Check out text with LF everywhere so a Windows build matches CI's (ubuntu) byte for byte.
+* text=auto eol=lf
+
+# Binary: never convert line endings.
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.avif binary
+*.ico binary
+*.cur binary
+*.bmp binary
+*.eps binary
+*.ai binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.eot binary
+*.mp3 binary
+*.mp4 binary
+*.webm binary
+*.ogg binary
+*.wav binary
+*.wasm binary
+*.data binary
+*.unityweb binary
+*.br binary
+*.gz binary
+*.zip binary
