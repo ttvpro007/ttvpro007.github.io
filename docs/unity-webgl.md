@@ -20,7 +20,7 @@ By hand: copy the build into `content/projects/<slug>/media/unity/` and add the 
 
 - Dev: the content plugin serves `content/projects/<slug>/media/**` at `/projects/<slug>/…` (correct MIME types, including `.wasm`).
 - Build: the folder is copied to `dist/projects/<slug>/` unchanged.
-- The modal renders it in a sandboxed iframe (`UnityFrame` in `src/components/features/projects/media/renderers.jsx`) and, when the tab closes, calls `window.cleanupUnity()` or `unityInstance.Quit()` inside the frame if the build exposes them — expose one from your WebGL template to free GPU memory promptly.
+- The modal renders it in a sandboxed iframe (`UnityFrame`, `src/features/projects/media/renderers.jsx` in `@loom/kit-portfolio`) and, when the tab closes, calls `window.cleanupUnity()` or `unityInstance.Quit()` inside the frame if the build exposes them — expose one from your WebGL template to free GPU memory promptly.
 
 ## Notes
 

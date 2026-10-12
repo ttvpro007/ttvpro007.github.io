@@ -10,9 +10,9 @@ const __dirname = path.dirname(__filename);
 
 // Configuration
 const CSS_DIRS = [
-  'src/styling',
-  'src/components',
-  'src/pages'
+  // The engine's and the kit's styles, as installed
+  'node_modules/@loom/blocks/src',
+  'node_modules/@loom/kit-portfolio/src',
 ];
 
 const CSS_EXTENSIONS = ['.css'];

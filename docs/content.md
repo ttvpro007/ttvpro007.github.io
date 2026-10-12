@@ -36,11 +36,11 @@ One folder per project: `content/projects/<slug>/`. The folder name is the proje
 - Local `src` values are relative to the project's `media/` folder. Absolute `https://` URLs also work.
 - `overview.md` can reference its own media: `![screenshot](media/ppm-1.png)`.
 - Order: `content/projects/order.json` (array of slugs). Projects not listed go last, newest first.
-- Field definitions, validation and the site view model: [`src/lib/content/projectSchema.js`](../src/lib/content/projectSchema.js). Adding a field to `PROJECT_FIELDS` makes it editable in the admin automatically.
+- Field definitions, validation and the site view model: `src/projectSchema.js` in `@loom/kit-portfolio`. Adding a field to `PROJECT_FIELDS` makes it editable in the admin automatically.
 
 ## Media types
 
-Registry: [`src/lib/content/mediaTypes.js`](../src/lib/content/mediaTypes.js). Renderers: [`src/components/features/projects/media/renderers.jsx`](../src/components/features/projects/media/renderers.jsx).
+Registry: `src/mediaTypes.js` in `@loom/core`. Renderers: `src/features/projects/media/renderers.jsx` in `@loom/kit-portfolio`.
 
 | type | source | where it shows |
 |---|---|---|
@@ -56,7 +56,7 @@ Uploads: large PNG/JPEG are resized to ≤2400px and converted to WebP (toggle i
 
 ## Link types
 
-Registry: [`src/lib/content/linkTypes.js`](../src/lib/content/linkTypes.js) — `demo`, `github`, `itchio`, `steam`, `appstore`, `website`, `docs`. Each link becomes a button in the modal, ordered as in the registry. Pasting a URL in the admin guesses its type. Add a type with one entry.
+Registry: `src/linkTypes.js` in `@loom/core` — `demo`, `github`, `itchio`, `steam`, `appstore`, `website`, `docs`. Each link becomes a button in the modal, ordered as in the registry. Pasting a URL in the admin guesses its type. Add a type with one entry.
 
 ## Theme
 
@@ -78,7 +78,7 @@ Registry: [`src/lib/content/linkTypes.js`](../src/lib/content/linkTypes.js) — 
 }
 ```
 
-[`src/lib/theme/applyTheme.js`](../src/lib/theme/applyTheme.js) maps these onto CSS custom properties at startup and loads the Google Fonts. Every stylesheet reads colors from those properties (shades via `color-mix()`), so a preset restyles the whole site. The admin's Theme page edits presets with a live preview at phone/tablet/laptop/wide sizes and checks text contrast.
+`src/applyTheme.js` in `@loom/blocks` maps these onto CSS custom properties at startup and loads the Google Fonts. Every stylesheet reads colors from those properties (shades via `color-mix()`), so a preset restyles the whole site. The admin's Theme page edits presets with a live preview at phone/tablet/laptop/wide sizes and checks text contrast.
 
 **Rule for code changes:** never hard-code a theme color in a component — use `var(--color-primary)` etc., or `color-mix(in srgb, var(--color-primary) 30%, transparent)` for a translucent shade. Token → variable mapping is `THEME_TOKENS`.
 
@@ -114,7 +114,7 @@ Registry: [`src/lib/content/linkTypes.js`](../src/lib/content/linkTypes.js) — 
 - Every save is validated (store.js `saveLayout`; `validate` and `npm test` run the same check). Unknown types, keys or options, wrong option values, duplicate page ids/slugs or section ids, and having no enabled page are all refused. Each problem prints as one line: the path, what's wrong, and the fix. For example: `pages[0] "home".sections[2] "flipCard": unknown section type "flipCard" — use one of: hero, timeline, flipCards, …`
 - `navigation.json`'s `pages` list is no longer read — nav labels come from `layout.json`.
 
-Section registry: [`src/lib/content/sectionTypes.js`](../src/lib/content/sectionTypes.js). Components: [`src/pages/sections.jsx`](../src/pages/sections.jsx). Layout helpers (validation, normalization, edits): [`src/lib/content/siteLayout.js`](../src/lib/content/siteLayout.js).
+Section registry: `src/sectionTypes.js` in `@loom/core`. Components: `src/components.jsx` in `@loom/kit-portfolio`. Layout helpers (validation, normalization, edits): `src/siteLayout.js` in `@loom/core`.
 
 | type | shows | reads | options |
 |---|---|---|---|
@@ -135,7 +135,7 @@ Section registry: [`src/lib/content/sectionTypes.js`](../src/lib/content/section
 
 ## Agent / CLI editing
 
-`npm run content -- <command>` edits `content/` without a browser or dev server — the same operations as the admin, through the same module ([`admin/server/store.js`](../admin/server/store.js), which the admin API also calls). Built for agents and scripts:
+`npm run content -- <command>` edits `content/` without a browser or dev server — the same operations as the admin, through the same module (`node/store.js` in `@loom/core`, which the admin API also calls). Built for agents and scripts:
 
 - Success prints **JSON on stdout** (exit 0). Failures print `error: …` (plus detail lines) on **stderr** and exit **1** (validation/operation failed, nothing written) or **2** (bad usage).
 - `npm run content -- --help` lists commands; `npm run content -- <command> --help` documents one. Use `npm run -s content -- …` to keep npm's banner out of stdout.

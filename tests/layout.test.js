@@ -2,11 +2,14 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { SECTION_TYPES, OPTION_KINDS, sectionOptions, parseOptionValue, compactOptions } from '../src/lib/content/sectionTypes.js';
+import path from 'node:path';
+import { createRequire } from 'node:module';
+import '@loom/kit-portfolio';
 import {
+  SECTION_TYPES, OPTION_KINDS, sectionOptions, parseOptionValue, compactOptions,
   validateLayout, visiblePages, normalizeLayout, addPage, movePage, removePage, updatePage,
   addSection, removeSection, moveSection, updateSection, transferSection, normalizeNode,
-} from '../src/lib/content/siteLayout.js';
+} from '@loom/core';
 
 const committed = JSON.parse(fs.readFileSync('content/site/layout.json', 'utf8'));
 
@@ -26,7 +29,7 @@ test('default layout reproduces the original site: Home, Projects, Resume, Conta
 });
 
 test('every section type has a component and a well-formed option schema', () => {
-  const registry = fs.readFileSync('src/pages/sections.jsx', 'utf8');
+  const registry = fs.readFileSync(path.join(path.dirname(createRequire(import.meta.url).resolve('@loom/kit-portfolio')), 'components.jsx'), 'utf8');
   const components = [...registry.matchAll(/^ {2}(\w+): /gm)].map((m) => m[1]);
   for (const [type, t] of Object.entries(SECTION_TYPES)) {
     assert.ok(components.includes(type), `${type} has no entry in SECTION_COMPONENTS`);

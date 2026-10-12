@@ -4,7 +4,14 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
-import { loadProjects, CONTENT_DIR, PROJECTS_DIR, ORDER_FILE } from '../plugins/content.js';
+import { loadSite, loadItems, itemsDir, orderFile, CONTENT_DIR } from '@loom/core/node';
+import { primaryCollection } from '@loom/core';
+
+await loadSite();
+const collection = primaryCollection();
+const PROJECTS_DIR = itemsDir(collection);
+const ORDER_FILE = orderFile(collection);
+const loadProjects = () => loadItems(collection);
 
 const isUrl = (src) => /^https?:\/\//.test(src);
 const projects = loadProjects();

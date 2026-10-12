@@ -1,4 +1,4 @@
-// Drives `npm run content` (admin/cli.js) against a throwaway copy of content/,
+// Drives `npm run content` (@loom/cli) against a throwaway copy of content/,
 // so the real content is never touched.
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
@@ -7,9 +7,13 @@ import os from 'node:os';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { spawnSync } from 'node:child_process';
+import { createRequire } from 'node:module';
 import sharp from 'sharp';
 
-const CLI = path.resolve('admin/cli.js');
+const require = createRequire(import.meta.url);
+const CLI = require.resolve('@loom/cli/cli.js');
+// The copy has no node_modules, so its loom.config.js names the kit by file path
+const KIT = require.resolve('@loom/kit-portfolio');
 let root;
 let scratch;
 
@@ -20,6 +24,7 @@ before(() => {
   fs.copyFileSync(path.resolve('content/theme.json'), path.join(root, 'content/theme.json'));
   fs.mkdirSync(path.join(root, 'content/projects'), { recursive: true });
   fs.writeFileSync(path.join(root, 'content/projects/order.json'), '[]\n');
+  fs.writeFileSync(path.join(root, 'loom.config.js'), `export default { kit: ${JSON.stringify(KIT)} };\n`);
 });
 
 after(() => {
@@ -29,7 +34,7 @@ after(() => {
 
 const cli = (args, input) => {
   const r = spawnSync(process.execPath, [CLI, ...args], {
-    env: { ...process.env, PORTFOLIO_ROOT: root }, input, encoding: 'utf8', cwd: scratch,
+    env: { ...process.env, LOOM_ROOT: root }, input, encoding: 'utf8', cwd: scratch,
   });
   let json;
   try { json = JSON.parse(r.stdout); } catch { /* not JSON */ }

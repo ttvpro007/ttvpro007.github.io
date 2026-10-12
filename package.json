@@ -15,9 +15,15 @@
     "css:size": "node scripts/css-size-analysis.js",
     "css:analyze": "npm run css:stats && npm run build && npm run css:size",
     "css:analyze:quick": "npm run css:quick",
-    "content": "node admin/cli.js"
+    "content": "loom-content"
   },
+  "//loom": "The five @loom/* lines install local checkouts of loom and loom-kit-portfolio until they are published. Then each becomes \"npm:@ttvpro007/loom-<name>@^0.1.0\" (the kit: loom-kit-portfolio), with the registry in .npmrc.",
   "dependencies": {
+    "@loom/blocks": "file:../../Business/loom/packages/blocks",
+    "@loom/builder": "file:../../Business/loom/packages/builder",
+    "@loom/cli": "file:../../Business/loom/packages/cli",
+    "@loom/core": "file:../../Business/loom/packages/core",
+    "@loom/kit-portfolio": "file:../../Business/loom-kit-portfolio",
     "framer-motion": "^12.23.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

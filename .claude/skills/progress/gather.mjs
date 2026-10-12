@@ -242,7 +242,7 @@ if (!flag('--no-test')) {
   tests = { exit: r.code, tests: num('tests'), pass: num('pass'), fail: num('fail'),
     failing: `${r.out}`.split(/\r?\n/).filter((l) => /^✖/.test(l.trim())).slice(0, 20) };
 }
-const v = run('node', ['admin/cli.js', 'validate']);
+const v = run('node', ['node_modules/@loom/cli/cli.js', 'validate']);
 let validate;
 try { validate = { exit: v.code, ...JSON.parse(v.out) }; } catch { validate = { exit: v.code, raw: (v.out || v.err).slice(0, 2000) }; }
 

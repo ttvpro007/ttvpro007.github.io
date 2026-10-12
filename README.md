@@ -29,9 +29,12 @@ Node 20+. `npm run dev` runs the site without opening the admin (the admin is st
 | `content/theme.json` | Theme presets and which one is live |
 | `content/site/layout.json` | Site structure: pages in the nav and each page's ordered sections (admin → Site map) |
 | `content/site/*.json` | Profile, navigation, UI text, contact form |
-| `src/lib/content/` | Registries: media types, link types, section types, project schema |
-| `plugins/content.js` | Vite plugin turning `content/` into site data and serving media |
-| `admin/` | The local admin (UI + dev-server API; never shipped) |
+| `loom.config.js` | Names the kit (`@loom/kit-portfolio`) the engine loads |
+| `src/main.jsx` | Entry point: global styles, the live theme, the kit's site shell |
+
+The engine and the kit are installed packages, not code in this repo: `@loom/core` (registries, the content plugin, the store and the release gate), `@loom/blocks` (general components, the site shell, global styles, `applyTheme`), `@loom/builder` (the local admin; never shipped), `@loom/cli` (`npm run content`) and `@loom/kit-portfolio` (the project schema, Unity/embed media, every section and page). Their source is in the private `loom` and `loom-kit-portfolio` repos.
+
+Until they are published, `package.json` installs them from checkouts of those repos at `../../Business/loom` and `../../Business/loom-kit-portfolio`, and `.npmrc` sets `install-links` so each is installed as a packed copy, the way a published version would be. Run `npm install` again after changing either repo. Moving to the published packages changes only those five `@loom/*` lines (the `//loom` note in `package.json` has the target form).
 
 Architecture map: [docs/architecture.md](docs/architecture.md) · Details: [docs/content.md](docs/content.md) (content model, adding media/link types, theming) · [docs/release.md](docs/release.md) (test → stage → live, CI) · [docs/unity-webgl.md](docs/unity-webgl.md) · [docs/css-analysis.md](docs/css-analysis.md)
 
