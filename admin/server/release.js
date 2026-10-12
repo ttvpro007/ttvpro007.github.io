@@ -10,8 +10,11 @@ import { CONTENT_DIR } from '../../plugins/content.js';
 
 const ROOT = path.resolve('.');
 const PREVIEW_PORT = 4173;
+// Saved to disk so a dev-server restart (any admin/plugin edit) doesn't forget a passed Test
+const TESTED_FILE = path.join(ROOT, '.release-tested.json');
 let preview = null;
 const tested = { testedFingerprint: null, testedAt: null, url: null };
+try { Object.assign(tested, JSON.parse(fs.readFileSync(TESTED_FILE, 'utf8'))); } catch { /* not tested yet */ }
 
 /**
  * Hash of everything that affects the published site: every file under content/
@@ -42,7 +45,10 @@ export const testState = () => ({
   upToDate: !!tested.testedFingerprint && tested.testedFingerprint === contentFingerprint(),
 });
 
-export const markTested = (fingerprint, url) => Object.assign(tested, { testedFingerprint: fingerprint, testedAt: Date.now(), url });
+export function markTested(fingerprint, url) {
+  Object.assign(tested, { testedFingerprint: fingerprint, testedAt: Date.now(), url });
+  fs.writeFileSync(TESTED_FILE, JSON.stringify(tested, null, 2) + '\n');
+}
 
 export function stopPreview() {
   preview?.kill();
