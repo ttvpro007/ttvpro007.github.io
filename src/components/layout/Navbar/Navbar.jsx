@@ -3,7 +3,8 @@ import { Button } from "@/components/base";
 import { navigation } from "@/data";
 import "./Navbar.css";
 
-export default function Navbar({ setPage, currentPage }) {
+/** `pages`: the enabled pages from layout.json ({ id, label }), in nav order. */
+export default function Navbar({ pages, setPage, currentPage }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
   const handleMobileMenuToggle = () => {
@@ -22,15 +23,15 @@ export default function Navbar({ setPage, currentPage }) {
           {navigation.brandName}
         </span>
         <div className="navbar-nav">
-          {navigation.pages.map((page) => (
+          {pages.map((page) => (
             <Button
-              key={page}
-              onClick={() => handlePageChange(page)}
-              variant={currentPage === page ? "primary" : "outline"}
+              key={page.id}
+              onClick={() => handlePageChange(page.id)}
+              variant={currentPage === page.id ? "primary" : "outline"}
               size="small"
-              className={`navbar-button ${currentPage === page ? 'navbar-button--active' : ''}`}
+              className={`navbar-button ${currentPage === page.id ? 'navbar-button--active' : ''}`}
             >
-              {page}
+              {page.label}
             </Button>
           ))}
         </div>
@@ -55,15 +56,15 @@ export default function Navbar({ setPage, currentPage }) {
         onClick={handleMobileMenuToggle}
       >
         <div className="navbar-mobile-menu-content" onClick={(e) => e.stopPropagation()}>
-          {navigation.pages.map((page) => (
+          {pages.map((page) => (
             <Button
-              key={page}
-              onClick={() => handlePageChange(page)}
-              variant={currentPage === page ? "primary" : "outline"}
+              key={page.id}
+              onClick={() => handlePageChange(page.id)}
+              variant={currentPage === page.id ? "primary" : "outline"}
               size="small"
-              className={`navbar-button ${currentPage === page ? 'navbar-button--active' : ''}`}
+              className={`navbar-button ${currentPage === page.id ? 'navbar-button--active' : ''}`}
             >
-              {page}
+              {page.label}
             </Button>
           ))}
         </div>

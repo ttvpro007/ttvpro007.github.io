@@ -82,8 +82,8 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
   </header>
 
   <section class="prose">
-    <p class="lede">The site is a pure function of the <code>content/</code> folder. Every project, image, Unity build, label and color the visitor sees is read from there at build time; code never holds content. The admin GUI and a headless CLI are two front doors onto one module that edits that folder, plus a gated way to ship it.</p>
-    <p>Once that is clear the rest follows: the Vite plugin exists to turn the folder into data and copy its media, the registries exist so a new kind of media or link is a data change rather than a code change, and the release gate exists because the only thing that can break the live site is content that was never built.</p>
+    <p class="lede">The site is a pure function of the <code>content/</code> folder. Every page, section, project, image, Unity build, label and color the visitor sees is read from there at build time; code never holds content. The admin GUI and a headless CLI are two front doors onto one module that edits that folder, plus a gated way to ship it.</p>
+    <p>Once that is clear the rest follows: the Vite plugin exists to turn the folder into data and copy its media, the registries exist so a new kind of media, link or page section is a data change rather than a code change, and the release gate exists because the only thing that can break the live site is content that was never built.</p>
   </section>
 
   <div class="facts" aria-label="Measured figures">
@@ -91,9 +91,10 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
     <div class="fact"><b>13</b><span>media items · 11 image, 1 YouTube, 1 Unity</span></div>
     <div class="fact"><b>5 / 7</b><span>media / link types registered</span></div>
     <div class="fact"><b>4 · 11</b><span>theme presets · color tokens</span></div>
-    <div class="fact"><b>16 · 13</b><span>admin API routes · CLI commands</span></div>
+    <div class="fact"><b>4 · 11 · 11</b><span>pages · sections placed · section types</span></div>
+    <div class="fact"><b>17 · 14</b><span>admin API routes · CLI commands</span></div>
     <div class="fact"><b>113 MB</b><span>content/projects on disk</span></div>
-    <div class="fact"><b>17</b><span>automated tests · content, media, CLI</span></div>
+    <div class="fact"><b>29</b><span>automated tests · content, media, CLI, layout</span></div>
   </div>
 
   <h2>Where a project lives — before and after</h2>
@@ -123,7 +124,7 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
         <rect x="500" y="44" width="340" height="212" rx="8" fill="none" style="stroke:var(--gold)" stroke-width="1.5"/>
         <g font-family="JetBrains Mono, monospace" font-size="12" fill="currentColor">
           <text x="516" y="68">content/projects/predictive-…/</text>
-          <text x="532" y="96">project.json</text><text x="680" y="96" opacity="0.65">fields · media[] · links[]</text>
+          <text x="532" y="96">project.json</text><text x="680" y="96" opacity="0.65">fields, media, links</text>
           <text x="532" y="122">overview.md</text><text x="680" y="122" opacity="0.65">inlined at build</text>
           <text x="532" y="148">media/ppm-1.png …</text><text x="680" y="148" opacity="0.65">type: image</text>
           <text x="532" y="174">media/unity/index.html</text><text x="680" y="174" opacity="0.65">type: unity</text>
@@ -197,6 +198,72 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
     <figcaption><b>Data goes through the module graph; media goes around it.</b> Project JSON and overviews become one virtual module (drafts dropped when <code>command === 'build'</code>), then <code>toViewModel</code> resolves media URLs and derives the two fields the cards read, <code>image</code> and <code>demo</code>. Media never enters Rollup — a 96 MB Unity build would be pointless to hash — and keeps one URL shape in both modes, so <code>resolveMediaUrl</code> needs no dev/prod branch. Content edits reach open site tabs through a custom HMR event, <code>portfolio:content-changed</code>, not a full reload, so the admin tab is not reset.</figcaption>
   </figure>
 
+  <h2>Pages are data — before and after</h2>
+  <figure>
+    <div class="fig-scroll">
+      <svg viewBox="0 0 860 384" role="img" aria-label="Before, App.jsx switched on four hard-coded page names and Home.jsx listed its five sections in JSX. After, content/site/layout.json lists pages and their sections; visiblePages filters them, SitePage groups consecutive sections by frame, and each section type maps to a lazily loaded component through SECTION_COMPONENTS.">
+        <defs>
+          <marker id="ah6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+        </defs>
+        <text x="20" y="26" font-family="Rajdhani, sans-serif" font-size="15" font-weight="700" fill="currentColor" letter-spacing="1.5">BEFORE · 20c0099</text>
+        <g font-family="JetBrains Mono, monospace" font-size="12" fill="currentColor">
+          <rect x="20" y="40" width="390" height="72" rx="6" fill="none" stroke="currentColor" opacity="0.6"/>
+          <text x="34" y="60">src/App.jsx</text>
+          <text x="34" y="80" opacity="0.65">switch (page) { case "Home": … "Contact" }</text>
+          <text x="34" y="98" opacity="0.65">leaving "Projects" → hard-coded exit delay</text>
+          <rect x="440" y="40" width="400" height="72" rx="6" fill="none" stroke="currentColor" opacity="0.6"/>
+          <text x="454" y="60">src/pages/features/home/Home.jsx</text>
+          <text x="454" y="80" opacity="0.65">&lt;Hero/&gt; &lt;Timeline/&gt; &lt;FlipCards/&gt; …</text>
+          <text x="454" y="98" opacity="0.65">order, presence and options fixed in JSX</text>
+        </g>
+        <text x="20" y="134" font-family="Source Sans 3, sans-serif" font-size="13" fill="currentColor" opacity="0.75">reordering, hiding or adding a section meant editing code</text>
+
+        <line x1="20" y1="152" x2="840" y2="152" stroke="currentColor" opacity="0.25" stroke-dasharray="4 4"/>
+        <text x="20" y="178" font-family="Rajdhani, sans-serif" font-size="15" font-weight="700" style="fill:var(--gold)" letter-spacing="1.5">AFTER · 2ac07b9</text>
+        <g font-family="JetBrains Mono, monospace" font-size="12" fill="currentColor">
+          <rect x="20" y="196" width="200" height="124" rx="8" fill="none" style="stroke:var(--gold)" stroke-width="1.5"/>
+          <text x="34" y="218" style="fill:var(--gold)">content/site/</text>
+          <text x="34" y="234" style="fill:var(--gold)">layout.json</text>
+          <text x="34" y="258" opacity="0.75">pages[]: id, label,</text>
+          <text x="34" y="274" opacity="0.75">  slug, enabled, order,</text>
+          <text x="34" y="290" opacity="0.75">  sections[]: { type,</text>
+          <text x="34" y="306" opacity="0.75">  id, enabled, options? }</text>
+
+          <rect x="266" y="196" width="160" height="56" rx="8" fill="none" stroke="currentColor"/>
+          <text x="346" y="220" text-anchor="middle">siteLayout.js</text>
+          <text x="346" y="238" text-anchor="middle" opacity="0.65">visiblePages()</text>
+
+          <rect x="474" y="196" width="160" height="56" rx="8" fill="none" stroke="currentColor"/>
+          <text x="554" y="220" text-anchor="middle">SitePage.jsx</text>
+          <text x="554" y="238" text-anchor="middle" opacity="0.65">groupByFrame()</text>
+
+          <rect x="686" y="182" width="154" height="40" rx="6" fill="none" stroke="currentColor"/>
+          <text x="763" y="199" text-anchor="middle">SECTION_FRAMES</text>
+          <text x="763" y="215" text-anchor="middle" opacity="0.65">stack · resume</text>
+          <rect x="686" y="232" width="154" height="40" rx="6" fill="none" stroke="currentColor"/>
+          <text x="763" y="249" text-anchor="middle">SECTION_COMPONENTS</text>
+          <text x="763" y="265" text-anchor="middle" opacity="0.65">React.lazy per type</text>
+
+          <rect x="266" y="292" width="368" height="56" rx="8" fill="none" stroke="currentColor" stroke-dasharray="4 3"/>
+          <text x="450" y="315" text-anchor="middle">sectionTypes.js · SECTION_TYPES</text>
+          <text x="450" y="333" text-anchor="middle" opacity="0.65">frame · options + defaults · exitDelay · deepLink</text>
+        </g>
+        <g font-family="Rajdhani, sans-serif" font-size="13" font-weight="600" fill="currentColor">
+          <line x1="220" y1="224" x2="262" y2="224" stroke="currentColor" marker-end="url(#ah6)"/>
+          <text x="242" y="214" text-anchor="middle">@/data</text>
+          <line x1="426" y1="224" x2="470" y2="224" stroke="currentColor" marker-end="url(#ah6)"/>
+          <text x="448" y="214" text-anchor="middle">a page</text>
+          <line x1="634" y1="214" x2="682" y2="203" stroke="currentColor" marker-end="url(#ah6)"/>
+          <line x1="634" y1="236" x2="682" y2="251" stroke="currentColor" marker-end="url(#ah6)"/>
+          <line x1="554" y1="292" x2="554" y2="256" stroke="currentColor" opacity="0.6" marker-end="url(#ah6)"/>
+          <text x="604" y="280" text-anchor="middle" font-size="12" opacity="0.8">frame, defaults</text>
+        </g>
+        <text x="20" y="374" font-family="Source Sans 3, sans-serif" font-size="13" fill="currentColor" opacity="0.75">reorder, hide, move or add a section by editing one JSON file — from the Site map, the CLI or by hand</text>
+      </svg>
+    </div>
+    <figcaption><b>The nav and every page body are rendered from <code>content/site/layout.json</code>.</b> <code>visiblePages</code> keeps enabled pages in <code>order</code> with their enabled, known sections; <code>SitePage</code> wraps each run of consecutive sections that share a <code>frame</code> in one wrapper (the home column, the resume card column) and gives <code>page</code>-frame sections none, so the DOM of all four pages matched the hard-coded version. Behaviour that used to be keyed to a page name now hangs off the section type: the 150 ms exit delay belongs to <code>projectsBrowser</code> (<code>exitDelay</code>), and <code>?project=&lt;slug&gt;</code> opens the first enabled page holding a <code>deepLink</code> section. <code>?page=&lt;slug&gt;</code> picks a start page (the admin's "View ↗" uses it); the site never writes the URL. <code>SECTION_TYPES</code> follows the same registry pattern as the others: the store and CLI validate against it, and the admin's Site map builds its add-section menu, option forms and "reads" list (which content file each section shows) from it.</figcaption>
+  </figure>
+
   <h2>Registries: one entry, three consumers</h2>
   <figure>
     <div class="fig-scroll">
@@ -226,7 +293,7 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
         </g>
       </svg>
     </div>
-    <figcaption><b>Extending the site is a data change.</b> The same pattern holds for <code>LINK_TYPES</code> (buttons in the modal, URL auto-detect in the admin), <code>PROJECT_FIELDS</code> (the admin form renders from it) and <code>THEME_TOKENS</code> (CSS variable mapping and the theme editor's color pickers). Registries are plain JS with no React, so the Node-side admin server and CLI import the same files as the browser.</figcaption>
+    <figcaption><b>Extending the site is a data change.</b> The same pattern holds for <code>SECTION_TYPES</code> (above), <code>LINK_TYPES</code> (buttons in the modal, URL auto-detect in the admin), <code>PROJECT_FIELDS</code> (the admin form renders from it) and <code>THEME_TOKENS</code> (CSS variable mapping and the theme editor's color pickers). Registries are plain JS with no React, so the Node-side admin server and CLI import the same files as the browser.</figcaption>
   </figure>
 
   <h2>Theming</h2>
@@ -260,7 +327,7 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
           <text x="630" y="102" text-anchor="middle" opacity="0.75">projects · overview</text>
           <text x="630" y="120" text-anchor="middle" opacity="0.75">media files + list</text>
           <text x="630" y="138" text-anchor="middle" opacity="0.75">order · theme · site</text>
-          <text x="630" y="156" text-anchor="middle" opacity="0.75">validateAll</text>
+          <text x="630" y="156" text-anchor="middle" opacity="0.75">layout · validateAll</text>
           <text x="630" y="174" text-anchor="middle" opacity="0.75">release steps</text>
 
           <rect x="755" y="40" width="88" height="40" rx="6" fill="none" stroke="currentColor"/>
@@ -289,7 +356,7 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
         <text x="20" y="248" font-family="Source Sans 3, sans-serif" font-size="13" fill="currentColor" opacity="0.75">api.js and cli.js only translate their input; every rule lives in store.js</text>
       </svg>
     </div>
-    <figcaption><b>The GUI and agents share one implementation.</b> Slug checks, trash-instead-of-delete, <code>order.json</code> upkeep, WebP optimisation, the Unity <code>index.html</code> check and the release gate all live in <code>admin/server/store.js</code>. <code>api.js</code> turns HTTP into calls to it and only runs inside the dev server; <code>cli.js</code> turns <code>npm run content -- &lt;command&gt;</code> into the same calls, prints JSON on stdout and exits 1 (nothing written) or 2 (bad usage). The CLI adds guard rails the GUI gets from its form: <code>--set</code> values are coerced by the field's kind in <code>PROJECT_FIELDS</code>, unknown fields are refused, and a published project that fails validation is not saved. Usage: docs/content.md, "Agent / CLI editing".</figcaption>
+    <figcaption><b>The GUI and agents share one implementation.</b> Slug checks, trash-instead-of-delete, <code>order.json</code> upkeep, WebP optimisation, the Unity <code>index.html</code> check and the release gate all live in <code>admin/server/store.js</code>. <code>api.js</code> turns HTTP into calls to it and only runs inside the dev server; <code>cli.js</code> turns <code>npm run content -- &lt;command&gt;</code> into the same calls, prints JSON on stdout and exits 1 (nothing written) or 2 (bad usage). The CLI adds guard rails the GUI gets from its form: <code>--set</code> values are coerced by the field's kind in <code>PROJECT_FIELDS</code>, unknown fields are refused, and a published project that fails validation is not saved. Site structure follows the same split: <code>PUT /layout</code> and <code>layout replace</code> both call <code>saveLayout</code>, and every other <code>layout page …</code> / <code>layout section …</code> command is a pure edit from <code>siteLayout.js</code> handed to <code>editLayout</code>, which re-validates and writes the whole file. An invalid layout is refused with nothing written (HTTP 422, CLI exit 1), one line per problem naming its JSON path, what is wrong and how to fix it. Usage: docs/content.md, "Agent / CLI editing".</figcaption>
   </figure>
 
   <h2>The release gate</h2>
@@ -339,6 +406,7 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
     <li><span>Media <code>src</code> is relative to the project's <code>media/</code> folder or an absolute <code>https://</code> URL; nothing else resolves.</span></li>
     <li><span>The admin API is dev-server only (<code>apply: 'serve'</code>) and binds to localhost. It writes files and runs git, so never run <code>npm run admin -- --host</code> on an untrusted network.</span></li>
     <li><span>Deletes from the admin or the CLI go to <code>.trash/</code> (ignored by git), never straight to removal.</span></li>
+    <li><span><code>layout.json</code> is only ever written in its normalized shape: pages sorted with <code>order</code> = 0…n−1, keys in canonical order, options equal to the type's default dropped. Unknown keys are errors unless they start with <code>_</code> (notes). The admin's Save, <code>PUT /layout</code> and the CLI store the same bytes for the same layout.</span></li>
     <li><span>Content writes go through <code>admin/server/store.js</code>. A new admin route or CLI command calls a store function rather than touching <code>content/</code> itself.</span></li>
   </ul>
 
@@ -346,6 +414,7 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
   <section class="prose">
     <p><b>Short legacy variable names</b> such as <code>--card-bg</code>, <code>--text</code> and <code>--bg</code> are defined in <code>variables.css</code> as aliases of theme tokens. About twenty components used them after an earlier CSS consolidation removed their definitions, which left cards and the mobile navbar transparent. They are aliases rather than renamed call sites to keep the diff reviewable; migrating them is optional cleanup.</p>
     <p><b>The <code>staging</code> branch is force-pushed.</b> It is a mirror of whatever is under review, not a line of history.</p>
+    <p><b><code>layout.json</code> is not one of the store's <code>SITE_FILES</code>.</b> The generic Site content forms render every file in that list from its JSON shape; the layout has its own reader, writer and validator and its own admin page (Site map), so it is left out on purpose. <code>navigation.json</code> still has a <code>pages</code> array that nothing reads any more; it was kept rather than change that file's format.</p>
     <p><b>The CLI changes directory before it imports anything.</b> <code>plugins/content.js</code> and <code>store.js</code> resolve <code>content/</code> from the working directory when they load, so <code>cli.js</code> runs <code>process.chdir()</code> (to the repo, or <code>PORTFOLIO_ROOT</code>) and then uses dynamic <code>import()</code>. File arguments are resolved against the directory it was run from. The tests rely on this to run against a temp copy of <code>content/</code>.</p>
   </section>
 
@@ -355,14 +424,18 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
       <thead><tr><th>Path</th><th>Owns</th><th>Lines</th></tr></thead>
       <tbody>
         <tr><td><code>plugins/content.js</code></td><td>virtual:projects, media middleware, build copy, change event</td><td class="mono">122</td></tr>
-        <tr><td><code>src/lib/content/</code></td><td>mediaTypes, linkTypes, projectSchema (fields, validation, view model)</td><td class="mono">194</td></tr>
+        <tr><td><code>src/lib/content/</code> (media, links, schema)</td><td>mediaTypes, linkTypes, projectSchema (fields, validation, view model)</td><td class="mono">194</td></tr>
+        <tr><td><code>src/lib/content/sectionTypes.js</code></td><td>SECTION_TYPES: 11 section types, option kinds and defaults, CLI value parsing</td><td class="mono">205</td></tr>
+        <tr><td><code>src/lib/content/siteLayout.js</code></td><td>layout.json: normalize, validate, visiblePages, pure page/section edits</td><td class="mono">235</td></tr>
+        <tr><td><code>src/pages/SitePage.jsx</code>, <code>sections.jsx</code></td><td>render one page; section type → lazy component, frame → wrapper</td><td class="mono">68</td></tr>
         <tr><td><code>src/lib/theme/applyTheme.js</code></td><td>token → CSS variable mapping, font loading</td><td class="mono">68</td></tr>
         <tr><td><code>src/components/features/projects/media/</code></td><td>View and Thumb per media type</td><td class="mono">112</td></tr>
-        <tr><td><code>admin/server/store.js</code></td><td>every content operation: projects, media, order, theme, site, validation, release steps</td><td class="mono">409</td></tr>
-        <tr><td><code>admin/server/</code> (rest)</td><td>HTTP routes, Vite plugin, jobs, image optimisation (sharp), fingerprint + preview</td><td class="mono">305</td></tr>
-        <tr><td><code>admin/cli.js</code></td><td><code>npm run content</code>: 13 commands, argument parsing, value coercion, help text</td><td class="mono">534</td></tr>
-        <tr><td><code>admin/src/</code></td><td>editor UI: projects, media, links, theme, site JSON, release</td><td class="mono">1,148</td></tr>
-        <tr><td><code>tests/</code></td><td>node:test: committed content loads, media files exist, order.json matches; WebP conversion; every CLI command group against a temp copy of content/</td><td class="mono">235</td></tr>
+        <tr><td><code>admin/server/store.js</code></td><td>every content operation: projects, media, order, theme, site, layout, validation, release steps</td><td class="mono">437</td></tr>
+        <tr><td><code>admin/server/</code> (rest)</td><td>HTTP routes, Vite plugin, jobs, image optimisation (sharp), fingerprint + preview</td><td class="mono">309</td></tr>
+        <tr><td><code>admin/cli.js</code></td><td><code>npm run content</code>: 14 commands, argument parsing, value coercion, help text</td><td class="mono">681</td></tr>
+        <tr><td><code>admin/src/</code></td><td>editor UI: projects, media, links, theme, site forms, Site map, release; shared dialogs and save bar in <code>ui.jsx</code></td><td class="mono">2,799</td></tr>
+        <tr><td><code>admin/src/SiteMap.jsx</code></td><td>(included above) pages → sections tree, drag or Alt+arrow reorder, add from the registry, option forms</td><td class="mono">396</td></tr>
+        <tr><td><code>tests/</code></td><td>node:test: committed content loads, media files exist, order.json matches; WebP conversion; every CLI command group against a temp copy of content/; layout validation, normalization and edits</td><td class="mono">451</td></tr>
         <tr><td><code>.github/workflows/deploy.yml</code></td><td>lint + test + build; live deploy on master; staging deploy when configured</td><td class="mono">—</td></tr>
       </tbody>
     </table>
@@ -370,16 +443,17 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--mute
 
   <h2>Unresolved</h2>
   <ul class="open prose">
-    <li><b>The HTTP layer and the git side of releasing have no automated tests.</b> The content operations do: 11 CLI tests drive <code>store.js</code> against a temp copy of <code>content/</code> (create, update guard rails, overview, WebP upload, Unity folder check, media removal, rename, order, theme, site, validate). The thin routing in <code>api.js</code> was checked by hand after the refactor, with every write route called through a running dev server. Stage and Go live (commit and push) have never run from the CLI; they are the same functions the GUI uses. Testing them would mean mocking git and child processes, which was judged not worth it for a one-person site.</li>
+    <li><b>The HTTP layer, the admin UI and the git side of releasing have no automated tests.</b> The content operations do: 12 CLI tests drive <code>store.js</code> against a temp copy of <code>content/</code> (create, update guard rails, overview, WebP upload, Unity folder check, media removal, rename, order, theme, site, layout, validate), and 11 more test <code>siteLayout.js</code> directly. The Site map page, and the claim that all four pages kept their DOM when they moved onto <code>layout.json</code>, were checked by hand in a browser. The thin routing in <code>api.js</code> was checked by hand after the refactor, with every write route called through a running dev server. Stage and Go live (commit and push) have never run from the CLI; they are the same functions the GUI uses. Testing them would mean mocking git and child processes, which was judged not worth it for a one-person site.</li>
+    <li class="minor"><b>Nested sections are allowed by the format but rendered nowhere.</b> A section node may carry <code>children</code>, and <code>validateLayout</code> already recurses into them for types whose registry entry sets <code>children: true</code>. No type does, and <code>SitePage</code> does not render children, so the first container type (rows, columns) has to add that rendering and its Site map UI; the stored format needs no migration.</li>
     <li class="minor"><b>Media-list editing exists twice.</b> The GUI's <code>MediaPanel.jsx</code> still builds the media list in the browser and uploads files one by one through the API, while the CLI uses <code>store.addMedia</code> / <code>removeMedia</code> for the same work. They follow the same rules (unique slugified names, Unity <code>index.html</code> check, clear the cover and trash the file once it's unused) but are separate code. Moving the GUI onto the store functions would need new routes.</li>
     <li class="minor"><b>Staging relies on one deploy key.</b> <code>ttvpro007/portfolio-staging</code> is deployed by CI with a write deploy key scoped to that repo, stored as <code>STAGING_DEPLOY_KEY</code>. Deploy keys do not expire, so there is no rotation schedule; rotate only if it leaks, using the steps in docs/release.md.</li>
     <li class="minor"><b>Large binaries live in git.</b> The Unity build is about 96 MB of the 113 MB under <code>content/projects</code>. LFS was considered and declined: every CI checkout would download the build, using up the free 1 GB/month LFS bandwidth in about ten deploys, and converting means rewriting history. If the build grows, host it outside the repo (e.g. a GitHub Release asset) instead.</li>
-    <li class="minor"><b>Content gaps.</b> Broken videos and wrong links found during the migration were removed rather than replaced. Five projects now have no video, Lumina Adfecto and Planet Runner have no external link, and Unity Physics Simulator and Programming Problems Solution have no images until real screenshots are added.</li>
+    <li class="minor"><b>Content gaps.</b> Broken videos and wrong links found during the migration were removed rather than replaced. Six of the seven projects have no video, Lumina Adfecto and Planet Runner have no external link, and Unity Physics Simulator and Programming Problems Solution have no images until real screenshots are added.</li>
     <li class="minor"><b>Fonts load from Google at runtime</b>, so the first paint can show fallback fonts.</li>
   </ul>
 
   <footer>
-    <span>Measured at <span class="mono">20c0099</span> (branch <span class="mono">content-admin-restructure</span>, PR #1), 2026-10-11. Re-pin to the merge commit on <span class="mono">master</span> after the PR merges.</span>
-    <span>Source: <span class="mono">docs/architecture.html</span>. Usage docs: <span class="mono">docs/content.md</span>, <span class="mono">docs/release.md</span>.</span>
+    <span>Measured at <span class="mono">2ac07b9</span> (branch <span class="mono">claude/beautiful-bose-7f6dc8</span>: content-driven site layout, built on <span class="mono">content-admin-restructure</span> plus the admin UX refine), 2026-10-11. Re-pin to the merge commit on <span class="mono">master</span> once it lands.</span>
+    <span>Source: <span class="mono">docs/architecture.html</span>. Usage docs (layout.json included): <span class="mono">docs/content.md</span>, <span class="mono">docs/release.md</span>.</span>
   </footer>
 </div>

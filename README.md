@@ -27,8 +27,9 @@ Node 20+. `npm run dev` runs the site without opening the admin (the admin is st
 | `content/projects/<slug>/media/` | That project's images, videos, Unity builds |
 | `content/projects/order.json` | Display order (drag to reorder in the admin) |
 | `content/theme.json` | Theme presets and which one is live |
+| `content/site/layout.json` | Site structure: pages in the nav and each page's ordered sections (admin → Site map) |
 | `content/site/*.json` | Profile, navigation, UI text, contact form |
-| `src/lib/content/` | Registries: media types, link types, project schema |
+| `src/lib/content/` | Registries: media types, link types, section types, project schema |
 | `plugins/content.js` | Vite plugin turning `content/` into site data and serving media |
 | `admin/` | The local admin (UI + dev-server API; never shipped) |
 

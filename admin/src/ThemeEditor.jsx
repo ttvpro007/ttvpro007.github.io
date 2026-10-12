@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { THEME_TOKENS, FONT_CHOICES } from '@/lib/theme/applyTheme';
 import { slugify } from '@/lib/content/projectSchema';
 import { api } from './api';
+import { SaveBar, useDialog, useDirty, useSaveShortcut } from './ui';
 
 const VIEWPORTS = [
   { id: 'phone', label: 'Phone', width: 390, height: 844 },
@@ -25,13 +26,22 @@ const contrast = (a, b) => {
 };
 
 export default function ThemeEditor({ theme, act }) {
+  const dialog = useDialog();
   const [draft, setDraft] = useState(theme);
+  const [saving, setSaving] = useState(false);
   const [viewport, setViewport] = useState(VIEWPORTS[2]);
   const frame = useRef(null);
   const box = useRef(null);
   const [scale, setScale] = useState(1);
   const dirty = JSON.stringify(draft) !== JSON.stringify(theme);
   const preset = draft.presets[draft.active];
+  useDirty('theme', dirty);
+
+  const save = async () => {
+    setSaving(true);
+    try { await act(() => api.saveTheme(draft), 'Theme saved'); } finally { setSaving(false); }
+  };
+  useSaveShortcut(save, dirty && !saving);
 
   // Live preview: push the unsaved theme into the site iframe
   const push = () => frame.current?.contentWindow?.postMessage({ type: 'portfolio:theme', theme: draft }, window.location.origin);
@@ -48,16 +58,23 @@ export default function ThemeEditor({ theme, act }) {
   const setPreset = (patch) => setDraft((d) => ({ ...d, presets: { ...d.presets, [d.active]: { ...d.presets[d.active], ...patch } } }));
   const setColor = (key, value) => setPreset({ colors: { ...preset.colors, [key]: value } });
 
-  const duplicate = () => {
-    const label = prompt('Name for the new preset', `${preset.label} copy`);
+  const duplicate = async () => {
+    const label = await dialog.prompt({ title: 'Duplicate preset', label: 'Name for the new preset', initial: `${preset.label} copy`, confirmLabel: 'Duplicate' });
     if (!label) return;
     let id = slugify(label);
     while (draft.presets[id]) id += '-2';
     setDraft((d) => ({ active: id, presets: { ...d.presets, [id]: { ...structuredClone(preset), label } } }));
   };
 
-  const remove = () => {
-    if (Object.keys(draft.presets).length < 2 || !confirm(`Delete preset "${preset.label}"?`)) return;
+  const rename = async () => {
+    const label = await dialog.prompt({ title: 'Rename preset', label: 'Preset name', initial: preset.label, confirmLabel: 'Rename' });
+    if (label) setPreset({ label });
+  };
+
+  const remove = async () => {
+    if (Object.keys(draft.presets).length < 2) return;
+    const ok = await dialog.confirm({ title: `Delete preset “${preset.label}”?`, body: 'Takes effect when you save the theme.', confirmLabel: 'Delete', danger: true });
+    if (!ok) return;
     setDraft((d) => {
       const presets = { ...d.presets };
       delete presets[d.active];
@@ -76,28 +93,25 @@ export default function ThemeEditor({ theme, act }) {
       <div className="theme-controls">
         <header className="editor-header">
           <h1>Theme</h1>
-          <div className="row">
-            <button className="btn" disabled={!dirty} onClick={() => setDraft(theme)}>Discard</button>
-            <button className="btn btn-primary" disabled={!dirty} onClick={() => act(() => api.saveTheme(draft), 'Theme saved')}>Save theme</button>
-          </div>
+          <SaveBar dirty={dirty} saving={saving} onSave={save} onDiscard={() => setDraft(theme)} saveLabel="Save theme" />
         </header>
 
         <h3>Presets</h3>
         <div className="preset-grid">
           {Object.entries(draft.presets).map(([id, p]) => (
-            <button key={id} className={`preset ${draft.active === id ? 'active' : ''}`} onClick={() => setDraft((d) => ({ ...d, active: id }))}>
+            <button key={id} aria-pressed={draft.active === id} className={`preset ${draft.active === id ? 'active' : ''}`} onClick={() => setDraft((d) => ({ ...d, active: id }))}>
               <div className="swatches" style={{ background: p.colors.background }}>
                 {['primary', 'secondary', 'accent', 'surface', 'text'].map((k) => <span key={k} style={{ background: p.colors[k] }} />)}
               </div>
               <div className="preset-name" style={{ fontFamily: `'${p.fonts.heading}'` }}>{p.label}</div>
-              {theme.active === id && <span className="tag tag-ok">live</span>}
+              {theme.active === id && <span className="badge badge-ok">Live</span>}
             </button>
           ))}
         </div>
         <div className="row">
-          <button className="btn btn-small" onClick={duplicate}>Duplicate</button>
-          <button className="btn btn-small" onClick={() => { const l = prompt('Preset name', preset.label); if (l) setPreset({ label: l }); }}>Rename</button>
-          <button className="btn btn-small btn-danger" onClick={remove} disabled={Object.keys(draft.presets).length < 2}>Delete</button>
+          <button className="btn btn-small" onClick={duplicate}>Duplicate…</button>
+          <button className="btn btn-small" onClick={rename}>Rename…</button>
+          <button className="btn btn-small btn-danger" onClick={remove} disabled={Object.keys(draft.presets).length < 2}>Delete…</button>
         </div>
 
         <h3>Colors <span className="muted small">— editing “{preset.label}”</span></h3>
@@ -107,7 +121,7 @@ export default function ThemeEditor({ theme, act }) {
               <input type="color" value={preset.colors[t.key] || '#000000'} onChange={(e) => setColor(t.key, e.target.value.toUpperCase())} />
               <span>
                 <b>{t.label}</b>
-                <input className="input input-small mono" value={preset.colors[t.key] || ''} onChange={(e) => /^#[0-9a-f]{6}$/i.test(e.target.value) && setColor(t.key, e.target.value.toUpperCase())} />
+                <HexInput value={preset.colors[t.key] || ''} onChange={(v) => setColor(t.key, v)} />
               </span>
             </label>
           ))}
@@ -139,9 +153,9 @@ export default function ThemeEditor({ theme, act }) {
       </div>
 
       <div className="theme-preview">
-        <div className="row">
+        <div className="segmented" role="group" aria-label="Preview size">
           {VIEWPORTS.map((v) => (
-            <button key={v.id} className={`btn btn-small ${viewport.id === v.id ? 'btn-primary' : ''}`} onClick={() => setViewport(v)}>
+            <button key={v.id} aria-pressed={viewport.id === v.id} className={viewport.id === v.id ? 'active' : ''} onClick={() => setViewport(v)}>
               {v.label} <span className="muted">{v.width}</span>
             </button>
           ))}
@@ -157,5 +171,27 @@ export default function ThemeEditor({ theme, act }) {
         </div>
       </div>
     </div>
+  );
+}
+
+/** Hex text field that lets you type freely and applies the color once it is a full #RRGGBB. */
+function HexInput({ value, onChange }) {
+  const [text, setText] = useState(value);
+  const [seen, setSeen] = useState(value);
+  if (seen !== value) { setSeen(value); setText(value); }
+  const valid = /^#[0-9a-f]{6}$/i.test(text);
+  return (
+    <input
+      className={`input input-small mono ${valid ? '' : 'input-invalid'}`}
+      value={text}
+      aria-invalid={!valid}
+      spellCheck={false}
+      onChange={(e) => {
+        const v = e.target.value.trim();
+        setText(v);
+        if (/^#[0-9a-f]{6}$/i.test(v)) onChange(v.toUpperCase());
+      }}
+      onBlur={() => setText(value)}
+    />
   );
 }

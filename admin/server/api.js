@@ -12,6 +12,7 @@
  *   PUT    /order                         [slug, …]
  *   PUT    /theme                         theme.json body
  *   PUT    /site/:name                    content/site/<name>.json body
+ *   PUT    /layout                        content/site/layout.json body (validated; 422 with details if not)
  *   POST   /test                          validate + production build + serve dist/ at localhost:4173 → { job }
  *   POST   /test/stop                     stop the local test server
  *   POST   /stage                         { message } → commit content/, push to the `staging` branch → { job }
@@ -92,6 +93,9 @@ export async function handleApi(req, res) {
 
     case 'PUT /site/:id':
       return send(res, store.saveSite(id, await readJsonBody(req)));
+
+    case 'PUT /layout':
+      return send(res, store.saveLayout(await readJsonBody(req)));
 
     case 'POST /test':
       return send(res, { job: startJob('test', (log) => store.releaseTest(log)) });

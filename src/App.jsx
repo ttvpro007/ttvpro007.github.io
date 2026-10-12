@@ -1,11 +1,22 @@
 import React from "react";
 import { Navbar } from "@/components/layout";
-// Pages load on first visit, keeping the initial bundle small
-const Home = React.lazy(() => import("./pages/features/home"));
-const Projects = React.lazy(() => import("./pages/features/projects"));
-const Resume = React.lazy(() => import("./pages/features/resume"));
-const Contact = React.lazy(() => import("./pages/features/contact"));
+import { layout } from "@/data";
+import { SECTION_TYPES } from "@/lib/content/sectionTypes";
+import { visiblePages } from "@/lib/content/siteLayout";
+import SitePage from "./pages/SitePage";
 import { AnimatePresence, motion } from "framer-motion";
+
+// Pages and their sections come from content/site/layout.json (section components load on first use)
+const PAGES = visiblePages(layout);
+const pageById = (id) => PAGES.find((p) => p.id === id);
+const exitDelayOf = (page) => Math.max(0, ...(page?.sections || []).map((s) => SECTION_TYPES[s.type].exitDelay || 0));
+
+/** ?project=<slug> deep-links to the page that opens project modals; ?page=<slug> picks a page; else the first one. */
+const initialPage = () => {
+  const params = new URLSearchParams(window.location.search);
+  const linked = params.has("project") && PAGES.find((p) => p.sections.some((s) => SECTION_TYPES[s.type].deepLink));
+  return (linked || PAGES.find((p) => p.slug === params.get("page")) || PAGES[0])?.id;
+};
 
 const KONAMI_CODE = [
   "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
@@ -95,10 +106,7 @@ function SecretBadge({ show }) {
 }
 
 function App() {
-  // ?project=<slug> deep-links straight into a project's modal
-  const [page, setPage] = React.useState(() =>
-    new URLSearchParams(window.location.search).has("project") ? "Projects" : "Home"
-  );
+  const [page, setPage] = React.useState(initialPage);
   const konamiRef = React.useRef([]);
   const [showConfetti, setShowConfetti] = React.useState(false);
   const [isTransitioning, setIsTransitioning] = React.useState(false);
@@ -117,39 +125,26 @@ function App() {
   }, []);
 
   const handlePageChange = (newPage) => {
-    // If we're leaving the Projects page, add a delay for search component exit
-    if (page === "Projects" && newPage !== "Projects") {
+    // Some sections (the projects search bar) animate out before the page switches
+    const delay = newPage !== page ? exitDelayOf(pageById(page)) : 0;
+    if (delay) {
       setIsTransitioning(true);
-      // Delay matches the search component's exit animation duration
       setTimeout(() => {
         setPage(newPage);
         setIsTransitioning(false);
-      }, 150); // 50ms animation + 100ms buffer
+      }, delay);
     } else {
       setPage(newPage);
     }
   };
 
-  const renderPage = () => {
-    switch (page) {
-      case "Home":
-        return <Home />;
-      case "Projects":
-        return <Projects isTransitioning={isTransitioning} />;
-      case "Resume":
-        return <Resume />;
-      case "Contact":
-        return <Contact />;
-      default:
-        return <Home />;
-    }
-  };
+  const current = pageById(page);
 
   return (
     <div>
       <SecretBadge show={showConfetti} />
       {showConfetti && <Confetti />}
-      <Navbar setPage={handlePageChange} currentPage={page} />
+      <Navbar pages={PAGES} setPage={handlePageChange} currentPage={page} />
       <AnimatePresence mode="wait" initial={false}>
         <motion.main
           key={page}
@@ -159,7 +154,9 @@ function App() {
           exit={{ opacity: 0, y: -30 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <React.Suspense fallback={null}>{renderPage()}</React.Suspense>
+          <React.Suspense fallback={null}>
+            {current && <SitePage page={current} isTransitioning={isTransitioning} />}
+          </React.Suspense>
         </motion.main>
       </AnimatePresence>
     </div>

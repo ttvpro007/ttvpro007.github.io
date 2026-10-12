@@ -5,7 +5,8 @@ import { projects, uiContent } from "@/data";
 import { ProgressBar, Section } from "@/components/base";
 import "./Projects.css";
 
-const Projects = ({ isTransitioning = false }) => {
+/** Projects page body (section type "projectsBrowser"); the page shell comes from SitePage. */
+const Projects = ({ isTransitioning = false, showFeatured = true, showStats = true, showSearch = true }) => {
   const [filteredProjects, setFilteredProjects] = useState(projects.items);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -93,45 +94,45 @@ const Projects = ({ isTransitioning = false }) => {
   };
 
   return (
-    <main>
-      <div className="body-panel">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="projects-main-container"
-        >
+    <>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="projects-main-container"
+      >
 
-          {/* Featured Project Section */}
-          {featuredProject && (
-            <Section
-              padding="0"
-              marginBottom="2rem"
-              className="projects-featured-section"
-              style={{ border: 'none', background: 'none' }}
+        {/* Featured Project Section */}
+        {showFeatured && featuredProject && (
+          <Section
+            padding="0"
+            marginBottom="2rem"
+            className="projects-featured-section"
+            style={{ border: 'none', background: 'none' }}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 30, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ 
+                delay: 0.3, 
+                duration: 0.6, 
+                ease: [0.25, 0.46, 0.45, 0.94] 
+              }}
+              className="projects-featured-container"
             >
-              <motion.div
-                initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ 
-                  delay: 0.3, 
-                  duration: 0.6, 
-                  ease: [0.25, 0.46, 0.45, 0.94] 
-                }}
-                className="projects-featured-container"
-              >
-                <FeaturedProject project={featuredProject} enableHover={false} />
-              </motion.div>
-            </Section>
-          )}
+              <FeaturedProject project={featuredProject} enableHover={false} />
+            </motion.div>
+          </Section>
+        )}
 
-          {/* Compact Stats Section */}
-                      <Section
-              padding="0"
-              marginBottom="0"
-              className="projects-stats-section"
-              style={{ border: 'none', background: 'none', boxShadow: 'none' }}
-            >
+        {/* Compact Stats Section */}
+        {showStats && (
+          <Section
+            padding="0"
+            marginBottom="0"
+            className="projects-stats-section"
+            style={{ border: 'none', background: 'none', boxShadow: 'none' }}
+          >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -162,8 +163,10 @@ const Projects = ({ isTransitioning = false }) => {
               </div>
             </motion.div>
           </Section>
+        )}
 
-          {/* Floating Search and Filter */}
+        {/* Floating Search and Filter */}
+        {showSearch && (
           <SearchAndFilter
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
@@ -175,98 +178,98 @@ const Projects = ({ isTransitioning = false }) => {
             animationStrategy="slideFade"
             isTransitioning={isTransitioning}
           />
+        )}
 
-          {/* Masonry-Style Projects Grid */}
-          <Section
-            padding="0"
-            marginBottom="0"
-            className="projects-grid-section"
-            style={{ border: 'none', background: 'none', boxShadow: 'none' }}
+        {/* Masonry-Style Projects Grid */}
+        <Section
+          padding="0"
+          marginBottom="0"
+          className="projects-grid-section"
+          style={{ border: 'none', background: 'none', boxShadow: 'none' }}
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ 
+              delay: 0.5, 
+              duration: 0.6, 
+              ease: [0.25, 0.46, 0.45, 0.94] 
+            }}
+            className="projects-grid-container"
           >
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ 
-                delay: 0.5, 
-                duration: 0.6, 
-                ease: [0.25, 0.46, 0.45, 0.94] 
-              }}
-              className="projects-grid-container"
-            >
-              <div className="projects-masonry-grid">
-                <AnimatePresence>
-                  {nonFeaturedProjects.map((project, index) => {
-                    const size = getProjectSize(index);
-                    
-                    return (
-                      <motion.div
-                        key={project.slug}
-                        initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -30, scale: 0.95 }}
-                        transition={{ 
-                          delay: 0.6 + (0.05 * index),
-                          duration: 0.5,
-                          ease: [0.25, 0.46, 0.45, 0.94]
-                        }}
-                        className="projects-card-wrapper"
-                        style={{
-                          transform: `rotate(${Math.sin(index) * 2}deg)`,
-                          gridColumn: size === 'large' ? 'span 2' : 'span 1'
-                        }}
-                      >
-                        <div className={`projects-card-container ${size}`}>
-                          <ProjectCard 
-                            project={project} 
-                            size={size}
-                            onClick={() => handleProjectClick(project)}
-                          />
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </AnimatePresence>
-              </div>
+            <div className="projects-masonry-grid">
+              <AnimatePresence>
+                {nonFeaturedProjects.map((project, index) => {
+                  const size = getProjectSize(index);
+                
+                  return (
+                    <motion.div
+                      key={project.slug}
+                      initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -30, scale: 0.95 }}
+                      transition={{ 
+                        delay: 0.6 + (0.05 * index),
+                        duration: 0.5,
+                        ease: [0.25, 0.46, 0.45, 0.94]
+                      }}
+                      className="projects-card-wrapper"
+                      style={{
+                        transform: `rotate(${Math.sin(index) * 2}deg)`,
+                        gridColumn: size === 'large' ? 'span 2' : 'span 1'
+                      }}
+                    >
+                      <div className={`projects-card-container ${size}`}>
+                        <ProjectCard 
+                          project={project} 
+                          size={size}
+                          onClick={() => handleProjectClick(project)}
+                        />
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
+            </div>
 
-              {/* No Results - Centered with Style */}
-              {filteredProjects.length === 0 && (
+            {/* No Results - Centered with Style */}
+            {filteredProjects.length === 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ 
+                  delay: 0.7, 
+                  duration: 0.5, 
+                  ease: [0.25, 0.46, 0.45, 0.94] 
+                }}
+                className="projects-no-results"
+              >
                 <motion.div
-                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ 
-                    delay: 0.7, 
-                    duration: 0.5, 
-                    ease: [0.25, 0.46, 0.45, 0.94] 
-                  }}
-                  className="projects-no-results"
+                  animate={{ rotate: [0, 10, -10, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="projects-no-results-icon"
                 >
-                  <motion.div
-                    animate={{ rotate: [0, 10, -10, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="projects-no-results-icon"
-                  >
-                    {uiContent.ui.noResults.icon}
-                  </motion.div>
-                  <h3 className="projects-no-results-title">
-                    {uiContent.ui.noResults.title}
-                  </h3>
-                  <p className="projects-no-results-description">
-                    {uiContent.ui.noResults.description}
-                  </p>
+                  {uiContent.ui.noResults.icon}
                 </motion.div>
-              )}
-            </motion.div>
-          </Section>
-        </motion.div>
+                <h3 className="projects-no-results-title">
+                  {uiContent.ui.noResults.title}
+                </h3>
+                <p className="projects-no-results-description">
+                  {uiContent.ui.noResults.description}
+                </p>
+              </motion.div>
+            )}
+          </motion.div>
+        </Section>
+      </motion.div>
 
-        {/* Full-Screen Modal */}
-        <ProjectModal
-          project={selectedProject}
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-        />
-      </div>
-    </main>
+      {/* Full-Screen Modal */}
+      <ProjectModal
+        project={selectedProject}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
+    </>
   );
 };
 

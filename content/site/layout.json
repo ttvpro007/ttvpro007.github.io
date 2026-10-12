@@ -1,0 +1,95 @@
+{
+  "pages": [
+    {
+      "id": "home",
+      "label": "Home",
+      "slug": "home",
+      "enabled": true,
+      "order": 0,
+      "sections": [
+        {
+          "type": "hero",
+          "id": "hero",
+          "enabled": true
+        },
+        {
+          "type": "timeline",
+          "id": "timeline",
+          "enabled": true
+        },
+        {
+          "type": "flipCards",
+          "id": "flipCards",
+          "enabled": true
+        },
+        {
+          "type": "funFacts",
+          "id": "funFacts",
+          "enabled": true
+        },
+        {
+          "type": "showAndTell",
+          "id": "showAndTell",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "projects",
+      "label": "Projects",
+      "slug": "projects",
+      "enabled": true,
+      "order": 1,
+      "sections": [
+        {
+          "type": "projectsBrowser",
+          "id": "projectsBrowser",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "resume",
+      "label": "Resume",
+      "slug": "resume",
+      "enabled": true,
+      "order": 2,
+      "sections": [
+        {
+          "type": "resumeProfile",
+          "id": "resumeProfile",
+          "enabled": true
+        },
+        {
+          "type": "resumeSkills",
+          "id": "resumeSkills",
+          "enabled": true
+        },
+        {
+          "type": "resumeEducation",
+          "id": "resumeEducation",
+          "enabled": true
+        },
+        {
+          "type": "resumeProjects",
+          "id": "resumeProjects",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "label": "Contact",
+      "slug": "contact",
+      "enabled": true,
+      "order": 3,
+      "sections": [
+        {
+          "type": "contactQuest",
+          "id": "contactQuest",
+          "enabled": true
+        }
+      ]
+    }
+  ]
+}

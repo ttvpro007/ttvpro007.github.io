@@ -21,7 +21,7 @@ export default function adminPlugin() {
         handleApi(req, res, server).catch((err) => {
           res.statusCode = err.status || 500;
           res.setHeader('Content-Type', 'application/json');
-          res.end(JSON.stringify({ error: err.message }));
+          res.end(JSON.stringify({ error: err.message, ...(err.details ? { details: err.details } : {}) }));
         });
       });
       // /admin → /admin/ so relative asset URLs resolve
