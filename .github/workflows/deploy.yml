@@ -17,6 +17,7 @@ concurrency:
 
 permissions:
   contents: write
+  packages: read   # install the @ttvpro007/loom-* packages from GitHub Packages
 
 jobs:
   build-and-deploy:
@@ -30,9 +31,14 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
+          registry-url: https://npm.pkg.github.com
+          scope: '@ttvpro007'
 
       - name: Install dependencies
         run: npm ci
+        env:
+          # Each Loom package grants this repo Actions read access (package settings → Manage Actions access)
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Lint
         run: npm run lint
