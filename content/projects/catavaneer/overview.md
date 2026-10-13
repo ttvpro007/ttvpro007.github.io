@@ -1,6 +1,6 @@
-A multiplayer hack n' slash game where players work as a team of cats tasked with escorting a moving caravan and fighting bandits.
+A multiplayer hack n' slash game where players work as a team of cats tasked with escorting a moving caravan and fighting bandits. Across the land, from desert to snowfields!!!
 
-Catavaneer combines cooperative gameplay with action combat in a unique setting where players control feline characters protecting valuable cargo from bandit attacks.
+Catavaneer blends cooperative gameplay with action combat in a unique setting where players control feline characters who protect valuable cargo from bandit attacks.
 
 ## Core Gameplay
 
