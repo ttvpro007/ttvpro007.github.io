@@ -87,6 +87,16 @@
       "back": {
         "content": "3D printing, custom keyboards, woodworking – when I'm not coding, I'm building something physical. The tactile satisfaction of creating never gets old."
       }
+    },
+    {
+      "front": {
+        "title": "Test Mode",
+        "icon": "🛠️",
+        "subtitle": "Sub Test Mode"
+      },
+      "back": {
+        "content": "Test content, nothing really special here..."
+      }
     }
   ],
   "education": [
@@ -256,9 +266,9 @@
   "hq": {
     "title": "Headquarters",
     "location": "Digital Realm",
-    "coordinates": "43.5901° N, -79.7736° W",
+    "coordinates": "43°35'36.2\"N 79°45'46.5\"W",
     "timezone": "UTC-4",
-    "status": "Online",
+    "status": "Offline",
     "description": "My digital headquarters where I craft games and code adventures. Currently stationed in the Mississauga area.",
     "icon": "🏰"
   }
