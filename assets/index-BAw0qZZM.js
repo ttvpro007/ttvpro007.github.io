@@ -1,0 +1,1 @@
+import{j as e}from"./index-CQ39tPF8.js";import"./motion-aZtqvxQl.js";import"./react-CLyQEj53.js";function i({children:o}){return e.jsxDEV("section",{className:"home-main-section",children:o},void 0,!1,{fileName:"C:/Users/tuxed/Documents/GitHub/Personal/Portfolio/node_modules/@loom/kit-portfolio/src/pages/home/Home.jsx",lineNumber:10,columnNumber:5},this)}export{i as HomeFrame};
