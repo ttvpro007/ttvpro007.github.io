@@ -42,17 +42,18 @@ The build supports serving under a sub-path via `BASE_PATH`: media URLs, CSS ass
 
 ## 3. Go live
 
-*Go live* (only on `master`) commits `content/` with your message and pushes `master`. CI then lints, tests and builds it, but **does not deploy**: Atelier is the only deployer of the live site. Deploy from the Atelier checkout (`Business/atelier`, a sibling of `Business/atelier-studio`, which holds the registration and the token):
+*Go live* (only on `master`) commits `content/` with your message, pushes `master`, then runs Atelier's release of that pushed commit:
 
 ```bash
 cd ../../Business/atelier
-npm run atelier -- site deploy portfolio --dry-run   # builds nothing; lists what would change on gh-pages
-npm run atelier -- site deploy portfolio             # builds this checkout, publishes dist/ to gh-pages, records the job
+node packages/cli/bin/atelier.js site release portfolio   # what Go live runs (release.liveCommand in loom.config.js)
 ```
 
-It asks for the studio secret-store passphrase.
+The admin asks for the Atelier secret-store passphrase in a password field and hands it to that one command as `ATELIER_PASSPHRASE`; it isn't stored, logged or shown. (Start the admin with `ATELIER_PASSPHRASE` already set and it won't ask.) The release refuses unless this checkout is exactly the pushed `master`, builds it, and publishes `dist/` to this repo's `gh-pages` branch as a commit "Release Portfolio from <sha>", which serves https://ttvpro007.github.io/. Its output shows in the Release page's log. Atelier needs `Business/atelier` beside this repo as `../../Business/atelier` and `Business/atelier-studio` beside it (registration and token).
 
-It publishes `dist/` to this repo's `gh-pages` branch, which serves https://ttvpro007.github.io/. The admin's Release page still says GitHub Actions deploys; that text lives in `@loom/builder` and is out of date until the next Loom release.
+If the release fails (wrong passphrase, GitHub down…), `master` stays pushed and the page shows Atelier's error. Fix it and press Go live again: the push is then a no-op and only the release runs. Or run the command above by hand. CI lints, tests and builds `master` but never deploys.
+
+To see what a release would change without publishing: `node packages/cli/bin/atelier.js site release portfolio --dry-run` in `Business/atelier` (not `npm run atelier -- … --dry-run` from PowerShell, which drops the flag and releases for real; see Stage).
 
 Only `content/` is committed by the admin. Code changes (components, styles) are committed by you as usual; the Release page warns when there are uncommitted code changes, because Test includes them but Go live would not ship them.
 
