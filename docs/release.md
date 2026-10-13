@@ -46,14 +46,14 @@ The build supports serving under a sub-path via `BASE_PATH`: media URLs, CSS ass
 
 ```bash
 cd ../../Business/atelier
-npm run atelier -- site release portfolio   # what Go live runs (release.liveCommand in loom.config.js)
+node packages/cli/bin/atelier.js site release portfolio   # what Go live runs (release.liveCommand in loom.config.js)
 ```
 
 The admin asks for the Atelier secret-store passphrase in a password field and hands it to that one command as `ATELIER_PASSPHRASE`; it isn't stored, logged or shown. (Start the admin with `ATELIER_PASSPHRASE` already set and it won't ask.) The release refuses unless this checkout is exactly the pushed `master`, builds it, and publishes `dist/` to this repo's `gh-pages` branch as a commit "Release Portfolio from <sha>", which serves https://ttvpro007.github.io/. Its output shows in the Release page's log. Atelier needs `Business/atelier` beside this repo as `../../Business/atelier` and `Business/atelier-studio` beside it (registration and token).
 
 If the release fails (wrong passphrase, GitHub down…), `master` stays pushed and the page shows Atelier's error. Fix it and press Go live again: the push is then a no-op and only the release runs. Or run the command above by hand. CI lints, tests and builds `master` but never deploys.
 
-To see what a release would change without publishing, from Git Bash: `npm run atelier -- site release portfolio --dry-run` (PowerShell drops the flag; see Stage).
+To see what a release would change without publishing: `node packages/cli/bin/atelier.js site release portfolio --dry-run` in `Business/atelier` (not `npm run atelier -- … --dry-run` from PowerShell, which drops the flag and releases for real; see Stage).
 
 Only `content/` is committed by the admin. Code changes (components, styles) are committed by you as usual; the Release page warns when there are uncommitted code changes, because Test includes them but Go live would not ship them.
 
