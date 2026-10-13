@@ -1,7 +1,7 @@
 {
   "title": "Planet Runner",
   "description": "An endless runner game set on a rotating planet. Features procedural generation and power-ups.",
-  "longDescription": "An innovative endless runner game that takes place on a dynamically rotating planet. The game features procedurally generated terrain, unique power-ups, and challenging obstacles that adapt to player skill level. Built with HTML5 and JavaScript for cross-platform compatibility.",
+  "longDescription": "An innovative endless runner set on a dynamically rotating planet. The game features procedurally generated terrain, unique power-ups, and challenging obstacles that adapt to the player's skill level - built with HTML5 and JavaScript for cross-platform compatibility.",
   "category": "Game Dev",
   "year": 2023,
   "tech": [
@@ -10,7 +10,8 @@
   ],
   "roles": [
     "Game Developer",
-    "Game Designer"
+    "Game Designer",
+    "Game Programmer"
   ],
   "features": [
     "Dynamic rotating planet environment",
