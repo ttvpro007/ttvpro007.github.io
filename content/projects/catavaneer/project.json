@@ -1,6 +1,6 @@
 {
   "title": "Catavaneer",
-  "description": "A reimagining of the Catavaneer game with modern C# and Unity features.",
+  "description": "A reimagining of the Unreal C++ Catavaneer game with modern C# and Unity features.",
   "longDescription": "Catavaneer is a multiplayer hack n' slash game where players work as a team of cats tasked with escorting a moving caravan and fighting bandits.",
   "category": "Tools",
   "year": 2024,
