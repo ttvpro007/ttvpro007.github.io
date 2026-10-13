@@ -10,9 +10,20 @@ The admin records a fingerprint of what was tested: every file under `content/`,
 
 By hand: `npm run build && npm run preview`.
 
-## 2. Stage (optional, needs one-time setup)
+## 2. Stage (optional)
 
-*Push to staging* commits `content/` and force-pushes the current commit to the `staging` branch. CI builds it and publishes it to a separate staging site, so you can check it on real phones and browsers before going live. The `staging` branch is a throwaway mirror — it is overwritten on every stage.
+Atelier deploys the staging site, a separate site for checking on real phones and browsers before going live. From the Atelier checkout (`Business/atelier`):
+
+```bash
+cd ../../Business/atelier
+npm run atelier -- site deploy portfolio preview   # builds this checkout for staging, publishes dist/ to the staging repo, records the job
+```
+
+It asks for the studio secret-store passphrase. It builds with `BASE_PATH=/portfolio-staging/` and `SITE_ENV=staging`, so `dist/` afterwards holds the staging build: rebuild before a production `--dry-run`. A preview `--dry-run` doesn't build either; it compares whatever is in `dist/`, so it is only meaningful after a staging build (`BASE_PATH=/portfolio-staging/ SITE_ENV=staging npm run build`; from Git Bash prefix `MSYS_NO_PATHCONV=1` so the path isn't rewritten).
+
+**Flags from PowerShell:** `npm run atelier -- … --dry-run` loses the `--` there, npm takes `--dry-run` as its own flag, and the command runs as a real deploy. Pass flags with `node packages/cli/bin/atelier.js site deploy portfolio preview --dry-run` instead (same folder), or run npm from Git Bash.
+
+*Push to staging* in the admin commits `content/` and force-pushes the current commit to the `staging` branch. CI only lints, tests and builds it (with the staging base path, so a base-path break shows up there); it doesn't deploy. Until the admin calls Atelier, run the command above after it. The `staging` branch is a throwaway mirror, overwritten on every stage.
 
 ### Setup (done 2026-10-11)
 
@@ -22,13 +33,10 @@ GitHub Pages allows one site per repository, so staging lives in a second repo:
 |---|---|
 | Staging repo | [ttvpro007/portfolio-staging](https://github.com/ttvpro007/portfolio-staging) (public, Pages from `gh-pages`) |
 | Staging URL | https://ttvpro007.github.io/portfolio-staging/ |
-| Auth | deploy key *CI deploy from ttvpro007.github.io* — write access to the staging repo only |
-| This repo, secret | `STAGING_DEPLOY_KEY` — the deploy key's private half |
-| This repo, variables | `STAGING_REPO` = `ttvpro007/portfolio-staging`, `STAGING_BASE_PATH` = `/portfolio-staging/` |
+| Atelier | `site_portfolio`'s host block has `preview: { repo: 'ttvpro007/portfolio-staging', basePath: '/portfolio-staging/' }`; the deploy uses the site's `github.token` secret in the studio store, the same one as production |
+| This repo, variable | `STAGING_BASE_PATH` = `/portfolio-staging/`: CI's staging build check |
 
 Staging builds set `SITE_ENV=staging`: the page gets `noindex, nofollow` and a `[staging]` title prefix so search engines skip it and a staging tab is easy to tell apart.
-
-**Rotating the key:** generate a new ed25519 key, add the public half as a write deploy key on the staging repo, `gh secret set STAGING_DEPLOY_KEY < key` here, delete the old deploy key and the local files. If `STAGING_REPO` is ever unset, pushes to `staging` are only linted and built.
 
 The build supports serving under a sub-path via `BASE_PATH`: media URLs, CSS assets and root-relative paths in `content/site/profile.json` follow it. Root-relative paths hard-coded in components would not — keep asset paths in content or CSS.
 
@@ -50,10 +58,10 @@ Only `content/` is committed by the admin. Code changes (components, styles) are
 
 ## CI summary
 
-| Event | Lint + build | Deploy |
+| Event | Lint + test + build | Deploy |
 |---|---|---|
 | Pull request → `master` | ✓ | — |
-| Push `staging` | ✓ (with `STAGING_BASE_PATH`) | staging repo, if configured |
+| Push `staging` | ✓ (with `STAGING_BASE_PATH`, `SITE_ENV=staging`) | — (Atelier deploys, see Stage) |
 | Push `master` | ✓ | — (Atelier deploys, see Go live) |
 
-Newer pushes cancel an in-progress run for the same branch.
+CI deploys nothing. Newer pushes cancel an in-progress run for the same branch.
