@@ -1,9 +1,11 @@
-name: CI & Deploy
+name: CI
 
-# master  → lint, test, build only. Atelier deploys the live site: `atelier site deploy portfolio`
-#           (atelier s4-register); CI deploying too would race it for gh-pages
-# staging → lint, test, build, deploy the staging site (only when STAGING_REPO is configured — see docs/release.md)
-# PRs     → lint, test and build only
+# Lint, test and build only, on every branch. Atelier is the only deployer (see docs/release.md):
+# master  → Atelier deploys the live site: `npm run atelier -- site deploy portfolio`
+# staging → Atelier deploys the staging site: `npm run atelier -- site deploy portfolio preview`.
+#           CI still builds it the way Atelier does (BASE_PATH=STAGING_BASE_PATH, SITE_ENV=staging),
+#           so a base-path break shows up here before the staging deploy
+# PRs     → lint, test and build
 on:
   push:
     branches: [master, staging]
@@ -11,17 +13,17 @@ on:
     branches: [master]
   workflow_dispatch:
 
-# One deploy per branch at a time; a newer push cancels the older run
+# A newer push cancels the older run for the same branch
 concurrency:
-  group: deploy-${{ github.ref }}
+  group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
-  contents: read   # the live site is deployed by Atelier; staging deploys with its own key
+  contents: read   # CI deploys nothing; Atelier does
   packages: read   # install the @ttvpro007/loom-* packages from GitHub Packages
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -53,11 +55,3 @@ jobs:
           BASE_PATH: ${{ github.ref == 'refs/heads/staging' && vars.STAGING_BASE_PATH || '/' }}
           SITE_ENV: ${{ github.ref == 'refs/heads/staging' && 'staging' || 'production' }}
 
-      - name: Deploy staging site
-        if: github.event_name == 'push' && github.ref == 'refs/heads/staging' && vars.STAGING_REPO != ''
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          deploy_key: ${{ secrets.STAGING_DEPLOY_KEY }}
-          external_repository: ${{ vars.STAGING_REPO }}
-          publish_branch: gh-pages
-          publish_dir: ./dist
