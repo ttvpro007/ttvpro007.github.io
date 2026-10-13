@@ -15,7 +15,7 @@ Node 20+. `npm run dev` runs the site without opening the admin (the admin is st
 
 1. **Edit** — `npm run admin`. Create or edit projects, drop in images/videos, upload a Unity WebGL build folder, paste YouTube links, write the overview in Markdown, pick or tweak a theme. Every save shows up immediately in the site tab.
 2. **Test** — *Release → Build & test* builds the production site and serves it at `http://localhost:4173`. Click through it.
-3. **Stage** *(optional)* — `npm run atelier -- site deploy portfolio preview` in `Business/atelier` deploys to a separate staging site (https://ttvpro007.github.io/portfolio-staging/) for checking on real phones. *Push to staging* only pushes the `staging` branch, which CI checks. Details in [docs/release.md](docs/release.md).
+3. **Stage** *(optional)* — commits `content/`, pushes the `staging` branch, then runs Atelier's preview deploy (`node packages/cli/bin/atelier.js site deploy portfolio preview` in `Business/atelier`) to a separate staging site (https://ttvpro007.github.io/portfolio-staging/) for checking on real phones, asking for the Atelier passphrase. CI only checks it. Details in [docs/release.md](docs/release.md).
 4. **Go live** — unlocks only after Test passes for the exact current content. Commits `content/`, pushes `master`, then runs Atelier's release of that commit (`node packages/cli/bin/atelier.js site release portfolio` in `Business/atelier`), asking for the Atelier passphrase. CI only checks it.
 
 ## Where things live

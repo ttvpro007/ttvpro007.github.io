@@ -12,19 +12,18 @@ By hand: `npm run build && npm run preview`.
 
 ## 2. Stage (optional)
 
-Atelier deploys the staging site, a separate site for checking on real phones and browsers before going live. From the Atelier checkout (`Business/atelier`):
+Atelier deploys the staging site, a separate site for checking on real phones and browsers before going live. *Push to staging* in the admin commits `content/`, force-pushes the current commit to the `staging` branch, then runs Atelier's preview deploy (`release.stageCommand` in `loom.config.js`), asking for the studio secret-store passphrase in a password field. The passphrase goes to that one command only. If the deploy fails, the push stays; fix what it says and press *Push to staging* again, which re-runs the deploy. The `staging` branch is a throwaway mirror, overwritten on every stage. CI only lints, tests and builds it (with the staging base path, so a base-path break shows up there); it doesn't deploy.
+
+The same deploy by hand, from the Atelier checkout (`Business/atelier`):
 
 ```bash
 cd ../../Business/atelier
-npm run atelier -- site deploy portfolio preview   # builds this checkout for staging, publishes dist/ to the staging repo, records the job
+node packages/cli/bin/atelier.js site deploy portfolio preview   # builds this checkout for staging, publishes dist/ to the staging repo, records the job
 ```
 
-It asks for the studio secret-store passphrase. It builds with `BASE_PATH=/portfolio-staging/` and `SITE_ENV=staging`, so `dist/` afterwards holds the staging build: rebuild before a production `--dry-run`. A preview `--dry-run` doesn't build either; it compares whatever is in `dist/`, so it is only meaningful after a staging build (`BASE_PATH=/portfolio-staging/ SITE_ENV=staging npm run build`; from Git Bash prefix `MSYS_NO_PATHCONV=1` so the path isn't rewritten).
+It builds with `BASE_PATH=/portfolio-staging/` and `SITE_ENV=staging`, so `dist/` afterwards holds the staging build: rebuild before a production `--dry-run`. A preview `--dry-run` doesn't build either; it compares whatever is in `dist/`, so it is only meaningful after a staging build (`BASE_PATH=/portfolio-staging/ SITE_ENV=staging npm run build`; from Git Bash prefix `MSYS_NO_PATHCONV=1` so the path isn't rewritten).
 
 **Flags from PowerShell:** `npm run atelier -- … --dry-run` loses the `--` there, npm takes `--dry-run` as its own flag, and the command runs as a real deploy. Pass flags with `node packages/cli/bin/atelier.js site deploy portfolio preview --dry-run` instead (same folder), or run npm from Git Bash.
-
-*Push to staging* in the admin commits `content/` and force-pushes the current commit to the `staging` branch. CI only lints, tests and builds it (with the staging base path, so a base-path break shows up there); it doesn't deploy. Until the admin calls Atelier, run the command above after it. The `staging` branch is a throwaway mirror, overwritten on every stage.
-
 ### Setup (done 2026-10-11)
 
 GitHub Pages allows one site per repository, so staging lives in a second repo:
