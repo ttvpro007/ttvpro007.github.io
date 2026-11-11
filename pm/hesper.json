@@ -1,0 +1,54 @@
+{
+  "format": 2,
+  "name": "ttvpro007.github.io",
+  "modules": [
+    "today",
+    "tasks",
+    "features",
+    "milestones",
+    "releases",
+    "playtests",
+    "runs",
+    "metrics",
+    "roadmap",
+    "design",
+    "claims",
+    "ideas",
+    "watch",
+    "capture",
+    "talk",
+    "report",
+    "files",
+    "assist",
+    "hints",
+    "prefs",
+    "gallery",
+    "cards",
+    "team",
+    "playful",
+    "quiet",
+    "diagnostics",
+    "feedback"
+  ],
+  "areas": [
+    "design",
+    "code",
+    "art",
+    "audio"
+  ],
+  "people": [
+    {
+      "id": "vi-tiet",
+      "name": "Vi Tiet",
+      "email": "tuxedo619_2010@yahoo.com",
+      "github": "ttvpro007",
+      "role": "lead",
+      "areas": [
+        "design",
+        "code",
+        "art",
+        "audio"
+      ]
+    }
+  ]
+}
